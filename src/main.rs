@@ -124,6 +124,8 @@ impl Op<()> for ConvertFormatOp {
         let to = format_of_str(self.out_media)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
+        output.start(false)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Converting format");
         let result = convert(from, to, data)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
