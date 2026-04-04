@@ -1,6 +1,6 @@
 [package]
 name = "datacartridge"
-version = "0.1.0"
+version = "{{ project.version }}"
 edition = "2021"
 description = "JSON/YAML/CSV format conversion cartridge"
 

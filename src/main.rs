@@ -7,8 +7,8 @@
 
 use anyhow::Result;
 use capdag::{
-    async_trait, ArgSource, Cap, CapArg, CapManifest, CapUrn, DryContext, MediaUrn, Op, OpError,
-    OpResult, PluginRuntime, Request, WetContext, WET_KEY_REQUEST,
+    async_trait, ArgSource, Cap, CapArg, CapManifest, DryContext, Op, OpError, OpResult,
+    PluginRuntime, Request, WetContext, WET_KEY_REQUEST,
 };
 use std::sync::Arc;
 
@@ -59,27 +59,31 @@ fn build_manifest() -> CapManifest {
 }
 
 fn format_display_name(media_urn: &str) -> &'static str {
-    // Match from most specific to least specific
-    if media_urn.contains("csv") && media_urn.contains("record") {
+    // Parse the URN properly — never inspect the string directly
+    let urn = capdag::MediaUrn::from_string(media_urn)
+        .expect("format_display_name called with invalid media URN");
+
+    let is_list = urn.is_list();
+    let is_record = urn.is_record();
+
+    if urn.is_csv() {
         "CSV"
-    } else if media_urn.contains("json") && media_urn.contains("list") && media_urn.contains("record") {
-        "JSON Array of Objects"
-    } else if media_urn.contains("json") && media_urn.contains("list") {
-        "JSON Array"
-    } else if media_urn.contains("json") && media_urn.contains("record") {
-        "JSON Object"
-    } else if media_urn.contains("json") {
-        "JSON Value"
-    } else if media_urn.contains("yaml") && media_urn.contains("list") && media_urn.contains("record") {
-        "YAML List of Mappings"
-    } else if media_urn.contains("yaml") && media_urn.contains("list") {
-        "YAML List"
-    } else if media_urn.contains("yaml") && media_urn.contains("record") {
-        "YAML Mapping"
-    } else if media_urn.contains("yaml") {
-        "YAML Value"
+    } else if urn.is_json() {
+        match (is_list, is_record) {
+            (true, true) => "JSON Array of Objects",
+            (true, false) => "JSON Array",
+            (false, true) => "JSON Object",
+            _ => "JSON Value",
+        }
+    } else if urn.is_yaml() {
+        match (is_list, is_record) {
+            (true, true) => "YAML List of Mappings",
+            (true, false) => "YAML List",
+            (false, true) => "YAML Mapping",
+            _ => "YAML Value",
+        }
     } else {
-        "Data"
+        panic!("Unrecognized data format in media URN: {}", media_urn)
     }
 }
 
@@ -87,7 +91,10 @@ fn format_display_name(media_urn: &str) -> &'static str {
 // OP IMPLEMENTATION
 // =============================================================================
 
-struct ConvertFormatOp;
+struct ConvertFormatOp {
+    in_media: &'static str,
+    out_media: &'static str,
+}
 
 #[async_trait]
 impl Op<()> for ConvertFormatOp {
@@ -105,24 +112,20 @@ impl Op<()> for ConvertFormatOp {
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
 
-        // Get cap URN to determine conversion direction
-        let cap_urn = req.cap_urn();
-        let parsed_urn = CapUrn::from_string(cap_urn)
-            .map_err(|e| OpError::ExecutionFailed(format!("Invalid cap URN '{}': {}", cap_urn, e)))?;
+        // Find input data by the expected media URN — fail hard if not supplied
+        let data = capdag::require_stream(&streams, self.in_media)
+            .map_err(|e| OpError::ExecutionFailed(format!(
+                "Expected input stream '{}' not found: {}", self.in_media, e
+            )))?;
 
-        let in_urn = MediaUrn::from_string(parsed_urn.in_spec())
-            .map_err(|e| OpError::ExecutionFailed(format!("Invalid in_spec: {}", e)))?;
-        let out_urn = MediaUrn::from_string(parsed_urn.out_spec())
-            .map_err(|e| OpError::ExecutionFailed(format!("Invalid out_spec: {}", e)))?;
-
-        // Find input data — first stream matching the in_spec
-        let data = streams
-            .first()
-            .map(|(_, bytes)| bytes.as_slice())
-            .ok_or_else(|| OpError::ExecutionFailed("No input data stream".to_string()))?;
+        // Determine conversion from the registered in/out media (not from content)
+        let from = format_of_str(self.in_media)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let to = format_of_str(self.out_media)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         output.progress(0.10, "Converting format");
-        let result = convert(&in_urn, &out_urn, data)
+        let result = convert(from, to, data)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         output.progress(0.90, "Encoding output");
@@ -153,7 +156,9 @@ async fn main() -> Result<()> {
 
     for (in_media, out_media) in capdag::all_format_conversion_paths() {
         let urn = capdag::format_conversion_urn(in_media, out_media);
-        runtime.register_op(&urn.to_string(), || Box::new(ConvertFormatOp));
+        runtime.register_op(&urn.to_string(), move || {
+            Box::new(ConvertFormatOp { in_media, out_media })
+        });
     }
 
     if let Err(e) = runtime.run().await {
@@ -175,7 +180,11 @@ enum Fmt {
     Csv,
 }
 
-fn format_of(urn: &MediaUrn) -> Result<Fmt> {
+/// Identify the data format from a media URN string.
+/// Parses the URN properly and checks marker tags — never inspects the string directly.
+fn format_of_str(media_urn: &str) -> Result<Fmt> {
+    let urn = capdag::MediaUrn::from_string(media_urn)
+        .map_err(|e| anyhow::anyhow!("Invalid media URN '{}': {}", media_urn, e))?;
     if urn.is_json() {
         Ok(Fmt::Json)
     } else if urn.is_yaml() {
@@ -183,14 +192,11 @@ fn format_of(urn: &MediaUrn) -> Result<Fmt> {
     } else if urn.is_csv() {
         Ok(Fmt::Csv)
     } else {
-        anyhow::bail!("Unknown data format in media URN: {}", urn)
+        anyhow::bail!("Media URN '{}' is not a recognized data format (json, yaml, or csv)", media_urn)
     }
 }
 
-fn convert(in_urn: &MediaUrn, out_urn: &MediaUrn, data: &[u8]) -> Result<Vec<u8>> {
-    let from = format_of(in_urn)?;
-    let to = format_of(out_urn)?;
-
+fn convert(from: Fmt, to: Fmt, data: &[u8]) -> Result<Vec<u8>> {
     match (from, to) {
         (Fmt::Json, Fmt::Yaml) => json_to_yaml(data),
         (Fmt::Yaml, Fmt::Json) => yaml_to_json(data),
@@ -198,7 +204,7 @@ fn convert(in_urn: &MediaUrn, out_urn: &MediaUrn, data: &[u8]) -> Result<Vec<u8>
         (Fmt::Csv, Fmt::Json) => csv_to_json_records(data),
         (Fmt::Yaml, Fmt::Csv) => yaml_records_to_csv(data),
         (Fmt::Csv, Fmt::Yaml) => csv_to_yaml_records(data),
-        _ => anyhow::bail!("Unsupported conversion: {:?} -> {:?}", from, to),
+        (f, t) => anyhow::bail!("Unsupported conversion: {:?} -> {:?}", f, t),
     }
 }
 
