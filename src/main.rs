@@ -1,9 +1,15 @@
-//! datacartridge - JSON/YAML/CSV format conversion plugin for MachineFabricEngine
+//! datacartridge - Data format conversion and type coercion plugin
 //!
-//! Converts between JSON, YAML, and CSV formats where structurally compatible:
+//! Format conversion (JSON/YAML/CSV where structurally compatible):
 //! - JSON <-> YAML: value, record, list, list-of-records
 //! - JSON list-of-records <-> CSV
 //! - YAML list-of-records <-> CSV
+//!
+//! Type coercion (scalar type conversions):
+//! - To string: from integer, number, boolean, object, and array types
+//! - To integer: from string, number, boolean
+//! - To number: from string, integer, boolean
+//! - To object: from string, integer, number, boolean
 
 use anyhow::Result;
 use capdag::{
@@ -48,10 +54,34 @@ fn build_manifest() -> CapManifest {
         all_caps.push(cap);
     }
 
+    // Coercion caps
+    for (source_type, target_type) in capdag::all_coercion_paths() {
+        let urn = capdag::coercion_urn(source_type, target_type);
+        let in_media = capdag::media_urn_for_type(source_type);
+        let out_media = capdag::media_urn_for_type(target_type);
+        let title = format!("Coerce {} to {}", source_type, target_type);
+        let description = format!("Coerce data from {} to {}", source_type, target_type);
+
+        let mut cap = Cap::with_description(urn, title, "coerce".to_string(), description);
+        cap.add_arg(CapArg::with_description(
+            in_media,
+            true,
+            vec![
+                ArgSource::Stdin {
+                    stdin: in_media.to_string(),
+                },
+                ArgSource::Position { position: 0 },
+            ],
+            "Input data to coerce".to_string(),
+        ));
+        cap.set_output(capdag::CapOutput::new(out_media, "Coerced data"));
+        all_caps.push(cap);
+    }
+
     CapManifest::new(
         "datacartridge".to_string(),
         env!("CARGO_PKG_VERSION").to_string(),
-        "JSON/YAML/CSV format conversion".to_string(),
+        "Data format conversion and type coercion".to_string(),
         all_caps,
     )
     .with_author("https://github.com/machinefabric".to_string())
@@ -148,6 +178,61 @@ impl Op<()> for ConvertFormatOp {
 }
 
 // =============================================================================
+// COERCION OP
+// =============================================================================
+
+struct CoerceOp {
+    source_type: &'static str,
+    target_type: &'static str,
+}
+
+#[async_trait]
+impl Op<()> for CoerceOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        let streams = input
+            .collect_streams()
+            .await
+            .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+
+        let in_media = capdag::media_urn_for_type(self.source_type);
+        let data = capdag::require_stream(&streams, in_media)
+            .map_err(|e| OpError::ExecutionFailed(format!(
+                "Expected input stream '{}' not found: {}", in_media, e
+            )))?;
+
+        output.start(false)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        output.progress(0.10, "Coercing type");
+
+        let result = coerce(data, self.source_type, self.target_type)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        output.progress(0.90, "Encoding output");
+        let cbor_value = ciborium::Value::Text(
+            String::from_utf8(result)
+                .map_err(|e| OpError::ExecutionFailed(format!("Coercion output is not valid UTF-8: {}", e)))?,
+        );
+        output
+            .emit_cbor(&cbor_value)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("CoerceOp").build()
+    }
+}
+
+// =============================================================================
 // MAIN
 // =============================================================================
 
@@ -160,6 +245,13 @@ async fn main() -> Result<()> {
         let urn = capdag::format_conversion_urn(in_media, out_media);
         runtime.register_op(&urn.to_string(), move || {
             Box::new(ConvertFormatOp { in_media, out_media })
+        });
+    }
+
+    for (source_type, target_type) in capdag::all_coercion_paths() {
+        let urn = capdag::coercion_urn(source_type, target_type);
+        runtime.register_op(&urn.to_string(), move || {
+            Box::new(CoerceOp { source_type, target_type })
         });
     }
 
@@ -383,6 +475,130 @@ fn infer_csv_value(field: &str) -> serde_json::Value {
 }
 
 // =============================================================================
+// COERCION FUNCTIONS
+// =============================================================================
+
+fn coerce(data: &[u8], _source_type: &str, target_type: &str) -> Result<Vec<u8>> {
+    let s = std::str::from_utf8(data)
+        .map_err(|e| anyhow::anyhow!("Content is not valid UTF-8: {}", e))?;
+    match target_type {
+        "string" => coerce_to_string(s),
+        "integer" => coerce_to_integer(s),
+        "number" => coerce_to_number(s),
+        "object" => coerce_to_object(s, _source_type),
+        other => anyhow::bail!("Unsupported coercion target type: '{}'", other),
+    }
+}
+
+fn coerce_to_string(s: &str) -> Result<Vec<u8>> {
+    if let Ok(value) = serde_json::from_str::<serde_json::Value>(s) {
+        let result = match value {
+            serde_json::Value::String(s) => format!("\"{}\"", s),
+            serde_json::Value::Number(n) => format!("\"{}\"", n),
+            serde_json::Value::Bool(b) => format!("\"{}\"", b),
+            serde_json::Value::Null => "\"null\"".to_string(),
+            serde_json::Value::Array(ref arr) => {
+                serde_json::to_string(arr)
+                    .map(|s| format!("\"{}\"", s.replace('\"', "\\\"")))
+                    .unwrap_or_else(|_| format!("\"{}\"", value))
+            }
+            serde_json::Value::Object(ref _obj) => {
+                serde_json::to_string(&value)
+                    .map(|s| format!("\"{}\"", s.replace('\"', "\\\"")))
+                    .unwrap_or_else(|_| format!("\"{}\"", value))
+            }
+        };
+        return Ok(result.into_bytes());
+    }
+    Ok(format!("\"{}\"", s).into_bytes())
+}
+
+fn coerce_to_integer(s: &str) -> Result<Vec<u8>> {
+    if let Ok(value) = serde_json::from_str::<serde_json::Value>(s) {
+        match value {
+            serde_json::Value::Number(n) => {
+                if let Some(i) = n.as_i64() {
+                    return Ok(i.to_string().into_bytes());
+                } else if let Some(f) = n.as_f64() {
+                    return Ok((f.round() as i64).to_string().into_bytes());
+                }
+            }
+            serde_json::Value::String(s) => {
+                if let Ok(i) = s.parse::<i64>() {
+                    return Ok(i.to_string().into_bytes());
+                } else if let Ok(f) = s.parse::<f64>() {
+                    return Ok((f.round() as i64).to_string().into_bytes());
+                }
+            }
+            serde_json::Value::Bool(b) => {
+                return Ok(if b { b"1".to_vec() } else { b"0".to_vec() });
+            }
+            _ => {}
+        }
+    }
+    let trimmed = s.trim();
+    if let Ok(i) = trimmed.parse::<i64>() {
+        return Ok(i.to_string().into_bytes());
+    }
+    if let Ok(f) = trimmed.parse::<f64>() {
+        return Ok((f.round() as i64).to_string().into_bytes());
+    }
+    anyhow::bail!("Cannot coerce content to integer: '{}'", s)
+}
+
+fn coerce_to_number(s: &str) -> Result<Vec<u8>> {
+    if let Ok(value) = serde_json::from_str::<serde_json::Value>(s) {
+        match value {
+            serde_json::Value::Number(n) => {
+                if let Some(f) = n.as_f64() {
+                    return Ok(f.to_string().into_bytes());
+                }
+            }
+            serde_json::Value::String(s) => {
+                if let Ok(f) = s.parse::<f64>() {
+                    return Ok(f.to_string().into_bytes());
+                }
+            }
+            serde_json::Value::Bool(b) => {
+                return Ok(if b { b"1.0".to_vec() } else { b"0.0".to_vec() });
+            }
+            _ => {}
+        }
+    }
+    let trimmed = s.trim();
+    if let Ok(f) = trimmed.parse::<f64>() {
+        return Ok(f.to_string().into_bytes());
+    }
+    anyhow::bail!("Cannot coerce content to number: '{}'", s)
+}
+
+fn coerce_to_object(s: &str, source_type: &str) -> Result<Vec<u8>> {
+    if let Ok(value) = serde_json::from_str::<serde_json::Value>(s) {
+        match value {
+            serde_json::Value::Object(_) => {
+                return Ok(s.as_bytes().to_vec());
+            }
+            _ => {
+                let source_media = capdag::media_urn_for_type(source_type);
+                let obj = serde_json::json!({
+                    "value": value,
+                    "source_type": source_media
+                });
+                return serde_json::to_vec(&obj)
+                    .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON object: {}", e));
+            }
+        }
+    }
+    let source_media = capdag::media_urn_for_type(source_type);
+    let obj = serde_json::json!({
+        "value": s,
+        "source_type": source_media
+    });
+    serde_json::to_vec(&obj)
+        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON object: {}", e))
+}
+
+// =============================================================================
 // TESTS
 // =============================================================================
 
@@ -559,5 +775,101 @@ mod tests {
         assert!(first_line.contains('a'));
         assert!(first_line.contains('b'));
         assert!(first_line.contains('c'));
+    }
+
+    // =========================================================================
+    // COERCION TESTS
+    // =========================================================================
+
+    #[test]
+    fn test_coerce_integer_to_string() {
+        let result = coerce(b"42", "integer", "string").unwrap();
+        assert_eq!(std::str::from_utf8(&result).unwrap(), "\"42\"");
+    }
+
+    #[test]
+    fn test_coerce_number_to_string() {
+        let result = coerce(b"3.14", "number", "string").unwrap();
+        assert_eq!(std::str::from_utf8(&result).unwrap(), "\"3.14\"");
+    }
+
+    #[test]
+    fn test_coerce_boolean_to_string() {
+        let result = coerce(b"true", "boolean", "string").unwrap();
+        assert_eq!(std::str::from_utf8(&result).unwrap(), "\"true\"");
+    }
+
+    #[test]
+    fn test_coerce_string_to_integer() {
+        let result = coerce(b"\"42\"", "string", "integer").unwrap();
+        assert_eq!(std::str::from_utf8(&result).unwrap(), "42");
+    }
+
+    #[test]
+    fn test_coerce_number_to_integer() {
+        let result = coerce(b"3.7", "number", "integer").unwrap();
+        assert_eq!(std::str::from_utf8(&result).unwrap(), "4");
+    }
+
+    #[test]
+    fn test_coerce_boolean_to_integer() {
+        assert_eq!(coerce(b"true", "boolean", "integer").unwrap(), b"1");
+        assert_eq!(coerce(b"false", "boolean", "integer").unwrap(), b"0");
+    }
+
+    #[test]
+    fn test_coerce_string_to_number() {
+        let result = coerce(b"\"3.14\"", "string", "number").unwrap();
+        assert_eq!(std::str::from_utf8(&result).unwrap(), "3.14");
+    }
+
+    #[test]
+    fn test_coerce_integer_to_number() {
+        let result = coerce(b"42", "integer", "number").unwrap();
+        // 42 as f64 can be "42" or "42.0" depending on serde
+        let s = std::str::from_utf8(&result).unwrap();
+        let f: f64 = s.parse().unwrap();
+        assert!((f - 42.0).abs() < f64::EPSILON);
+    }
+
+    #[test]
+    fn test_coerce_boolean_to_number() {
+        assert_eq!(coerce(b"true", "boolean", "number").unwrap(), b"1.0");
+        assert_eq!(coerce(b"false", "boolean", "number").unwrap(), b"0.0");
+    }
+
+    #[test]
+    fn test_coerce_string_to_object() {
+        let result = coerce(b"\"hello\"", "string", "object").unwrap();
+        let val: serde_json::Value = serde_json::from_slice(&result).unwrap();
+        assert_eq!(val["value"], "hello");
+        assert!(val["source_type"].as_str().unwrap().contains("textable"));
+    }
+
+    #[test]
+    fn test_coerce_object_passthrough() {
+        let input = br#"{"key": "value"}"#;
+        let result = coerce(input, "object", "string").unwrap();
+        let s = std::str::from_utf8(&result).unwrap();
+        // Object to string wraps as JSON string
+        assert!(s.starts_with('"'));
+    }
+
+    #[test]
+    fn test_coerce_invalid_to_integer_fails() {
+        let result = coerce(b"\"not a number\"", "string", "integer");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_coerce_invalid_to_number_fails() {
+        let result = coerce(b"\"not a number\"", "string", "number");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_coerce_unsupported_target_fails() {
+        let result = coerce(b"42", "integer", "array");
+        assert!(result.is_err());
     }
 }

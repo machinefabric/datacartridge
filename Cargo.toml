@@ -2,7 +2,7 @@
 name = "datacartridge"
 version = "0.2.9"
 edition = "2021"
-description = "JSON/YAML/CSV format conversion cartridge"
+description = "Data format conversion and type coercion cartridge"
 
 [[bin]]
 name = "datacartridge"
