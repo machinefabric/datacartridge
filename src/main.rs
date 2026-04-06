@@ -154,7 +154,9 @@ impl Op<()> for ConvertFormatOp {
         let to = format_of_str(self.out_media)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
-        output.start(false)
+        // Scalar→Scalar: propagate input stream meta to output
+        let input_meta = capdag::find_stream_meta(&streams, self.in_media).cloned();
+        output.start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Converting format");
         let result = convert(from, to, data)
@@ -208,7 +210,9 @@ impl Op<()> for CoerceOp {
                 "Expected input stream '{}' not found: {}", in_media, e
             )))?;
 
-        output.start(false)
+        // Scalar→Scalar: propagate input stream meta to output
+        let input_meta = capdag::find_stream_meta(&streams, in_media).cloned();
+        output.start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Coercing type");
 
