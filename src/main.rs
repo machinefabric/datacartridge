@@ -25,32 +25,22 @@ use std::sync::Arc;
 fn build_manifest() -> CapManifest {
     let mut all_caps = vec![capdag::identity_cap()];
 
-    for (in_media, out_media) in capdag::all_format_conversion_paths() {
-        let urn = capdag::format_conversion_urn(in_media, out_media);
-        let title = format!(
-            "Convert {} to {}",
-            format_display_name(in_media),
-            format_display_name(out_media),
-        );
-        let description = format!(
-            "Convert data from {} to {}",
-            format_display_name(in_media),
-            format_display_name(out_media),
-        );
+    for path in capdag::all_format_conversion_paths() {
+        let urn = capdag::format_conversion_urn(path.in_media, path.out_media);
 
-        let mut cap = Cap::with_description(urn, title, "convert_format".to_string(), description);
+        let mut cap = Cap::with_description(urn, path.title.to_string(), "convert_format".to_string(), path.description.to_string());
         cap.add_arg(CapArg::with_description(
-            in_media,
+            path.in_media,
             true,
             vec![
                 ArgSource::Stdin {
-                    stdin: in_media.to_string(),
+                    stdin: path.in_media.to_string(),
                 },
                 ArgSource::Position { position: 0 },
             ],
             "Input data to convert".to_string(),
         ));
-        cap.set_output(capdag::CapOutput::new(out_media, "Converted data"));
+        cap.set_output(capdag::CapOutput::new(path.out_media, "Converted data"));
         all_caps.push(cap);
     }
 
@@ -88,34 +78,6 @@ fn build_manifest() -> CapManifest {
     .with_page_url("https://github.com/machinefabric/datacartridge".to_string())
 }
 
-fn format_display_name(media_urn: &str) -> &'static str {
-    // Parse the URN properly — never inspect the string directly
-    let urn = capdag::MediaUrn::from_string(media_urn)
-        .expect("format_display_name called with invalid media URN");
-
-    let is_list = urn.is_list();
-    let is_record = urn.is_record();
-
-    if urn.is_csv() {
-        "CSV"
-    } else if urn.is_json() {
-        match (is_list, is_record) {
-            (true, true) => "JSON Array of Objects",
-            (true, false) => "JSON Array",
-            (false, true) => "JSON Object",
-            _ => "JSON Value",
-        }
-    } else if urn.is_yaml() {
-        match (is_list, is_record) {
-            (true, true) => "YAML List of Mappings",
-            (true, false) => "YAML List",
-            (false, true) => "YAML Mapping",
-            _ => "YAML Value",
-        }
-    } else {
-        panic!("Unrecognized data format in media URN: {}", media_urn)
-    }
-}
 
 // =============================================================================
 // OP IMPLEMENTATION
@@ -142,11 +104,28 @@ impl Op<()> for ConvertFormatOp {
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
 
+        output.log("INFO", &format!(
+            "[convert_format] collect_streams returned {} streams", streams.len()
+        ));
+        for (i, (urn, bytes, _meta)) in streams.iter().enumerate() {
+            output.log("INFO", &format!(
+                "[convert_format]   stream[{}]: urn='{}', {} bytes, preview={:?}",
+                i, urn, bytes.len(),
+                String::from_utf8_lossy(&bytes[..bytes.len().min(100)])
+            ));
+        }
+
         // Find input data by the expected media URN — fail hard if not supplied
         let data = capdag::require_stream(&streams, self.in_media)
             .map_err(|e| OpError::ExecutionFailed(format!(
                 "Expected input stream '{}' not found: {}", self.in_media, e
             )))?;
+
+        output.log("INFO", &format!(
+            "[convert_format] require_stream('{}') -> {} bytes, preview={:?}",
+            self.in_media, data.len(),
+            String::from_utf8_lossy(&data[..data.len().min(100)])
+        ));
 
         // Determine conversion from the registered in/out media (not from content)
         let from = format_of_str(self.in_media)
@@ -159,6 +138,10 @@ impl Op<()> for ConvertFormatOp {
         output.start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Converting format");
+        output.log("INFO", &format!(
+            "[convert_format] converting {:?} -> {:?}, {} bytes input",
+            from, to, data.len()
+        ));
         let result = convert(from, to, data)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
@@ -245,8 +228,10 @@ async fn main() -> Result<()> {
     let manifest = build_manifest();
     let mut runtime = PluginRuntime::with_manifest(manifest);
 
-    for (in_media, out_media) in capdag::all_format_conversion_paths() {
-        let urn = capdag::format_conversion_urn(in_media, out_media);
+    for path in capdag::all_format_conversion_paths() {
+        let urn = capdag::format_conversion_urn(path.in_media, path.out_media);
+        let in_media = path.in_media;
+        let out_media = path.out_media;
         runtime.register_op(&urn.to_string(), move || {
             Box::new(ConvertFormatOp { in_media, out_media })
         });
@@ -276,6 +261,8 @@ enum Fmt {
     Json,
     Yaml,
     Csv,
+    /// Bare textable list — CBOR sequence of byte strings, no format tag.
+    TextableList,
 }
 
 /// Identify the data format from a media URN string.
@@ -289,8 +276,10 @@ fn format_of_str(media_urn: &str) -> Result<Fmt> {
         Ok(Fmt::Yaml)
     } else if urn.is_csv() {
         Ok(Fmt::Csv)
+    } else if urn.is_list() && !urn.is_json() && !urn.is_yaml() && !urn.is_csv() {
+        Ok(Fmt::TextableList)
     } else {
-        anyhow::bail!("Media URN '{}' is not a recognized data format (json, yaml, or csv)", media_urn)
+        anyhow::bail!("Media URN '{}' is not a recognized data format (json, yaml, csv, or textable list)", media_urn)
     }
 }
 
@@ -302,6 +291,13 @@ fn convert(from: Fmt, to: Fmt, data: &[u8]) -> Result<Vec<u8>> {
         (Fmt::Csv, Fmt::Json) => csv_to_json_records(data),
         (Fmt::Yaml, Fmt::Csv) => yaml_records_to_csv(data),
         (Fmt::Csv, Fmt::Yaml) => csv_to_yaml_records(data),
+        // Textable list conversions
+        (Fmt::TextableList, Fmt::Json) => textable_list_to_json(data),
+        (Fmt::Json, Fmt::TextableList) => json_to_textable_list(data),
+        (Fmt::TextableList, Fmt::Yaml) => textable_list_to_yaml(data),
+        (Fmt::Yaml, Fmt::TextableList) => yaml_to_textable_list(data),
+        (Fmt::TextableList, Fmt::Csv) => textable_list_to_csv(data),
+        (Fmt::Csv, Fmt::TextableList) => csv_to_textable_list(data),
         (f, t) => anyhow::bail!("Unsupported conversion: {:?} -> {:?}", f, t),
     }
 }
@@ -476,6 +472,112 @@ fn infer_csv_value(field: &str) -> serde_json::Value {
         return serde_json::Value::Bool(false);
     }
     serde_json::Value::String(field.to_string())
+}
+
+// =============================================================================
+// TEXTABLE LIST CONVERSIONS
+// =============================================================================
+
+/// Decode a CBOR sequence of byte strings into a Vec of raw UTF-8 strings.
+/// Each item in the CBOR sequence is expected to be a Value::Bytes containing UTF-8 text.
+/// Decode a textable list: plain text with one value per line.
+/// Empty lines are skipped. Trailing newline is tolerated.
+fn decode_textable_list(data: &[u8]) -> Result<Vec<String>> {
+    let text = std::str::from_utf8(data)
+        .map_err(|e| anyhow::anyhow!("Textable list is not valid UTF-8: {}", e))?;
+    Ok(text.lines()
+        .map(|line| line.to_string())
+        .filter(|line| !line.is_empty())
+        .collect())
+}
+
+/// Encode a Vec of strings into a textable list: one value per line.
+fn encode_textable_list(items: &[String]) -> Vec<u8> {
+    let mut result = String::new();
+    for item in items {
+        result.push_str(item);
+        result.push('\n');
+    }
+    result.into_bytes()
+}
+
+/// Textable list (CBOR sequence) -> JSON array.
+/// Each item is parsed as a JSON value if possible, otherwise kept as a JSON string.
+fn textable_list_to_json(data: &[u8]) -> Result<Vec<u8>> {
+    let items = decode_textable_list(data)?;
+    let json_values: Vec<serde_json::Value> = items.iter()
+        .map(|s| serde_json::from_str(s).unwrap_or_else(|_| serde_json::Value::String(s.clone())))
+        .collect();
+    serde_json::to_vec_pretty(&json_values)
+        .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))
+}
+
+/// JSON array -> textable list (one value per line).
+/// Each JSON value is serialized to its string representation.
+fn json_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
+    let values: Vec<serde_json::Value> = serde_json::from_slice(data)
+        .map_err(|e| anyhow::anyhow!("Invalid JSON array: {}", e))?;
+    let strings: Vec<String> = values.iter()
+        .map(|v| match v {
+            serde_json::Value::String(s) => s.clone(),
+            other => other.to_string(),
+        })
+        .collect();
+    Ok(encode_textable_list(&strings))
+}
+
+/// Textable list (one value per line) -> YAML sequence.
+/// Each item is parsed as a YAML value if possible, otherwise kept as a string.
+fn textable_list_to_yaml(data: &[u8]) -> Result<Vec<u8>> {
+    let items = decode_textable_list(data)?;
+    let yaml_values: Vec<serde_yaml::Value> = items.iter()
+        .map(|s| serde_yaml::from_str(s).unwrap_or_else(|_| serde_yaml::Value::String(s.clone())))
+        .collect();
+    let yaml_str = serde_yaml::to_string(&yaml_values)
+        .map_err(|e| anyhow::anyhow!("Failed to serialize to YAML: {}", e))?;
+    Ok(yaml_str.into_bytes())
+}
+
+/// YAML sequence -> textable list (one value per line).
+/// Each YAML value is serialized to its string representation.
+fn yaml_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
+    let values: Vec<serde_yaml::Value> = serde_yaml::from_slice(data)
+        .map_err(|e| anyhow::anyhow!("Invalid YAML sequence: {}", e))?;
+    let strings: Vec<String> = values.iter()
+        .map(|v| {
+            let s = serde_yaml::to_string(v).unwrap_or_default();
+            s.trim_start_matches("---\n").trim_end().to_string()
+        })
+        .collect();
+    Ok(encode_textable_list(&strings))
+}
+
+/// Textable list (one value per line) -> CSV.
+/// Single-column CSV with header "value".
+fn textable_list_to_csv(data: &[u8]) -> Result<Vec<u8>> {
+    let items = decode_textable_list(data)?;
+    let mut wtr = csv::Writer::from_writer(Vec::new());
+    wtr.write_record(&["value"])
+        .map_err(|e| anyhow::anyhow!("Failed to write CSV header: {}", e))?;
+    for item in &items {
+        wtr.write_record(&[item])
+            .map_err(|e| anyhow::anyhow!("Failed to write CSV row: {}", e))?;
+    }
+    wtr.into_inner()
+        .map_err(|e| anyhow::anyhow!("Failed to finalize CSV: {}", e))
+}
+
+/// CSV -> textable list (one value per line).
+/// Reads the first column of each row (ignoring headers).
+fn csv_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
+    let mut rdr = csv::Reader::from_reader(data);
+    let mut items = Vec::new();
+    for result in rdr.records() {
+        let row = result.map_err(|e| anyhow::anyhow!("Failed to read CSV row: {}", e))?;
+        let value = row.get(0).unwrap_or("").to_string();
+        items.push(value);
+    }
+    Ok(encode_textable_list(&items))
 }
 
 // =============================================================================
