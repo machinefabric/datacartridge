@@ -1,4 +1,4 @@
-//! datacartridge - Data format conversion and type coercion plugin
+//! datacartridge - Data format conversion and type coercion cartridge
 //!
 //! Format conversion (JSON/YAML/CSV where structurally compatible):
 //! - JSON <-> YAML: value, record, list, list-of-records
@@ -14,7 +14,7 @@
 use anyhow::Result;
 use capdag::{
     async_trait, ArgSource, Cap, CapArg, CapManifest, DryContext, Op, OpError, OpResult,
-    PluginRuntime, Request, WetContext, WET_KEY_REQUEST,
+    CartridgeRuntime, Request, WetContext, WET_KEY_REQUEST,
 };
 use std::sync::Arc;
 
@@ -503,7 +503,7 @@ fn json_objects_to_yaml(objects: &[serde_json::Value]) -> Result<Vec<u8>> {
 #[tokio::main]
 async fn main() -> Result<()> {
     let manifest = build_manifest();
-    let mut runtime = PluginRuntime::with_manifest(manifest);
+    let mut runtime = CartridgeRuntime::with_manifest(manifest);
 
     for path in capdag::all_format_conversion_paths() {
         let urn = capdag::format_conversion_urn(path.in_media, path.out_media);
