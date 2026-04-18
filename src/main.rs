@@ -11,10 +11,12 @@
 //! - To number: from string, integer, boolean
 //! - To object: from string, integer, number, boolean
 
+mod adapter;
+
 use anyhow::Result;
 use capdag::{
-    async_trait, ArgSource, Cap, CapArg, CapManifest, DryContext, Op, OpError, OpResult,
-    CartridgeRuntime, Request, WetContext, WET_KEY_REQUEST,
+    async_trait, ArgSource, Cap, CapArg, CapGroup, CapManifest, DryContext, Op, OpError, OpResult,
+    CartridgeRuntime, Request, WetContext, WET_KEY_REQUEST, CAP_ADAPTER_SELECTION,
 };
 use std::sync::Arc;
 
@@ -125,11 +127,27 @@ fn build_manifest() -> CapManifest {
         all_caps.push(cap);
     }
 
+    // All caps in a single cap group with data format adapter URNs
+    let data_group = CapGroup {
+        name: "data-formats".to_string(),
+        caps: all_caps, // identity_cap() is already first in all_caps
+        adapter_urns: vec![
+            "media:json".to_string(),
+            "media:ndjson".to_string(),
+            "media:csv".to_string(),
+            "media:tsv".to_string(),
+            "media:psv".to_string(),
+            "media:yaml".to_string(),
+            "media:xml".to_string(),
+            "media:toml".to_string(),
+        ],
+    };
+
     CapManifest::new(
         "datacartridge".to_string(),
         env!("CARGO_PKG_VERSION").to_string(),
-        "Data format conversion and type coercion".to_string(),
-        all_caps,
+        "Data format conversion, type coercion, and data format content inspection".to_string(),
+        vec![data_group],
     )
     .with_author("https://github.com/machinefabric".to_string())
     .with_page_url("https://github.com/machinefabric/datacartridge".to_string())
@@ -497,6 +515,79 @@ fn json_objects_to_yaml(objects: &[serde_json::Value]) -> Result<Vec<u8>> {
 }
 
 // =============================================================================
+// ADAPTER SELECTION
+// =============================================================================
+
+/// Data format content inspection adapter.
+/// Detects JSON, NDJSON, CSV, TSV, PSV, YAML, XML, and TOML formats.
+struct DataAdapterSelectionOp;
+
+#[async_trait]
+impl Op<()> for DataAdapterSelectionOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        let streams = input
+            .collect_streams()
+            .await
+            .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+
+        let content = streams
+            .first()
+            .map(|(_, bytes, _)| bytes.as_slice())
+            .unwrap_or(&[]);
+
+        // Extract extension from stream meta if available
+        let extension = streams
+            .first()
+            .and_then(|(_, _, meta)| meta.as_ref())
+            .and_then(|m| m.get("file_path"))
+            .and_then(|v| {
+                if let ciborium::Value::Text(s) = v {
+                    std::path::Path::new(s.as_str())
+                        .extension()
+                        .and_then(|e| e.to_str())
+                        .map(|e| e.to_lowercase())
+                } else {
+                    None
+                }
+            })
+            .unwrap_or_default();
+
+        let media_urns = adapter::detect_data_media_urns(content, &extension);
+
+        if media_urns.is_empty() {
+            return Ok(());
+        }
+
+        let response = serde_json::json!({ "media_urns": media_urns });
+        let json_bytes = serde_json::to_vec(&response)
+            .map_err(|e| OpError::ExecutionFailed(format!("JSON error: {}", e)))?;
+
+        output
+            .start(false, None)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        output
+            .emit_cbor(&ciborium::Value::Bytes(json_bytes))
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("DataAdapterSelectionOp")
+            .description("Data format content inspection adapter")
+            .build()
+    }
+}
+
+// =============================================================================
 // MAIN
 // =============================================================================
 
@@ -504,6 +595,9 @@ fn json_objects_to_yaml(objects: &[serde_json::Value]) -> Result<Vec<u8>> {
 async fn main() -> Result<()> {
     let manifest = build_manifest();
     let mut runtime = CartridgeRuntime::with_manifest(manifest);
+
+    // Register adapter selection handler
+    runtime.register_op(CAP_ADAPTER_SELECTION, || Box::new(DataAdapterSelectionOp));
 
     for path in capdag::all_format_conversion_paths() {
         let urn = capdag::format_conversion_urn(path.in_media, path.out_media);
