@@ -146,6 +146,7 @@ fn build_manifest() -> CapManifest {
     CapManifest::new(
         "datacartridge".to_string(),
         env!("CARGO_PKG_VERSION").to_string(),
+        capdag::CartridgeChannel::from_build_env(env!("MFR_CARTRIDGE_CHANNEL")),
         "Data format conversion, type coercion, and data format content inspection".to_string(),
         vec![data_group],
     )
