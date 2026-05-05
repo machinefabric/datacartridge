@@ -127,6 +127,55 @@ fn build_manifest() -> CapManifest {
         all_caps.push(cap);
     }
 
+    // Sequence decimate cap: generic over media. Takes a sequence of
+    // any media URN and emits a sequence of the same media URN with
+    // every Nth item kept. The argument `--keep-every` is N; missing
+    // ⇒ N=1 ⇒ passthrough. Built once with `media:` (the wildcard
+    // media URN) so the planner sees it as applicable to any
+    // sequence input.
+    {
+        let urn = capdag::CapUrnBuilder::new()
+            .solo_tag("decimate-sequence")
+            .in_spec("media:")
+            .out_spec("media:")
+            .build()
+            .expect("decimate-sequence URN");
+        let mut cap = Cap::with_description(
+            urn,
+            "Decimate Sequence".to_string(),
+            "decimate-sequence".to_string(),
+            "Keep one item out of every N from an input sequence (drop the rest). \
+             With --keep-every N omitted (or N=1), the sequence is passed through unchanged."
+                .to_string(),
+        );
+        let mut input_arg = CapArg::with_description(
+            "media:",
+            true,
+            vec![ArgSource::Stdin {
+                stdin: "media:".to_string(),
+            }],
+            "Input sequence".to_string(),
+        );
+        input_arg.is_sequence = true;
+        cap.add_arg(input_arg);
+        cap.add_arg(CapArg::with_description(
+            "media:keep-every;textable;numeric",
+            false,
+            vec![ArgSource::CliFlag {
+                cli_flag: "--keep-every".to_string(),
+            }],
+            "Stride N: keep one item out of every N. Positive integer. Omit for passthrough."
+                .to_string(),
+        ));
+        cap.set_output(capdag::CapOutput::with_full_definition(
+            "media:",
+            "Decimated sequence (same media as input)",
+            true,
+            None,
+        ));
+        all_caps.push(cap);
+    }
+
     // All caps in a single cap group with data format adapter URNs
     let data_group = CapGroup {
         name: "data-formats".to_string(),
@@ -350,6 +399,186 @@ impl Op<()> for CollectJsonObjectsOp {
 
     fn metadata(&self) -> capdag::OpMetadata {
         capdag::OpMetadata::builder("CollectJsonObjectsOp").build()
+    }
+}
+
+/// Indices the decimate gate emits given a sequence length and a
+/// stride. Hoisted out so it can be unit-tested without spinning up
+/// the whole cartridge runtime — the gate is the only behaviour the
+/// Op contributes beyond stream plumbing, so a regression in stride
+/// math has to surface here.
+///
+/// Contract:
+///   - `keep_every == 1` ⇒ every index in `0..count`.
+///   - `keep_every > 1`  ⇒ indices `0, keep_every, 2*keep_every, ...`
+///     while `< count`.
+///   - `keep_every == 0` is impossible at this point (the Op
+///     rejects it as a parse error before calling the gate); we
+///     defend against it here with a debug_assert so a future
+///     refactor can't silently introduce a divide-by-zero.
+fn decimate_indices(count: usize, keep_every: usize) -> Vec<usize> {
+    debug_assert!(keep_every >= 1, "decimate_indices requires keep_every >= 1");
+    let n = keep_every.max(1);
+    (0..count).step_by(n).collect()
+}
+
+/// Op behind `cap:decimate-sequence;in=media:;out=media:`.
+///
+/// Keeps every N-th item from the input sequence (positions 0, N,
+/// 2N, ... of the original sequence are emitted). With `--keep-every`
+/// missing or N=1, the sequence passes through unchanged.
+///
+/// Per-item metadata is preserved: the kept item's original meta
+/// flows verbatim to the output. The output's media URN matches the
+/// input sequence's media URN — we never change the type of the
+/// items themselves.
+struct DecimateSequenceOp;
+
+#[async_trait]
+impl Op<()> for DecimateSequenceOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let mut input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        // Drain all incoming streams. We don't know the arrival
+        // order of the sequence input vs the CLI flag, so we
+        // classify by media URN as each stream arrives and store
+        // them separately. The keep-every stream is a small scalar;
+        // the sequence stream's items are buffered into a Vec
+        // because we don't start emitting until we know N.
+        let keep_every_urn = "media:keep-every;textable;numeric";
+
+        let mut keep_every_raw: Option<String> = None;
+        let mut sequence_items: Vec<(Vec<u8>, Option<capdag::StreamMeta>)> = Vec::new();
+        let mut sequence_input_urn: Option<String> = None;
+        let mut sequence_input_meta: Option<capdag::StreamMeta> = None;
+
+        while let Some(stream_result) = input.recv().await {
+            let stream = stream_result
+                .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+            let urn = stream.media_urn().to_string();
+            if urn == keep_every_urn {
+                let bytes = stream
+                    .collect_bytes()
+                    .await
+                    .map_err(|e| OpError::ExecutionFailed(format!("collect_bytes for keep-every: {}", e)))?;
+                let raw = String::from_utf8(bytes).map_err(|e| {
+                    OpError::ExecutionFailed(format!(
+                        "--keep-every value is not valid UTF-8: {}",
+                        e
+                    ))
+                })?;
+                keep_every_raw = Some(raw);
+            } else {
+                if sequence_input_urn.is_some() {
+                    return Err(OpError::ExecutionFailed(format!(
+                        "decimate-sequence received two non-keep-every streams: {} and {}",
+                        sequence_input_urn.as_deref().unwrap(),
+                        urn
+                    )));
+                }
+                sequence_input_urn = Some(urn);
+                sequence_input_meta = stream.stream_meta().cloned();
+                let items = stream
+                    .collect_items()
+                    .await
+                    .map_err(|e| OpError::ExecutionFailed(format!("collect_items: {}", e)))?;
+                sequence_items = items;
+            }
+        }
+
+        let sequence_input_urn = sequence_input_urn.ok_or_else(|| {
+            OpError::ExecutionFailed(
+                "decimate-sequence received no input stream — missing required sequence input"
+                    .to_string(),
+            )
+        })?;
+
+        // Parse and validate --keep-every. Missing ⇒ N=1
+        // (passthrough). N must be a positive integer; negative,
+        // zero, fractional, or unparseable values are programmer
+        // errors, not silent passthrough — fail loud.
+        let keep_every: usize = match keep_every_raw {
+            None => 1,
+            Some(raw) => {
+                let trimmed = raw.trim();
+                let n: i64 = trimmed.parse().map_err(|e| {
+                    OpError::ExecutionFailed(format!(
+                        "--keep-every must be a positive integer, got {:?}: {}",
+                        trimmed, e
+                    ))
+                })?;
+                if n < 1 {
+                    return Err(OpError::ExecutionFailed(format!(
+                        "--keep-every must be ≥ 1 (got {})",
+                        n
+                    )));
+                }
+                n as usize
+            }
+        };
+
+        // Output as a sequence of the same media URN as the input
+        // sequence; the items themselves pass through unchanged.
+        output
+            .start(true, sequence_input_meta.clone())
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        let total = sequence_items.len();
+        let keep = decimate_indices(total, keep_every);
+        let mut emitted = 0usize;
+        // Walk the indices to keep in order; index into the
+        // pre-buffered items vector. We move the items into an
+        // Option<...> array so we can `take` each kept slot without
+        // cloning the byte vectors.
+        let mut slots: Vec<Option<(Vec<u8>, Option<capdag::StreamMeta>)>> =
+            sequence_items.into_iter().map(Some).collect();
+        for i in keep {
+            let (item_bytes, item_meta) = slots[i]
+                .take()
+                .expect("decimate_indices yielded a duplicate or out-of-range index");
+            output
+                .emit_list_item(
+                    &ciborium::Value::Bytes(item_bytes),
+                    item_meta,
+                )
+                .map_err(|e| OpError::ExecutionFailed(format!(
+                    "emit_list_item at index {} (input sequence {}): {}",
+                    i, sequence_input_urn, e
+                )))?;
+            emitted += 1;
+        }
+
+        // No items in: that's a real input error to surface, not a
+        // "successfully decimated zero items" — silently emitting an
+        // empty sequence would let downstream caps run on nothing
+        // without anyone noticing.
+        if total == 0 {
+            return Err(OpError::ExecutionFailed(format!(
+                "decimate-sequence: input sequence {} was empty",
+                sequence_input_urn
+            )));
+        }
+
+        output.progress(
+            1.0,
+            &format!(
+                "decimate-sequence: kept {} of {} items (every {})",
+                emitted, total, keep_every
+            ),
+        );
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("DecimateSequenceOp")
+            .description("Keep every N-th item from a sequence (passthrough when N omitted or 1)")
+            .build()
     }
 }
 
@@ -708,6 +937,19 @@ async fn main() -> Result<()> {
         runtime.register_op(&yaml_csv_urn.to_string(), || {
             Box::new(CollectRecordsOp { in_media: "media:record;textable;yaml", out_media: "media:csv;list;record;textable" })
         });
+    }
+
+    // decimate-sequence: drop items from a sequence at stride N.
+    // Single op handles every input/output media because the cap
+    // URN's in/out are both `media:` (the wildcard).
+    {
+        let urn = capdag::CapUrnBuilder::new()
+            .solo_tag("decimate-sequence")
+            .in_spec("media:")
+            .out_spec("media:")
+            .build()
+            .expect("decimate-sequence URN");
+        runtime.register_op(&urn.to_string(), || Box::new(DecimateSequenceOp));
     }
 
     if let Err(e) = runtime.run().await {
@@ -1443,5 +1685,65 @@ mod tests {
     fn test_coerce_unsupported_target_fails() {
         let result = coerce(b"42", "integer", "array");
         assert!(result.is_err());
+    }
+
+    // ----- decimate-sequence ---------------------------------------
+
+    /// Stride 1 keeps every index — this is the passthrough contract
+    /// the cap promises when --keep-every is omitted (the Op
+    /// substitutes `1` and calls the gate).
+    #[test]
+    fn test_decimate_indices_stride_one_keeps_all() {
+        for n in [0usize, 1, 5, 100] {
+            let got = decimate_indices(n, 1);
+            let want: Vec<usize> = (0..n).collect();
+            assert_eq!(got, want, "stride=1 over count={} must keep every index", n);
+        }
+    }
+
+    /// Stride N starts at index 0 and keeps every Nth thereafter,
+    /// regardless of count. An off-by-one (e.g. starting at index 1
+    /// instead of 0) shows up here as the first kept index being N
+    /// instead of 0 — exactly the failure we want to surface.
+    #[test]
+    fn test_decimate_indices_starts_at_zero() {
+        for stride in [2usize, 3, 7, 13] {
+            let got = decimate_indices(100, stride);
+            assert_eq!(got.first().copied(), Some(0),
+                "stride={} must start at 0; got {:?}", stride, got.first());
+            assert!(got.windows(2).all(|w| w[1] - w[0] == stride),
+                "stride={} produced non-uniform spacing: {:?}", stride, got);
+        }
+    }
+
+    /// Specific case spelled out by the user requirement: every Nth.
+    /// This pins down N=3 over a small enumerated count where the
+    /// expected output is hand-readable, so a regression that
+    /// changes "every Nth from 0" to "every Nth except 0" or to
+    /// "0-indexed but offset N-1" produces a clearly wrong list.
+    #[test]
+    fn test_decimate_indices_every_third_of_ten() {
+        let got = decimate_indices(10, 3);
+        assert_eq!(got, vec![0, 3, 6, 9]);
+    }
+
+    /// A stride larger than the input length keeps exactly the
+    /// first item (index 0) and nothing else. Catches the "what if
+    /// stride > count" edge.
+    #[test]
+    fn test_decimate_indices_stride_larger_than_count() {
+        assert_eq!(decimate_indices(5, 100), vec![0]);
+    }
+
+    /// Empty input yields empty output. The Op layer turns this
+    /// into a hard error (an empty input sequence is suspicious),
+    /// but the gate itself must be honest about returning [] —
+    /// otherwise we'd hide the empty case from the Op.
+    #[test]
+    fn test_decimate_indices_empty_input() {
+        let got = decimate_indices(0, 1);
+        assert!(got.is_empty());
+        let got = decimate_indices(0, 5);
+        assert!(got.is_empty());
     }
 }
