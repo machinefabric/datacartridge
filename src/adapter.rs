@@ -86,10 +86,10 @@ fn detect_csv(text: &str) -> Vec<String> {
     if column_count > 1 {
         vec![
             "media:csv;list;record;textable".to_string(),
-            "media:csv;list;textable".to_string(),
+            "media:csv;list;record;textable".to_string(),
         ]
     } else {
-        vec!["media:csv;list;textable".to_string()]
+        vec!["media:csv;list;record;textable".to_string()]
     }
 }
 
@@ -268,7 +268,7 @@ fn detect_xml(text: &str) -> Vec<String> {
 fn detect_toml(text: &str) -> Vec<String> {
     let _ = text;
     vec![
-        "media:record;textable;toml".to_string(),
+        "media:textable;toml".to_string(),
         "media:textable;toml".to_string(),
     ]
 }

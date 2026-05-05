@@ -73,7 +73,7 @@ fn build_manifest() -> CapManifest {
     // Collect JSON objects caps
     for out_media in &["media:json;list;record;textable", "media:csv;list;record;textable", "media:list;record;textable;yaml"] {
         let urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_json_objects")
+            .solo_tag("collect-json-objects")
             .in_spec("media:json;record;textable")
             .out_spec(out_media)
             .build().expect("collect_json_objects URN");
@@ -92,7 +92,7 @@ fn build_manifest() -> CapManifest {
     // Collect CSV records caps
     for out_media in &["media:csv;list;record;textable", "media:json;list;record;textable", "media:list;record;textable;yaml"] {
         let urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:csv;list;record;textable")
             .out_spec(out_media)
             .build().expect("collect_records csv URN");
@@ -111,7 +111,7 @@ fn build_manifest() -> CapManifest {
     // Collect YAML mappings caps
     for out_media in &["media:list;record;textable;yaml", "media:json;list;record;textable", "media:csv;list;record;textable"] {
         let urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:record;textable;yaml")
             .out_spec(out_media)
             .build().expect("collect_records yaml URN");
@@ -623,7 +623,7 @@ async fn main() -> Result<()> {
     // Collect JSON objects → JSON array / CSV / YAML
     {
         let json_array_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_json_objects")
+            .solo_tag("collect-json-objects")
             .in_spec("media:json;record;textable")
             .out_spec("media:json;list;record;textable")
             .build().expect("collect_json_objects → json array URN");
@@ -632,7 +632,7 @@ async fn main() -> Result<()> {
         });
 
         let csv_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_json_objects")
+            .solo_tag("collect-json-objects")
             .in_spec("media:json;record;textable")
             .out_spec("media:csv;list;record;textable")
             .build().expect("collect_json_objects → csv URN");
@@ -641,7 +641,7 @@ async fn main() -> Result<()> {
         });
 
         let yaml_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_json_objects")
+            .solo_tag("collect-json-objects")
             .in_spec("media:json;record;textable")
             .out_spec("media:list;record;textable;yaml")
             .build().expect("collect_json_objects → yaml URN");
@@ -653,7 +653,7 @@ async fn main() -> Result<()> {
     // Collect CSV records → merged CSV / JSON array / YAML list
     {
         let csv_csv_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:csv;list;record;textable")
             .out_spec("media:csv;list;record;textable")
             .build().expect("collect_records csv→csv URN");
@@ -662,7 +662,7 @@ async fn main() -> Result<()> {
         });
 
         let csv_json_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:csv;list;record;textable")
             .out_spec("media:json;list;record;textable")
             .build().expect("collect_records csv→json URN");
@@ -671,7 +671,7 @@ async fn main() -> Result<()> {
         });
 
         let csv_yaml_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:csv;list;record;textable")
             .out_spec("media:list;record;textable;yaml")
             .build().expect("collect_records csv→yaml URN");
@@ -683,7 +683,7 @@ async fn main() -> Result<()> {
     // Collect YAML mappings → merged YAML list / JSON array / CSV
     {
         let yaml_yaml_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:record;textable;yaml")
             .out_spec("media:list;record;textable;yaml")
             .build().expect("collect_records yaml→yaml URN");
@@ -692,7 +692,7 @@ async fn main() -> Result<()> {
         });
 
         let yaml_json_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:record;textable;yaml")
             .out_spec("media:json;list;record;textable")
             .build().expect("collect_records yaml→json URN");
@@ -701,7 +701,7 @@ async fn main() -> Result<()> {
         });
 
         let yaml_csv_urn = capdag::CapUrnBuilder::new()
-            .tag("op", "collect_records")
+            .solo_tag("collect-records")
             .in_spec("media:record;textable;yaml")
             .out_spec("media:csv;list;record;textable")
             .build().expect("collect_records yaml→csv URN");

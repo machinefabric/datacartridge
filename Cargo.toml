@@ -1,6 +1,6 @@
 [package]
 name = "datacartridge"
-version = "0.13.42"
+version = "0.14.45"
 edition = "2021"
 description = "JSON/YAML/CSV format conversion cartridge"
 
