@@ -2,7 +2,8 @@
 name = "datacartridge"
 version = "{{ project.version }}"
 edition = "2021"
-description = "JSON/YAML/CSV format conversion cartridge"
+license = "AGPL-3.0-or-later"
+description = "JSON/YAML/CSV format conversion cartridge for MachineFabric"
 
 [[bin]]
 name = "datacartridge"
