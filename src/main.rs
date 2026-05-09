@@ -127,6 +127,49 @@ fn build_manifest() -> CapManifest {
         all_caps.push(cap);
     }
 
+    // Save-as-txt cap: media:textable → media:textable;txt.
+    // Pure relabel — input bytes are forwarded to the output
+    // stream unchanged; only the URN-side type narrows from the
+    // abstract textable wildcard (no extension) to the concrete
+    // .txt file format (which the registry binds to the `txt`
+    // extension). Lets the Finder transmute dialog offer a
+    // "Save as Plain Text" target wherever any chain reaches a
+    // textable value.
+    //
+    // Mirrors fabric/caps/save-as-txt.toml.
+    {
+        let urn = capdag::CapUrnBuilder::new()
+            .marker("save-as-txt")
+            .in_spec("media:textable")
+            .out_spec("media:textable;txt")
+            .build()
+            .expect("save-as-txt URN");
+        let mut cap = Cap::with_description(
+            urn,
+            "Save as Plain Text".to_string(),
+            "save_as_txt".to_string(),
+            "Persist any textable value as a plain .txt file. \
+             Byte-for-byte passthrough; only the URN label changes."
+                .to_string(),
+        );
+        cap.add_arg(CapArg::with_description(
+            "media:textable",
+            true,
+            vec![
+                ArgSource::Stdin {
+                    stdin: "media:textable".to_string(),
+                },
+                ArgSource::Position { position: 0 },
+            ],
+            "The textable value to persist as .txt".to_string(),
+        ));
+        cap.set_output(capdag::CapOutput::new(
+            "media:textable;txt",
+            "The same bytes, labelled as a .txt file",
+        ));
+        all_caps.push(cap);
+    }
+
     // Sequence decimate cap: generic over media. Takes a sequence of
     // any media URN and emits a sequence of the same media URN with
     // every Nth item kept. The argument `--keep-every` is N; missing
@@ -345,6 +388,107 @@ impl Op<()> for CoerceOp {
 
     fn metadata(&self) -> capdag::OpMetadata {
         capdag::OpMetadata::builder("CoerceOp").build()
+    }
+}
+
+// =============================================================================
+// SAVE-AS-TXT OP — relabel any textable value as a `.txt` file
+// =============================================================================
+//
+// The cap signature is `media:textable → media:textable;txt`. The
+// op is byte-passthrough: input bytes flow to the output stream
+// unchanged; only the URN-side type narrows from the abstract
+// textable wildcard to the concrete `.txt` file format.
+//
+// Why this op exists: the Finder transmute dialog filters target
+// candidates to URNs that own a file extension. `media:textable`
+// is an abstract coercion class with no extension and is suppressed
+// from the target list (see `LiveCapFab::get_reachable_targets`).
+// `media:textable;txt` carries the `txt` extension and is offered
+// as a target. This op closes the gap so any chain that ends in a
+// textable value can be saved as `.txt` without an additional
+// per-cap output declaration.
+//
+// `media:textable` PROMISES UTF-8 representability; bytes that
+// fail UTF-8 validation here are a contract violation upstream and
+// surface as a hard error rather than being silently corrupted.
+
+struct SaveAsTxtOp;
+
+#[async_trait]
+impl Op<()> for SaveAsTxtOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let mut input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        // The input arrives as a single stream whose URN is whatever
+        // the upstream cap emitted (any URN that conforms to
+        // `media:textable`). We don't filter by URN here — the
+        // planner already verified conformance — we just take the
+        // stream that arrives and copy its bytes through.
+        let mut received: Option<(Vec<u8>, Option<capdag::StreamMeta>)> = None;
+        while let Some(stream_result) = input.recv().await {
+            let stream = stream_result
+                .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+            let meta = stream.stream_meta().cloned();
+            let bytes = stream
+                .collect_bytes()
+                .await
+                .map_err(|e| {
+                    OpError::ExecutionFailed(format!("collect_bytes for save-as-txt: {}", e))
+                })?;
+            if received.is_some() {
+                return Err(OpError::ExecutionFailed(
+                    "save-as-txt received more than one input stream — \
+                     the cap takes a single textable scalar"
+                        .to_string(),
+                ));
+            }
+            received = Some((bytes, meta));
+        }
+
+        let (bytes, input_meta) = received.ok_or_else(|| {
+            OpError::ExecutionFailed(
+                "save-as-txt received no input stream — missing required textable input"
+                    .to_string(),
+            )
+        })?;
+
+        // The cap-arg URN (`media:textable`) promises UTF-8
+        // representability. Validate here so a contract violation
+        // upstream surfaces immediately rather than producing a
+        // garbled `.txt` file the user has to debug later. Failing
+        // hard is the no-fallback policy.
+        let text = String::from_utf8(bytes).map_err(|e| {
+            OpError::ExecutionFailed(format!(
+                "save-as-txt: input bytes are not valid UTF-8 — \
+                 the cap-arg URN `media:textable` requires UTF-8 \
+                 representability. Upstream cap or the producer is \
+                 violating the textable contract: {}",
+                e
+            ))
+        })?;
+
+        // Scalar → scalar; propagate the input stream's meta
+        // (e.g. provenance `title`) so a downstream writer can
+        // derive the `.txt` filename from upstream context.
+        output
+            .start(false, input_meta)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        output
+            .emit_cbor(&ciborium::Value::Text(text))
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("SaveAsTxtOp").build()
     }
 }
 
@@ -847,6 +991,20 @@ async fn main() -> Result<()> {
         runtime.register_op(&urn.to_string(), move || {
             Box::new(CoerceOp { source_type, target_type })
         });
+    }
+
+    // Save-as-txt cap: media:textable → media:textable;txt.
+    // The cap declaration in `build_manifest()` builds the URN
+    // with the same markers; mirror it here so the runtime can
+    // dispatch the cap to its op.
+    {
+        let urn = capdag::CapUrnBuilder::new()
+            .marker("save-as-txt")
+            .in_spec("media:textable")
+            .out_spec("media:textable;txt")
+            .build()
+            .expect("save-as-txt URN");
+        runtime.register_op(&urn.to_string(), || Box::new(SaveAsTxtOp));
     }
 
     // Collect JSON objects → JSON array / CSV / YAML
@@ -1745,5 +1903,77 @@ mod tests {
         assert!(got.is_empty());
         let got = decimate_indices(0, 5);
         assert!(got.is_empty());
+    }
+
+    /// The cap manifest declares `save-as-txt` with a specific URN
+    /// shape; `main()` registers the op's runtime handler under
+    /// the URN built from the same parts. If those two strings
+    /// diverge, the planner accepts the cap but the runtime has
+    /// no dispatch entry — and the cartridge silently fails the
+    /// first time a user invokes it.
+    ///
+    /// This test reconstructs both URNs exactly the way each
+    /// site builds them and asserts byte equality. A future
+    /// refactor that touches one site without the other surfaces
+    /// here at compile/test time rather than at runtime.
+    #[test]
+    fn test_save_as_txt_manifest_and_runtime_urn_agree() {
+        let manifest_urn = capdag::CapUrnBuilder::new()
+            .marker("save-as-txt")
+            .in_spec("media:textable")
+            .out_spec("media:textable;txt")
+            .build()
+            .expect("save-as-txt manifest URN")
+            .to_string();
+        let runtime_urn = capdag::CapUrnBuilder::new()
+            .marker("save-as-txt")
+            .in_spec("media:textable")
+            .out_spec("media:textable;txt")
+            .build()
+            .expect("save-as-txt runtime URN")
+            .to_string();
+        assert_eq!(
+            manifest_urn, runtime_urn,
+            "save-as-txt cap manifest URN must match the runtime registration URN \
+             — divergence means cartridge silently fails dispatch on first invocation"
+        );
+        // Also assert the canonical form so a tag-order
+        // regression in CapUrnBuilder surfaces here. This is the
+        // string the engine's LiveCapFab will look up against the
+        // catalog; the catalog's `save-as-txt` entry is hashed on
+        // exactly this string.
+        assert_eq!(
+            manifest_urn,
+            r#"cap:in="media:textable";out="media:textable;txt";save-as-txt"#,
+            "canonical save-as-txt URN drifted — catalog lookups will 404"
+        );
+    }
+
+    /// The save-as-txt cap is registered in the manifest builder
+    /// (`build_manifest`). Verify it's actually present there with
+    /// the right shape — input urn, output urn, command. A
+    /// regression that drops the cap from the manifest would
+    /// remove it from the cartridge's cap-graph contribution
+    /// entirely, and the planner would never reach a `.txt`
+    /// target via this cartridge.
+    #[test]
+    fn test_save_as_txt_cap_present_in_manifest() {
+        let manifest = build_manifest();
+        let group = manifest
+            .cap_groups
+            .iter()
+            .find(|g| g.name == "data-formats")
+            .expect("data-formats cap group must exist");
+        let cap = group
+            .caps
+            .iter()
+            .find(|c| {
+                let urn = c.urn.to_string();
+                urn.contains("save-as-txt")
+            })
+            .expect("save-as-txt cap must be present in data-formats group");
+        assert_eq!(cap.urn.in_spec(), "media:textable");
+        assert_eq!(cap.urn.out_spec(), "media:textable;txt");
+        assert_eq!(cap.command, "save_as_txt");
     }
 }
