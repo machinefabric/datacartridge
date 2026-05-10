@@ -127,45 +127,46 @@ fn build_manifest() -> CapManifest {
         all_caps.push(cap);
     }
 
-    // Save-as-txt cap: media:textable → media:textable;txt.
-    // Pure relabel — input bytes are forwarded to the output
-    // stream unchanged; only the URN-side type narrows from the
-    // abstract textable wildcard (no extension) to the concrete
-    // .txt file format (which the registry binds to the `txt`
-    // extension). Lets the Finder transmute dialog offer a
-    // "Save as Plain Text" target wherever any chain reaches a
-    // textable value.
+    // Save-as-txt cap: media:plain-text;textable;txt → same.
+    // Pure relabel-and-persist. Input must already carry the
+    // `plain-text` marker — that is the explicit opt-in that
+    // keeps every textable-producing cap (PDF page extractor,
+    // JSON-as-text adapter, prompt loader) from becoming a
+    // recommended feeder for `.txt` persistence. Producers of
+    // genuinely-finalised prose (LLM text-generation, OCR's
+    // extracted-text, vision descriptions, transcriptions) carry
+    // the marker; coercion-class textable values do not.
     //
     // Mirrors fabric/caps/save-as-txt.toml.
     {
         let urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:textable")
-            .out_spec("media:textable;txt")
+            .in_spec("media:plain-text;textable;txt")
+            .out_spec("media:plain-text;textable;txt")
             .build()
             .expect("save-as-txt URN");
         let mut cap = Cap::with_description(
             urn,
             "Save as Plain Text".to_string(),
             "save_as_txt".to_string(),
-            "Persist any textable value as a plain .txt file. \
-             Byte-for-byte passthrough; only the URN label changes."
+            "Persist a finalised plain-text value as a .txt file. \
+             Byte-for-byte passthrough."
                 .to_string(),
         );
         cap.add_arg(CapArg::with_description(
-            "media:textable",
+            "media:plain-text;textable;txt",
             true,
             vec![
                 ArgSource::Stdin {
-                    stdin: "media:textable".to_string(),
+                    stdin: "media:plain-text;textable;txt".to_string(),
                 },
                 ArgSource::Position { position: 0 },
             ],
-            "The textable value to persist as .txt".to_string(),
+            "The finalised plain-text value to persist as .txt".to_string(),
         ));
         cap.set_output(capdag::CapOutput::new(
-            "media:textable;txt",
-            "The same bytes, labelled as a .txt file",
+            "media:plain-text;textable;txt",
+            "The same bytes, persisted as a .txt file",
         ));
         all_caps.push(cap);
     }
@@ -459,17 +460,18 @@ impl Op<()> for SaveAsTxtOp {
             )
         })?;
 
-        // The cap-arg URN (`media:textable`) promises UTF-8
-        // representability. Validate here so a contract violation
-        // upstream surfaces immediately rather than producing a
-        // garbled `.txt` file the user has to debug later. Failing
-        // hard is the no-fallback policy.
+        // The cap-arg URN (`media:plain-text;textable;txt`)
+        // promises UTF-8 representability via the `textable` dim.
+        // Validate here so a contract violation upstream surfaces
+        // immediately rather than producing a garbled `.txt` file
+        // the user has to debug later. Failing hard is the
+        // no-fallback policy.
         let text = String::from_utf8(bytes).map_err(|e| {
             OpError::ExecutionFailed(format!(
                 "save-as-txt: input bytes are not valid UTF-8 — \
-                 the cap-arg URN `media:textable` requires UTF-8 \
-                 representability. Upstream cap or the producer is \
-                 violating the textable contract: {}",
+                 the cap-arg URN `media:plain-text;textable;txt` \
+                 requires UTF-8 representability. Upstream cap or \
+                 the producer is violating the textable contract: {}",
                 e
             ))
         })?;
@@ -993,15 +995,15 @@ async fn main() -> Result<()> {
         });
     }
 
-    // Save-as-txt cap: media:textable → media:textable;txt.
+    // Save-as-txt cap: media:plain-text;textable;txt → same.
     // The cap declaration in `build_manifest()` builds the URN
     // with the same markers; mirror it here so the runtime can
     // dispatch the cap to its op.
     {
         let urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:textable")
-            .out_spec("media:textable;txt")
+            .in_spec("media:plain-text;textable;txt")
+            .out_spec("media:plain-text;textable;txt")
             .build()
             .expect("save-as-txt URN");
         runtime.register_op(&urn.to_string(), || Box::new(SaveAsTxtOp));
@@ -1920,15 +1922,15 @@ mod tests {
     fn test_save_as_txt_manifest_and_runtime_urn_agree() {
         let manifest_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:textable")
-            .out_spec("media:textable;txt")
+            .in_spec("media:plain-text;textable;txt")
+            .out_spec("media:plain-text;textable;txt")
             .build()
             .expect("save-as-txt manifest URN")
             .to_string();
         let runtime_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:textable")
-            .out_spec("media:textable;txt")
+            .in_spec("media:plain-text;textable;txt")
+            .out_spec("media:plain-text;textable;txt")
             .build()
             .expect("save-as-txt runtime URN")
             .to_string();
@@ -1944,7 +1946,7 @@ mod tests {
         // exactly this string.
         assert_eq!(
             manifest_urn,
-            r#"cap:in="media:textable";out="media:textable;txt";save-as-txt"#,
+            r#"cap:in="media:plain-text;textable;txt";out="media:plain-text;textable;txt";save-as-txt"#,
             "canonical save-as-txt URN drifted — catalog lookups will 404"
         );
     }
@@ -1972,8 +1974,8 @@ mod tests {
                 urn.contains("save-as-txt")
             })
             .expect("save-as-txt cap must be present in data-formats group");
-        assert_eq!(cap.urn.in_spec(), "media:textable");
-        assert_eq!(cap.urn.out_spec(), "media:textable;txt");
+        assert_eq!(cap.urn.in_spec(), "media:plain-text;textable;txt");
+        assert_eq!(cap.urn.out_spec(), "media:plain-text;textable;txt");
         assert_eq!(cap.command, "save_as_txt");
     }
 }
