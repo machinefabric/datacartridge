@@ -243,7 +243,7 @@ fn build_manifest() -> CapManifest {
         // Registry URL is baked at compile time via
         // `MFR_REGISTRY_URL`. Unset (plain `cargo build`) ⇒ dev
         // build, manifest emits null.
-        option_env!("MFR_REGISTRY_URL").map(|s| s.to_string()),
+        capdag::registry_url_from_build_env(option_env!("MFR_REGISTRY_URL")).map(|s| s.to_string()),
         "Data format conversion, type coercion, and data format content inspection".to_string(),
         vec![data_group],
     )
