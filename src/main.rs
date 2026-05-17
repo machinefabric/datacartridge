@@ -182,6 +182,7 @@ fn build_manifest() -> CapManifest {
             .marker("decimate-sequence")
             .in_spec("media:")
             .out_spec("media:")
+            .effect(capdag::CapEffect::None)
             .build()
             .expect("decimate-sequence URN");
         let mut cap = Cap::with_description(
@@ -568,7 +569,7 @@ fn decimate_indices(count: usize, keep_every: usize) -> Vec<usize> {
     (0..count).step_by(n).collect()
 }
 
-/// Op behind `cap:decimate-sequence;in=media:;out=media:`.
+/// Op behind `cap:decimate-sequence;effect=none`.
 ///
 /// Keeps every N-th item from the input sequence (positions 0, N,
 /// 2N, ... of the original sequence are emitted). With `--keep-every`
@@ -1107,6 +1108,7 @@ async fn main() -> Result<()> {
             .marker("decimate-sequence")
             .in_spec("media:")
             .out_spec("media:")
+            .effect(capdag::CapEffect::None)
             .build()
             .expect("decimate-sequence URN");
         runtime.register_op(&urn.to_string(), || Box::new(DecimateSequenceOp));
