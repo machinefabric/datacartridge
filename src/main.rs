@@ -71,7 +71,7 @@ fn build_manifest() -> CapManifest {
     }
 
     // Collect JSON objects caps
-    for out_media in &["media:json;list;record;textable", "media:csv;list;record;textable", "media:list;record;textable;yaml"] {
+    for out_media in &["media:json;list;record;textable", "media:ext=csv;list;record;textable", "media:list;record;textable;yaml"] {
         let urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
             .in_spec("media:json;record;textable")
@@ -90,16 +90,16 @@ fn build_manifest() -> CapManifest {
     }
 
     // Collect CSV records caps
-    for out_media in &["media:csv;list;record;textable", "media:json;list;record;textable", "media:list;record;textable;yaml"] {
+    for out_media in &["media:ext=csv;list;record;textable", "media:json;list;record;textable", "media:list;record;textable;yaml"] {
         let urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:csv;list;record;textable")
+            .in_spec("media:ext=csv;list;record;textable")
             .out_spec(out_media)
             .build().expect("collect_records csv URN");
         let mut cap = Cap::with_description(urn, format!("Merge CSV into {}", out_media), "collect_records".to_string(), format!("Merge CSV files into {}", out_media));
         let mut arg = CapArg::with_description(
-            "media:csv;list;record;textable", true,
-            vec![ArgSource::Stdin { stdin: "media:csv;list;record;textable".to_string() }, ArgSource::Position { position: 0 }],
+            "media:ext=csv;list;record;textable", true,
+            vec![ArgSource::Stdin { stdin: "media:ext=csv;list;record;textable".to_string() }, ArgSource::Position { position: 0 }],
             "CSV files to merge",
         );
         arg.is_sequence = true;
@@ -109,7 +109,7 @@ fn build_manifest() -> CapManifest {
     }
 
     // Collect YAML mappings caps
-    for out_media in &["media:list;record;textable;yaml", "media:json;list;record;textable", "media:csv;list;record;textable"] {
+    for out_media in &["media:list;record;textable;yaml", "media:json;list;record;textable", "media:ext=csv;list;record;textable"] {
         let urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
             .in_spec("media:record;textable;yaml")
@@ -141,8 +141,8 @@ fn build_manifest() -> CapManifest {
     {
         let urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:plain-text;textable;txt")
-            .out_spec("media:plain-text;textable;txt")
+            .in_spec("media:ext=txt;plain-text;textable")
+            .out_spec("media:ext=txt;plain-text;textable")
             .build()
             .expect("save-as-txt URN");
         let mut cap = Cap::with_description(
@@ -154,18 +154,18 @@ fn build_manifest() -> CapManifest {
                 .to_string(),
         );
         cap.add_arg(CapArg::with_description(
-            "media:plain-text;textable;txt",
+            "media:ext=txt;plain-text;textable",
             true,
             vec![
                 ArgSource::Stdin {
-                    stdin: "media:plain-text;textable;txt".to_string(),
+                    stdin: "media:ext=txt;plain-text;textable".to_string(),
                 },
                 ArgSource::Position { position: 0 },
             ],
             "The finalised plain-text value to persist as .txt".to_string(),
         ));
         cap.set_output(capdag::CapOutput::new(
-            "media:plain-text;textable;txt",
+            "media:ext=txt;plain-text;textable",
             "The same bytes, persisted as a .txt file",
         ));
         all_caps.push(cap);
@@ -228,12 +228,12 @@ fn build_manifest() -> CapManifest {
         adapter_urns: vec![
             "media:json".to_string(),
             "media:ndjson".to_string(),
-            "media:csv".to_string(),
-            "media:tsv".to_string(),
-            "media:psv".to_string(),
+            "media:ext=csv".to_string(),
+            "media:ext=tsv".to_string(),
+            "media:ext=psv".to_string(),
             "media:yaml".to_string(),
-            "media:xml".to_string(),
-            "media:toml".to_string(),
+            "media:ext=xml".to_string(),
+            "media:ext=toml".to_string(),
         ],
     };
 
@@ -1003,8 +1003,8 @@ async fn main() -> Result<()> {
     {
         let urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:plain-text;textable;txt")
-            .out_spec("media:plain-text;textable;txt")
+            .in_spec("media:ext=txt;plain-text;textable")
+            .out_spec("media:ext=txt;plain-text;textable")
             .build()
             .expect("save-as-txt URN");
         runtime.register_op(&urn.to_string(), || Box::new(SaveAsTxtOp));
@@ -1024,10 +1024,10 @@ async fn main() -> Result<()> {
         let csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
             .in_spec("media:json;record;textable")
-            .out_spec("media:csv;list;record;textable")
+            .out_spec("media:ext=csv;list;record;textable")
             .build().expect("collect_json_objects → csv URN");
         runtime.register_op(&csv_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:csv;list;record;textable" })
+            Box::new(CollectJsonObjectsOp { out_media: "media:ext=csv;list;record;textable" })
         });
 
         let yaml_urn = capdag::CapUrnBuilder::new()
@@ -1044,29 +1044,29 @@ async fn main() -> Result<()> {
     {
         let csv_csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:csv;list;record;textable")
-            .out_spec("media:csv;list;record;textable")
+            .in_spec("media:ext=csv;list;record;textable")
+            .out_spec("media:ext=csv;list;record;textable")
             .build().expect("collect_records csv→csv URN");
         runtime.register_op(&csv_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:csv;list;record;textable", out_media: "media:csv;list;record;textable" })
+            Box::new(CollectRecordsOp { in_media: "media:ext=csv;list;record;textable", out_media: "media:ext=csv;list;record;textable" })
         });
 
         let csv_json_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:csv;list;record;textable")
+            .in_spec("media:ext=csv;list;record;textable")
             .out_spec("media:json;list;record;textable")
             .build().expect("collect_records csv→json URN");
         runtime.register_op(&csv_json_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:csv;list;record;textable", out_media: "media:json;list;record;textable" })
+            Box::new(CollectRecordsOp { in_media: "media:ext=csv;list;record;textable", out_media: "media:json;list;record;textable" })
         });
 
         let csv_yaml_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:csv;list;record;textable")
+            .in_spec("media:ext=csv;list;record;textable")
             .out_spec("media:list;record;textable;yaml")
             .build().expect("collect_records csv→yaml URN");
         runtime.register_op(&csv_yaml_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:csv;list;record;textable", out_media: "media:list;record;textable;yaml" })
+            Box::new(CollectRecordsOp { in_media: "media:ext=csv;list;record;textable", out_media: "media:list;record;textable;yaml" })
         });
     }
 
@@ -1093,10 +1093,10 @@ async fn main() -> Result<()> {
         let yaml_csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
             .in_spec("media:record;textable;yaml")
-            .out_spec("media:csv;list;record;textable")
+            .out_spec("media:ext=csv;list;record;textable")
             .build().expect("collect_records yaml→csv URN");
         runtime.register_op(&yaml_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:record;textable;yaml", out_media: "media:csv;list;record;textable" })
+            Box::new(CollectRecordsOp { in_media: "media:record;textable;yaml", out_media: "media:ext=csv;list;record;textable" })
         });
     }
 
@@ -1924,15 +1924,15 @@ mod tests {
     fn test_save_as_txt_manifest_and_runtime_urn_agree() {
         let manifest_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:plain-text;textable;txt")
-            .out_spec("media:plain-text;textable;txt")
+            .in_spec("media:ext=txt;plain-text;textable")
+            .out_spec("media:ext=txt;plain-text;textable")
             .build()
             .expect("save-as-txt manifest URN")
             .to_string();
         let runtime_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:plain-text;textable;txt")
-            .out_spec("media:plain-text;textable;txt")
+            .in_spec("media:ext=txt;plain-text;textable")
+            .out_spec("media:ext=txt;plain-text;textable")
             .build()
             .expect("save-as-txt runtime URN")
             .to_string();
@@ -1948,7 +1948,7 @@ mod tests {
         // exactly this string.
         assert_eq!(
             manifest_urn,
-            r#"cap:in="media:plain-text;textable;txt";out="media:plain-text;textable;txt";save-as-txt"#,
+            r#"cap:in="media:ext=txt;plain-text;textable";out="media:ext=txt;plain-text;textable";save-as-txt"#,
             "canonical save-as-txt URN drifted — catalog lookups will 404"
         );
     }
@@ -1976,8 +1976,8 @@ mod tests {
                 urn.contains("save-as-txt")
             })
             .expect("save-as-txt cap must be present in data-formats group");
-        assert_eq!(cap.urn.in_spec(), "media:plain-text;textable;txt");
-        assert_eq!(cap.urn.out_spec(), "media:plain-text;textable;txt");
+        assert_eq!(cap.urn.in_spec(), "media:ext=txt;plain-text;textable");
+        assert_eq!(cap.urn.out_spec(), "media:ext=txt;plain-text;textable");
         assert_eq!(cap.command, "save_as_txt");
     }
 }

@@ -91,19 +91,19 @@ fn detect_csv(_text: &str) -> Vec<String> {
     // single canonical URN is `media:csv;list;record;textable`. A
     // single-column CSV is still a list of one-field records, not a
     // different shape.
-    vec!["media:csv;list;record;textable".to_string()]
+    vec!["media:ext=csv;list;record;textable".to_string()]
 }
 
 fn detect_tsv(_text: &str) -> Vec<String> {
     // TSV mirrors CSV: tab-separated values, list of records, single
     // canonical URN. See `fabric/media/_tsv-data.toml`.
-    vec!["media:tsv;list;record;textable".to_string()]
+    vec!["media:ext=tsv;list;record;textable".to_string()]
 }
 
 fn detect_psv(_text: &str) -> Vec<String> {
     // PSV mirrors CSV: pipe-separated values. See
     // `fabric/media/_psv-data.toml`.
-    vec!["media:psv;list;record;textable".to_string()]
+    vec!["media:ext=psv;list;record;textable".to_string()]
 }
 
 fn detect_yaml(text: &str) -> Vec<String> {
@@ -219,8 +219,8 @@ fn detect_xml(text: &str) -> Vec<String> {
 
             if child_count > 2 {
                 return vec![
-                    "media:xml;list;record;textable".to_string(),
-                    "media:xml;textable".to_string(),
+                    "media:ext=xml;list;record;textable".to_string(),
+                    "media:ext=xml;textable".to_string(),
                 ];
             }
         }
@@ -228,11 +228,11 @@ fn detect_xml(text: &str) -> Vec<String> {
 
     if trimmed.contains('=') || (trimmed.matches('<').count() > 2) {
         vec![
-            "media:xml;record;textable".to_string(),
-            "media:xml;textable".to_string(),
+            "media:ext=xml;record;textable".to_string(),
+            "media:ext=xml;textable".to_string(),
         ]
     } else {
-        vec!["media:xml;textable".to_string()]
+        vec!["media:ext=xml;textable".to_string()]
     }
 }
 
@@ -243,7 +243,7 @@ fn detect_toml(_text: &str) -> Vec<String> {
     // but the existing anchor `_data-format-bare.toml` doesn't, so we
     // emit what's published. If a stricter narrowing is wanted later,
     // extend the TOML anchor and update this single emission point.
-    vec!["media:textable;toml".to_string()]
+    vec!["media:ext=toml;textable".to_string()]
 }
 
 #[cfg(test)]
@@ -308,7 +308,7 @@ mod tests {
     #[test]
     fn test_csv_is_single_canonical_urn() {
         let urns = detect_data_media_urns(b"a,b,c\n1,2,3", "csv");
-        assert_eq!(urns, vec!["media:csv;list;record;textable".to_string()]);
+        assert_eq!(urns, vec!["media:ext=csv;list;record;textable".to_string()]);
         assert_eq!(urns.len(), 1, "CSV emits a single URN, not duplicates");
     }
 
@@ -322,7 +322,7 @@ mod tests {
         let single = detect_data_media_urns(b"a\n1\n2", "csv");
         let multi = detect_data_media_urns(b"a,b\n1,2\n3,4", "csv");
         assert_eq!(single, multi);
-        assert_eq!(single, vec!["media:csv;list;record;textable".to_string()]);
+        assert_eq!(single, vec!["media:ext=csv;list;record;textable".to_string()]);
     }
 
     /// TSV emits the canonical catalog URN. The previous adapter
@@ -332,14 +332,14 @@ mod tests {
     #[test]
     fn test_tsv_emits_canonical_catalog_urn() {
         let urns = detect_data_media_urns(b"a\tb\n1\t2", "tsv");
-        assert_eq!(urns, vec!["media:tsv;list;record;textable".to_string()]);
+        assert_eq!(urns, vec!["media:ext=tsv;list;record;textable".to_string()]);
     }
 
     /// PSV emits the canonical catalog URN.
     #[test]
     fn test_psv_emits_canonical_catalog_urn() {
         let urns = detect_data_media_urns(b"a|b\n1|2", "psv");
-        assert_eq!(urns, vec!["media:psv;list;record;textable".to_string()]);
+        assert_eq!(urns, vec!["media:ext=psv;list;record;textable".to_string()]);
     }
 
     /// YAML mapping → record narrowing without list, then bare.
@@ -378,7 +378,7 @@ mod tests {
     #[test]
     fn test_toml_is_single_canonical_urn() {
         let urns = detect_data_media_urns(b"key = \"value\"", "toml");
-        assert_eq!(urns, vec!["media:textable;toml".to_string()]);
+        assert_eq!(urns, vec!["media:ext=toml;textable".to_string()]);
         assert_eq!(urns.len(), 1, "TOML emits a single URN, not duplicates");
     }
 
@@ -455,20 +455,20 @@ mod tests {
             "media:ndjson;list;textable",
             "media:ndjson;list;record;textable",
             // CSV/TSV/PSV — single canonical each
-            "media:csv;list;record;textable",
-            "media:tsv;list;record;textable",
-            "media:psv;list;record;textable",
+            "media:ext=csv;list;record;textable",
+            "media:ext=tsv;list;record;textable",
+            "media:ext=psv;list;record;textable",
             // YAML variants
             "media:textable;yaml",
             "media:list;textable;yaml",
             "media:record;textable;yaml",
             "media:list;record;textable;yaml",
             // XML variants
-            "media:xml;textable",
-            "media:xml;record;textable",
-            "media:xml;list;record;textable",
+            "media:ext=xml;textable",
+            "media:ext=xml;record;textable",
+            "media:ext=xml;list;record;textable",
             // TOML
-            "media:textable;toml",
+            "media:ext=toml;textable",
         ]
         .iter()
         .map(|s| s.to_string())
