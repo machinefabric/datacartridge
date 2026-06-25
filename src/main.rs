@@ -1582,6 +1582,40 @@ fn coerce_to_object(s: &str, source_type: &str) -> Result<Vec<u8>> {
 mod tests {
     use super::*;
 
+    // TEST1859: every cap URN this cartridge advertises must resolve in the
+    // pinned fabric catalog. A drifted/bare-marker URN absent from the catalog
+    // is silently dropped by LiveCapFab at runtime; this guard turns that into a
+    // hard failure naming the exact URN. `get_cap` consults the same canonical
+    // manifest map LiveCapFab resolves against. Network-mediated against the
+    // env-configured registry (set by `dx test`), pinned at FABRIC_MANIFEST_VERSION.
+    // The identity cap is engine-provided, not a catalog entry, so it is excluded.
+    #[tokio::test]
+    async fn test1859_advertised_caps_resolve_in_catalog() {
+        let registry = capdag::FabricRegistry::new().await.expect(
+            "datacartridge catalog guard: FabricRegistry::new() must succeed (set CDG_FABRIC_REGISTRY_URL; run via dx test)",
+        );
+        let manifest = build_manifest();
+        let identity = capdag::identity_cap().urn_string();
+
+        let mut unresolved: Vec<String> = Vec::new();
+        for cap in manifest.all_caps() {
+            let urn = cap.urn_string();
+            if urn == identity {
+                continue;
+            }
+            if registry.get_cap(&urn).await.is_err() {
+                unresolved.push(urn);
+            }
+        }
+        assert!(
+            unresolved.is_empty(),
+            "datacartridge advertises cap URN(s) not present in fabric catalog v{} \
+             (LiveCapFab would drop these at runtime): {:?}",
+            capdag::FABRIC_MANIFEST_VERSION,
+            unresolved
+        );
+    }
+
     #[test]
     fn test_json_to_yaml_object() {
         let json = br#"{"name": "Alice", "age": 30}"#;
