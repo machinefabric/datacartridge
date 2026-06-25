@@ -255,7 +255,7 @@ mod tests {
     /// be present in the catalog for the input-resolver's
     /// conformance walk to succeed.
     #[test]
-    fn test_json_object_emits_record_then_bare() {
+    fn test0001_json_object_emits_record_then_bare() {
         let urns = detect_data_media_urns(br#"{"key": "value"}"#, "json");
         assert_eq!(
             urns,
@@ -270,7 +270,7 @@ mod tests {
     /// list, then bare. Three tiers of specificity, all in the
     /// catalog.
     #[test]
-    fn test_json_array_of_objects_emits_full_tier() {
+    fn test0002_json_array_of_objects_emits_full_tier() {
         let urns = detect_data_media_urns(br#"[{"a": 1}]"#, "json");
         assert_eq!(
             urns,
@@ -285,7 +285,7 @@ mod tests {
     /// JSON array of scalars → list narrowing without record, then
     /// bare. Only two tiers because record doesn't apply.
     #[test]
-    fn test_json_array_of_scalars_has_no_record_narrowing() {
+    fn test0003_json_array_of_scalars_has_no_record_narrowing() {
         let urns = detect_data_media_urns(b"[1, 2, 3]", "json");
         assert_eq!(
             urns,
@@ -306,7 +306,7 @@ mod tests {
     /// returned that URN duplicated (a copy-paste bug producing a
     /// 2-element list of identical strings).
     #[test]
-    fn test_csv_is_single_canonical_urn() {
+    fn test0004_csv_is_single_canonical_urn() {
         let urns = detect_data_media_urns(b"a,b,c\n1,2,3", "csv");
         assert_eq!(urns, vec!["media:ext=csv;list;record;textable".to_string()]);
         assert_eq!(urns.len(), 1, "CSV emits a single URN, not duplicates");
@@ -318,7 +318,7 @@ mod tests {
     /// — that distinction had no semantic meaning at the URN level
     /// since the catalog only publishes one CSV URN.
     #[test]
-    fn test_csv_single_column_same_urn_as_multi() {
+    fn test0005_csv_single_column_same_urn_as_multi() {
         let single = detect_data_media_urns(b"a\n1\n2", "csv");
         let multi = detect_data_media_urns(b"a,b\n1,2\n3,4", "csv");
         assert_eq!(single, multi);
@@ -330,14 +330,14 @@ mod tests {
     /// a URN that did not exist in the published catalog because
     /// no `_tsv-data.toml` anchor was declared.
     #[test]
-    fn test_tsv_emits_canonical_catalog_urn() {
+    fn test0006_tsv_emits_canonical_catalog_urn() {
         let urns = detect_data_media_urns(b"a\tb\n1\t2", "tsv");
         assert_eq!(urns, vec!["media:ext=tsv;list;record;textable".to_string()]);
     }
 
     /// PSV emits the canonical catalog URN.
     #[test]
-    fn test_psv_emits_canonical_catalog_urn() {
+    fn test0007_psv_emits_canonical_catalog_urn() {
         let urns = detect_data_media_urns(b"a|b\n1|2", "psv");
         assert_eq!(urns, vec!["media:ext=psv;list;record;textable".to_string()]);
     }
@@ -346,7 +346,7 @@ mod tests {
     /// The `looks_like_yaml_mapping` heuristic detects `key:
     /// value` lines.
     #[test]
-    fn test_yaml_mapping_emits_record_then_bare() {
+    fn test0008_yaml_mapping_emits_record_then_bare() {
         let urns = detect_data_media_urns(b"key: value\nother: data", "yaml");
         assert_eq!(
             urns,
@@ -359,7 +359,7 @@ mod tests {
 
     /// YAML sequence of mappings → list+record, list, bare.
     #[test]
-    fn test_yaml_sequence_of_mappings_full_tier() {
+    fn test0009_yaml_sequence_of_mappings_full_tier() {
         let urns = detect_data_media_urns(b"- name: a\n  v: 1\n- name: b\n  v: 2", "yaml");
         assert_eq!(
             urns,
@@ -376,7 +376,7 @@ mod tests {
     /// not the duplicated form the previous adapter returned (also
     /// a copy-paste bug).
     #[test]
-    fn test_toml_is_single_canonical_urn() {
+    fn test0010_toml_is_single_canonical_urn() {
         let urns = detect_data_media_urns(b"key = \"value\"", "toml");
         assert_eq!(urns, vec!["media:ext=toml;textable".to_string()]);
         assert_eq!(urns.len(), 1, "TOML emits a single URN, not duplicates");
@@ -386,7 +386,7 @@ mod tests {
     /// empty vec. Text data formats require UTF-8; emitting any
     /// URN for binary content would lie about the bytes.
     #[test]
-    fn test_binary_returns_empty() {
+    fn test0011_binary_returns_empty() {
         let urns = detect_data_media_urns(&[0xFF, 0xFE, 0x00], "json");
         assert!(urns.is_empty());
     }
@@ -398,7 +398,7 @@ mod tests {
     /// txtcartridge's adapter and would also be wrong (no JSON
     /// detection has happened).
     #[test]
-    fn test_unknown_extension_returns_empty() {
+    fn test0012_unknown_extension_returns_empty() {
         let urns = detect_data_media_urns(b"some text", "xyz");
         assert!(urns.is_empty());
     }
@@ -414,7 +414,7 @@ mod tests {
     /// time catches any of these strings drifting away from
     /// catalog truth.
     #[test]
-    fn test_every_emitted_urn_is_in_catalog_form() {
+    fn test0013_every_emitted_urn_is_in_catalog_form() {
         // Trigger every detect_* branch with carefully-chosen
         // inputs and union the URN strings. Any string emitted
         // outside this allow-list must be added to the dim

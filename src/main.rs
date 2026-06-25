@@ -1616,8 +1616,9 @@ mod tests {
         );
     }
 
+    // TEST0014: Json to yaml object
     #[test]
-    fn test_json_to_yaml_object() {
+    fn test0014_json_to_yaml_object() {
         let json = br#"{"name": "Alice", "age": 30}"#;
         let yaml = json_to_yaml(json).unwrap();
         let yaml_str = std::str::from_utf8(&yaml).unwrap();
@@ -1626,8 +1627,9 @@ mod tests {
         assert!(yaml_str.contains("age:"));
     }
 
+    // TEST0015: Yaml to json object
     #[test]
-    fn test_yaml_to_json_object() {
+    fn test0015_yaml_to_json_object() {
         let yaml = b"name: Alice\nage: 30";
         let json = yaml_to_json(yaml).unwrap();
         let val: serde_json::Value = serde_json::from_slice(&json).unwrap();
@@ -1635,8 +1637,9 @@ mod tests {
         assert_eq!(val["age"], 30);
     }
 
+    // TEST0016: Json to yaml array
     #[test]
-    fn test_json_to_yaml_array() {
+    fn test0016_json_to_yaml_array() {
         let json = br#"[1, 2, 3]"#;
         let yaml = json_to_yaml(json).unwrap();
         let yaml_str = std::str::from_utf8(&yaml).unwrap();
@@ -1645,24 +1648,27 @@ mod tests {
         assert!(yaml_str.contains("- 3"));
     }
 
+    // TEST0017: Yaml to json list
     #[test]
-    fn test_yaml_to_json_list() {
+    fn test0017_yaml_to_json_list() {
         let yaml = b"- 1\n- 2\n- 3";
         let json = yaml_to_json(yaml).unwrap();
         let val: serde_json::Value = serde_json::from_slice(&json).unwrap();
         assert_eq!(val, serde_json::json!([1, 2, 3]));
     }
 
+    // TEST0018: Json to yaml scalar
     #[test]
-    fn test_json_to_yaml_scalar() {
+    fn test0018_json_to_yaml_scalar() {
         let json = br#""hello world""#;
         let yaml = json_to_yaml(json).unwrap();
         let yaml_str = std::str::from_utf8(&yaml).unwrap();
         assert!(yaml_str.contains("hello world"));
     }
 
+    // TEST0019: Json records to csv
     #[test]
-    fn test_json_records_to_csv() {
+    fn test0019_json_records_to_csv() {
         let json = br#"[{"a": 1, "b": "x"}, {"a": 2, "b": "y"}]"#;
         let csv_bytes = json_records_to_csv(json).unwrap();
         let csv_str = std::str::from_utf8(&csv_bytes).unwrap();
@@ -1673,8 +1679,9 @@ mod tests {
         assert!(csv_str.contains('x'));
     }
 
+    // TEST0020: Csv to json records
     #[test]
-    fn test_csv_to_json_records() {
+    fn test0020_csv_to_json_records() {
         let csv = b"name,age\nAlice,30\nBob,25";
         let json = csv_to_json_records(csv).unwrap();
         let records: Vec<serde_json::Value> = serde_json::from_slice(&json).unwrap();
@@ -1685,8 +1692,9 @@ mod tests {
         assert_eq!(records[1]["age"], 25);
     }
 
+    // TEST0021: Csv to yaml records
     #[test]
-    fn test_csv_to_yaml_records() {
+    fn test0021_csv_to_yaml_records() {
         let csv = b"name,age\nAlice,30";
         let yaml = csv_to_yaml_records(csv).unwrap();
         let yaml_str = std::str::from_utf8(&yaml).unwrap();
@@ -1694,8 +1702,9 @@ mod tests {
         assert!(yaml_str.contains("Alice"));
     }
 
+    // TEST0022: Yaml records to csv
     #[test]
-    fn test_yaml_records_to_csv() {
+    fn test0022_yaml_records_to_csv() {
         let yaml = b"- name: Alice\n  age: 30\n- name: Bob\n  age: 25";
         let csv_bytes = yaml_records_to_csv(yaml).unwrap();
         let csv_str = std::str::from_utf8(&csv_bytes).unwrap();
@@ -1703,8 +1712,9 @@ mod tests {
         assert!(csv_str.contains("Bob"));
     }
 
+    // TEST0023: Roundtrip json yaml json
     #[test]
-    fn test_roundtrip_json_yaml_json() {
+    fn test0023_roundtrip_json_yaml_json() {
         let original = br#"{"key": "value", "num": 42, "flag": true}"#;
         let yaml = json_to_yaml(original).unwrap();
         let json = yaml_to_json(&yaml).unwrap();
@@ -1713,8 +1723,9 @@ mod tests {
         assert_eq!(orig_val, round_val);
     }
 
+    // TEST0024: Roundtrip csv json csv
     #[test]
-    fn test_roundtrip_csv_json_csv() {
+    fn test0024_roundtrip_csv_json_csv() {
         let csv = b"name,age\nAlice,30\nBob,25";
         let json = csv_to_json_records(csv).unwrap();
         let csv2 = json_records_to_csv(&json).unwrap();
@@ -1724,29 +1735,33 @@ mod tests {
         assert_eq!(records1, records2);
     }
 
+    // TEST0025: Empty json array to csv
     #[test]
-    fn test_empty_json_array_to_csv() {
+    fn test0025_empty_json_array_to_csv() {
         let json = b"[]";
         let csv_bytes = json_records_to_csv(json).unwrap();
         assert!(csv_bytes.is_empty());
     }
 
+    // TEST0026: Malformed json fails
     #[test]
-    fn test_malformed_json_fails() {
+    fn test0026_malformed_json_fails() {
         let bad = b"not json at all";
         let result = json_to_yaml(bad);
         assert!(result.is_err());
     }
 
+    // TEST0027: Malformed yaml fails
     #[test]
-    fn test_malformed_yaml_fails() {
+    fn test0027_malformed_yaml_fails() {
         let bad = b"{{{{invalid yaml";
         let result = yaml_to_json(bad);
         assert!(result.is_err());
     }
 
+    // TEST0028: Csv type inference
     #[test]
-    fn test_csv_type_inference() {
+    fn test0028_csv_type_inference() {
         assert_eq!(infer_csv_value(""), serde_json::Value::Null);
         assert_eq!(infer_csv_value("42"), serde_json::json!(42));
         assert_eq!(infer_csv_value("3.14"), serde_json::json!(3.14));
@@ -1755,8 +1770,9 @@ mod tests {
         assert_eq!(infer_csv_value("hello"), serde_json::json!("hello"));
     }
 
+    // TEST0029: Csv with mixed columns
     #[test]
-    fn test_csv_with_mixed_columns() {
+    fn test0029_csv_with_mixed_columns() {
         let csv = b"id,name,active,score\n1,Alice,true,95.5\n2,Bob,false,";
         let json = csv_to_json_records(csv).unwrap();
         let records: Vec<serde_json::Value> = serde_json::from_slice(&json).unwrap();
@@ -1766,8 +1782,9 @@ mod tests {
         assert_eq!(records[1]["score"], serde_json::Value::Null);
     }
 
+    // TEST0030: Yaml tagged values stripped
     #[test]
-    fn test_yaml_tagged_values_stripped() {
+    fn test0030_yaml_tagged_values_stripped() {
         let yaml = b"!!str 42";
         let json = yaml_to_json(yaml).unwrap();
         let val: serde_json::Value = serde_json::from_slice(&json).unwrap();
@@ -1775,8 +1792,9 @@ mod tests {
         assert!(val.is_string() || val.is_number());
     }
 
+    // TEST0031: Json records superset headers
     #[test]
-    fn test_json_records_superset_headers() {
+    fn test0031_json_records_superset_headers() {
         // Records with different keys — all keys should appear as headers
         let json = br#"[{"a": 1}, {"b": 2}, {"a": 3, "c": 4}]"#;
         let csv_bytes = json_records_to_csv(json).unwrap();
@@ -1792,49 +1810,56 @@ mod tests {
     // =========================================================================
 
     #[test]
-    fn test_coerce_integer_to_string() {
+    fn test0032_coerce_integer_to_string() {
         let result = coerce(b"42", "integer", "string").unwrap();
         assert_eq!(std::str::from_utf8(&result).unwrap(), "\"42\"");
     }
 
+    // TEST0033: Coerce number to string
     #[test]
-    fn test_coerce_number_to_string() {
+    fn test0033_coerce_number_to_string() {
         let result = coerce(b"3.14", "number", "string").unwrap();
         assert_eq!(std::str::from_utf8(&result).unwrap(), "\"3.14\"");
     }
 
+    // TEST0034: Coerce boolean to string
     #[test]
-    fn test_coerce_boolean_to_string() {
+    fn test0034_coerce_boolean_to_string() {
         let result = coerce(b"true", "boolean", "string").unwrap();
         assert_eq!(std::str::from_utf8(&result).unwrap(), "\"true\"");
     }
 
+    // TEST0035: Coerce string to integer
     #[test]
-    fn test_coerce_string_to_integer() {
+    fn test0035_coerce_string_to_integer() {
         let result = coerce(b"\"42\"", "string", "integer").unwrap();
         assert_eq!(std::str::from_utf8(&result).unwrap(), "42");
     }
 
+    // TEST0036: Coerce number to integer
     #[test]
-    fn test_coerce_number_to_integer() {
+    fn test0036_coerce_number_to_integer() {
         let result = coerce(b"3.7", "number", "integer").unwrap();
         assert_eq!(std::str::from_utf8(&result).unwrap(), "4");
     }
 
+    // TEST0037: Coerce boolean to integer
     #[test]
-    fn test_coerce_boolean_to_integer() {
+    fn test0037_coerce_boolean_to_integer() {
         assert_eq!(coerce(b"true", "boolean", "integer").unwrap(), b"1");
         assert_eq!(coerce(b"false", "boolean", "integer").unwrap(), b"0");
     }
 
+    // TEST0038: Coerce string to number
     #[test]
-    fn test_coerce_string_to_number() {
+    fn test0038_coerce_string_to_number() {
         let result = coerce(b"\"3.14\"", "string", "number").unwrap();
         assert_eq!(std::str::from_utf8(&result).unwrap(), "3.14");
     }
 
+    // TEST0039: Coerce integer to number
     #[test]
-    fn test_coerce_integer_to_number() {
+    fn test0039_coerce_integer_to_number() {
         let result = coerce(b"42", "integer", "number").unwrap();
         // 42 as f64 can be "42" or "42.0" depending on serde
         let s = std::str::from_utf8(&result).unwrap();
@@ -1842,22 +1867,25 @@ mod tests {
         assert!((f - 42.0).abs() < f64::EPSILON);
     }
 
+    // TEST0040: Coerce boolean to number
     #[test]
-    fn test_coerce_boolean_to_number() {
+    fn test0040_coerce_boolean_to_number() {
         assert_eq!(coerce(b"true", "boolean", "number").unwrap(), b"1.0");
         assert_eq!(coerce(b"false", "boolean", "number").unwrap(), b"0.0");
     }
 
+    // TEST0041: Coerce string to object
     #[test]
-    fn test_coerce_string_to_object() {
+    fn test0041_coerce_string_to_object() {
         let result = coerce(b"\"hello\"", "string", "object").unwrap();
         let val: serde_json::Value = serde_json::from_slice(&result).unwrap();
         assert_eq!(val["value"], "hello");
         assert!(val["source_type"].as_str().unwrap().contains("textable"));
     }
 
+    // TEST0042: Coerce object passthrough
     #[test]
-    fn test_coerce_object_passthrough() {
+    fn test0042_coerce_object_passthrough() {
         let input = br#"{"key": "value"}"#;
         let result = coerce(input, "object", "string").unwrap();
         let s = std::str::from_utf8(&result).unwrap();
@@ -1865,20 +1893,23 @@ mod tests {
         assert!(s.starts_with('"'));
     }
 
+    // TEST0043: Coerce invalid to integer fails
     #[test]
-    fn test_coerce_invalid_to_integer_fails() {
+    fn test0043_coerce_invalid_to_integer_fails() {
         let result = coerce(b"\"not a number\"", "string", "integer");
         assert!(result.is_err());
     }
 
+    // TEST0044: Coerce invalid to number fails
     #[test]
-    fn test_coerce_invalid_to_number_fails() {
+    fn test0044_coerce_invalid_to_number_fails() {
         let result = coerce(b"\"not a number\"", "string", "number");
         assert!(result.is_err());
     }
 
+    // TEST0045: Coerce unsupported target fails
     #[test]
-    fn test_coerce_unsupported_target_fails() {
+    fn test0045_coerce_unsupported_target_fails() {
         let result = coerce(b"42", "integer", "array");
         assert!(result.is_err());
     }
@@ -1889,7 +1920,7 @@ mod tests {
     /// the cap promises when --keep-every is omitted (the Op
     /// substitutes `1` and calls the gate).
     #[test]
-    fn test_decimate_indices_stride_one_keeps_all() {
+    fn test0046_decimate_indices_stride_one_keeps_all() {
         for n in [0usize, 1, 5, 100] {
             let got = decimate_indices(n, 1);
             let want: Vec<usize> = (0..n).collect();
@@ -1902,7 +1933,7 @@ mod tests {
     /// instead of 0) shows up here as the first kept index being N
     /// instead of 0 — exactly the failure we want to surface.
     #[test]
-    fn test_decimate_indices_starts_at_zero() {
+    fn test0047_decimate_indices_starts_at_zero() {
         for stride in [2usize, 3, 7, 13] {
             let got = decimate_indices(100, stride);
             assert_eq!(got.first().copied(), Some(0),
@@ -1918,7 +1949,7 @@ mod tests {
     /// changes "every Nth from 0" to "every Nth except 0" or to
     /// "0-indexed but offset N-1" produces a clearly wrong list.
     #[test]
-    fn test_decimate_indices_every_third_of_ten() {
+    fn test0048_decimate_indices_every_third_of_ten() {
         let got = decimate_indices(10, 3);
         assert_eq!(got, vec![0, 3, 6, 9]);
     }
@@ -1927,7 +1958,7 @@ mod tests {
     /// first item (index 0) and nothing else. Catches the "what if
     /// stride > count" edge.
     #[test]
-    fn test_decimate_indices_stride_larger_than_count() {
+    fn test0049_decimate_indices_stride_larger_than_count() {
         assert_eq!(decimate_indices(5, 100), vec![0]);
     }
 
@@ -1936,7 +1967,7 @@ mod tests {
     /// but the gate itself must be honest about returning [] —
     /// otherwise we'd hide the empty case from the Op.
     #[test]
-    fn test_decimate_indices_empty_input() {
+    fn test0050_decimate_indices_empty_input() {
         let got = decimate_indices(0, 1);
         assert!(got.is_empty());
         let got = decimate_indices(0, 5);
@@ -1955,7 +1986,7 @@ mod tests {
     /// refactor that touches one site without the other surfaces
     /// here at compile/test time rather than at runtime.
     #[test]
-    fn test_save_as_txt_manifest_and_runtime_urn_agree() {
+    fn test0051_save_as_txt_manifest_and_runtime_urn_agree() {
         let manifest_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
             .in_spec("media:ext=txt;plain-text;textable")
@@ -1995,7 +2026,7 @@ mod tests {
     /// entirely, and the planner would never reach a `.txt`
     /// target via this cartridge.
     #[test]
-    fn test_save_as_txt_cap_present_in_manifest() {
+    fn test0052_save_as_txt_cap_present_in_manifest() {
         let manifest = build_manifest();
         let group = manifest
             .cap_groups
