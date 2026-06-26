@@ -130,12 +130,12 @@ fn build_manifest() -> CapManifest {
     // Save-as-txt cap: media:enc=utf-8;ext=txt;plain-text → same.
     // Pure relabel-and-persist. Input must already carry the
     // `plain-text` marker — that is the explicit opt-in that
-    // keeps every textable-producing cap (PDF page extractor,
+    // keeps every text-producing cap (PDF page extractor,
     // JSON-as-text adapter, prompt loader) from becoming a
     // recommended feeder for `.txt` persistence. Producers of
     // genuinely-finalised prose (LLM text-generation, OCR's
     // extracted-text, vision descriptions, transcriptions) carry
-    // the marker; coercion-class textable values do not.
+    // the marker; coercion-class text values do not.
     //
     // Mirrors fabric/caps/save-as-txt.toml.
     {
@@ -394,13 +394,13 @@ impl Op<()> for CoerceOp {
 }
 
 // =============================================================================
-// SAVE-AS-TXT OP — relabel any textable value as a `.txt` file
+// SAVE-AS-TXT OP — relabel any text value as a `.txt` file
 // =============================================================================
 //
 // The cap signature is `media:enc=utf-8 → media:enc=utf-8;ext=txt`. The
 // op is byte-passthrough: input bytes flow to the output stream
 // unchanged; only the URN-side type narrows from the abstract
-// textable wildcard to the concrete `.txt` file format.
+// enc=utf-8 wildcard to the concrete `.txt` file format.
 //
 // Why this op exists: the Finder transmute dialog filters target
 // candidates to URNs that own a file extension. `media:enc=utf-8`
@@ -408,7 +408,7 @@ impl Op<()> for CoerceOp {
 // from the target list (see `LiveCapFab::get_reachable_targets`).
 // `media:enc=utf-8;ext=txt` carries the `txt` extension and is offered
 // as a target. This op closes the gap so any chain that ends in a
-// textable value can be saved as `.txt` without an additional
+// text value can be saved as `.txt` without an additional
 // per-cap output declaration.
 //
 // `media:enc=utf-8` PROMISES UTF-8 representability; bytes that
@@ -462,7 +462,7 @@ impl Op<()> for SaveAsTxtOp {
         })?;
 
         // The cap-arg URN (`media:enc=utf-8;ext=txt;plain-text`)
-        // promises UTF-8 representability via the `textable` dim.
+        // promises UTF-8 representability via the `enc=` dim.
         // Validate here so a contract violation upstream surfaces
         // immediately rather than producing a garbled `.txt` file
         // the user has to debug later. Failing hard is the
@@ -1354,7 +1354,7 @@ fn infer_csv_value(field: &str) -> serde_json::Value {
 
 /// Decode a CBOR sequence of byte strings into a Vec of raw UTF-8 strings.
 /// Each item in the CBOR sequence is expected to be a Value::Bytes containing UTF-8 text.
-/// Decode a textable list: plain text with one value per line.
+/// Decode a text list: plain text with one value per line.
 /// Empty lines are skipped. Trailing newline is tolerated.
 fn decode_textable_list(data: &[u8]) -> Result<Vec<String>> {
     let text = std::str::from_utf8(data)
@@ -1365,7 +1365,7 @@ fn decode_textable_list(data: &[u8]) -> Result<Vec<String>> {
         .collect())
 }
 
-/// Encode a Vec of strings into a textable list: one value per line.
+/// Encode a Vec of strings into a text list: one value per line.
 fn encode_textable_list(items: &[String]) -> Vec<u8> {
     let mut result = String::new();
     for item in items {
@@ -1386,7 +1386,7 @@ fn text_list_to_json(data: &[u8]) -> Result<Vec<u8>> {
         .map_err(|e| anyhow::anyhow!("Failed to serialize to JSON: {}", e))
 }
 
-/// JSON array -> textable list (one value per line).
+/// JSON array -> text list (one value per line).
 /// Each JSON value is serialized to its string representation.
 fn json_to_text_list(data: &[u8]) -> Result<Vec<u8>> {
     let values: Vec<serde_json::Value> = serde_json::from_slice(data)
@@ -1412,7 +1412,7 @@ fn text_list_to_yaml(data: &[u8]) -> Result<Vec<u8>> {
     Ok(yaml_str.into_bytes())
 }
 
-/// YAML sequence -> textable list (one value per line).
+/// YAML sequence -> text list (one value per line).
 /// Each YAML value is serialized to its string representation.
 fn yaml_to_text_list(data: &[u8]) -> Result<Vec<u8>> {
     let values: Vec<serde_yaml::Value> = serde_yaml::from_slice(data)
@@ -1441,7 +1441,7 @@ fn text_list_to_csv(data: &[u8]) -> Result<Vec<u8>> {
         .map_err(|e| anyhow::anyhow!("Failed to finalize CSV: {}", e))
 }
 
-/// CSV -> textable list (one value per line).
+/// CSV -> text list (one value per line).
 /// Reads the first column of each row (ignoring headers).
 fn csv_to_text_list(data: &[u8]) -> Result<Vec<u8>> {
     let mut rdr = csv::Reader::from_reader(data);

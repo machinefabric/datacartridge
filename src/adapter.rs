@@ -238,8 +238,8 @@ fn detect_xml(text: &str) -> Vec<String> {
 fn detect_toml(_text: &str) -> Vec<String> {
     // TOML has no `fmt=` serialization value of its own; a `.toml` file is a
     // UTF-8 text file, so the catalog publishes `media:ext=toml;enc=utf-8`
-    // (from the `_textable-file.toml` text-file anchor, which narrows file-type
-    // to include `toml`). Emit that single file shape.
+    // (the file-type dim narrows `toml` to a UTF-8 text file). Emit that single
+    // file shape.
     vec!["media:enc=utf-8;ext=toml".to_string()]
 }
 
