@@ -71,16 +71,16 @@ fn build_manifest() -> CapManifest {
     }
 
     // Collect JSON objects caps
-    for out_media in &["media:json;list;record;textable", "media:ext=csv;list;record;textable", "media:list;record;textable;yaml"] {
+    for out_media in &["media:fmt=json;list;record", "media:fmt=csv;list;record", "media:fmt=yaml;list;record"] {
         let urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
-            .in_spec("media:json;record;textable")
+            .in_spec("media:fmt=json;record")
             .out_spec(out_media)
             .build().expect("collect_json_objects URN");
         let mut cap = Cap::with_description(urn, format!("Collect JSON Objects into {}", out_media), "collect_json_objects".to_string(), format!("Collect individual JSON objects into {}", out_media));
         let mut arg = CapArg::with_description(
-            "media:json;record;textable", true,
-            vec![ArgSource::Stdin { stdin: "media:json;record;textable".to_string() }, ArgSource::Position { position: 0 }],
+            "media:fmt=json;record", true,
+            vec![ArgSource::Stdin { stdin: "media:fmt=json;record".to_string() }, ArgSource::Position { position: 0 }],
             "JSON objects to collect",
         );
         arg.is_sequence = true;
@@ -90,16 +90,16 @@ fn build_manifest() -> CapManifest {
     }
 
     // Collect CSV records caps
-    for out_media in &["media:ext=csv;list;record;textable", "media:json;list;record;textable", "media:list;record;textable;yaml"] {
+    for out_media in &["media:fmt=csv;list;record", "media:fmt=json;list;record", "media:fmt=yaml;list;record"] {
         let urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:ext=csv;list;record;textable")
+            .in_spec("media:fmt=csv;list;record")
             .out_spec(out_media)
             .build().expect("collect_records csv URN");
         let mut cap = Cap::with_description(urn, format!("Merge CSV into {}", out_media), "collect_records".to_string(), format!("Merge CSV files into {}", out_media));
         let mut arg = CapArg::with_description(
-            "media:ext=csv;list;record;textable", true,
-            vec![ArgSource::Stdin { stdin: "media:ext=csv;list;record;textable".to_string() }, ArgSource::Position { position: 0 }],
+            "media:fmt=csv;list;record", true,
+            vec![ArgSource::Stdin { stdin: "media:fmt=csv;list;record".to_string() }, ArgSource::Position { position: 0 }],
             "CSV files to merge",
         );
         arg.is_sequence = true;
@@ -109,16 +109,16 @@ fn build_manifest() -> CapManifest {
     }
 
     // Collect YAML mappings caps
-    for out_media in &["media:list;record;textable;yaml", "media:json;list;record;textable", "media:ext=csv;list;record;textable"] {
+    for out_media in &["media:fmt=yaml;list;record", "media:fmt=json;list;record", "media:fmt=csv;list;record"] {
         let urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:record;textable;yaml")
+            .in_spec("media:fmt=yaml;record")
             .out_spec(out_media)
             .build().expect("collect_records yaml URN");
         let mut cap = Cap::with_description(urn, format!("Merge YAML into {}", out_media), "collect_records".to_string(), format!("Merge YAML mapping files into {}", out_media));
         let mut arg = CapArg::with_description(
-            "media:record;textable;yaml", true,
-            vec![ArgSource::Stdin { stdin: "media:record;textable;yaml".to_string() }, ArgSource::Position { position: 0 }],
+            "media:fmt=yaml;record", true,
+            vec![ArgSource::Stdin { stdin: "media:fmt=yaml;record".to_string() }, ArgSource::Position { position: 0 }],
             "YAML mapping files to merge",
         );
         arg.is_sequence = true;
@@ -127,7 +127,7 @@ fn build_manifest() -> CapManifest {
         all_caps.push(cap);
     }
 
-    // Save-as-txt cap: media:plain-text;textable;txt → same.
+    // Save-as-txt cap: media:enc=utf-8;ext=txt;plain-text → same.
     // Pure relabel-and-persist. Input must already carry the
     // `plain-text` marker — that is the explicit opt-in that
     // keeps every textable-producing cap (PDF page extractor,
@@ -141,8 +141,8 @@ fn build_manifest() -> CapManifest {
     {
         let urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:ext=txt;plain-text;textable")
-            .out_spec("media:ext=txt;plain-text;textable")
+            .in_spec("media:enc=utf-8;ext=txt;plain-text")
+            .out_spec("media:enc=utf-8;ext=txt;plain-text")
             .build()
             .expect("save-as-txt URN");
         let mut cap = Cap::with_description(
@@ -154,18 +154,18 @@ fn build_manifest() -> CapManifest {
                 .to_string(),
         );
         cap.add_arg(CapArg::with_description(
-            "media:ext=txt;plain-text;textable",
+            "media:enc=utf-8;ext=txt;plain-text",
             true,
             vec![
                 ArgSource::Stdin {
-                    stdin: "media:ext=txt;plain-text;textable".to_string(),
+                    stdin: "media:enc=utf-8;ext=txt;plain-text".to_string(),
                 },
                 ArgSource::Position { position: 0 },
             ],
             "The finalised plain-text value to persist as .txt".to_string(),
         ));
         cap.set_output(capdag::CapOutput::new(
-            "media:ext=txt;plain-text;textable",
+            "media:enc=utf-8;ext=txt;plain-text",
             "The same bytes, persisted as a .txt file",
         ));
         all_caps.push(cap);
@@ -204,7 +204,7 @@ fn build_manifest() -> CapManifest {
         input_arg.is_sequence = true;
         cap.add_arg(input_arg);
         cap.add_arg(CapArg::with_description(
-            "media:keep-every;textable;numeric",
+            "media:keep-every;numeric",
             false,
             vec![ArgSource::CliFlag {
                 cli_flag: "--keep-every".to_string(),
@@ -226,12 +226,12 @@ fn build_manifest() -> CapManifest {
         name: "data-formats".to_string(),
         caps: all_caps, // identity_cap() is already first in all_caps
         adapter_urns: vec![
-            "media:json".to_string(),
-            "media:ndjson".to_string(),
-            "media:ext=csv".to_string(),
+            "media:fmt=json".to_string(),
+            "media:fmt=ndjson".to_string(),
+            "media:fmt=csv".to_string(),
             "media:ext=tsv".to_string(),
             "media:ext=psv".to_string(),
-            "media:yaml".to_string(),
+            "media:fmt=yaml".to_string(),
             "media:ext=xml".to_string(),
             "media:ext=toml".to_string(),
         ],
@@ -397,21 +397,21 @@ impl Op<()> for CoerceOp {
 // SAVE-AS-TXT OP — relabel any textable value as a `.txt` file
 // =============================================================================
 //
-// The cap signature is `media:textable → media:textable;txt`. The
+// The cap signature is `media:enc=utf-8 → media:enc=utf-8;ext=txt`. The
 // op is byte-passthrough: input bytes flow to the output stream
 // unchanged; only the URN-side type narrows from the abstract
 // textable wildcard to the concrete `.txt` file format.
 //
 // Why this op exists: the Finder transmute dialog filters target
-// candidates to URNs that own a file extension. `media:textable`
+// candidates to URNs that own a file extension. `media:enc=utf-8`
 // is an abstract coercion class with no extension and is suppressed
 // from the target list (see `LiveCapFab::get_reachable_targets`).
-// `media:textable;txt` carries the `txt` extension and is offered
+// `media:enc=utf-8;ext=txt` carries the `txt` extension and is offered
 // as a target. This op closes the gap so any chain that ends in a
 // textable value can be saved as `.txt` without an additional
 // per-cap output declaration.
 //
-// `media:textable` PROMISES UTF-8 representability; bytes that
+// `media:enc=utf-8` PROMISES UTF-8 representability; bytes that
 // fail UTF-8 validation here are a contract violation upstream and
 // surface as a hard error rather than being silently corrupted.
 
@@ -430,7 +430,7 @@ impl Op<()> for SaveAsTxtOp {
 
         // The input arrives as a single stream whose URN is whatever
         // the upstream cap emitted (any URN that conforms to
-        // `media:textable`). We don't filter by URN here — the
+        // `media:enc=utf-8`). We don't filter by URN here — the
         // planner already verified conformance — we just take the
         // stream that arrives and copy its bytes through.
         let mut received: Option<(Vec<u8>, Option<capdag::StreamMeta>)> = None;
@@ -461,7 +461,7 @@ impl Op<()> for SaveAsTxtOp {
             )
         })?;
 
-        // The cap-arg URN (`media:plain-text;textable;txt`)
+        // The cap-arg URN (`media:enc=utf-8;ext=txt;plain-text`)
         // promises UTF-8 representability via the `textable` dim.
         // Validate here so a contract violation upstream surfaces
         // immediately rather than producing a garbled `.txt` file
@@ -470,7 +470,7 @@ impl Op<()> for SaveAsTxtOp {
         let text = String::from_utf8(bytes).map_err(|e| {
             OpError::ExecutionFailed(format!(
                 "save-as-txt: input bytes are not valid UTF-8 — \
-                 the cap-arg URN `media:plain-text;textable;txt` \
+                 the cap-arg URN `media:enc=utf-8;ext=txt;plain-text` \
                  requires UTF-8 representability. Upstream cap or \
                  the producer is violating the textable contract: {}",
                 e
@@ -598,7 +598,7 @@ impl Op<()> for DecimateSequenceOp {
         // them separately. The keep-every stream is a small scalar;
         // the sequence stream's items are buffered into a Vec
         // because we don't start emitting until we know N.
-        let keep_every_urn = "media:keep-every;textable;numeric";
+        let keep_every_urn = "media:keep-every;numeric";
 
         let mut keep_every_raw: Option<String> = None;
         let mut sequence_items: Vec<(Vec<u8>, Option<capdag::StreamMeta>)> = Vec::new();
@@ -996,15 +996,15 @@ async fn main() -> Result<()> {
         });
     }
 
-    // Save-as-txt cap: media:plain-text;textable;txt → same.
+    // Save-as-txt cap: media:enc=utf-8;ext=txt;plain-text → same.
     // The cap declaration in `build_manifest()` builds the URN
     // with the same markers; mirror it here so the runtime can
     // dispatch the cap to its op.
     {
         let urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:ext=txt;plain-text;textable")
-            .out_spec("media:ext=txt;plain-text;textable")
+            .in_spec("media:enc=utf-8;ext=txt;plain-text")
+            .out_spec("media:enc=utf-8;ext=txt;plain-text")
             .build()
             .expect("save-as-txt URN");
         runtime.register_op(&urn.to_string(), || Box::new(SaveAsTxtOp));
@@ -1014,29 +1014,29 @@ async fn main() -> Result<()> {
     {
         let json_array_urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
-            .in_spec("media:json;record;textable")
-            .out_spec("media:json;list;record;textable")
+            .in_spec("media:fmt=json;record")
+            .out_spec("media:fmt=json;list;record")
             .build().expect("collect_json_objects → json array URN");
         runtime.register_op(&json_array_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:json;list;record;textable" })
+            Box::new(CollectJsonObjectsOp { out_media: "media:fmt=json;list;record" })
         });
 
         let csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
-            .in_spec("media:json;record;textable")
-            .out_spec("media:ext=csv;list;record;textable")
+            .in_spec("media:fmt=json;record")
+            .out_spec("media:fmt=csv;list;record")
             .build().expect("collect_json_objects → csv URN");
         runtime.register_op(&csv_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:ext=csv;list;record;textable" })
+            Box::new(CollectJsonObjectsOp { out_media: "media:fmt=csv;list;record" })
         });
 
         let yaml_urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
-            .in_spec("media:json;record;textable")
-            .out_spec("media:list;record;textable;yaml")
+            .in_spec("media:fmt=json;record")
+            .out_spec("media:fmt=yaml;list;record")
             .build().expect("collect_json_objects → yaml URN");
         runtime.register_op(&yaml_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:list;record;textable;yaml" })
+            Box::new(CollectJsonObjectsOp { out_media: "media:fmt=yaml;list;record" })
         });
     }
 
@@ -1044,29 +1044,29 @@ async fn main() -> Result<()> {
     {
         let csv_csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:ext=csv;list;record;textable")
-            .out_spec("media:ext=csv;list;record;textable")
+            .in_spec("media:fmt=csv;list;record")
+            .out_spec("media:fmt=csv;list;record")
             .build().expect("collect_records csv→csv URN");
         runtime.register_op(&csv_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:ext=csv;list;record;textable", out_media: "media:ext=csv;list;record;textable" })
+            Box::new(CollectRecordsOp { in_media: "media:fmt=csv;list;record", out_media: "media:fmt=csv;list;record" })
         });
 
         let csv_json_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:ext=csv;list;record;textable")
-            .out_spec("media:json;list;record;textable")
+            .in_spec("media:fmt=csv;list;record")
+            .out_spec("media:fmt=json;list;record")
             .build().expect("collect_records csv→json URN");
         runtime.register_op(&csv_json_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:ext=csv;list;record;textable", out_media: "media:json;list;record;textable" })
+            Box::new(CollectRecordsOp { in_media: "media:fmt=csv;list;record", out_media: "media:fmt=json;list;record" })
         });
 
         let csv_yaml_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:ext=csv;list;record;textable")
-            .out_spec("media:list;record;textable;yaml")
+            .in_spec("media:fmt=csv;list;record")
+            .out_spec("media:fmt=yaml;list;record")
             .build().expect("collect_records csv→yaml URN");
         runtime.register_op(&csv_yaml_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:ext=csv;list;record;textable", out_media: "media:list;record;textable;yaml" })
+            Box::new(CollectRecordsOp { in_media: "media:fmt=csv;list;record", out_media: "media:fmt=yaml;list;record" })
         });
     }
 
@@ -1074,29 +1074,29 @@ async fn main() -> Result<()> {
     {
         let yaml_yaml_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:record;textable;yaml")
-            .out_spec("media:list;record;textable;yaml")
+            .in_spec("media:fmt=yaml;record")
+            .out_spec("media:fmt=yaml;list;record")
             .build().expect("collect_records yaml→yaml URN");
         runtime.register_op(&yaml_yaml_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:record;textable;yaml", out_media: "media:list;record;textable;yaml" })
+            Box::new(CollectRecordsOp { in_media: "media:fmt=yaml;record", out_media: "media:fmt=yaml;list;record" })
         });
 
         let yaml_json_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:record;textable;yaml")
-            .out_spec("media:json;list;record;textable")
+            .in_spec("media:fmt=yaml;record")
+            .out_spec("media:fmt=json;list;record")
             .build().expect("collect_records yaml→json URN");
         runtime.register_op(&yaml_json_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:record;textable;yaml", out_media: "media:json;list;record;textable" })
+            Box::new(CollectRecordsOp { in_media: "media:fmt=yaml;record", out_media: "media:fmt=json;list;record" })
         });
 
         let yaml_csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:record;textable;yaml")
-            .out_spec("media:ext=csv;list;record;textable")
+            .in_spec("media:fmt=yaml;record")
+            .out_spec("media:fmt=csv;list;record")
             .build().expect("collect_records yaml→csv URN");
         runtime.register_op(&yaml_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:record;textable;yaml", out_media: "media:ext=csv;list;record;textable" })
+            Box::new(CollectRecordsOp { in_media: "media:fmt=yaml;record", out_media: "media:fmt=csv;list;record" })
         });
     }
 
@@ -1131,12 +1131,15 @@ enum Fmt {
     Json,
     Yaml,
     Csv,
-    /// Bare textable list — CBOR sequence of byte strings, no format tag.
-    TextableList,
+    /// Bare UTF-8 text list (`media:enc=utf-8;list`) — CBOR sequence of byte
+    /// strings, carrying an encoding but no serialization-format (`fmt=`) tag.
+    TextList,
 }
 
 /// Identify the data format from a media URN string.
-/// Parses the URN properly and checks marker tags — never inspects the string directly.
+/// Parses the URN properly and checks tags — never inspects the string directly.
+/// Serialization formats are read off the single `fmt=` axis (`is_json`/`is_yaml`/
+/// `is_csv`); a value with a `list` marker but no `fmt=` is a bare UTF-8 text list.
 fn format_of_str(media_urn: &str) -> Result<Fmt> {
     let urn = capdag::MediaUrn::from_string(media_urn)
         .map_err(|e| anyhow::anyhow!("Invalid media URN '{}': {}", media_urn, e))?;
@@ -1146,10 +1149,11 @@ fn format_of_str(media_urn: &str) -> Result<Fmt> {
         Ok(Fmt::Yaml)
     } else if urn.is_csv() {
         Ok(Fmt::Csv)
-    } else if urn.is_list() && !urn.is_json() && !urn.is_yaml() && !urn.is_csv() {
-        Ok(Fmt::TextableList)
+    } else if urn.is_list() {
+        // list marker, no fmt= serialization tag → bare UTF-8 text list
+        Ok(Fmt::TextList)
     } else {
-        anyhow::bail!("Media URN '{}' is not a recognized data format (json, yaml, csv, or textable list)", media_urn)
+        anyhow::bail!("Media URN '{}' is not a recognized data format (json, yaml, csv, or text list)", media_urn)
     }
 }
 
@@ -1162,12 +1166,12 @@ fn convert(from: Fmt, to: Fmt, data: &[u8]) -> Result<Vec<u8>> {
         (Fmt::Yaml, Fmt::Csv) => yaml_records_to_csv(data),
         (Fmt::Csv, Fmt::Yaml) => csv_to_yaml_records(data),
         // Textable list conversions
-        (Fmt::TextableList, Fmt::Json) => textable_list_to_json(data),
-        (Fmt::Json, Fmt::TextableList) => json_to_textable_list(data),
-        (Fmt::TextableList, Fmt::Yaml) => textable_list_to_yaml(data),
-        (Fmt::Yaml, Fmt::TextableList) => yaml_to_textable_list(data),
-        (Fmt::TextableList, Fmt::Csv) => textable_list_to_csv(data),
-        (Fmt::Csv, Fmt::TextableList) => csv_to_textable_list(data),
+        (Fmt::TextList, Fmt::Json) => text_list_to_json(data),
+        (Fmt::Json, Fmt::TextList) => json_to_text_list(data),
+        (Fmt::TextList, Fmt::Yaml) => text_list_to_yaml(data),
+        (Fmt::Yaml, Fmt::TextList) => yaml_to_text_list(data),
+        (Fmt::TextList, Fmt::Csv) => text_list_to_csv(data),
+        (Fmt::Csv, Fmt::TextList) => csv_to_text_list(data),
         (f, t) => anyhow::bail!("Unsupported conversion: {:?} -> {:?}", f, t),
     }
 }
@@ -1373,7 +1377,7 @@ fn encode_textable_list(items: &[String]) -> Vec<u8> {
 
 /// Textable list (CBOR sequence) -> JSON array.
 /// Each item is parsed as a JSON value if possible, otherwise kept as a JSON string.
-fn textable_list_to_json(data: &[u8]) -> Result<Vec<u8>> {
+fn text_list_to_json(data: &[u8]) -> Result<Vec<u8>> {
     let items = decode_textable_list(data)?;
     let json_values: Vec<serde_json::Value> = items.iter()
         .map(|s| serde_json::from_str(s).unwrap_or_else(|_| serde_json::Value::String(s.clone())))
@@ -1384,7 +1388,7 @@ fn textable_list_to_json(data: &[u8]) -> Result<Vec<u8>> {
 
 /// JSON array -> textable list (one value per line).
 /// Each JSON value is serialized to its string representation.
-fn json_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
+fn json_to_text_list(data: &[u8]) -> Result<Vec<u8>> {
     let values: Vec<serde_json::Value> = serde_json::from_slice(data)
         .map_err(|e| anyhow::anyhow!("Invalid JSON array: {}", e))?;
     let strings: Vec<String> = values.iter()
@@ -1398,7 +1402,7 @@ fn json_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
 
 /// Textable list (one value per line) -> YAML sequence.
 /// Each item is parsed as a YAML value if possible, otherwise kept as a string.
-fn textable_list_to_yaml(data: &[u8]) -> Result<Vec<u8>> {
+fn text_list_to_yaml(data: &[u8]) -> Result<Vec<u8>> {
     let items = decode_textable_list(data)?;
     let yaml_values: Vec<serde_yaml::Value> = items.iter()
         .map(|s| serde_yaml::from_str(s).unwrap_or_else(|_| serde_yaml::Value::String(s.clone())))
@@ -1410,7 +1414,7 @@ fn textable_list_to_yaml(data: &[u8]) -> Result<Vec<u8>> {
 
 /// YAML sequence -> textable list (one value per line).
 /// Each YAML value is serialized to its string representation.
-fn yaml_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
+fn yaml_to_text_list(data: &[u8]) -> Result<Vec<u8>> {
     let values: Vec<serde_yaml::Value> = serde_yaml::from_slice(data)
         .map_err(|e| anyhow::anyhow!("Invalid YAML sequence: {}", e))?;
     let strings: Vec<String> = values.iter()
@@ -1424,7 +1428,7 @@ fn yaml_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
 
 /// Textable list (one value per line) -> CSV.
 /// Single-column CSV with header "value".
-fn textable_list_to_csv(data: &[u8]) -> Result<Vec<u8>> {
+fn text_list_to_csv(data: &[u8]) -> Result<Vec<u8>> {
     let items = decode_textable_list(data)?;
     let mut wtr = csv::Writer::from_writer(Vec::new());
     wtr.write_record(&["value"])
@@ -1439,7 +1443,7 @@ fn textable_list_to_csv(data: &[u8]) -> Result<Vec<u8>> {
 
 /// CSV -> textable list (one value per line).
 /// Reads the first column of each row (ignoring headers).
-fn csv_to_textable_list(data: &[u8]) -> Result<Vec<u8>> {
+fn csv_to_text_list(data: &[u8]) -> Result<Vec<u8>> {
     let mut rdr = csv::Reader::from_reader(data);
     let mut items = Vec::new();
     for result in rdr.records() {
@@ -1880,7 +1884,9 @@ mod tests {
         let result = coerce(b"\"hello\"", "string", "object").unwrap();
         let val: serde_json::Value = serde_json::from_slice(&result).unwrap();
         assert_eq!(val["value"], "hello");
-        assert!(val["source_type"].as_str().unwrap().contains("textable"));
+        // The string source media URN now declares its UTF-8 encoding via enc=utf-8
+        // (the old `textable` marker is gone).
+        assert!(val["source_type"].as_str().unwrap().contains("enc=utf-8"));
     }
 
     // TEST0042: Coerce object passthrough
@@ -1989,15 +1995,15 @@ mod tests {
     fn test0051_save_as_txt_manifest_and_runtime_urn_agree() {
         let manifest_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:ext=txt;plain-text;textable")
-            .out_spec("media:ext=txt;plain-text;textable")
+            .in_spec("media:enc=utf-8;ext=txt;plain-text")
+            .out_spec("media:enc=utf-8;ext=txt;plain-text")
             .build()
             .expect("save-as-txt manifest URN")
             .to_string();
         let runtime_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:ext=txt;plain-text;textable")
-            .out_spec("media:ext=txt;plain-text;textable")
+            .in_spec("media:enc=utf-8;ext=txt;plain-text")
+            .out_spec("media:enc=utf-8;ext=txt;plain-text")
             .build()
             .expect("save-as-txt runtime URN")
             .to_string();
@@ -2013,7 +2019,7 @@ mod tests {
         // exactly this string.
         assert_eq!(
             manifest_urn,
-            r#"cap:in="media:ext=txt;plain-text;textable";out="media:ext=txt;plain-text;textable";save-as-txt"#,
+            r#"cap:in="media:enc=utf-8;ext=txt;plain-text";out="media:enc=utf-8;ext=txt;plain-text";save-as-txt"#,
             "canonical save-as-txt URN drifted — catalog lookups will 404"
         );
     }
@@ -2041,8 +2047,8 @@ mod tests {
                 urn.contains("save-as-txt")
             })
             .expect("save-as-txt cap must be present in data-formats group");
-        assert_eq!(cap.urn.in_spec(), "media:ext=txt;plain-text;textable");
-        assert_eq!(cap.urn.out_spec(), "media:ext=txt;plain-text;textable");
+        assert_eq!(cap.urn.in_spec(), "media:enc=utf-8;ext=txt;plain-text");
+        assert_eq!(cap.urn.out_spec(), "media:enc=utf-8;ext=txt;plain-text");
         assert_eq!(cap.command, "save_as_txt");
     }
 }
