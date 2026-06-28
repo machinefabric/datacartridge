@@ -323,7 +323,7 @@ mod tests {
     }
 
     /// TSV emits the canonical catalog URN. The previous adapter
-    /// returned `media:tsv;list;textable` for single-column TSV —
+    /// returned `media:enc=utf-8;list;tsv` for single-column TSV —
     /// a URN that did not exist in the published catalog because
     /// no `_tsv-data.toml` anchor was declared.
     #[test]
@@ -403,8 +403,8 @@ mod tests {
     /// **Catalog-presence regression guard.** Every URN this
     /// adapter emits for any of its supported extensions must be
     /// a URN the published catalog actually contains. The earlier
-    /// adapter emitted `media:tsv;list;textable`,
-    /// `media:psv;list;textable`, and other URN forms that did
+    /// adapter emitted `media:enc=utf-8;list;tsv`,
+    /// `media:enc=utf-8;list;psv`, and other URN forms that did
     /// not exist in the catalog because no anchor declared them.
     /// This test exhaustively enumerates the URN forms the adapter
     /// is allowed to return; cross-validation at `dx fabric update`
