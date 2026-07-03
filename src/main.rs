@@ -326,6 +326,7 @@ impl Op<()> for ConvertFormatOp {
         );
         output
             .emit_cbor(&cbor_value)
+            .await
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         Ok(())
@@ -383,6 +384,7 @@ impl Op<()> for CoerceOp {
         );
         output
             .emit_cbor(&cbor_value)
+            .await
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         Ok(())
@@ -485,6 +487,7 @@ impl Op<()> for SaveAsTxtOp {
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output
             .emit_cbor(&ciborium::Value::Text(text))
+            .await
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         Ok(())
@@ -539,6 +542,7 @@ impl Op<()> for CollectJsonObjectsOp {
         );
         output
             .emit_cbor(&cbor_value)
+            .await
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         Ok(())
@@ -694,6 +698,7 @@ impl Op<()> for DecimateSequenceOp {
                     &ciborium::Value::Bytes(item_bytes),
                     item_meta,
                 )
+                .await
                 .map_err(|e| OpError::ExecutionFailed(format!(
                     "emit_list_item at index {} (input sequence {}): {}",
                     i, sequence_input_urn, e
@@ -770,6 +775,7 @@ impl Op<()> for CollectRecordsOp {
         );
         output
             .emit_cbor(&cbor_value)
+            .await
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         Ok(())
@@ -956,6 +962,7 @@ impl Op<()> for DataAdapterSelectionOp {
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output
             .emit_cbor(&ciborium::Value::Bytes(json_bytes))
+            .await
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         Ok(())
