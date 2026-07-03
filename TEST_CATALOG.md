@@ -29,46 +29,46 @@ This catalog lists all tests in the Rust codebase.
 | test0011 | `test0011_binary_returns_empty` | / Non-UTF-8 bytes given to a JSON-extension path return the / empty vec. Text data formats require UTF-8; emitting any / URN for binary content would lie about the bytes. | src/adapter.rs:386 |
 | test0012 | `test0012_unknown_extension_returns_empty` | / An extension this adapter doesn't own returns the empty / vec — datacartridge handles only the structured-data / formats (JSON, CSV, etc.); a `.txt` file is not its / concern. Emitting `media:enc=utf-8` here would step on / txtcartridge's adapter and would also be wrong (no JSON / detection has happened). | src/adapter.rs:398 |
 | test0013 | `test0013_every_emitted_urn_is_in_catalog_form` | / **Catalog-presence regression guard.** Every URN this / adapter emits for any of its supported extensions must be / a URN the published catalog actually contains. The earlier / adapter emitted `media:enc=utf-8;list;tsv`, / `media:enc=utf-8;list;psv`, and other URN forms that did / not exist in the catalog because no anchor declared them. / This test exhaustively enumerates the URN forms the adapter / is allowed to return; cross-validation at `dx fabric update` / time catches any of these strings drifting away from / catalog truth. | src/adapter.rs:414 |
-| test0014 | `test0014_json_to_yaml_object` | TEST0014: Json to yaml object | src/main.rs:1625 |
-| test0015 | `test0015_yaml_to_json_object` | TEST0015: Yaml to json object | src/main.rs:1636 |
-| test0016 | `test0016_json_to_yaml_array` | TEST0016: Json to yaml array | src/main.rs:1646 |
-| test0017 | `test0017_yaml_to_json_list` | TEST0017: Yaml to json list | src/main.rs:1657 |
-| test0018 | `test0018_json_to_yaml_scalar` | TEST0018: Json to yaml scalar | src/main.rs:1666 |
-| test0019 | `test0019_json_records_to_csv` | TEST0019: Json records to csv | src/main.rs:1675 |
-| test0020 | `test0020_csv_to_json_records` | TEST0020: Csv to json records | src/main.rs:1688 |
-| test0021 | `test0021_csv_to_yaml_records` | TEST0021: Csv to yaml records | src/main.rs:1701 |
-| test0022 | `test0022_yaml_records_to_csv` | TEST0022: Yaml records to csv | src/main.rs:1711 |
-| test0023 | `test0023_roundtrip_json_yaml_json` | TEST0023: Roundtrip json yaml json | src/main.rs:1721 |
-| test0024 | `test0024_roundtrip_csv_json_csv` | TEST0024: Roundtrip csv json csv | src/main.rs:1732 |
-| test0025 | `test0025_empty_json_array_to_csv` | TEST0025: Empty json array to csv | src/main.rs:1744 |
-| test0026 | `test0026_malformed_json_fails` | TEST0026: Malformed json fails | src/main.rs:1752 |
-| test0027 | `test0027_malformed_yaml_fails` | TEST0027: Malformed yaml fails | src/main.rs:1760 |
-| test0028 | `test0028_csv_type_inference` | TEST0028: Csv type inference | src/main.rs:1768 |
-| test0029 | `test0029_csv_with_mixed_columns` | TEST0029: Csv with mixed columns | src/main.rs:1779 |
-| test0030 | `test0030_yaml_tagged_values_stripped` | TEST0030: Yaml tagged values stripped | src/main.rs:1791 |
-| test0031 | `test0031_json_records_superset_headers` | TEST0031: Json records superset headers | src/main.rs:1801 |
-| test0032 | `test0032_coerce_integer_to_string` | COERCION TESTS | src/main.rs:1817 |
-| test0033 | `test0033_coerce_number_to_string` | TEST0033: Coerce number to string | src/main.rs:1824 |
-| test0034 | `test0034_coerce_boolean_to_string` | TEST0034: Coerce boolean to string | src/main.rs:1831 |
-| test0035 | `test0035_coerce_string_to_integer` | TEST0035: Coerce string to integer | src/main.rs:1838 |
-| test0036 | `test0036_coerce_number_to_integer` | TEST0036: Coerce number to integer | src/main.rs:1845 |
-| test0037 | `test0037_coerce_boolean_to_integer` | TEST0037: Coerce boolean to integer | src/main.rs:1852 |
-| test0038 | `test0038_coerce_string_to_number` | TEST0038: Coerce string to number | src/main.rs:1859 |
-| test0039 | `test0039_coerce_integer_to_number` | TEST0039: Coerce integer to number | src/main.rs:1866 |
-| test0040 | `test0040_coerce_boolean_to_number` | TEST0040: Coerce boolean to number | src/main.rs:1876 |
-| test0041 | `test0041_coerce_string_to_object` | TEST0041: Coerce string to object | src/main.rs:1883 |
-| test0042 | `test0042_coerce_object_passthrough` | TEST0042: Coerce object passthrough | src/main.rs:1894 |
-| test0043 | `test0043_coerce_invalid_to_integer_fails` | TEST0043: Coerce invalid to integer fails | src/main.rs:1904 |
-| test0044 | `test0044_coerce_invalid_to_number_fails` | TEST0044: Coerce invalid to number fails | src/main.rs:1911 |
-| test0045 | `test0045_coerce_unsupported_target_fails` | TEST0045: Coerce unsupported target fails | src/main.rs:1918 |
-| test0046 | `test0046_decimate_indices_stride_one_keeps_all` | / Stride 1 keeps every index — this is the passthrough contract / the cap promises when --keep-every is omitted (the Op / substitutes `1` and calls the gate). | src/main.rs:1929 |
-| test0047 | `test0047_decimate_indices_starts_at_zero` | / Stride N starts at index 0 and keeps every Nth thereafter, / regardless of count. An off-by-one (e.g. starting at index 1 / instead of 0) shows up here as the first kept index being N / instead of 0 — exactly the failure we want to surface. | src/main.rs:1942 |
-| test0048 | `test0048_decimate_indices_every_third_of_ten` | / Specific case spelled out by the user requirement: every Nth. / This pins down N=3 over a small enumerated count where the / expected output is hand-readable, so a regression that / changes "every Nth from 0" to "every Nth except 0" or to / "0-indexed but offset N-1" produces a clearly wrong list. | src/main.rs:1958 |
-| test0049 | `test0049_decimate_indices_stride_larger_than_count` | / A stride larger than the input length keeps exactly the / first item (index 0) and nothing else. Catches the "what if / stride > count" edge. | src/main.rs:1967 |
-| test0050 | `test0050_decimate_indices_empty_input` | / Empty input yields empty output. The Op layer turns this / into a hard error (an empty input sequence is suspicious), / but the gate itself must be honest about returning [] — / otherwise we'd hide the empty case from the Op. | src/main.rs:1976 |
-| test0051 | `test0051_save_as_txt_manifest_and_runtime_urn_agree` | / The cap manifest declares `save-as-txt` with a specific URN / shape; `main()` registers the op's runtime handler under / the URN built from the same parts. If those two strings / diverge, the planner accepts the cap but the runtime has / no dispatch entry — and the cartridge silently fails the / first time a user invokes it. / / This test reconstructs both URNs exactly the way each / site builds them and asserts byte equality. A future / refactor that touches one site without the other surfaces / here at compile/test time rather than at runtime. | src/main.rs:1995 |
-| test0052 | `test0052_save_as_txt_cap_present_in_manifest` | / The save-as-txt cap is registered in the manifest builder / (`build_manifest`). Verify it's actually present there with / the right shape — input urn, output urn, command. A / regression that drops the cap from the manifest would / remove it from the cartridge's cap-graph contribution / entirely, and the planner would never reach a `.txt` / target via this cartridge. | src/main.rs:2035 |
-| test1859 | `test1859_advertised_caps_resolve_in_catalog` | TEST1859: every cap URN this cartridge advertises must resolve in the pinned fabric catalog. A drifted/bare-marker URN absent from the catalog is silently dropped by LiveCapFab at runtime; this guard turns that into a hard failure naming the exact URN. `get_cap` consults the same canonical manifest map LiveCapFab resolves against. Network-mediated against the env-configured registry (set by `dx test`), pinned at FABRIC_MANIFEST_VERSION. The identity cap is engine-provided, not a catalog entry, so it is excluded. | src/main.rs:1597 |
+| test0014 | `test0014_json_to_yaml_object` | TEST0014: Json to yaml object | src/main.rs:1632 |
+| test0015 | `test0015_yaml_to_json_object` | TEST0015: Yaml to json object | src/main.rs:1643 |
+| test0016 | `test0016_json_to_yaml_array` | TEST0016: Json to yaml array | src/main.rs:1653 |
+| test0017 | `test0017_yaml_to_json_list` | TEST0017: Yaml to json list | src/main.rs:1664 |
+| test0018 | `test0018_json_to_yaml_scalar` | TEST0018: Json to yaml scalar | src/main.rs:1673 |
+| test0019 | `test0019_json_records_to_csv` | TEST0019: Json records to csv | src/main.rs:1682 |
+| test0020 | `test0020_csv_to_json_records` | TEST0020: Csv to json records | src/main.rs:1695 |
+| test0021 | `test0021_csv_to_yaml_records` | TEST0021: Csv to yaml records | src/main.rs:1708 |
+| test0022 | `test0022_yaml_records_to_csv` | TEST0022: Yaml records to csv | src/main.rs:1718 |
+| test0023 | `test0023_roundtrip_json_yaml_json` | TEST0023: Roundtrip json yaml json | src/main.rs:1728 |
+| test0024 | `test0024_roundtrip_csv_json_csv` | TEST0024: Roundtrip csv json csv | src/main.rs:1739 |
+| test0025 | `test0025_empty_json_array_to_csv` | TEST0025: Empty json array to csv | src/main.rs:1751 |
+| test0026 | `test0026_malformed_json_fails` | TEST0026: Malformed json fails | src/main.rs:1759 |
+| test0027 | `test0027_malformed_yaml_fails` | TEST0027: Malformed yaml fails | src/main.rs:1767 |
+| test0028 | `test0028_csv_type_inference` | TEST0028: Csv type inference | src/main.rs:1775 |
+| test0029 | `test0029_csv_with_mixed_columns` | TEST0029: Csv with mixed columns | src/main.rs:1786 |
+| test0030 | `test0030_yaml_tagged_values_stripped` | TEST0030: Yaml tagged values stripped | src/main.rs:1798 |
+| test0031 | `test0031_json_records_superset_headers` | TEST0031: Json records superset headers | src/main.rs:1808 |
+| test0032 | `test0032_coerce_integer_to_string` | COERCION TESTS | src/main.rs:1824 |
+| test0033 | `test0033_coerce_number_to_string` | TEST0033: Coerce number to string | src/main.rs:1831 |
+| test0034 | `test0034_coerce_boolean_to_string` | TEST0034: Coerce boolean to string | src/main.rs:1838 |
+| test0035 | `test0035_coerce_string_to_integer` | TEST0035: Coerce string to integer | src/main.rs:1845 |
+| test0036 | `test0036_coerce_number_to_integer` | TEST0036: Coerce number to integer | src/main.rs:1852 |
+| test0037 | `test0037_coerce_boolean_to_integer` | TEST0037: Coerce boolean to integer | src/main.rs:1859 |
+| test0038 | `test0038_coerce_string_to_number` | TEST0038: Coerce string to number | src/main.rs:1866 |
+| test0039 | `test0039_coerce_integer_to_number` | TEST0039: Coerce integer to number | src/main.rs:1873 |
+| test0040 | `test0040_coerce_boolean_to_number` | TEST0040: Coerce boolean to number | src/main.rs:1883 |
+| test0041 | `test0041_coerce_string_to_object` | TEST0041: Coerce string to object | src/main.rs:1890 |
+| test0042 | `test0042_coerce_object_passthrough` | TEST0042: Coerce object passthrough | src/main.rs:1901 |
+| test0043 | `test0043_coerce_invalid_to_integer_fails` | TEST0043: Coerce invalid to integer fails | src/main.rs:1911 |
+| test0044 | `test0044_coerce_invalid_to_number_fails` | TEST0044: Coerce invalid to number fails | src/main.rs:1918 |
+| test0045 | `test0045_coerce_unsupported_target_fails` | TEST0045: Coerce unsupported target fails | src/main.rs:1925 |
+| test0046 | `test0046_decimate_indices_stride_one_keeps_all` | / Stride 1 keeps every index — this is the passthrough contract / the cap promises when --keep-every is omitted (the Op / substitutes `1` and calls the gate). | src/main.rs:1936 |
+| test0047 | `test0047_decimate_indices_starts_at_zero` | / Stride N starts at index 0 and keeps every Nth thereafter, / regardless of count. An off-by-one (e.g. starting at index 1 / instead of 0) shows up here as the first kept index being N / instead of 0 — exactly the failure we want to surface. | src/main.rs:1949 |
+| test0048 | `test0048_decimate_indices_every_third_of_ten` | / Specific case spelled out by the user requirement: every Nth. / This pins down N=3 over a small enumerated count where the / expected output is hand-readable, so a regression that / changes "every Nth from 0" to "every Nth except 0" or to / "0-indexed but offset N-1" produces a clearly wrong list. | src/main.rs:1965 |
+| test0049 | `test0049_decimate_indices_stride_larger_than_count` | / A stride larger than the input length keeps exactly the / first item (index 0) and nothing else. Catches the "what if / stride > count" edge. | src/main.rs:1974 |
+| test0050 | `test0050_decimate_indices_empty_input` | / Empty input yields empty output. The Op layer turns this / into a hard error (an empty input sequence is suspicious), / but the gate itself must be honest about returning [] — / otherwise we'd hide the empty case from the Op. | src/main.rs:1983 |
+| test0051 | `test0051_save_as_txt_manifest_and_runtime_urn_agree` | / The cap manifest declares `save-as-txt` with a specific URN / shape; `main()` registers the op's runtime handler under / the URN built from the same parts. If those two strings / diverge, the planner accepts the cap but the runtime has / no dispatch entry — and the cartridge silently fails the / first time a user invokes it. / / This test reconstructs both URNs exactly the way each / site builds them and asserts byte equality. A future / refactor that touches one site without the other surfaces / here at compile/test time rather than at runtime. | src/main.rs:2002 |
+| test0052 | `test0052_save_as_txt_cap_present_in_manifest` | / The save-as-txt cap is registered in the manifest builder / (`build_manifest`). Verify it's actually present there with / the right shape — input urn, output urn, command. A / regression that drops the cap from the manifest would / remove it from the cartridge's cap-graph contribution / entirely, and the planner would never reach a `.txt` / target via this cartridge. | src/main.rs:2042 |
+| test1859 | `test1859_advertised_caps_resolve_in_catalog` | TEST1859: every cap URN this cartridge advertises must resolve in the pinned fabric catalog. A drifted/bare-marker URN absent from the catalog is silently dropped by LiveCapFab at runtime; this guard turns that into a hard failure naming the exact URN. `get_cap` consults the same canonical manifest map LiveCapFab resolves against. Network-mediated against the env-configured registry (set by `dx test`), pinned at FABRIC_MANIFEST_VERSION. The identity cap is engine-provided, not a catalog entry, so it is excluded. | src/main.rs:1604 |
 ---
 
 *Generated from Rust source tree*
