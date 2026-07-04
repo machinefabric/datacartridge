@@ -200,11 +200,17 @@ impl<'a> JsonRepairer<'a> {
             }
 
             // Separator: comma, or the next pair/end directly (missing
-            // comma is repaired).
+            // comma is repaired). A comma directly followed by the end
+            // is a trailing comma — consumed AND recorded.
             self.skip_ws_and_comments();
             match self.peek() {
                 Some(b',') => {
+                    let at = self.pos;
                     self.pos += 1;
+                    self.skip_ws_and_comments();
+                    if matches!(self.peek(), Some(b'}') | None) {
+                        self.note(at, "removed trailing comma in object");
+                    }
                 }
                 Some(b'}') | None => {}
                 Some(_) => {
@@ -248,7 +254,12 @@ impl<'a> JsonRepairer<'a> {
             self.skip_ws_and_comments();
             match self.peek() {
                 Some(b',') => {
+                    let at = self.pos;
                     self.pos += 1;
+                    self.skip_ws_and_comments();
+                    if matches!(self.peek(), Some(b']') | None) {
+                        self.note(at, "removed trailing comma in array");
+                    }
                 }
                 Some(b']') | None => {}
                 Some(_) => {
