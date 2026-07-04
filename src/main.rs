@@ -816,7 +816,7 @@ fn collect_records_to(items: &[Vec<u8>], in_media: &str, out_media: &str) -> Res
     for (i, bytes) in items.iter().enumerate() {
         if in_media.contains("csv") {
             // Parse CSV rows as JSON objects
-            let mut rdr = csv::Reader::from_reader(&bytes[..]);
+            let mut rdr = csv::Reader::from_reader(strip_utf8_bom(&bytes[..]));
             let headers: Vec<String> = rdr.headers()
                 .map_err(|e| anyhow::anyhow!("CSV item {} has no headers: {}", i, e))?
                 .iter()
@@ -1291,7 +1291,7 @@ fn json_records_to_csv(data: &[u8]) -> Result<Vec<u8>> {
 /// Headers from first row become object keys. Type inference: empty→null, integers, floats,
 /// booleans ("true"/"false"), else string.
 fn csv_to_json_records(data: &[u8]) -> Result<Vec<u8>> {
-    let mut rdr = csv::Reader::from_reader(data);
+    let mut rdr = csv::Reader::from_reader(strip_utf8_bom(data));
     let headers: Vec<String> = rdr
         .headers()
         .map_err(|e| anyhow::anyhow!("Failed to read CSV headers: {}", e))?
@@ -1334,16 +1334,26 @@ fn csv_to_yaml_records(data: &[u8]) -> Result<Vec<u8>> {
 }
 
 /// Infer a typed JSON value from a CSV field string.
+/// Infer a CSV field's JSON type LOSSLESSLY: a field converts to a
+/// number only when the number's canonical rendering round-trips to
+/// the original text. This is what keeps identifier-like fields
+/// intact — `"007"` (leading zero), `"1e5"` (notation), `"+42"`
+/// (sign) all stay strings because converting them would destroy
+/// information; `"42"` and `"-3.5"` convert because nothing is lost.
 fn infer_csv_value(field: &str) -> serde_json::Value {
     if field.is_empty() {
         return serde_json::Value::Null;
     }
     if let Ok(n) = field.parse::<i64>() {
-        return serde_json::Value::Number(n.into());
+        if n.to_string() == field {
+            return serde_json::Value::Number(n.into());
+        }
     }
     if let Ok(f) = field.parse::<f64>() {
         if let Some(n) = serde_json::Number::from_f64(f) {
-            return serde_json::Value::Number(n);
+            if n.to_string() == field {
+                return serde_json::Value::Number(n);
+            }
         }
     }
     if field == "true" {
@@ -1353,6 +1363,14 @@ fn infer_csv_value(field: &str) -> serde_json::Value {
         return serde_json::Value::Bool(false);
     }
     serde_json::Value::String(field.to_string())
+}
+
+/// Strip a UTF-8 BOM before CSV parsing. Windows tools emit
+/// BOM-prefixed CSVs routinely; without stripping, the first header
+/// key silently becomes `"\u{feff}name"` and every record key derived
+/// from it is corrupted.
+fn strip_utf8_bom(data: &[u8]) -> &[u8] {
+    data.strip_prefix(&[0xEF, 0xBB, 0xBF]).unwrap_or(data)
 }
 
 // =============================================================================
@@ -1451,7 +1469,7 @@ fn text_list_to_csv(data: &[u8]) -> Result<Vec<u8>> {
 /// CSV -> text list (one value per line).
 /// Reads the first column of each row (ignoring headers).
 fn csv_to_text_list(data: &[u8]) -> Result<Vec<u8>> {
-    let mut rdr = csv::Reader::from_reader(data);
+    let mut rdr = csv::Reader::from_reader(strip_utf8_bom(data));
     let mut items = Vec::new();
     for result in rdr.records() {
         let row = result.map_err(|e| anyhow::anyhow!("Failed to read CSV row: {}", e))?;
@@ -1472,8 +1490,57 @@ fn coerce(data: &[u8], _source_type: &str, target_type: &str) -> Result<Vec<u8>>
         "string" => coerce_to_string(s),
         "integer" => coerce_to_integer(s),
         "number" => coerce_to_number(s),
+        "boolean" => coerce_to_boolean(s),
         "object" => coerce_to_object(s, _source_type),
         other => anyhow::bail!("Unsupported coercion target type: '{}'", other),
+    }
+}
+
+/// Coerce to boolean. Strict, documented spellings only (the inverse
+/// of the boolean→* family): strings accept exactly
+/// true/false/1/0/yes/no/on/off case-insensitively after trim;
+/// numbers accept exactly 1/1.0 → true and 0/0.0 → false. Anything
+/// else is a hard error naming the accepted set — "truthiness" of
+/// arbitrary values would be a silent guess.
+fn coerce_to_boolean(s: &str) -> Result<Vec<u8>> {
+    const ACCEPTED: &str =
+        "true/false, 1/0, yes/no, on/off (strings, case-insensitive) or the numbers 1/0";
+
+    fn bool_from_number(f: f64) -> Option<bool> {
+        if f == 1.0 {
+            Some(true)
+        } else if f == 0.0 {
+            Some(false)
+        } else {
+            None
+        }
+    }
+    fn bool_from_str(s: &str) -> Option<bool> {
+        match s.trim().to_ascii_lowercase().as_str() {
+            "true" | "1" | "yes" | "on" => Some(true),
+            "false" | "0" | "no" | "off" => Some(false),
+            _ => None,
+        }
+    }
+
+    let value = if let Ok(value) = serde_json::from_str::<serde_json::Value>(s) {
+        match value {
+            serde_json::Value::Bool(b) => Some(b),
+            serde_json::Value::Number(n) => n.as_f64().and_then(bool_from_number),
+            serde_json::Value::String(inner) => bool_from_str(&inner),
+            _ => None,
+        }
+    } else {
+        bool_from_str(s)
+    };
+
+    match value {
+        Some(b) => Ok(if b { b"true".to_vec() } else { b"false".to_vec() }),
+        None => anyhow::bail!(
+            "Cannot coerce '{}' to boolean — accepted values: {}",
+            s.trim(),
+            ACCEPTED
+        ),
     }
 }
 
@@ -1547,7 +1614,11 @@ fn coerce_to_number(s: &str) -> Result<Vec<u8>> {
                 }
             }
             serde_json::Value::Bool(b) => {
-                return Ok(if b { b"1.0".to_vec() } else { b"0.0".to_vec() });
+                // Canonical f64 rendering, matching every other
+                // number-producing coercion (integral values render
+                // without a decimal point).
+                let f: f64 = if b { 1.0 } else { 0.0 };
+                return Ok(f.to_string().into_bytes());
             }
             _ => {}
         }
@@ -1779,6 +1850,32 @@ mod tests {
         assert_eq!(infer_csv_value("true"), serde_json::json!(true));
         assert_eq!(infer_csv_value("false"), serde_json::json!(false));
         assert_eq!(infer_csv_value("hello"), serde_json::json!("hello"));
+        assert_eq!(infer_csv_value("-7"), serde_json::json!(-7));
+
+        // Lossless-only inference: identifier-like fields whose numeric
+        // parse would NOT round-trip stay strings (the old inference
+        // corrupted zip codes and IDs: "007" became 7).
+        for keep in ["007", "01234", "1e5", "+42", "1_000", " 42", "42 ", "NaN", "inf", "1.10"] {
+            assert_eq!(
+                infer_csv_value(keep),
+                serde_json::json!(keep),
+                "'{keep}' must stay a string — numeric conversion is lossy"
+            );
+        }
+    }
+
+    // TEST0054: UTF-8 BOM never leaks into CSV header keys.
+    #[test]
+    fn test0054_csv_bom_stripped() {
+        let mut data = vec![0xEF, 0xBB, 0xBF];
+        data.extend_from_slice(b"name,age\nalice,3\n");
+        let out = csv_to_json_records(&data).unwrap();
+        let text = String::from_utf8(out).unwrap();
+        assert!(
+            text.contains("\"name\""),
+            "header must parse clean of the BOM, got: {text}"
+        );
+        assert!(!text.contains('\u{feff}'), "BOM leaked into output: {text}");
     }
 
     // TEST0029: Csv with mixed columns
@@ -1878,11 +1975,47 @@ mod tests {
         assert!((f - 42.0).abs() < f64::EPSILON);
     }
 
-    // TEST0040: Coerce boolean to number
+    // TEST0040: Coerce boolean to number — canonical f64 rendering,
+    // consistent with every other number-producing coercion (integral
+    // values render without a decimal point; "42" not "42.0").
     #[test]
     fn test0040_coerce_boolean_to_number() {
-        assert_eq!(coerce(b"true", "boolean", "number").unwrap(), b"1.0");
-        assert_eq!(coerce(b"false", "boolean", "number").unwrap(), b"0.0");
+        assert_eq!(coerce(b"true", "boolean", "number").unwrap(), b"1");
+        assert_eq!(coerce(b"false", "boolean", "number").unwrap(), b"0");
+        // The consistency this pins: integer input renders identically.
+        assert_eq!(coerce(b"1", "integer", "number").unwrap(), b"1");
+    }
+
+    // TEST0053: Coerce to boolean — strict spellings both ways, hard
+    // error on everything else (the missing inverse of boolean→*).
+    #[test]
+    fn test0053_coerce_to_boolean_strict() {
+        for (input, expected) in [
+            (&b"true"[..], &b"true"[..]),
+            (b"\"YES\"", b"true"),
+            (b"\"on\"", b"true"),
+            (b"1", b"true"),
+            (b"1.0", b"true"),
+            (b"false", b"false"),
+            (b"\"No\"", b"false"),
+            (b"\"off\"", b"false"),
+            (b"0", b"false"),
+            (b"0.0", b"false"),
+        ] {
+            assert_eq!(
+                coerce(input, "string", "boolean").unwrap(),
+                expected,
+                "input {:?}",
+                std::str::from_utf8(input).unwrap()
+            );
+        }
+        for bad in [&b"2"[..], b"\"truthy\"", b"0.5", b"\"\"", b"null", b"[true]"] {
+            assert!(
+                coerce(bad, "string", "boolean").is_err(),
+                "{:?} must be rejected",
+                std::str::from_utf8(bad).unwrap()
+            );
+        }
     }
 
     // TEST0041: Coerce string to object
