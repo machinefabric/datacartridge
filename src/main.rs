@@ -12,6 +12,8 @@
 //! - To object: from string, integer, number, boolean
 
 mod adapter;
+mod repair;
+mod transform;
 
 use anyhow::Result;
 use capdag::{
@@ -67,6 +69,105 @@ fn build_manifest() -> CapManifest {
             "Input data to coerce".to_string(),
         ));
         cap.set_output(capdag::CapOutput::new(out_media, "Coerced data"));
+        all_caps.push(cap);
+    }
+
+    // Semantic-primitive ops: repair (explicit forgiveness) and edit
+    // (instruction-driven deterministic transform).
+    {
+        let repair_json_urn = capdag::CapUrnBuilder::new()
+            .marker("repair")
+            .in_spec("media:enc=utf-8")
+            .out_spec("media:fmt=json")
+            .build()
+            .expect("repair-json URN");
+        let mut cap = Cap::with_description(
+            repair_json_urn,
+            "Repair JSON".to_string(),
+            "repair".to_string(),
+            "Repair broken JSON (quotes, commas, truncation, non-JSON literals) with every              fix logged — explicit forgiveness so strict caps can stay strict."
+                .to_string(),
+        );
+        cap.add_arg(CapArg::with_description(
+            "media:enc=utf-8",
+            true,
+            vec![
+                ArgSource::Stdin { stdin: "media:enc=utf-8".to_string() },
+                ArgSource::Position { position: 0 },
+            ],
+            "The broken JSON text to repair".to_string(),
+        ));
+        cap.set_output(capdag::CapOutput::new("media:fmt=json", "Repaired, strictly valid JSON"));
+        all_caps.push(cap);
+
+        let repair_csv_urn = capdag::CapUrnBuilder::new()
+            .marker("repair")
+            .in_spec("media:enc=utf-8")
+            .out_spec("media:fmt=csv;list;record")
+            .build()
+            .expect("repair-csv URN");
+        let mut cap = Cap::with_description(
+            repair_csv_urn,
+            "Repair CSV".to_string(),
+            "repair".to_string(),
+            "Repair broken CSV (BOM, rows shorter than the header) with every fix logged;              rows with EXTRA fields stay hard errors — dropping data is never a repair."
+                .to_string(),
+        );
+        cap.add_arg(CapArg::with_description(
+            "media:enc=utf-8",
+            true,
+            vec![
+                ArgSource::Stdin { stdin: "media:enc=utf-8".to_string() },
+                ArgSource::Position { position: 0 },
+            ],
+            "The broken CSV text to repair".to_string(),
+        ));
+        cap.set_output(capdag::CapOutput::new(
+            "media:fmt=csv;list;record",
+            "Repaired CSV with uniform row width and normalized quoting",
+        ));
+        all_caps.push(cap);
+
+        let edit_urn = capdag::CapUrnBuilder::new()
+            .marker("edit")
+            .in_spec("media:fmt=json;list;record")
+            .out_spec("media:fmt=json;list;record")
+            .build()
+            .expect("edit URN");
+        let mut cap = Cap::with_description(
+            edit_urn,
+            "Edit (Instruction-Driven Transform)".to_string(),
+            "edit".to_string(),
+            "Describe a transformation of JSON records in plain language; a schema-constrained              program is generated, logged in full, and executed deterministically — the model              never touches the data."
+                .to_string(),
+        );
+        cap.add_arg(CapArg::with_description(
+            "media:fmt=json;list;record",
+            true,
+            vec![
+                ArgSource::Stdin { stdin: "media:fmt=json;list;record".to_string() },
+                ArgSource::Position { position: 0 },
+            ],
+            "The JSON array of records to transform".to_string(),
+        ));
+        cap.add_arg(CapArg::with_description(
+            "media:enc=utf-8;instruction",
+            true,
+            vec![ArgSource::CliFlag { cli_flag: "--instruction".to_string() }],
+            "The transformation, described in plain language".to_string(),
+        ));
+        let mut model_arg = CapArg::with_description(
+            "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+            false,
+            vec![ArgSource::CliFlag { cli_flag: "--model-spec".to_string() }],
+            "Model spec used to generate the transform program".to_string(),
+        );
+        model_arg.default_value = Some(serde_json::json!(DEFAULT_EDIT_MODEL));
+        cap.add_arg(model_arg);
+        cap.set_output(capdag::CapOutput::new(
+            "media:fmt=json;list;record",
+            "The transformed JSON records",
+        ));
         all_caps.push(cap);
     }
 
@@ -1017,6 +1118,34 @@ async fn main() -> Result<()> {
         runtime.register_op(&urn.to_string(), || Box::new(SaveAsTxtOp));
     }
 
+    // Semantic-primitive ops: repair-json, repair-csv, edit — URNs
+    // mirror the manifest declarations above.
+    {
+        let repair_json_urn = capdag::CapUrnBuilder::new()
+            .marker("repair")
+            .in_spec("media:enc=utf-8")
+            .out_spec("media:fmt=json")
+            .build()
+            .expect("repair-json URN");
+        runtime.register_op(&repair_json_urn.to_string(), || Box::new(RepairJsonOp));
+
+        let repair_csv_urn = capdag::CapUrnBuilder::new()
+            .marker("repair")
+            .in_spec("media:enc=utf-8")
+            .out_spec("media:fmt=csv;list;record")
+            .build()
+            .expect("repair-csv URN");
+        runtime.register_op(&repair_csv_urn.to_string(), || Box::new(RepairCsvOp));
+
+        let edit_urn = capdag::CapUrnBuilder::new()
+            .marker("edit")
+            .in_spec("media:fmt=json;list;record")
+            .out_spec("media:fmt=json;list;record")
+            .build()
+            .expect("edit URN");
+        runtime.register_op(&edit_urn.to_string(), || Box::new(EditOp));
+    }
+
     // Collect JSON objects → JSON array / CSV / YAML
     {
         let json_array_urn = capdag::CapUrnBuilder::new()
@@ -1659,6 +1788,369 @@ fn coerce_to_object(s: &str, source_type: &str) -> Result<Vec<u8>> {
 // =============================================================================
 // TESTS
 // =============================================================================
+
+
+// =============================================================================
+// SEMANTIC-PRIMITIVE OPS: repair (explicit forgiveness) and edit
+// (instruction-driven deterministic transform) — docs/semantic-primitives.md
+// =============================================================================
+
+/// `repair-json`: tolerant JSON reader with a visible repair trail.
+/// Every fix is logged with its byte position; unguessable damage is a
+/// hard error (see `repair::repair_json`).
+struct RepairJsonOp;
+
+#[async_trait]
+impl Op<()> for RepairJsonOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        let streams = input
+            .collect_streams()
+            .await
+            .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+        let data = capdag::require_stream(&streams, "media:enc=utf-8")
+            .map_err(|e| OpError::ExecutionFailed(format!("Missing input: {}", e)))?;
+        let text = String::from_utf8_lossy(data);
+
+        let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf-8").cloned();
+        output
+            .start(false, input_meta)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        output.progress(0.10, "Repairing JSON");
+
+        let (value, repairs) = repair::repair_json(&text)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        // The visible-forgiveness contract: every fix is on the record.
+        for action in &repairs {
+            output.log(
+                "WARN",
+                &format!("[repair-json] byte {}: {}", action.position, action.what),
+            );
+        }
+        output.log(
+            "INFO",
+            &format!("[repair-json] {} repair(s) applied", repairs.len()),
+        );
+
+        let out = serde_json::to_string(&value)
+            .map_err(|e| OpError::ExecutionFailed(format!("Serialize failed: {}", e)))?;
+        output
+            .emit_cbor(&ciborium::Value::Text(out))
+            .await
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("RepairJsonOp")
+            .description("Repair broken JSON with a visible repair trail")
+            .build()
+    }
+}
+
+/// `repair-csv`: BOM stripping + short-row padding with a visible
+/// repair trail; over-wide rows stay hard errors (see
+/// `repair::repair_csv`).
+struct RepairCsvOp;
+
+#[async_trait]
+impl Op<()> for RepairCsvOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        let streams = input
+            .collect_streams()
+            .await
+            .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+        let data = capdag::require_stream(&streams, "media:enc=utf-8")
+            .map_err(|e| OpError::ExecutionFailed(format!("Missing input: {}", e)))?;
+
+        let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf-8").cloned();
+        output
+            .start(false, input_meta)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        output.progress(0.10, "Repairing CSV");
+
+        let (repaired, repairs) = repair::repair_csv(data)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        for action in &repairs {
+            output.log(
+                "WARN",
+                &format!("[repair-csv] byte {}: {}", action.position, action.what),
+            );
+        }
+        output.log(
+            "INFO",
+            &format!("[repair-csv] {} repair(s) applied", repairs.len()),
+        );
+
+        let out = String::from_utf8(repaired)
+            .map_err(|e| OpError::ExecutionFailed(format!("Repaired CSV is not UTF-8: {}", e)))?;
+        output
+            .emit_cbor(&ciborium::Value::Text(out))
+            .await
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("RepairCsvOp")
+            .description("Repair broken CSV (BOM, short rows) with a visible repair trail")
+            .build()
+    }
+}
+
+/// `edit`: instruction-driven structured transformation. The model
+/// translates the instruction into a program in the closed op language
+/// (token-level constrained to `transform::PROGRAM_SCHEMA` via a peer
+/// call to constrained GGUF inference); the program executes
+/// deterministically HERE and is logged in full — auditable and
+/// replayable. The model only ever sees the instruction plus a bounded
+/// structural sample of the data, never the data itself.
+struct EditOp;
+
+/// Default GGUF model for edit-program generation — the same
+/// offline-travel-kit model the other constrained caps default to.
+const DEFAULT_EDIT_MODEL: &str = "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*";
+
+#[async_trait]
+impl Op<()> for EditOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        let streams = input
+            .collect_streams()
+            .await
+            .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+        let data_bytes = capdag::require_stream(&streams, "media:fmt=json;list;record")
+            .map_err(|e| OpError::ExecutionFailed(format!("Missing JSON records input: {}", e)))?;
+        let instruction = capdag::find_stream_str_conforming(&streams, "media:enc=utf-8;instruction")
+            .filter(|s| !s.trim().is_empty())
+            .ok_or_else(|| {
+                OpError::ExecutionFailed("Missing --instruction (media:enc=utf-8;instruction)".to_string())
+            })?;
+        let model_spec = capdag::find_stream_str_conforming(&streams, "media:model-spec")
+            .filter(|s| !s.trim().is_empty())
+            .unwrap_or_else(|| DEFAULT_EDIT_MODEL.to_string());
+
+        let data: serde_json::Value = serde_json::from_slice(data_bytes)
+            .map_err(|e| OpError::ExecutionFailed(format!("Input is not valid JSON: {}", e)))?;
+        let records = data.as_array().ok_or_else(|| {
+            OpError::ExecutionFailed("edit input must be a JSON array of objects".to_string())
+        })?;
+
+        let input_meta = capdag::find_stream_meta(&streams, "media:fmt=json;list;record").cloned();
+        output
+            .start(false, input_meta)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        output.progress(0.05, "Sampling data structure");
+
+        // Bounded structural sample: field names + JSON types from the
+        // first records. The model routes on structure, never on data.
+        let sample = structural_sample(records);
+        let program_schema: serde_json::Value = serde_json::from_str(transform::PROGRAM_SCHEMA)
+            .expect("PROGRAM_SCHEMA is valid JSON (pinned by transform tests)");
+        let schema_pretty = serde_json::to_string_pretty(&program_schema)
+            .expect("schema serializes");
+
+        let prompt = format!(
+            "Translate the instruction into a transform program for a table of JSON records.\n\n\
+             Instruction: {}\n\n\
+             Record structure ({} records total):\n{}\n\n\
+             The program is an ordered list of operations applied to every record. Use only \
+             the operations the schema defines; the program must implement the instruction \
+             exactly — no extra operations.\n\n\
+             You MUST respond with valid JSON matching this exact schema:\n```json\n{}\n```\n\n\
+             Respond with ONLY the JSON object, no other text.",
+            instruction.trim(),
+            records.len(),
+            sample,
+            schema_pretty
+        );
+
+        output.progress(0.15, "Generating transform program");
+        let program_json = invoke_constrained_peer(
+            req.peer(),
+            &prompt,
+            program_schema,
+            &model_spec,
+        )
+        .await
+        .map_err(|e| OpError::ExecutionFailed(format!("Program generation failed: {}", e)))?;
+
+        // The program IS the audit artifact: log it in full before running.
+        output.log("INFO", &format!("[edit] generated program: {}", program_json.trim()));
+
+        let program = transform::parse_program(&program_json)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        output.progress(0.75, "Applying transform program");
+        let result = transform::apply_program(&program, &data)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+
+        let n_out = result.as_array().map(|a| a.len()).unwrap_or(0);
+        output.log(
+            "INFO",
+            &format!("[edit] {} record(s) in, {} record(s) out", records.len(), n_out),
+        );
+
+        let out = serde_json::to_string(&result)
+            .map_err(|e| OpError::ExecutionFailed(format!("Serialize failed: {}", e)))?;
+        output
+            .emit_cbor(&ciborium::Value::Text(out))
+            .await
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("EditOp")
+            .description("Instruction-driven deterministic transform of JSON records via a schema-constrained generated program")
+            .build()
+    }
+}
+
+/// Field names and JSON types from the first records — the ONLY view
+/// of the data the model gets. Bounded: at most 3 records, values
+/// replaced by their type names.
+fn structural_sample(records: &[serde_json::Value]) -> String {
+    let mut lines = Vec::new();
+    for (i, rec) in records.iter().take(3).enumerate() {
+        match rec.as_object() {
+            Some(obj) => {
+                let fields: Vec<String> = obj
+                    .iter()
+                    .map(|(k, v)| {
+                        let ty = match v {
+                            serde_json::Value::Null => "null",
+                            serde_json::Value::Bool(_) => "boolean",
+                            serde_json::Value::Number(_) => "number",
+                            serde_json::Value::String(_) => "string",
+                            serde_json::Value::Array(_) => "array",
+                            serde_json::Value::Object(_) => "object",
+                        };
+                        format!("{}: {}", k, ty)
+                    })
+                    .collect();
+                lines.push(format!("record {}: {{{}}}", i, fields.join(", ")));
+            }
+            None => lines.push(format!("record {}: NOT AN OBJECT", i)),
+        }
+    }
+    lines.join("\n")
+}
+
+/// Peer-call constrained GGUF inference and accumulate the generated
+/// text from the NDJSON token stream. Deterministic (temperature 0,
+/// fixed seed) — the same instruction and structure produce the same
+/// program.
+async fn invoke_constrained_peer(
+    peer: &dyn capdag::PeerInvoker,
+    prompt: &str,
+    schema: serde_json::Value,
+    model_spec: &str,
+) -> Result<String> {
+    use machfab_cartridge_sdk::llm::{
+        ConstraintSpec, LlmGenerationRequest, LlmStreamMessage, CAP_LLM_INFERENCE_CONSTRAINED,
+    };
+
+    let request = LlmGenerationRequest {
+        constraint: Some(ConstraintSpec::JsonSchema {
+            schema,
+            description: None,
+        }),
+        temperature: Some(0.0),
+        seed: Some(42),
+        max_tokens: Some(2048),
+        ..LlmGenerationRequest::with_defaults(prompt.to_string(), model_spec.to_string())
+    };
+    let request_json = format!("{}\n", request.to_json());
+
+    let call = peer
+        .call(CAP_LLM_INFERENCE_CONSTRAINED)
+        .map_err(|e| anyhow::anyhow!("peer call failed to start: {}", e))?;
+    let arg = call.arg("media:fmt=json;llm-generation-request;record");
+    arg.start(false, None)
+        .map_err(|e| anyhow::anyhow!("peer arg start failed: {}", e))?;
+    arg.write(request_json.as_bytes())
+        .await
+        .map_err(|e| anyhow::anyhow!("peer arg write failed: {}", e))?;
+    arg.close()
+        .map_err(|e| anyhow::anyhow!("peer arg close failed: {}", e))?;
+
+    let mut response = call
+        .finish()
+        .await
+        .map_err(|e| anyhow::anyhow!("peer call failed: {}", e))?;
+
+    let mut generated = String::new();
+    let mut line_buffer = String::new();
+    while let Some(item) = response.recv().await {
+        match item {
+            capdag::PeerResponseItem::Log(_) => {}
+            capdag::PeerResponseItem::Data(Err(e), _) => {
+                anyhow::bail!("peer response stream error: {}", e);
+            }
+            capdag::PeerResponseItem::Data(Ok(value), _) => {
+                let chunk = match value {
+                    ciborium::Value::Bytes(b) => String::from_utf8_lossy(&b).into_owned(),
+                    ciborium::Value::Text(t) => t,
+                    other => anyhow::bail!("unexpected CBOR type in LLM stream: {:?}", other),
+                };
+                line_buffer.push_str(&chunk);
+                while let Some(nl) = line_buffer.find('\n') {
+                    let line: String = line_buffer.drain(..=nl).collect();
+                    let line = line.trim();
+                    if line.is_empty() {
+                        continue;
+                    }
+                    match LlmStreamMessage::from_line(line) {
+                        Ok(LlmStreamMessage::Token { text }) => generated.push_str(&text),
+                        Ok(LlmStreamMessage::Complete { generated_text, .. }) => {
+                            // Authoritative full text.
+                            generated = generated_text;
+                        }
+                        Ok(LlmStreamMessage::Error { code, message }) => {
+                            anyhow::bail!("constrained inference failed: {} — {}", code, message);
+                        }
+                        Ok(_) => {}
+                        Err(e) => {
+                            anyhow::bail!(
+                                "unparseable NDJSON line from LLM stream: {} (line: {})",
+                                e,
+                                line
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if generated.trim().is_empty() {
+        anyhow::bail!("constrained inference produced no output");
+    }
+    Ok(generated)
+}
 
 #[cfg(test)]
 mod tests {

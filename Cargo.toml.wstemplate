@@ -20,3 +20,10 @@ tracing = "0.1"
 
 [dependencies.capdag]
 path = "../capdag"
+
+[dependencies.machfab-cartridge-sdk]
+path = "../machfab-cartridge-sdk"
+
+[dependencies.serde]
+features = ["derive"]
+version = "1.0"
