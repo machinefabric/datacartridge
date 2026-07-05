@@ -13,6 +13,7 @@
 
 mod adapter;
 mod repair;
+mod semantic;
 mod transform;
 
 use anyhow::Result;
@@ -162,7 +163,7 @@ fn build_manifest() -> CapManifest {
             vec![ArgSource::CliFlag { cli_flag: "--model-spec".to_string() }],
             "Model spec used to generate the transform program".to_string(),
         );
-        model_arg.default_value = Some(serde_json::json!(DEFAULT_EDIT_MODEL));
+        model_arg.default_value = Some(serde_json::json!(DEFAULT_LLM_MODEL));
         cap.add_arg(model_arg);
         cap.set_output(capdag::CapOutput::new(
             "media:fmt=json;list;record",
@@ -321,6 +322,10 @@ fn build_manifest() -> CapManifest {
         ));
         all_caps.push(cap);
     }
+
+    // Semantic-primitive judgment caps (moved out of the engine's former
+    // in-process provider). Their manifest defs mirror fabric/caps/*-en.toml.
+    all_caps.extend(semantic::semantic_caps());
 
     // All caps in a single cap group with data format adapter URNs
     let data_group = CapGroup {
@@ -1146,6 +1151,10 @@ async fn main() -> Result<()> {
         runtime.register_op(&edit_urn.to_string(), || Box::new(EditOp));
     }
 
+    // Semantic-primitive judgment caps: register each Op under its canonical
+    // cap URN (the same URNs advertised by semantic::semantic_caps()).
+    semantic::register_semantic_ops(&mut runtime);
+
     // Collect JSON objects → JSON array / CSV / YAML
     {
         let json_array_urn = capdag::CapUrnBuilder::new()
@@ -1923,9 +1932,10 @@ impl Op<()> for RepairCsvOp {
 /// structural sample of the data, never the data itself.
 struct EditOp;
 
-/// Default GGUF model for edit-program generation — the same
-/// offline-travel-kit model the other constrained caps default to.
-const DEFAULT_EDIT_MODEL: &str = "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*";
+/// Default GGUF model for the constrained caps (`edit` and the semantic
+/// judgment caps) — the offline-travel-kit model the fabric catalog declares
+/// as the default for every one of them.
+pub(crate) const DEFAULT_LLM_MODEL: &str = "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*";
 
 #[async_trait]
 impl Op<()> for EditOp {
@@ -1951,7 +1961,7 @@ impl Op<()> for EditOp {
             })?;
         let model_spec = capdag::find_stream_str_conforming(&streams, "media:model-spec")
             .filter(|s| !s.trim().is_empty())
-            .unwrap_or_else(|| DEFAULT_EDIT_MODEL.to_string());
+            .unwrap_or_else(|| DEFAULT_LLM_MODEL.to_string());
 
         let data: serde_json::Value = serde_json::from_slice(data_bytes)
             .map_err(|e| OpError::ExecutionFailed(format!("Input is not valid JSON: {}", e)))?;
@@ -1994,6 +2004,7 @@ impl Op<()> for EditOp {
             &prompt,
             program_schema,
             &model_spec,
+            /* deterministic */ true,
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Program generation failed: {}", e)))?;
@@ -2060,30 +2071,35 @@ fn structural_sample(records: &[serde_json::Value]) -> String {
     lines.join("\n")
 }
 
-/// Peer-call constrained GGUF inference and accumulate the generated
-/// text from the NDJSON token stream. Deterministic (temperature 0,
-/// fixed seed) — the same instruction and structure produce the same
-/// program.
-async fn invoke_constrained_peer(
+/// Peer-call constrained GGUF inference and accumulate the generated text from
+/// the NDJSON token stream. When `deterministic`, pins greedy sampling +
+/// a fixed seed (semantic-primitives law P4: same input/model/args → same
+/// output), which `edit` and every judgment cap require; `generate_json` is the
+/// one free-generation caller and passes `false` to keep the model's default
+/// sampling.
+pub(crate) async fn invoke_constrained_peer(
     peer: &dyn capdag::PeerInvoker,
     prompt: &str,
     schema: serde_json::Value,
     model_spec: &str,
+    deterministic: bool,
 ) -> Result<String> {
     use machfab_cartridge_sdk::llm::{
         ConstraintSpec, LlmGenerationRequest, LlmStreamMessage, CAP_LLM_INFERENCE_CONSTRAINED,
     };
 
-    let request = LlmGenerationRequest {
+    let mut request = LlmGenerationRequest {
         constraint: Some(ConstraintSpec::JsonSchema {
             schema,
             description: None,
         }),
-        temperature: Some(0.0),
-        seed: Some(42),
         max_tokens: Some(2048),
         ..LlmGenerationRequest::with_defaults(prompt.to_string(), model_spec.to_string())
     };
+    if deterministic {
+        request.temperature = Some(0.0);
+        request.seed = Some(42);
+    }
     let request_json = format!("{}\n", request.to_json());
 
     let call = peer
