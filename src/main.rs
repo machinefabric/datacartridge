@@ -165,6 +165,12 @@ fn build_manifest() -> CapManifest {
         );
         model_arg.default_value = Some(serde_json::json!(DEFAULT_LLM_MODEL));
         cap.add_arg(model_arg);
+        // The edit cap runs constrained inference (deterministic), so it declares the
+        // same nine configurable inference-param args as the semantic caps. Temperature
+        // and seed are intrinsic constants here (see semantic::resolve_judgment_params).
+        for a in crate::semantic::inference_args() {
+            cap.add_arg(a);
+        }
         cap.set_output(capdag::CapOutput::new(
             "media:fmt=json;list;record",
             "The transformed JSON records",
@@ -1998,13 +2004,18 @@ impl Op<()> for EditOp {
             schema_pretty
         );
 
+        // Transform-program generation is deterministic — resolve the judgment
+        // inference params (temperature/seed pinned; the nine configurable params from
+        // this cap's delivered arg streams).
+        let inference_params = crate::semantic::resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.15, "Generating transform program");
         let program_json = invoke_constrained_peer(
             req.peer(),
             &prompt,
             program_schema,
             &model_spec,
-            /* deterministic */ true,
+            &inference_params,
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Program generation failed: {}", e)))?;
@@ -2077,29 +2088,63 @@ fn structural_sample(records: &[serde_json::Value]) -> String {
 /// output), which `edit` and every judgment cap require; `generate_json` is the
 /// one free-generation caller and passes `false` to keep the model's default
 /// sampling.
+/// The fully-resolved inference parameters for one constrained-generation call.
+///
+/// Every field is a NORMAL cap arg: its default lives in the cap's fabric toml
+/// (`fabric/caps/*.toml`) and is mirrored by `datacartridge::semantic`'s arg
+/// builders; the engine resolves each (default, or a per-cap/per-model/user setting
+/// override) and delivers it as an arg stream. Nothing here is hardcoded at the call
+/// site — `resolve_inference_params` reads these from the delivered streams and fails
+/// hard if any declared param is missing, so a delivery gap is exposed, never hidden.
+/// Field types mirror `LlmGenerationRequest` exactly.
+#[derive(Debug, Clone, Copy)]
+pub(crate) struct InferenceParams {
+    pub max_tokens: u64,
+    pub temperature: f32,
+    pub top_k: i32,
+    pub top_p: f32,
+    pub min_p: f32,
+    pub seed: u32,
+    pub repeat_penalty: f32,
+    pub max_context_length: u32,
+    pub batch_size: u32,
+    pub rope_freq_base: f32,
+    pub rope_freq_scale: f32,
+}
+
 pub(crate) async fn invoke_constrained_peer(
     peer: &dyn capdag::PeerInvoker,
     prompt: &str,
     schema: serde_json::Value,
     model_spec: &str,
-    deterministic: bool,
+    params: &InferenceParams,
 ) -> Result<String> {
     use machfab_cartridge_sdk::llm::{
         ConstraintSpec, LlmGenerationRequest, LlmStreamMessage, CAP_LLM_INFERENCE_CONSTRAINED,
     };
 
-    let mut request = LlmGenerationRequest {
+    // Every sampling/limit parameter comes from the resolved cap args. The request
+    // carries exactly what was resolved and delivered — no hardcoded token cap, no
+    // `deterministic` override. `with_defaults` supplies only prompt/model_spec/
+    // request_type; every tuning field below overrides it from `params`.
+    let request = LlmGenerationRequest {
         constraint: Some(ConstraintSpec::JsonSchema {
             schema,
             description: None,
         }),
-        max_tokens: Some(2048),
+        max_tokens: Some(params.max_tokens),
+        temperature: Some(params.temperature),
+        top_k: Some(params.top_k),
+        top_p: Some(params.top_p),
+        min_p: Some(params.min_p),
+        seed: Some(params.seed),
+        repeat_penalty: Some(params.repeat_penalty),
+        max_context_length: Some(params.max_context_length),
+        batch_size: Some(params.batch_size),
+        rope_freq_base: Some(params.rope_freq_base),
+        rope_freq_scale: Some(params.rope_freq_scale),
         ..LlmGenerationRequest::with_defaults(prompt.to_string(), model_spec.to_string())
     };
-    if deterministic {
-        request.temperature = Some(0.0);
-        request.seed = Some(42);
-    }
     let request_json = format!("{}\n", request.to_json());
 
     let call = peer

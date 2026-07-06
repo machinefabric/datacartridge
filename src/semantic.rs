@@ -58,6 +58,119 @@ fn resolve_model_spec(streams: &Streams) -> String {
         .unwrap_or_else(|| DEFAULT_LLM_MODEL.to_string())
 }
 
+// -----------------------------------------------------------------------------
+// INFERENCE PARAMETERS (normal cap args — defaults live in the fabric tomls)
+// -----------------------------------------------------------------------------
+//
+// Every constrained-inference param is an ordinary cap arg with its own URN. On
+// cap-add the engine discovers each arg's default (below) into a setting record, then
+// resolves the value (default, or a per-cap/per-model/user override) and delivers it
+// as an arg stream on every call — so the arg is practically always present. For
+// capdag CLI / direct invocation, where no engine is in the loop, the cartridge falls
+// back to the SAME default from its own cap definition (the arg's declared default,
+// not a fallback masking a bug). A value that IS supplied but unparseable fails hard.
+//
+// `temperature`/`seed` are special: a judgment must be reproducible, so those are not
+// configurable for the judgment caps — they use the deterministic constants below and
+// do not declare temperature/seed args at all. Only the one free-generation cap
+// (`generate_json`) declares temperature/seed as real args.
+
+// The default values — the SINGLE source of truth shared by the arg builders (which
+// advertise them in the cap definition, mirroring the fabric tomls) and the reader
+// (which substitutes them for an absent optional arg). These MUST equal the
+// fabric-toml defaults.
+const DEFAULT_MAX_TOKENS: u64 = 4096;
+const DEFAULT_TOP_K: i32 = 40;
+const DEFAULT_TOP_P: f32 = 0.95;
+const DEFAULT_MIN_P: f32 = 0.05;
+const DEFAULT_REPEAT_PENALTY: f32 = 1.1;
+const DEFAULT_MAX_CONTEXT: u32 = 8192;
+const DEFAULT_BATCH_SIZE: u32 = 2048;
+const DEFAULT_ROPE_BASE: f32 = 10000.0;
+const DEFAULT_ROPE_SCALE: f32 = 1.0;
+/// The free-generation cap's temperature/seed defaults (its only configurable
+/// sampling knobs; the judgment caps use the deterministic constants instead).
+const DEFAULT_TEMPERATURE: f32 = 0.7;
+const DEFAULT_SEED: u32 = 1234;
+
+/// Greedy-decoding temperature for the judgment caps (reproducible judgments). Not a
+/// configurable arg — judgment reproducibility is intrinsic, never user-tunable.
+const JUDGMENT_TEMPERATURE: f32 = 0.0;
+/// Fixed seed for the judgment caps. Inert under greedy decoding, pinned so the
+/// request is fully specified.
+const JUDGMENT_SEED: u32 = DEFAULT_SEED;
+
+/// URNs of the nine configurable inference-param args every LLM cap declares.
+const MAX_TOKENS_URN: &str = "media:max-tokens;inference;limit;user;task;numeric";
+const TOP_K_URN: &str = "media:top-k;inference;sampling;user;task;numeric";
+const TOP_P_URN: &str = "media:top-p;inference;sampling;user;task;numeric";
+const MIN_P_URN: &str = "media:min-p;inference;sampling;user;task;numeric";
+const REPEAT_PENALTY_URN: &str = "media:repeat-penalty;inference;sampling;user;task;numeric";
+const MAX_CONTEXT_URN: &str = "media:max-context-length;inference;limit;operator;model;numeric";
+const BATCH_SIZE_URN: &str = "media:batch-size;inference;limit;operator;task;numeric";
+const ROPE_BASE_URN: &str = "media:rope-frequency-base;inference;policy;operator;model;numeric";
+const ROPE_SCALE_URN: &str = "media:rope-frequency-scale;inference;policy;operator;model;numeric";
+/// URNs of the temperature/seed args, declared only by the free-generation cap.
+const TEMPERATURE_URN: &str = "media:temperature;inference;sampling;user;task;numeric";
+const SEED_URN: &str = "media:sampling-seed;inference;sampling;user;task;numeric";
+
+/// Read an optional numeric inference-param arg from the delivered streams. Returns
+/// `None` when the arg is absent (the caller substitutes its declared default — see
+/// the module notes: the engine practically always supplies it, but capdag CLI /
+/// direct invocation may not). A value that IS present but unparseable fails hard,
+/// exposing bad input rather than silently defaulting over it.
+fn optional_num<T>(streams: &Streams, urn: &str, name: &str) -> Result<Option<T>>
+where
+    T: std::str::FromStr,
+    T::Err: std::fmt::Display,
+{
+    match optional_conforming(streams, urn) {
+        None => Ok(None),
+        Some(raw) => raw.trim().parse::<T>().map(Some).map_err(|e| {
+            anyhow::anyhow!("inference param '{name}' ({urn}) is not a valid number: '{raw}' ({e})")
+        }),
+    }
+}
+
+/// Resolve the fully-populated [`crate::InferenceParams`] from the delivered arg
+/// streams. Each of the nine configurable params is read from the streams, falling
+/// back to its declared default when absent. `temperature`/`seed` are supplied by the
+/// caller — the judgment constants for judgment caps, or the values the
+/// free-generation cap resolved from its own temperature/seed args.
+fn resolve_inference_params(
+    streams: &Streams,
+    temperature: f32,
+    seed: u32,
+) -> Result<crate::InferenceParams> {
+    Ok(crate::InferenceParams {
+        max_tokens: optional_num(streams, MAX_TOKENS_URN, "max_tokens")?.unwrap_or(DEFAULT_MAX_TOKENS),
+        temperature,
+        top_k: optional_num(streams, TOP_K_URN, "top_k")?.unwrap_or(DEFAULT_TOP_K),
+        top_p: optional_num(streams, TOP_P_URN, "top_p")?.unwrap_or(DEFAULT_TOP_P),
+        min_p: optional_num(streams, MIN_P_URN, "min_p")?.unwrap_or(DEFAULT_MIN_P),
+        seed,
+        repeat_penalty: optional_num(streams, REPEAT_PENALTY_URN, "repeat_penalty")?
+            .unwrap_or(DEFAULT_REPEAT_PENALTY),
+        max_context_length: optional_num(streams, MAX_CONTEXT_URN, "max_context_length")?
+            .unwrap_or(DEFAULT_MAX_CONTEXT),
+        batch_size: optional_num(streams, BATCH_SIZE_URN, "batch_size")?.unwrap_or(DEFAULT_BATCH_SIZE),
+        rope_freq_base: optional_num(streams, ROPE_BASE_URN, "rope_freq_base")?
+            .unwrap_or(DEFAULT_ROPE_BASE),
+        rope_freq_scale: optional_num(streams, ROPE_SCALE_URN, "rope_freq_scale")?
+            .unwrap_or(DEFAULT_ROPE_SCALE),
+    })
+}
+
+/// Resolve inference params for a judgment cap (deterministic constants for
+/// temperature/seed; the nine configurable params from the streams). Shared with the
+/// `edit` cap in `main.rs`, whose transform-program generation is likewise
+/// deterministic.
+pub(crate) fn resolve_judgment_params(
+    streams: &[(String, Vec<u8>, Option<StreamMeta>)],
+) -> Result<crate::InferenceParams> {
+    resolve_inference_params(streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
+}
+
 /// The stream meta of the primary content input (first stream conforming to
 /// `media:enc=utf-8`), carrying the `title` provenance downstream writers use
 /// to derive per-row file names. Returns the meta of that stream even when it
@@ -119,6 +232,7 @@ async fn execute_generate_json(
     content: &str,
     output_schema: serde_json::Value,
     model_spec: &str,
+    params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
 ) -> Result<serde_json::Value> {
     let schema_json = serde_json::to_string_pretty(&output_schema)
@@ -132,7 +246,7 @@ async fn execute_generate_json(
     );
 
     let result_json =
-        invoke_constrained_peer(peer, &prompt, output_schema, model_spec, /* deterministic */ false)
+        invoke_constrained_peer(peer, &prompt, output_schema, model_spec, params)
             .await?;
 
     serde_json::from_str::<serde_json::Value>(&result_json).map_err(|e| {
@@ -156,6 +270,7 @@ async fn execute_extract(
     content: &str,
     user_schema: serde_json::Value,
     model_spec: &str,
+    params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
 ) -> Result<serde_json::Value> {
     let envelope_schema = serde_json::json!({
@@ -185,7 +300,7 @@ async fn execute_extract(
     );
 
     let result_json =
-        invoke_constrained_peer(peer, &prompt, envelope_schema, model_spec, /* deterministic */ true)
+        invoke_constrained_peer(peer, &prompt, envelope_schema, model_spec, params)
             .await?;
 
     let judgment: serde_json::Value = serde_json::from_str(&result_json).map_err(|e| {
@@ -215,6 +330,7 @@ async fn execute_make_decision(
     question: &str,
     max_content_length: Option<usize>,
     model_spec: &str,
+    params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
 ) -> Result<(bool, f32, String)> {
     let registry = StructuredQueryRegistry::new();
@@ -250,7 +366,7 @@ async fn execute_make_decision(
         &prompt_with_schema,
         query.output_schema.clone(),
         model_spec,
-        /* deterministic */ true,
+        params,
     )
     .await?;
 
@@ -282,6 +398,7 @@ async fn execute_make_multiple_decisions(
     questions: &[String],
     max_content_length: Option<usize>,
     model_spec: &str,
+    params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
 ) -> Result<Vec<(bool, f32, String)>> {
     let registry = StructuredQueryRegistry::new();
@@ -333,7 +450,7 @@ async fn execute_make_multiple_decisions(
         &prompt_with_schema,
         output_schema,
         model_spec,
-        /* deterministic */ true,
+        params,
     )
     .await?;
 
@@ -388,6 +505,7 @@ async fn execute_judgment_query(
     schema_variables: Option<HashMap<String, serde_json::Value>>,
     required_fields: &[&str],
     model_spec: &str,
+    params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
 ) -> Result<serde_json::Value> {
     let registry = StructuredQueryRegistry::new();
@@ -422,7 +540,7 @@ async fn execute_judgment_query(
         &prompt_with_schema,
         output_schema,
         model_spec,
-        /* deterministic */ true,
+        params,
     )
     .await?;
 
@@ -460,6 +578,7 @@ async fn execute_same(
     right: &str,
     context: Option<&str>,
     model_spec: &str,
+    params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
 ) -> Result<serde_json::Value> {
     let registry = StructuredQueryRegistry::new();
@@ -491,7 +610,7 @@ async fn execute_same(
         &prompt_with_schema,
         query.output_schema.clone(),
         model_spec,
-        /* deterministic */ true,
+        params,
     )
     .await?;
 
@@ -738,8 +857,18 @@ impl Op<()> for GenerateJsonOp {
         let output_schema: serde_json::Value = serde_json::from_str(&schema_str)
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to parse schema argument as JSON: {}", e)))?;
         let model_spec = resolve_model_spec(&streams);
+        // generate_json is the one non-deterministic cap: temperature/seed are real,
+        // configurable args here, each backstopped to its declared default.
+        let temperature: f32 = optional_num(&streams, TEMPERATURE_URN, "temperature")
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?
+            .unwrap_or(DEFAULT_TEMPERATURE);
+        let seed: u32 = optional_num(&streams, SEED_URN, "seed")
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?
+            .unwrap_or(DEFAULT_SEED);
+        let inference_params = resolve_inference_params(&streams, temperature, seed)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
-        let result = execute_generate_json(&content, output_schema, &model_spec, req.peer())
+        let result = execute_generate_json(&content, output_schema, &model_spec, &inference_params, req.peer())
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute generate_json: {}", e)))?;
 
@@ -770,8 +899,10 @@ impl Op<()> for ExtractOp {
         let user_schema: serde_json::Value = serde_json::from_str(&schema_str)
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to parse schema argument as JSON: {}", e)))?;
         let model_spec = resolve_model_spec(&streams);
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
-        let judgment = execute_extract(&content, user_schema, &model_spec, req.peer())
+        let judgment = execute_extract(&content, user_schema, &model_spec, &inference_params, req.peer())
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute extract: {}", e)))?;
 
@@ -807,9 +938,11 @@ impl Op<()> for MakeDecisionOp {
             .and_then(|v| v.trim().parse().ok())
             .unwrap_or(0.7);
         let model_spec = resolve_model_spec(&streams);
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         let (value, confidence, reason) =
-            execute_make_decision(&content, &question, max_content_length, &model_spec, req.peer())
+            execute_make_decision(&content, &question, max_content_length, &model_spec, &inference_params, req.peer())
                 .await
                 .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute Make Decision: {}", e)))?;
 
@@ -862,12 +995,15 @@ impl Op<()> for MakeMultipleDecisionsOp {
             .and_then(|v| v.trim().parse().ok())
             .unwrap_or(0.7);
         let model_spec = resolve_model_spec(&streams);
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         let results = execute_make_multiple_decisions(
             &content,
             &questions,
             max_content_length,
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -922,8 +1058,10 @@ impl Op<()> for SameOp {
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let context = optional_conforming(&streams, "media:criterion;enc=utf-8");
         let model_spec = resolve_model_spec(&streams);
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
-        let judgment = execute_same(&left, &right, context.as_deref(), &model_spec, req.peer())
+        let judgment = execute_same(&left, &right, context.as_deref(), &model_spec, &inference_params, req.peer())
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute same: {}", e)))?;
 
@@ -974,12 +1112,15 @@ impl Op<()> for ClassifyOp {
             serde_json::Value::String(serde_json::to_string(&labels).expect("label list serializes")),
         );
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_classify",
             subs,
             Some(schema_vars),
             &["label", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1032,12 +1173,15 @@ impl Op<()> for ScoreOp {
         schema_vars.insert("scale_min".to_string(), serde_json::json!(scale_min));
         schema_vars.insert("scale_max".to_string(), serde_json::json!(scale_max));
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_score",
             subs,
             Some(schema_vars),
             &["score", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1076,12 +1220,15 @@ impl Op<()> for VerifyOp {
             serde_json::Value::String(requirements),
         );
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_verify",
             subs,
             None,
             &["pass", "violations", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1140,12 +1287,15 @@ impl Op<()> for RouteOp {
             serde_json::Value::String(serde_json::to_string(&names).expect("target names serialize")),
         );
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_route",
             subs,
             Some(schema_vars),
             &["target", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1196,12 +1346,15 @@ impl Op<()> for NormalizeOp {
             },
         );
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_normalize",
             subs,
             None,
             &["canonical", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1237,12 +1390,15 @@ impl Op<()> for AskOp {
         subs.insert("content".to_string(), serde_json::Value::String(content.clone()));
         subs.insert("question".to_string(), serde_json::Value::String(question));
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_ask",
             subs,
             None,
             &["answer", "quotes", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1283,12 +1439,15 @@ impl Op<()> for ExplainOp {
         subs.insert("content".to_string(), serde_json::Value::String(content.clone()));
         subs.insert("goal".to_string(), serde_json::Value::String(goal));
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_explain",
             subs,
             None,
             &["hypothesis", "evidence", "next_checks", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1352,12 +1511,15 @@ impl Op<()> for SummarizeOp {
             },
         );
 
+        let inference_params = resolve_judgment_params(&streams)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         let judgment = execute_judgment_query(
             "semantic_summarize",
             subs,
             None,
             &["summary", "confidence", "reason"],
             &model_spec,
+            &inference_params,
             req.peer(),
         )
         .await
@@ -1434,6 +1596,56 @@ fn model_spec_arg() -> capdag::CapArg {
     a
 }
 
+/// A numeric CLI-flag inference-param arg with its default. The URN is a config
+/// setting URN, so the engine's settings stack can override the fabric-toml default
+/// per cap/model/user; the value the cartridge receives is whatever was resolved.
+fn num_arg(media: &str, flag: &str, desc: &str, default: serde_json::Value) -> capdag::CapArg {
+    let mut a = capdag::CapArg::with_description(
+        media,
+        false,
+        vec![capdag::ArgSource::CliFlag { cli_flag: flag.to_string() }],
+        desc.to_string(),
+    );
+    a.default_value = Some(default);
+    a
+}
+
+/// The nine configurable inference-param args every LLM cap shares. Temperature and
+/// seed are deliberately excluded (see the module's INFERENCE PARAMETERS notes):
+/// judgment caps are deterministic and do not expose them. Defaults mirror the
+/// fabric tomls exactly. Shared with the `edit` cap in `main.rs`.
+pub(crate) fn inference_args() -> Vec<capdag::CapArg> {
+    vec![
+        num_arg(MAX_TOKENS_URN, "--max-tokens", "Maximum tokens to generate", serde_json::json!(DEFAULT_MAX_TOKENS)),
+        num_arg(TOP_K_URN, "--top-k", "Top-k sampling parameter", serde_json::json!(DEFAULT_TOP_K)),
+        num_arg(TOP_P_URN, "--top-p", "Top-p (nucleus) sampling parameter", serde_json::json!(DEFAULT_TOP_P)),
+        num_arg(MIN_P_URN, "--min-p", "Minimum-probability sampling parameter", serde_json::json!(DEFAULT_MIN_P)),
+        num_arg(REPEAT_PENALTY_URN, "--repeat-penalty", "Repetition penalty for token sampling", serde_json::json!(DEFAULT_REPEAT_PENALTY)),
+        num_arg(MAX_CONTEXT_URN, "--max-context-length", "Maximum context length", serde_json::json!(DEFAULT_MAX_CONTEXT)),
+        num_arg(BATCH_SIZE_URN, "--batch-size", "Batch size for processing", serde_json::json!(DEFAULT_BATCH_SIZE)),
+        num_arg(ROPE_BASE_URN, "--rope-freq-base", "RoPE frequency base", serde_json::json!(DEFAULT_ROPE_BASE)),
+        num_arg(ROPE_SCALE_URN, "--rope-freq-scale", "RoPE frequency scale parameter", serde_json::json!(DEFAULT_ROPE_SCALE)),
+    ]
+}
+
+/// The temperature + seed args — declared only by the one free-generation cap
+/// (`generate_json`), whose output is not required to be reproducible.
+fn sampling_temperature_args() -> Vec<capdag::CapArg> {
+    vec![
+        num_arg(TEMPERATURE_URN, "--temperature", "Sampling temperature", serde_json::json!(DEFAULT_TEMPERATURE)),
+        num_arg(SEED_URN, "--seed", "Random seed for reproducible sampling", serde_json::json!(DEFAULT_SEED)),
+    ]
+}
+
+/// Add the shared LLM control args (`--model-spec` + the nine configurable inference
+/// params) to a cap — the set every constrained-inference cap carries.
+fn add_llm_args(cap: &mut capdag::Cap) {
+    cap.add_arg(model_spec_arg());
+    for a in inference_args() {
+        cap.add_arg(a);
+    }
+}
+
 /// The primary content arg (stdin / positional 0) every semantic cap shares.
 fn content_arg(desc: &str) -> capdag::CapArg {
     capdag::CapArg::with_description(
@@ -1500,7 +1712,12 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to analyze"));
         cap.add_arg(flag_arg("media:fmt=json;json-schema;record", "--schema", "The JSON Schema the output must match"));
         cap.add_arg(language_arg());
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
+        // generate_json is the one non-deterministic cap: temperature/seed are real,
+        // configurable args here (they are intrinsic constants on the judgment caps).
+        for a in sampling_temperature_args() {
+            cap.add_arg(a);
+        }
         cap.set_output(CapOutput::new("media:fmt=json;record", "JSON object conforming to the supplied schema."));
         caps.push(cap);
     }
@@ -1515,7 +1732,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         );
         cap.add_arg(content_arg("Content to extract from"));
         cap.add_arg(flag_arg("media:fmt=json;json-schema;record", "--schema", "The JSON Schema describing the fields to extract"));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: result (instance of the supplied schema), confidence, reason"));
         caps.push(cap);
     }
@@ -1533,7 +1750,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(language_arg());
         cap.add_arg(opt_flag_arg("media:max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
         cap.add_arg(opt_flag_arg("media:confidence-threshold;numeric", "--confidence-threshold", "Minimum confidence threshold for decisions", Some(serde_json::json!(0.7))));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new("media:decision;fmt=json;record", "Binary decision result (true/false)"));
         caps.push(cap);
     }
@@ -1551,7 +1768,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(language_arg());
         cap.add_arg(opt_flag_arg("media:max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
         cap.add_arg(opt_flag_arg("media:confidence-threshold;numeric", "--confidence-threshold", "Minimum confidence threshold for decisions", Some(serde_json::json!(0.7))));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         // is_sequence=true: this is the one semantic cap that emits a *sequence*
         // (one decision record per question). It must match the fabric TOML's
         // `[output] is_sequence = true`, else the cartridge runtime sets up a
@@ -1582,7 +1799,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             "The second item".to_string(),
         ));
         cap.add_arg(opt_flag_arg("media:criterion;enc=utf-8", "--context", "Optional context framing what \"the same\" means", None));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: same (bool), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
@@ -1598,7 +1815,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to classify"));
         cap.add_arg(flag_arg("media:enc=utf-8;label-set", "--labels", "The allowed labels, comma- or newline-separated (2..=64)"));
         cap.add_arg(opt_flag_arg("media:criterion;enc=utf-8", "--context", "Optional context framing the classification", None));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: label (from the allowed set), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
@@ -1614,7 +1831,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to score"));
         cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--rubric", "The rubric describing what to score"));
         cap.add_arg(opt_flag_arg("media:enc=utf-8;scale", "--scale", "The integer scale as min..max (default 0..10)", Some(serde_json::json!("0..10"))));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: score (integer on the scale), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
@@ -1629,7 +1846,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         );
         cap.add_arg(content_arg("The artifact to verify"));
         cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--against", "The requirements to verify against"));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: pass (bool), violations (requirement/evidence/severity), confidence, reason"));
         caps.push(cap);
     }
@@ -1644,7 +1861,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         );
         cap.add_arg(content_arg("Content to route"));
         cap.add_arg(flag_arg("media:fmt=json;record;target-set", "--targets", "A JSON object mapping target name to its contract description (2..=64)"));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: target (from the given set), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
@@ -1660,7 +1877,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("The value to normalize"));
         cap.add_arg(flag_arg("media:enc=utf-8;entity-type", "--type", "The entity type (e.g. date, currency, phone)"));
         cap.add_arg(opt_flag_arg("media:enc=utf-8;locale", "--locale", "Optional locale hint for normalization", None));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: canonical (string; empty with confidence 0.0 when unreadable), confidence, reason"));
         caps.push(cap);
     }
@@ -1675,7 +1892,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         );
         cap.add_arg(content_arg("Content to answer against"));
         cap.add_arg(flag_arg("media:enc=utf-8;question", "--question", "The question to answer about the content"));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: answer, verified verbatim quotes, confidence, reason"));
         caps.push(cap);
     }
@@ -1690,7 +1907,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         );
         cap.add_arg(content_arg("The data to explain"));
         cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--goal", "The goal the explanation should serve"));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: hypothesis, verified evidence, next checks, confidence, reason"));
         caps.push(cap);
     }
@@ -1706,7 +1923,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to summarize"));
         cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--for", "The purpose the summary should serve"));
         cap.add_arg(opt_flag_arg("media:numeric;word-budget", "--budget", "Optional positive word budget for the summary", None));
-        cap.add_arg(model_spec_arg());
+        add_llm_args(&mut cap);
         cap.set_output(CapOutput::new("media:enc=utf-8;ext=txt;plain-text", "The purpose-driven summary as plain text"));
         caps.push(cap);
     }
@@ -1849,5 +2066,100 @@ mod tests {
 
         let not_array = serde_json::json!("quote");
         assert!(verify_quotes_grounded(content, &not_array, "ask").is_err());
+    }
+
+    // --- Inference parameters (fabric-toml-defaulted cap args) -----------------
+
+    /// With no arg streams supplied (the capdag-CLI / direct-invocation path), every
+    /// param backstops to its declared cap-definition default. Concrete values are
+    /// asserted so this guards the ACTUAL defaults — notably that `max_tokens` is the
+    /// fabric `4096`, never the old hardcoded `2048` that truncated the JSON mid-string.
+    #[test]
+    fn test0300_inference_params_backstop_to_declared_defaults() {
+        let streams: Vec<(String, Vec<u8>, Option<StreamMeta>)> = Vec::new();
+        let p = resolve_inference_params(&streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
+            .expect("backstop resolution never fails");
+        assert_eq!(p.max_tokens, 4096, "max_tokens must be the fabric default, not the old 2048");
+        assert_eq!(p.top_k, 40);
+        assert_eq!(p.top_p, 0.95_f32);
+        assert_eq!(p.min_p, 0.05_f32);
+        assert_eq!(p.repeat_penalty, 1.1_f32);
+        assert_eq!(p.max_context_length, 8192);
+        assert_eq!(p.batch_size, 2048);
+        assert_eq!(p.rope_freq_base, 10000.0_f32);
+        assert_eq!(p.rope_freq_scale, 1.0_f32);
+        // Judgment temperature/seed are the deterministic constants, not configurable.
+        assert_eq!(p.temperature, 0.0_f32);
+        assert_eq!(p.seed, 1234);
+    }
+
+    /// A supplied arg stream (the normal engine-delivered path) is read and parsed;
+    /// params not supplied still backstop to their defaults.
+    #[test]
+    fn test0301_inference_params_read_supplied_values() {
+        let streams = vec![
+            (MAX_TOKENS_URN.to_string(), b"9001".to_vec(), None),
+            (TOP_K_URN.to_string(), b"7".to_vec(), None),
+        ];
+        let p = resolve_inference_params(&streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED).unwrap();
+        assert_eq!(p.max_tokens, 9001);
+        assert_eq!(p.top_k, 7);
+        assert_eq!(p.max_context_length, 8192, "unsupplied params still backstop");
+    }
+
+    /// A supplied-but-unparseable value fails hard — it exposes bad input rather than
+    /// silently substituting the default over a malformed override.
+    #[test]
+    fn test0302_inference_params_malformed_value_fails_hard() {
+        let streams = vec![(MAX_TOKENS_URN.to_string(), b"not-a-number".to_vec(), None)];
+        let err = resolve_inference_params(&streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
+            .expect_err("a malformed numeric arg must fail, not default over it");
+        assert!(err.to_string().contains("max_tokens"), "error must name the param: {err}");
+    }
+
+    /// Every semantic cap declares all nine configurable inference args, so the engine
+    /// surfaces and delivers them. A cap that forgot `add_llm_args` would silently lose
+    /// its tunable inference params (and, with the reader's backstop, run on defaults
+    /// with no way to override) — this catches that.
+    #[test]
+    fn test0303_llm_caps_declare_inference_args() {
+        let required = [
+            MAX_TOKENS_URN, TOP_K_URN, TOP_P_URN, MIN_P_URN, REPEAT_PENALTY_URN,
+            MAX_CONTEXT_URN, BATCH_SIZE_URN, ROPE_BASE_URN, ROPE_SCALE_URN,
+        ];
+        let caps = semantic_caps();
+        for cap in &caps {
+            for urn in required {
+                assert!(
+                    cap.get_args().iter().any(|a| a.media_urn == urn),
+                    "cap '{}' is missing inference arg '{}'",
+                    cap.urn.to_string(),
+                    urn,
+                );
+            }
+        }
+        assert_eq!(caps.len(), 13, "expected the 13 semantic LLM caps, found {}", caps.len());
+    }
+
+    /// Only the free-generation cap exposes temperature/seed as configurable args;
+    /// judgment caps keep determinism intrinsic and must NOT expose them.
+    #[test]
+    fn test0304_temperature_seed_only_on_generate_json() {
+        let caps = semantic_caps();
+        let gj_urn = capdag::standard::generate_json_urn("en").to_string();
+        let gj = caps.iter().find(|c| c.urn.to_string() == gj_urn).expect("generate_json cap present");
+        assert!(gj.get_args().iter().any(|a| a.media_urn == TEMPERATURE_URN), "generate_json exposes temperature");
+        assert!(gj.get_args().iter().any(|a| a.media_urn == SEED_URN), "generate_json exposes seed");
+
+        let summ_urn = capdag::standard::summarize_urn("en").to_string();
+        let summ = caps.iter().find(|c| c.urn.to_string() == summ_urn).expect("summarize cap present");
+        assert!(
+            !summ.get_args().iter().any(|a| a.media_urn == TEMPERATURE_URN),
+            "judgment cap 'summarize' must not expose a configurable temperature",
+        );
+        assert!(
+            !summ.get_args().iter().any(|a| a.media_urn == SEED_URN),
+            "judgment cap 'summarize' must not expose a configurable seed",
+        );
     }
 }
