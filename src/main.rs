@@ -2112,6 +2112,73 @@ pub(crate) struct InferenceParams {
     pub rope_freq_scale: f32,
 }
 
+/// Backstop limits on the complexity of a JSON schema handed to constrained
+/// generation. A model under grammar constraint cannot reliably follow an
+/// arbitrarily deep or wide schema — past these bounds it degrades or fails opaquely
+/// (a truncated/garbled object, or a grammar the runtime rejects). These are hard
+/// structural safety rails, NOT user-tunable knobs (they were formerly the
+/// `max-guidance-depth` / `max-guidance-fields` engine settings; that indirection is
+/// gone — the limit lives with the code that enforces it). Exceeding them is a clear,
+/// up-front failure instead of a cryptic downstream one.
+const GUIDANCE_MAX_SCHEMA_DEPTH: usize = 10;
+const GUIDANCE_MAX_SCHEMA_FIELDS: usize = 50;
+
+/// Compute (max object/array nesting depth, total declared-property count) of a JSON
+/// schema. Depth counts each `properties`/`items` descent; fields sums every declared
+/// property across the whole schema.
+fn schema_depth_and_fields(schema: &serde_json::Value) -> (usize, usize) {
+    fn walk(v: &serde_json::Value, depth: usize, fields: &mut usize) -> usize {
+        match v {
+            serde_json::Value::Object(map) => {
+                let mut deepest = depth;
+                if let Some(serde_json::Value::Object(props)) = map.get("properties") {
+                    *fields += props.len();
+                    for sub in props.values() {
+                        deepest = deepest.max(walk(sub, depth + 1, fields));
+                    }
+                }
+                if let Some(items) = map.get("items") {
+                    deepest = deepest.max(walk(items, depth + 1, fields));
+                }
+                deepest
+            }
+            serde_json::Value::Array(arr) => {
+                let mut deepest = depth;
+                for item in arr {
+                    deepest = deepest.max(walk(item, depth, fields));
+                }
+                deepest
+            }
+            _ => depth,
+        }
+    }
+    let mut fields = 0;
+    let depth = walk(schema, 0, &mut fields);
+    (depth, fields)
+}
+
+/// Reject a schema too complex for reliable constrained generation, with a message
+/// that names the offending dimension and the limit — so the failure is actionable
+/// rather than surfacing later as a mangled model output.
+fn guard_schema_complexity(schema: &serde_json::Value) -> Result<()> {
+    let (depth, fields) = schema_depth_and_fields(schema);
+    if depth > GUIDANCE_MAX_SCHEMA_DEPTH {
+        anyhow::bail!(
+            "output JSON schema is too deeply nested for constrained generation: nesting \
+             depth {depth} exceeds the limit of {GUIDANCE_MAX_SCHEMA_DEPTH}. Models cannot \
+             reliably follow a schema this deep under grammar constraint — flatten it."
+        );
+    }
+    if fields > GUIDANCE_MAX_SCHEMA_FIELDS {
+        anyhow::bail!(
+            "output JSON schema has too many fields for constrained generation: {fields} \
+             declared properties exceed the limit of {GUIDANCE_MAX_SCHEMA_FIELDS}. Models \
+             cannot reliably follow a schema this wide under grammar constraint — reduce it."
+        );
+    }
+    Ok(())
+}
+
 pub(crate) async fn invoke_constrained_peer(
     peer: &dyn capdag::PeerInvoker,
     prompt: &str,
@@ -2122,6 +2189,10 @@ pub(crate) async fn invoke_constrained_peer(
     use machfab_cartridge_sdk::llm::{
         ConstraintSpec, LlmGenerationRequest, LlmStreamMessage, CAP_LLM_INFERENCE_CONSTRAINED,
     };
+
+    // Backstop: reject a schema too deep/wide for the model to follow under grammar
+    // constraint, up front, before spending a generation on it.
+    guard_schema_complexity(&schema)?;
 
     // Every sampling/limit parameter comes from the resolved cap args. The request
     // carries exactly what was resolved and delivered — no hardcoded token cap, no
@@ -2216,6 +2287,44 @@ pub(crate) async fn invoke_constrained_peer(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The schema-complexity backstop (formerly the `max-guidance-*` settings): a
+    /// normal schema passes; a schema deeper than the depth limit, or wider than the
+    /// field limit, fails hard with a message naming the offending dimension — so an
+    /// over-complex schema is rejected up front rather than mangled by the model.
+    #[test]
+    fn test_guard_schema_complexity() {
+        // A normal semantic-judgment schema is well within both limits.
+        let ok = serde_json::json!({
+            "type": "object",
+            "properties": {
+                "summary": {"type": "string", "maxLength": 6000},
+                "confidence": {"type": "number"},
+                "reason": {"type": "string"}
+            }
+        });
+        let (depth, fields) = schema_depth_and_fields(&ok);
+        assert_eq!(depth, 1);
+        assert_eq!(fields, 3);
+        assert!(guard_schema_complexity(&ok).is_ok());
+
+        // Nesting past GUIDANCE_MAX_SCHEMA_DEPTH is rejected, naming the depth.
+        let mut deep = serde_json::json!({"type": "string"});
+        for _ in 0..(GUIDANCE_MAX_SCHEMA_DEPTH + 1) {
+            deep = serde_json::json!({"type": "object", "properties": {"n": deep}});
+        }
+        let err = guard_schema_complexity(&deep).unwrap_err().to_string();
+        assert!(err.contains("deeply nested") && err.contains("depth"), "got: {err}");
+
+        // Exceeding GUIDANCE_MAX_SCHEMA_FIELDS is rejected, naming the field count.
+        let mut props = serde_json::Map::new();
+        for i in 0..(GUIDANCE_MAX_SCHEMA_FIELDS + 1) {
+            props.insert(format!("f{i}"), serde_json::json!({"type": "string"}));
+        }
+        let wide = serde_json::json!({"type": "object", "properties": props});
+        let err = guard_schema_complexity(&wide).unwrap_err().to_string();
+        assert!(err.contains("too many fields"), "got: {err}");
+    }
 
     // TEST1859: every cap URN this cartridge advertises must resolve in the
     // pinned fabric catalog. A drifted/bare-marker URN absent from the catalog
