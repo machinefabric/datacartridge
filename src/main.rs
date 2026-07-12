@@ -1687,18 +1687,33 @@ impl Op<()> for EditOp {
         // Bounded structural sample: field names + JSON types from the
         // first records. The model routes on structure, never on data.
         let sample = structural_sample(records);
-        let program_schema: serde_json::Value = serde_json::from_str(transform::PROGRAM_SCHEMA)
-            .expect("PROGRAM_SCHEMA is valid JSON (pinned by transform tests)");
+        // Constrain every existing-field reference in the program to the input's
+        // actual field names, so the model cannot emit an op over a field that
+        // doesn't exist (`set_field` still adds new fields — see the schema doc).
+        let field_names = transform::input_field_names(records);
+        let program_schema = transform::program_schema_with_fields(&field_names);
         let schema_pretty = serde_json::to_string_pretty(&program_schema)
             .expect("schema serializes");
 
         let prompt = format!(
             "Translate the instruction into a transform program for a table of JSON records.\n\n\
+             The program is an ordered list of operations applied to every record. Use ONLY \
+             the operations the schema defines; the program must implement the instruction \
+             EXACTLY — no extra operations. Pick the operation that matches the instruction's \
+             verb: add/set a field → `set_field`; change a field's text → `map_field`; keep/remove \
+             rows → `filter`; rename → `rename_field`; keep/remove columns → `select_fields`/\
+             `drop_fields`. Do NOT filter or drop rows unless the instruction asks to. A field's \
+             value must have the type the instruction states (true/false is a JSON boolean, not \
+             a string).\n\n\
+             Examples:\n\
+             - Instruction \"Add a boolean field verified set to true\" → \
+             {{\"ops\":[{{\"op\":\"set_field\",\"field\":\"verified\",\"value\":true}}]}}\n\
+             - Instruction \"Uppercase the city field\" → \
+             {{\"ops\":[{{\"op\":\"map_field\",\"field\":\"city\",\"transform\":\"uppercase\"}}]}}\n\
+             - Instruction \"Keep only rows where age is at least 18\" → \
+             {{\"ops\":[{{\"op\":\"filter\",\"field\":\"age\",\"predicate\":\"ge\",\"value\":18}}]}}\n\n\
              Instruction: {}\n\n\
              Record structure ({} records total):\n{}\n\n\
-             The program is an ordered list of operations applied to every record. Use only \
-             the operations the schema defines; the program must implement the instruction \
-             exactly — no extra operations.\n\n\
              You MUST respond with valid JSON matching this exact schema:\n```json\n{}\n```\n\n\
              Respond with ONLY the JSON object, no other text.",
             instruction.trim(),

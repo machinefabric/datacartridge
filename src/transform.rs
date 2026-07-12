@@ -136,6 +136,62 @@ pub const PROGRAM_SCHEMA: &str = r#"{
   "additionalProperties": false
 }"#;
 
+/// Build the program schema with existing-field references constrained to the
+/// input's actual field names. Ops that READ an existing field
+/// (`select_fields`, `drop_fields`, `rename_field.from`, `filter`, `map_field`,
+/// `sort_by`) get an `enum` of `field_names` on their field reference, so under
+/// constrained decoding the model literally cannot name a field that isn't in
+/// the data — a whole class of wrong programs (e.g. `map_field` on a field that
+/// doesn't exist) becomes *undecodable* rather than merely rejected afterward.
+///
+/// `set_field.field` and `rename_field.to` stay OPEN on purpose: they
+/// legitimately introduce a NEW field (that is how you'd add a column). With no
+/// field names (empty or object-free input) the base schema is returned
+/// unchanged — an empty `enum` would make every read op undecodable.
+pub fn program_schema_with_fields(field_names: &[String]) -> Value {
+    let mut schema: Value =
+        serde_json::from_str(PROGRAM_SCHEMA).expect("PROGRAM_SCHEMA is valid JSON");
+    if field_names.is_empty() {
+        return schema;
+    }
+    let field_enum = Value::Array(field_names.iter().cloned().map(Value::String).collect());
+    if let Some(branches) = schema["properties"]["ops"]["items"]["oneOf"].as_array_mut() {
+        for branch in branches {
+            let op = branch["properties"]["op"]["enum"][0].as_str().unwrap_or("");
+            match op {
+                "select_fields" | "drop_fields" => {
+                    branch["properties"]["fields"]["items"]["enum"] = field_enum.clone();
+                }
+                "rename_field" => {
+                    branch["properties"]["from"]["enum"] = field_enum.clone();
+                }
+                "filter" | "map_field" | "sort_by" => {
+                    branch["properties"]["field"]["enum"] = field_enum.clone();
+                }
+                // set_field (may add a field), limit, reverse: no existing-field
+                // reference to constrain.
+                _ => {}
+            }
+        }
+    }
+    schema
+}
+
+/// The union of every object key across `records`, sorted — the set of fields a
+/// read op may reference. Deterministic (BTreeSet) so the generated schema, and
+/// thus constrained decoding, is reproducible.
+pub fn input_field_names(records: &[Value]) -> Vec<String> {
+    let mut seen = std::collections::BTreeSet::new();
+    for rec in records {
+        if let Some(obj) = rec.as_object() {
+            for k in obj.keys() {
+                seen.insert(k.clone());
+            }
+        }
+    }
+    seen.into_iter().collect()
+}
+
 /// A transform program: an ordered list of operations.
 #[derive(Debug, Clone, Deserialize)]
 pub struct Program {
@@ -529,6 +585,48 @@ mod tests {
         }
         // Unknown ops are rejected (a schema/executor drift would land here).
         assert!(parse_program(r#"{"ops": [{"op": "explode"}]}"#).is_err());
+    }
+
+    // TEST0065: the dynamic schema constrains every existing-field reference to
+    // the input's field names, so a read op over a non-existent field is
+    // undecodable; `set_field` stays open so a NEW field can still be added.
+    #[test]
+    fn test0065_schema_constrains_read_op_fields_to_input() {
+        let schema = program_schema_with_fields(&["name".to_string(), "age".to_string()]);
+        let branches = schema["properties"]["ops"]["items"]["oneOf"]
+            .as_array()
+            .expect("oneOf");
+        let get = |op: &str| {
+            branches
+                .iter()
+                .find(|b| b["properties"]["op"]["enum"][0] == op)
+                .unwrap_or_else(|| panic!("branch {op}"))
+        };
+        let want = json!(["name", "age"]);
+        assert_eq!(get("map_field")["properties"]["field"]["enum"], want);
+        assert_eq!(get("filter")["properties"]["field"]["enum"], want);
+        assert_eq!(get("sort_by")["properties"]["field"]["enum"], want);
+        assert_eq!(get("select_fields")["properties"]["fields"]["items"]["enum"], want);
+        assert_eq!(get("drop_fields")["properties"]["fields"]["items"]["enum"], want);
+        assert_eq!(get("rename_field")["properties"]["from"]["enum"], want);
+        // set_field.field and rename_field.to stay OPEN (they may add a new field).
+        assert!(get("set_field")["properties"]["field"].get("enum").is_none());
+        assert!(get("rename_field")["properties"]["to"].get("enum").is_none());
+        // Empty field set -> base schema unchanged (no empty enum on any read op).
+        let base = program_schema_with_fields(&[]);
+        let mf = base["properties"]["ops"]["items"]["oneOf"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|b| b["properties"]["op"]["enum"][0] == "map_field")
+            .unwrap();
+        assert!(mf["properties"]["field"].get("enum").is_none());
+        // The union of record keys, sorted, is what feeds the enum.
+        let records = json!([{"b": 1, "a": 2}, {"a": 3, "c": 4}]);
+        assert_eq!(
+            input_field_names(records.as_array().unwrap()),
+            vec!["a".to_string(), "b".to_string(), "c".to_string()]
+        );
     }
 
     // TEST0061: an end-to-end program — the "describe it like a chatbot"
