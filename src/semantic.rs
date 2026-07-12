@@ -1706,9 +1706,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::generate_json_urn(en),
             "Generate JSON".to_string(),
-            "generate_json".to_string(),
-            "Produce a JSON object matching a caller-supplied schema from content, guaranteed valid via constrained generation.".to_string(),
-        );
+            vec!["generate_json".to_string()],
+            "Produce a JSON object matching a caller-supplied schema from content, guaranteed valid via constrained generation.".to_string());
         cap.add_arg(content_arg("Content to analyze"));
         cap.add_arg(flag_arg("media:fmt=json;json-schema;record", "--schema", "The JSON Schema the output must match"));
         cap.add_arg(language_arg());
@@ -1727,9 +1726,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::extract_urn(en),
             "Extract".to_string(),
-            "extract".to_string(),
-            "Extract the fields described by a schema from content, wrapped in the semantic-judgment envelope.".to_string(),
-        );
+            vec!["extract".to_string()],
+            "Extract the fields described by a schema from content, wrapped in the semantic-judgment envelope.".to_string());
         cap.add_arg(content_arg("Content to extract from"));
         cap.add_arg(flag_arg("media:fmt=json;json-schema;record", "--schema", "The JSON Schema describing the fields to extract"));
         add_llm_args(&mut cap);
@@ -1742,9 +1740,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::make_decision_urn(en),
             "Make a Decision".to_string(),
-            "make_decision".to_string(),
-            "Make a single binary (yes/no, true/false) decision based on content and a question".to_string(),
-        );
+            vec!["make_decision".to_string()],
+            "Make a single binary (yes/no, true/false) decision based on content and a question".to_string());
         cap.add_arg(content_arg("Content to analyze for the binary decision"));
         cap.add_arg(flag_arg("media:enc=utf-8;question", "--question", "The binary question to answer about the content"));
         cap.add_arg(language_arg());
@@ -1760,9 +1757,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::make_multiple_decisions_urn(en),
             "Make Multiple Decisions".to_string(),
-            "make_multiple_decisions".to_string(),
-            "Make several binary decisions about the same content in one constrained decode, one record per question.".to_string(),
-        );
+            vec!["make_multiple_decisions".to_string()],
+            "Make several binary decisions about the same content in one constrained decode, one record per question.".to_string());
         cap.add_arg(content_arg("Content to analyze for the binary decisions"));
         cap.add_arg(flag_arg("media:enc=utf-8;question", "--questions", "The binary questions (one per line) to answer about the content"));
         cap.add_arg(language_arg());
@@ -1788,9 +1784,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::same_urn(en),
             "Same".to_string(),
-            "same".to_string(),
-            "Judge whether two items refer to the same thing, under an optional context.".to_string(),
-        );
+            vec!["same".to_string()],
+            "Judge whether two items refer to the same thing, under an optional context.".to_string());
         cap.add_arg(content_arg("The first item"));
         cap.add_arg(capdag::CapArg::with_description(
             "media:enc=utf-8;second-item",
@@ -1809,9 +1804,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::classify_urn(en),
             "Classify".to_string(),
-            "classify".to_string(),
-            "Assign content exactly one label from a caller-supplied set.".to_string(),
-        );
+            vec!["classify".to_string()],
+            "Assign content exactly one label from a caller-supplied set.".to_string());
         cap.add_arg(content_arg("Content to classify"));
         cap.add_arg(flag_arg("media:enc=utf-8;label-set", "--labels", "The allowed labels, comma- or newline-separated (2..=64)"));
         cap.add_arg(opt_flag_arg("media:criterion;enc=utf-8", "--context", "Optional context framing the classification", None));
@@ -1825,9 +1819,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::score_urn(en),
             "Score".to_string(),
-            "score".to_string(),
-            "Score content on a caller-supplied integer scale against a rubric.".to_string(),
-        );
+            vec!["score".to_string()],
+            "Score content on a caller-supplied integer scale against a rubric.".to_string());
         cap.add_arg(content_arg("Content to score"));
         cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--rubric", "The rubric describing what to score"));
         cap.add_arg(opt_flag_arg("media:enc=utf-8;scale", "--scale", "The integer scale as min..max (default 0..10)", Some(serde_json::json!("0..10"))));
@@ -1841,9 +1834,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::verify_urn(en),
             "Verify".to_string(),
-            "verify".to_string(),
-            "Verify an artifact against requirements, returning pass/fail with violations.".to_string(),
-        );
+            vec!["verify".to_string()],
+            "Verify an artifact against requirements, returning pass/fail with violations.".to_string());
         cap.add_arg(content_arg("The artifact to verify"));
         cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--against", "The requirements to verify against"));
         add_llm_args(&mut cap);
@@ -1856,9 +1848,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::route_urn(en),
             "Route".to_string(),
-            "route".to_string(),
-            "Pick exactly one target from a caller-supplied contract set for the content.".to_string(),
-        );
+            vec!["route".to_string()],
+            "Pick exactly one target from a caller-supplied contract set for the content.".to_string());
         cap.add_arg(content_arg("Content to route"));
         cap.add_arg(flag_arg("media:fmt=json;record;target-set", "--targets", "A JSON object mapping target name to its contract description (2..=64)"));
         add_llm_args(&mut cap);
@@ -1871,9 +1862,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::normalize_urn(en),
             "Normalize".to_string(),
-            "normalize".to_string(),
-            "Canonicalize a value to its standard form for a given entity type.".to_string(),
-        );
+            vec!["normalize".to_string()],
+            "Canonicalize a value to its standard form for a given entity type.".to_string());
         cap.add_arg(content_arg("The value to normalize"));
         cap.add_arg(flag_arg("media:enc=utf-8;entity-type", "--type", "The entity type (e.g. date, currency, phone)"));
         cap.add_arg(opt_flag_arg("media:enc=utf-8;locale", "--locale", "Optional locale hint for normalization", None));
@@ -1887,9 +1877,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::ask_urn(en),
             "Ask".to_string(),
-            "ask".to_string(),
-            "Answer a question about content with verbatim-quote evidence that is verified to occur in the content.".to_string(),
-        );
+            vec!["ask".to_string()],
+            "Answer a question about content with verbatim-quote evidence that is verified to occur in the content.".to_string());
         cap.add_arg(content_arg("Content to answer against"));
         cap.add_arg(flag_arg("media:enc=utf-8;question", "--question", "The question to answer about the content"));
         add_llm_args(&mut cap);
@@ -1902,9 +1891,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::explain_urn(en),
             "Explain".to_string(),
-            "explain".to_string(),
-            "Propose a hypothesis for a goal, backed by verified evidence from the data plus next checks.".to_string(),
-        );
+            vec!["explain".to_string()],
+            "Propose a hypothesis for a goal, backed by verified evidence from the data plus next checks.".to_string());
         cap.add_arg(content_arg("The data to explain"));
         cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--goal", "The goal the explanation should serve"));
         add_llm_args(&mut cap);
@@ -1917,9 +1905,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         let mut cap = Cap::with_description(
             standard::summarize_urn(en),
             "Summarize".to_string(),
-            "summarize".to_string(),
-            "Summarize content for a stated purpose, as plain text.".to_string(),
-        );
+            vec!["summarize".to_string()],
+            "Summarize content for a stated purpose, as plain text.".to_string());
         cap.add_arg(content_arg("Content to summarize"));
         cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--for", "The purpose the summary should serve"));
         cap.add_arg(opt_flag_arg("media:numeric;word-budget", "--budget", "Optional positive word budget for the summary", None));
