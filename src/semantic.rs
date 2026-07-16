@@ -1,6 +1,6 @@
 //! Semantic-primitive caps: schema-constrained "judgment" operations.
 //!
-//! These moved out of the engine's former in-process `GenerativeTextProvider`
+//! These moved out of the engine's former in-process `GenerativeTextCartridge`
 //! into this cartridge unchanged: the prompt building, the judgment-envelope
 //! schemas, the structured-query registry, and the grounding checks are the
 //! same code. Only the plumbing differs — instead of reaching into engine
@@ -36,7 +36,7 @@ type Streams = [(String, Vec<u8>, Option<StreamMeta>)];
 
 /// Read a required arg whose declared URN *conforms to* `pattern`, failing
 /// hard (never a silent default) when it is absent. Conformance matching
-/// mirrors the former provider's `find_arg`: the primary content arg is the
+/// mirrors the former cartridge's `find_arg`: the primary content arg is the
 /// first stream conforming to the bare `media:enc=utf-8`, the refined args
 /// (`…;question`, `…;rubric`, …) match their own specific patterns.
 fn require_conforming(streams: &Streams, pattern: &str, what: &str) -> Result<String> {
@@ -210,7 +210,7 @@ async fn take_request_streams(
 
 /// The mandatory JSON-shape suffix appended to every registry-rendered prompt,
 /// pinning the exact schema the model must emit. Identical wording to the
-/// former provider so the constrained decode behaves the same.
+/// former cartridge so the constrained decode behaves the same.
 fn with_schema_suffix(base_prompt: &str, schema: &serde_json::Value) -> String {
     let schema_json =
         serde_json::to_string_pretty(schema).unwrap_or_else(|_| schema.to_string());
@@ -221,7 +221,7 @@ fn with_schema_suffix(base_prompt: &str, schema: &serde_json::Value) -> String {
 }
 
 // =============================================================================
-// EXECUTE FUNCTIONS (copied verbatim from the engine provider; only the
+// EXECUTE FUNCTIONS (copied verbatim from the engine cartridge; only the
 // registry access and inference invocation are re-plumbed for the cartridge)
 // =============================================================================
 
@@ -637,7 +637,7 @@ async fn execute_same(
 }
 
 // =============================================================================
-// HELPERS (copied verbatim from the engine provider)
+// HELPERS (copied verbatim from the engine cartridge)
 // =============================================================================
 
 /// Apply the optional operator content bound. `None`/`Some(0)` = whole content
