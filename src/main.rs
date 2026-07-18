@@ -23,6 +23,19 @@ use capdag::{
 };
 use std::sync::Arc;
 
+pub(crate) fn input_arg_error(
+    code: &str,
+    message: impl Into<String>,
+    arg_urn: &str,
+) -> OpError {
+    OpError::Classified {
+        code: code.to_string(),
+        class: capdag::FailureClass::Input,
+        message: message.into(),
+        arg_urn: Some(arg_urn.to_string()),
+    }
+}
+
 // =============================================================================
 // MANIFEST
 // =============================================================================
@@ -106,9 +119,11 @@ impl Op<()> for ConvertFormatOp {
 
         // Find input data by the expected media URN — fail hard if not supplied
         let data = capdag::require_stream(&streams, self.in_media)
-            .map_err(|e| OpError::ExecutionFailed(format!(
-                "Expected input stream '{}' not found: {}", self.in_media, e
-            )))?;
+            .map_err(|e| input_arg_error(
+                "INPUT_REQUIRED",
+                format!("Expected input stream '{}' not found: {}", self.in_media, e),
+                self.in_media,
+            ))?;
 
         output.log("INFO", &format!(
             "[convert_format] require_stream('{}') -> {} bytes, preview={:?}",
@@ -132,7 +147,7 @@ impl Op<()> for ConvertFormatOp {
             from, to, data.len()
         ));
         let result = convert(from, to, data)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), self.in_media))?;
 
         output.progress(0.90, "Encoding output");
         let cbor_value = ciborium::Value::Text(
@@ -179,9 +194,11 @@ impl Op<()> for CoerceOp {
 
         let in_media = capdag::media_urn_for_type(self.source_type);
         let data = capdag::require_stream(&streams, in_media)
-            .map_err(|e| OpError::ExecutionFailed(format!(
-                "Expected input stream '{}' not found: {}", in_media, e
-            )))?;
+            .map_err(|e| input_arg_error(
+                "INPUT_REQUIRED",
+                format!("Expected input stream '{}' not found: {}", in_media, e),
+                in_media,
+            ))?;
 
         // Scalar→Scalar: propagate input stream meta to output
         let input_meta = capdag::find_stream_meta(&streams, in_media).cloned();
@@ -190,7 +207,7 @@ impl Op<()> for CoerceOp {
         output.progress(0.10, "Coercing type");
 
         let result = coerce(data, self.source_type, self.target_type)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), in_media))?;
 
         output.progress(0.90, "Encoding output");
         let cbor_value = ciborium::Value::Text(
@@ -272,9 +289,10 @@ impl Op<()> for SaveAsTxtOp {
         }
 
         let (bytes, input_meta) = received.ok_or_else(|| {
-            OpError::ExecutionFailed(
-                "save-as-txt received no input stream — missing required textable input"
-                    .to_string(),
+            input_arg_error(
+                "INPUT_REQUIRED",
+                "save-as-txt received no input stream — missing required textable input",
+                "media:enc=utf-8;ext=txt;plain-text",
             )
         })?;
 
@@ -285,13 +303,17 @@ impl Op<()> for SaveAsTxtOp {
         // the user has to debug later. Failing hard is the
         // no-fallback policy.
         let text = String::from_utf8(bytes).map_err(|e| {
-            OpError::ExecutionFailed(format!(
+            input_arg_error(
+                "INVALID_INPUT",
+                format!(
                 "save-as-txt: input bytes are not valid UTF-8 — \
                  the cap-arg URN `media:enc=utf-8;ext=txt;plain-text` \
                  requires UTF-8 representability. Upstream cap or \
                  the producer is violating the textable contract: {}",
                 e
-            ))
+                ),
+                "media:enc=utf-8;ext=txt;plain-text",
+            )
         })?;
 
         // Scalar → scalar; propagate the input stream's meta
@@ -434,10 +456,11 @@ impl Op<()> for DecimateSequenceOp {
                     .await
                     .map_err(|e| OpError::ExecutionFailed(format!("collect_bytes for keep-every: {}", e)))?;
                 let raw = String::from_utf8(bytes).map_err(|e| {
-                    OpError::ExecutionFailed(format!(
-                        "--keep-every value is not valid UTF-8: {}",
-                        e
-                    ))
+                    input_arg_error(
+                        "INVALID_INPUT",
+                        format!("--keep-every value is not valid UTF-8: {}", e),
+                        keep_every_urn,
+                    )
                 })?;
                 keep_every_raw = Some(raw);
             } else {
@@ -459,9 +482,10 @@ impl Op<()> for DecimateSequenceOp {
         }
 
         let sequence_input_urn = sequence_input_urn.ok_or_else(|| {
-            OpError::ExecutionFailed(
-                "decimate-sequence received no input stream — missing required sequence input"
-                    .to_string(),
+            input_arg_error(
+                "INPUT_REQUIRED",
+                "decimate-sequence received no input stream — missing required sequence input",
+                "media:",
             )
         })?;
 
@@ -474,16 +498,21 @@ impl Op<()> for DecimateSequenceOp {
             Some(raw) => {
                 let trimmed = raw.trim();
                 let n: i64 = trimmed.parse().map_err(|e| {
-                    OpError::ExecutionFailed(format!(
-                        "--keep-every must be a positive integer, got {:?}: {}",
-                        trimmed, e
-                    ))
+                    input_arg_error(
+                        "INVALID_INPUT",
+                        format!(
+                            "--keep-every must be a positive integer, got {:?}: {}",
+                            trimmed, e
+                        ),
+                        keep_every_urn,
+                    )
                 })?;
                 if n < 1 {
-                    return Err(OpError::ExecutionFailed(format!(
-                        "--keep-every must be ≥ 1 (got {})",
-                        n
-                    )));
+                    return Err(input_arg_error(
+                        "INVALID_INPUT",
+                        format!("--keep-every must be ≥ 1 (got {})", n),
+                        keep_every_urn,
+                    ));
                 }
                 n as usize
             }
@@ -526,10 +555,11 @@ impl Op<()> for DecimateSequenceOp {
         // empty sequence would let downstream caps run on nothing
         // without anyone noticing.
         if total == 0 {
-            return Err(OpError::ExecutionFailed(format!(
-                "decimate-sequence: input sequence {} was empty",
-                sequence_input_urn
-            )));
+            return Err(input_arg_error(
+                "INVALID_INPUT",
+                format!("decimate-sequence: input sequence {} was empty", sequence_input_urn),
+                "media:",
+            ));
         }
 
         output.progress(
@@ -1534,7 +1564,7 @@ impl Op<()> for RepairJsonOp {
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
         let data = capdag::require_stream(&streams, "media:enc=utf-8")
-            .map_err(|e| OpError::ExecutionFailed(format!("Missing input: {}", e)))?;
+            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing input: {}", e), "media:enc=utf-8"))?;
         let text = String::from_utf8_lossy(data);
 
         let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf-8").cloned();
@@ -1544,7 +1574,7 @@ impl Op<()> for RepairJsonOp {
         output.progress(0.10, "Repairing JSON");
 
         let (value, repairs) = repair::repair_json(&text)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), "media:enc=utf-8"))?;
 
         // The visible-forgiveness contract: every fix is on the record.
         for action in &repairs {
@@ -1595,7 +1625,7 @@ impl Op<()> for RepairCsvOp {
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
         let data = capdag::require_stream(&streams, "media:enc=utf-8")
-            .map_err(|e| OpError::ExecutionFailed(format!("Missing input: {}", e)))?;
+            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing input: {}", e), "media:enc=utf-8"))?;
 
         let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf-8").cloned();
         output
@@ -1604,7 +1634,7 @@ impl Op<()> for RepairCsvOp {
         output.progress(0.10, "Repairing CSV");
 
         let (repaired, repairs) = repair::repair_csv(data)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), "media:enc=utf-8"))?;
         for action in &repairs {
             output.log(
                 "WARN",
@@ -1662,20 +1692,57 @@ impl Op<()> for EditOp {
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
         let data_bytes = capdag::require_stream(&streams, "media:fmt=json;list;record")
-            .map_err(|e| OpError::ExecutionFailed(format!("Missing JSON records input: {}", e)))?;
-        let instruction = capdag::find_stream_str_conforming(&streams, "media:enc=utf-8;instruction")
-            .filter(|s| !s.trim().is_empty())
-            .ok_or_else(|| {
-                OpError::ExecutionFailed("Missing --instruction (media:enc=utf-8;instruction)".to_string())
-            })?;
-        let model_spec = capdag::find_stream_str_conforming(&streams, "media:model-spec")
-            .filter(|s| !s.trim().is_empty())
-            .unwrap_or_else(|| DEFAULT_LLM_MODEL.to_string());
+            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing JSON records input: {}", e), "media:fmt=json;list;record"))?;
+        let instruction_bytes = capdag::find_stream_conforming(&streams, "media:enc=utf-8;instruction")
+            .ok_or_else(|| input_arg_error(
+                "INPUT_REQUIRED",
+                "Missing --instruction (media:enc=utf-8;instruction)",
+                "media:enc=utf-8;instruction",
+            ))?;
+        let instruction = std::str::from_utf8(instruction_bytes).map_err(|e| {
+            input_arg_error(
+                "INVALID_INPUT",
+                format!("--instruction is not valid UTF-8: {}", e),
+                "media:enc=utf-8;instruction",
+            )
+        })?;
+        if instruction.trim().is_empty() {
+            return Err(input_arg_error(
+                "INPUT_REQUIRED",
+                "--instruction must not be empty",
+                "media:enc=utf-8;instruction",
+            ));
+        }
+        let model_spec = match capdag::find_stream_conforming(&streams, "media:model-spec") {
+            None => DEFAULT_LLM_MODEL.to_string(),
+            Some(bytes) => {
+                let value = std::str::from_utf8(bytes).map_err(|e| {
+                    input_arg_error(
+                        "INVALID_INPUT",
+                        format!("model-spec is not valid UTF-8: {}", e),
+                        "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+                    )
+                })?;
+                if value.trim().is_empty() {
+                    return Err(input_arg_error(
+                        "INVALID_INPUT",
+                        "model-spec must not be empty",
+                        "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+                    ));
+                } else {
+                    value.to_string()
+                }
+            }
+        };
 
         let data: serde_json::Value = serde_json::from_slice(data_bytes)
-            .map_err(|e| OpError::ExecutionFailed(format!("Input is not valid JSON: {}", e)))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Input is not valid JSON: {}", e), "media:fmt=json;list;record"))?;
         let records = data.as_array().ok_or_else(|| {
-            OpError::ExecutionFailed("edit input must be a JSON array of objects".to_string())
+            input_arg_error(
+                "INVALID_INPUT",
+                "edit input must be a JSON array of objects",
+                "media:fmt=json;list;record",
+            )
         })?;
 
         let input_meta = capdag::find_stream_meta(&streams, "media:fmt=json;list;record").cloned();
@@ -1725,8 +1792,7 @@ impl Op<()> for EditOp {
         // Transform-program generation is deterministic — resolve the judgment
         // inference params (temperature/seed pinned; the nine configurable params from
         // this cap's delivered arg streams).
-        let inference_params = crate::semantic::resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = crate::semantic::resolve_judgment_params(&streams)?;
         output.progress(0.15, "Generating transform program");
         let program_json = invoke_constrained_peer(
             req.peer(),

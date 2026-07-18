@@ -25,7 +25,7 @@ use std::collections::HashMap;
 use std::sync::Arc;
 use tracing::{error, info};
 
-use crate::{invoke_constrained_peer, DEFAULT_LLM_MODEL};
+use crate::{input_arg_error, invoke_constrained_peer, DEFAULT_LLM_MODEL};
 
 /// The stream triple `collect_streams` yields: (media-urn, bytes, stream meta).
 type Streams = [(String, Vec<u8>, Option<StreamMeta>)];
@@ -39,23 +39,54 @@ type Streams = [(String, Vec<u8>, Option<StreamMeta>)];
 /// mirrors the former cartridge's `find_arg`: the primary content arg is the
 /// first stream conforming to the bare `media:enc=utf-8`, the refined args
 /// (`…;question`, `…;rubric`, …) match their own specific patterns.
-fn require_conforming(streams: &Streams, pattern: &str, what: &str) -> Result<String> {
-    capdag::find_stream_str_conforming(streams, pattern)
-        .ok_or_else(|| anyhow::anyhow!("Missing {} argument ({})", what, pattern))
+fn require_conforming(streams: &Streams, pattern: &str, what: &str) -> OpResult<String> {
+    let bytes = capdag::find_stream_conforming(streams, pattern).ok_or_else(|| {
+        input_arg_error(
+            "INPUT_REQUIRED",
+            format!("Missing {} argument ({})", what, pattern),
+            pattern,
+        )
+    })?;
+    std::str::from_utf8(bytes)
+        .map(str::to_owned)
+        .map_err(|error| {
+            input_arg_error(
+                "INVALID_INPUT",
+                format!("{} argument ({}) is not valid UTF-8: {}", what, pattern, error),
+                pattern,
+            )
+        })
 }
 
 /// Optional counterpart to [`require_conforming`].
-fn optional_conforming(streams: &Streams, pattern: &str) -> Option<String> {
-    capdag::find_stream_str_conforming(streams, pattern)
+fn optional_conforming(streams: &Streams, pattern: &str) -> OpResult<Option<String>> {
+    let Some(bytes) = capdag::find_stream_conforming(streams, pattern) else {
+        return Ok(None);
+    };
+    std::str::from_utf8(bytes)
+        .map(|value| Some(value.to_owned()))
+        .map_err(|error| {
+            input_arg_error(
+                "INVALID_INPUT",
+                format!("argument ({}) is not valid UTF-8: {}", pattern, error),
+                pattern,
+            )
+        })
 }
 
 /// Resolve the model spec from the `…;model-spec` arg, falling back to the
 /// offline-travel-kit GGUF LLM the fabric catalog declares as the default for
 /// every semantic cap (identical to `edit`'s default).
-fn resolve_model_spec(streams: &Streams) -> String {
-    optional_conforming(streams, "media:model-spec")
-        .filter(|s| !s.trim().is_empty())
-        .unwrap_or_else(|| DEFAULT_LLM_MODEL.to_string())
+fn resolve_model_spec(streams: &Streams) -> OpResult<String> {
+    match optional_conforming(streams, MODEL_SPEC_URN)? {
+        None => Ok(DEFAULT_LLM_MODEL.to_string()),
+        Some(value) if value.trim().is_empty() => Err(input_arg_error(
+            "INVALID_INPUT",
+            "model spec must not be empty",
+            MODEL_SPEC_URN,
+        )),
+        Some(value) => Ok(value),
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -113,21 +144,27 @@ const ROPE_SCALE_URN: &str = "media:rope-frequency-scale;inference;policy;operat
 /// URNs of the temperature/seed args, declared only by the free-generation cap.
 const TEMPERATURE_URN: &str = "media:temperature;inference;sampling;user;task;numeric";
 const SEED_URN: &str = "media:sampling-seed;inference;sampling;user;task;numeric";
+const MODEL_SPEC_URN: &str =
+    "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf";
 
 /// Read an optional numeric inference-param arg from the delivered streams. Returns
 /// `None` when the arg is absent (the caller substitutes its declared default — see
 /// the module notes: the engine practically always supplies it, but capdag CLI /
 /// direct invocation may not). A value that IS present but unparseable fails hard,
 /// exposing bad input rather than silently defaulting over it.
-fn optional_num<T>(streams: &Streams, urn: &str, name: &str) -> Result<Option<T>>
+fn optional_num<T>(streams: &Streams, urn: &str, name: &str) -> OpResult<Option<T>>
 where
     T: std::str::FromStr,
     T::Err: std::fmt::Display,
 {
-    match optional_conforming(streams, urn) {
+    match optional_conforming(streams, urn)? {
         None => Ok(None),
         Some(raw) => raw.trim().parse::<T>().map(Some).map_err(|e| {
-            anyhow::anyhow!("inference param '{name}' ({urn}) is not a valid number: '{raw}' ({e})")
+            input_arg_error(
+                "INVALID_INPUT",
+                format!("inference param '{name}' ({urn}) is not a valid number: '{raw}' ({e})"),
+                urn,
+            )
         }),
     }
 }
@@ -141,7 +178,7 @@ fn resolve_inference_params(
     streams: &Streams,
     temperature: f32,
     seed: u32,
-) -> Result<crate::InferenceParams> {
+) -> OpResult<crate::InferenceParams> {
     Ok(crate::InferenceParams {
         max_tokens: optional_num(streams, MAX_TOKENS_URN, "max_tokens")?.unwrap_or(DEFAULT_MAX_TOKENS),
         temperature,
@@ -167,7 +204,7 @@ fn resolve_inference_params(
 /// deterministic.
 pub(crate) fn resolve_judgment_params(
     streams: &[(String, Vec<u8>, Option<StreamMeta>)],
-) -> Result<crate::InferenceParams> {
+) -> OpResult<crate::InferenceParams> {
     resolve_inference_params(streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
 }
 
@@ -850,23 +887,18 @@ impl Op<()> for GenerateJsonOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let schema_str = require_conforming(&streams, "media:fmt=json;json-schema;record", "schema")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let schema_str = require_conforming(&streams, "media:fmt=json;json-schema;record", "schema")?;
         let output_schema: serde_json::Value = serde_json::from_str(&schema_str)
-            .map_err(|e| OpError::ExecutionFailed(format!("Failed to parse schema argument as JSON: {}", e)))?;
-        let model_spec = resolve_model_spec(&streams);
+            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Failed to parse schema argument as JSON: {}", e), "media:fmt=json;json-schema;record"))?;
+        let model_spec = resolve_model_spec(&streams)?;
         // generate_json is the one non-deterministic cap: temperature/seed are real,
         // configurable args here, each backstopped to its declared default.
-        let temperature: f32 = optional_num(&streams, TEMPERATURE_URN, "temperature")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?
+        let temperature: f32 = optional_num(&streams, TEMPERATURE_URN, "temperature")?
             .unwrap_or(DEFAULT_TEMPERATURE);
-        let seed: u32 = optional_num(&streams, SEED_URN, "seed")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?
+        let seed: u32 = optional_num(&streams, SEED_URN, "seed")?
             .unwrap_or(DEFAULT_SEED);
-        let inference_params = resolve_inference_params(&streams, temperature, seed)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_inference_params(&streams, temperature, seed)?;
 
         let result = execute_generate_json(&content, output_schema, &model_spec, &inference_params, req.peer())
             .await
@@ -892,15 +924,12 @@ impl Op<()> for ExtractOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let schema_str = require_conforming(&streams, "media:fmt=json;json-schema;record", "schema")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let schema_str = require_conforming(&streams, "media:fmt=json;json-schema;record", "schema")?;
         let user_schema: serde_json::Value = serde_json::from_str(&schema_str)
-            .map_err(|e| OpError::ExecutionFailed(format!("Failed to parse schema argument as JSON: {}", e)))?;
-        let model_spec = resolve_model_spec(&streams);
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Failed to parse schema argument as JSON: {}", e), "media:fmt=json;json-schema;record"))?;
+        let model_spec = resolve_model_spec(&streams)?;
+        let inference_params = resolve_judgment_params(&streams)?;
 
         let judgment = execute_extract(&content, user_schema, &model_spec, &inference_params, req.peer())
             .await
@@ -926,20 +955,15 @@ impl Op<()> for MakeDecisionOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let question = require_conforming(&streams, "media:enc=utf-8;question", "question")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let max_content_length = optional_conforming(&streams, "media:max-content-length;numeric")
-            .and_then(|s| s.trim().parse::<usize>().ok());
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let question = require_conforming(&streams, "media:enc=utf-8;question", "question")?;
+        let max_content_length = optional_num(&streams, "media:max-content-length;numeric", "max_content_length")?;
         // The threshold arg is REAL: below-threshold judgments are flagged on
         // the record (and warned), exactly as the cap doc promises.
-        let confidence_threshold: f32 = optional_conforming(&streams, "media:confidence-threshold;numeric")
-            .and_then(|v| v.trim().parse().ok())
+        let confidence_threshold: f32 = optional_num(&streams, "media:confidence-threshold;numeric", "confidence_threshold")?
             .unwrap_or(0.7);
-        let model_spec = resolve_model_spec(&streams);
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let model_spec = resolve_model_spec(&streams)?;
+        let inference_params = resolve_judgment_params(&streams)?;
 
         let (value, confidence, reason) =
             execute_make_decision(&content, &question, max_content_length, &model_spec, &inference_params, req.peer())
@@ -980,23 +1004,18 @@ impl Op<()> for MakeMultipleDecisionsOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let questions_str = require_conforming(&streams, "media:enc=utf-8;question", "questions")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let questions_str = require_conforming(&streams, "media:enc=utf-8;question", "questions")?;
         let questions: Vec<String> = questions_str
             .lines()
             .filter(|line| !line.is_empty())
             .map(|line| line.to_string())
             .collect();
-        let max_content_length = optional_conforming(&streams, "media:max-content-length;numeric")
-            .and_then(|s| s.trim().parse::<usize>().ok());
-        let confidence_threshold: f32 = optional_conforming(&streams, "media:confidence-threshold;numeric")
-            .and_then(|v| v.trim().parse().ok())
+        let max_content_length = optional_num(&streams, "media:max-content-length;numeric", "max_content_length")?;
+        let confidence_threshold: f32 = optional_num(&streams, "media:confidence-threshold;numeric", "confidence_threshold")?
             .unwrap_or(0.7);
-        let model_spec = resolve_model_spec(&streams);
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let model_spec = resolve_model_spec(&streams)?;
+        let inference_params = resolve_judgment_params(&streams)?;
 
         let results = execute_make_multiple_decisions(
             &content,
@@ -1052,14 +1071,11 @@ impl Op<()> for SameOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let left = require_conforming(&streams, "media:enc=utf-8", "first item")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let right = require_conforming(&streams, "media:enc=utf-8;second-item", "second item")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let context = optional_conforming(&streams, "media:criterion;enc=utf-8");
-        let model_spec = resolve_model_spec(&streams);
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let left = require_conforming(&streams, "media:enc=utf-8", "first item")?;
+        let right = require_conforming(&streams, "media:enc=utf-8;second-item", "second item")?;
+        let context = optional_conforming(&streams, "media:criterion;enc=utf-8")?;
+        let model_spec = resolve_model_spec(&streams)?;
+        let inference_params = resolve_judgment_params(&streams)?;
 
         let judgment = execute_same(&left, &right, context.as_deref(), &model_spec, &inference_params, req.peer())
             .await
@@ -1085,13 +1101,13 @@ impl Op<()> for ClassifyOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let labels_raw = require_conforming(&streams, "media:enc=utf-8;label-set", "labels")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let labels = parse_label_set(&labels_raw).map_err(OpError::ExecutionFailed)?;
-        let context = optional_conforming(&streams, "media:criterion;enc=utf-8");
-        let model_spec = resolve_model_spec(&streams);
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let labels_raw = require_conforming(&streams, "media:enc=utf-8;label-set", "labels")?;
+        let labels = parse_label_set(&labels_raw).map_err(|message| {
+            input_arg_error("INVALID_INPUT", message, "media:enc=utf-8;label-set")
+        })?;
+        let context = optional_conforming(&streams, "media:criterion;enc=utf-8")?;
+        let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
         subs.insert("content".to_string(), serde_json::Value::String(content));
@@ -1112,8 +1128,7 @@ impl Op<()> for ClassifyOp {
             serde_json::Value::String(serde_json::to_string(&labels).expect("label list serializes")),
         );
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_classify",
             subs,
@@ -1155,14 +1170,14 @@ impl Op<()> for ScoreOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let rubric = require_conforming(&streams, "media:enc=utf-8;rubric", "rubric")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let scale_raw = optional_conforming(&streams, "media:enc=utf-8;scale")
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let rubric = require_conforming(&streams, "media:enc=utf-8;rubric", "rubric")?;
+        let scale_raw = optional_conforming(&streams, "media:enc=utf-8;scale")?
             .unwrap_or_else(|| "0..10".to_string());
-        let (scale_min, scale_max) = parse_scale(&scale_raw).map_err(OpError::ExecutionFailed)?;
-        let model_spec = resolve_model_spec(&streams);
+        let (scale_min, scale_max) = parse_scale(&scale_raw).map_err(|message| {
+            input_arg_error("INVALID_INPUT", message, "media:enc=utf-8;scale")
+        })?;
+        let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
         subs.insert("content".to_string(), serde_json::Value::String(content));
@@ -1173,8 +1188,7 @@ impl Op<()> for ScoreOp {
         schema_vars.insert("scale_min".to_string(), serde_json::json!(scale_min));
         schema_vars.insert("scale_max".to_string(), serde_json::json!(scale_max));
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_score",
             subs,
@@ -1207,11 +1221,9 @@ impl Op<()> for VerifyOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "artifact")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let requirements = require_conforming(&streams, "media:enc=utf-8;rubric", "requirements")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let model_spec = resolve_model_spec(&streams);
+        let content = require_conforming(&streams, "media:enc=utf-8", "artifact")?;
+        let requirements = require_conforming(&streams, "media:enc=utf-8;rubric", "requirements")?;
+        let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
         subs.insert("content".to_string(), serde_json::Value::String(content));
@@ -1220,8 +1232,7 @@ impl Op<()> for VerifyOp {
             serde_json::Value::String(requirements),
         );
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_verify",
             subs,
@@ -1264,12 +1275,12 @@ impl Op<()> for RouteOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let targets_raw = require_conforming(&streams, "media:fmt=json;record;target-set", "targets")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let targets = parse_target_set(&targets_raw).map_err(OpError::ExecutionFailed)?;
-        let model_spec = resolve_model_spec(&streams);
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let targets_raw = require_conforming(&streams, "media:fmt=json;record;target-set", "targets")?;
+        let targets = parse_target_set(&targets_raw).map_err(|message| {
+            input_arg_error("INVALID_INPUT", message, "media:fmt=json;record;target-set")
+        })?;
+        let model_spec = resolve_model_spec(&streams)?;
 
         let names: Vec<String> = targets.iter().map(|(n, _)| n.clone()).collect();
         let display = targets
@@ -1287,8 +1298,7 @@ impl Op<()> for RouteOp {
             serde_json::Value::String(serde_json::to_string(&names).expect("target names serialize")),
         );
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_route",
             subs,
@@ -1328,12 +1338,10 @@ impl Op<()> for NormalizeOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "value")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let entity_type = require_conforming(&streams, "media:enc=utf-8;entity-type", "entity type")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let locale = optional_conforming(&streams, "media:enc=utf-8;locale");
-        let model_spec = resolve_model_spec(&streams);
+        let content = require_conforming(&streams, "media:enc=utf-8", "value")?;
+        let entity_type = require_conforming(&streams, "media:enc=utf-8;entity-type", "entity type")?;
+        let locale = optional_conforming(&streams, "media:enc=utf-8;locale")?;
+        let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
         subs.insert("content".to_string(), serde_json::Value::String(content));
@@ -1346,8 +1354,7 @@ impl Op<()> for NormalizeOp {
             },
         );
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_normalize",
             subs,
@@ -1380,18 +1387,15 @@ impl Op<()> for AskOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let question = require_conforming(&streams, "media:enc=utf-8;question", "question")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let model_spec = resolve_model_spec(&streams);
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let question = require_conforming(&streams, "media:enc=utf-8;question", "question")?;
+        let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
         subs.insert("content".to_string(), serde_json::Value::String(content.clone()));
         subs.insert("question".to_string(), serde_json::Value::String(question));
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_ask",
             subs,
@@ -1429,18 +1433,15 @@ impl Op<()> for ExplainOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "data")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let goal = require_conforming(&streams, "media:criterion;enc=utf-8", "goal")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let model_spec = resolve_model_spec(&streams);
+        let content = require_conforming(&streams, "media:enc=utf-8", "data")?;
+        let goal = require_conforming(&streams, "media:criterion;enc=utf-8", "goal")?;
+        let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
         subs.insert("content".to_string(), serde_json::Value::String(content.clone()));
         subs.insert("goal".to_string(), serde_json::Value::String(goal));
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_explain",
             subs,
@@ -1477,28 +1478,29 @@ impl Op<()> for SummarizeOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let purpose = require_conforming(&streams, "media:criterion;enc=utf-8", "purpose")
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let budget_words = match optional_conforming(&streams, "media:numeric;word-budget") {
+        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
+        let purpose = require_conforming(&streams, "media:criterion;enc=utf-8", "purpose")?;
+        let budget_words = match optional_conforming(&streams, "media:numeric;word-budget")? {
             None => None,
             Some(raw) => {
                 let n: u64 = raw.trim().parse().map_err(|_| {
-                    OpError::ExecutionFailed(format!(
-                        "--budget must be a positive word count, got '{}'",
-                        raw
-                    ))
+                    input_arg_error(
+                        "INVALID_INPUT",
+                        format!("--budget must be a positive word count, got '{}'", raw),
+                        "media:numeric;word-budget",
+                    )
                 })?;
                 if n == 0 {
-                    return Err(OpError::ExecutionFailed(
-                        "--budget must be a positive word count, got 0".to_string(),
+                    return Err(input_arg_error(
+                        "INVALID_INPUT",
+                        "--budget must be a positive word count, got 0",
+                        "media:numeric;word-budget",
                     ));
                 }
                 Some(n)
             }
         };
-        let model_spec = resolve_model_spec(&streams);
+        let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
         subs.insert("content".to_string(), serde_json::Value::String(content));
@@ -1511,8 +1513,7 @@ impl Op<()> for SummarizeOp {
             },
         );
 
-        let inference_params = resolve_judgment_params(&streams)
-            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let inference_params = resolve_judgment_params(&streams)?;
         let judgment = execute_judgment_query(
             "semantic_summarize",
             subs,
@@ -2102,6 +2103,21 @@ mod tests {
         let err = resolve_inference_params(&streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
             .expect_err("a malformed numeric arg must fail, not default over it");
         assert!(err.to_string().contains("max_tokens"), "error must name the param: {err}");
+        assert_eq!(err.failure_class(), capdag::FailureClass::Input);
+        assert_eq!(err.failure_code(), Some("INVALID_INPUT"));
+        assert_eq!(err.failure_arg_urn(), Some(MAX_TOKENS_URN));
+    }
+
+    /// A present but non-UTF-8 optional argument is invalid input, never
+    /// indistinguishable from an absent argument that legitimately defaults.
+    #[test]
+    fn test0304_optional_argument_invalid_utf8_is_attributed() {
+        let streams = vec![(TOP_P_URN.to_string(), vec![0xff], None)];
+        let err = resolve_inference_params(&streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
+            .expect_err("invalid UTF-8 must not fall back to the TOML default");
+        assert_eq!(err.failure_class(), capdag::FailureClass::Input);
+        assert_eq!(err.failure_code(), Some("INVALID_INPUT"));
+        assert_eq!(err.failure_arg_urn(), Some(TOP_P_URN));
     }
 
     /// Every semantic cap declares all nine configurable inference args, so the engine
