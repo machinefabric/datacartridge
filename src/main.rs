@@ -19,7 +19,7 @@ mod transform;
 use anyhow::Result;
 use capdag::{
     async_trait, ArgSource, Cap, CapArg, CapGroup, CapManifest, DryContext, Op, OpError, OpResult,
-    CartridgeRuntime, Request, WetContext, WET_KEY_REQUEST, CAP_ADAPTER_SELECTION,
+    CartridgeRuntime, OutputStream, Request, WetContext, WET_KEY_REQUEST, CAP_ADAPTER_SELECTION,
 };
 use std::sync::Arc;
 
@@ -30,7 +30,7 @@ pub(crate) fn input_arg_error(
 ) -> OpError {
     OpError::Classified {
         code: code.to_string(),
-        class: capdag::FailureClass::Input,
+        class: capdag::AttributionClass::Input,
         message: message.into(),
         arg_urn: Some(arg_urn.to_string()),
     }
@@ -106,11 +106,11 @@ impl Op<()> for ConvertFormatOp {
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
 
-        output.log("INFO", &format!(
+        output.log("info", capdag::AttributionClass::Internal, &format!(
             "[convert_format] collect_streams returned {} streams", streams.len()
         ));
         for (i, (urn, bytes, _meta)) in streams.iter().enumerate() {
-            output.log("INFO", &format!(
+            output.log("info", capdag::AttributionClass::Internal, &format!(
                 "[convert_format]   stream[{}]: urn='{}', {} bytes, preview={:?}",
                 i, urn, bytes.len(),
                 String::from_utf8_lossy(&bytes[..bytes.len().min(100)])
@@ -125,7 +125,7 @@ impl Op<()> for ConvertFormatOp {
                 self.in_media,
             ))?;
 
-        output.log("INFO", &format!(
+        output.log("info", capdag::AttributionClass::Internal, &format!(
             "[convert_format] require_stream('{}') -> {} bytes, preview={:?}",
             self.in_media, data.len(),
             String::from_utf8_lossy(&data[..data.len().min(100)])
@@ -142,7 +142,7 @@ impl Op<()> for ConvertFormatOp {
         output.start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Converting format");
-        output.log("INFO", &format!(
+        output.log("info", capdag::AttributionClass::Internal, &format!(
             "[convert_format] converting {:?} -> {:?}, {} bytes input",
             from, to, data.len()
         ));
@@ -1579,12 +1579,12 @@ impl Op<()> for RepairJsonOp {
         // The visible-forgiveness contract: every fix is on the record.
         for action in &repairs {
             output.log(
-                "WARN",
+                "WARN", capdag::AttributionClass::Internal,
                 &format!("[repair-json] byte {}: {}", action.position, action.what),
             );
         }
         output.log(
-            "INFO",
+            "info", capdag::AttributionClass::Internal,
             &format!("[repair-json] {} repair(s) applied", repairs.len()),
         );
 
@@ -1637,12 +1637,12 @@ impl Op<()> for RepairCsvOp {
             .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), "media:enc=utf-8"))?;
         for action in &repairs {
             output.log(
-                "WARN",
+                "WARN", capdag::AttributionClass::Internal,
                 &format!("[repair-csv] byte {}: {}", action.position, action.what),
             );
         }
         output.log(
-            "INFO",
+            "info", capdag::AttributionClass::Internal,
             &format!("[repair-csv] {} repair(s) applied", repairs.len()),
         );
 
@@ -1796,6 +1796,9 @@ impl Op<()> for EditOp {
         output.progress(0.15, "Generating transform program");
         let program_json = invoke_constrained_peer(
             req.peer(),
+            output,
+            0.15,
+            0.60,
             &prompt,
             program_schema,
             &model_spec,
@@ -1805,7 +1808,7 @@ impl Op<()> for EditOp {
         .map_err(|e| OpError::ExecutionFailed(format!("Program generation failed: {}", e)))?;
 
         // The program IS the audit artifact: log it in full before running.
-        output.log("INFO", &format!("[edit] generated program: {}", program_json.trim()));
+        output.log("info", capdag::AttributionClass::Internal, &format!("[edit] generated program: {}", program_json.trim()));
 
         let program = transform::parse_program(&program_json)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
@@ -1816,7 +1819,7 @@ impl Op<()> for EditOp {
 
         let n_out = result.as_array().map(|a| a.len()).unwrap_or(0);
         output.log(
-            "INFO",
+            "info", capdag::AttributionClass::Internal,
             &format!("[edit] {} record(s) in, {} record(s) out", records.len(), n_out),
         );
 
@@ -1965,6 +1968,9 @@ fn guard_schema_complexity(schema: &serde_json::Value) -> Result<()> {
 
 pub(crate) async fn invoke_constrained_peer(
     peer: &dyn capdag::PeerInvoker,
+    output: &OutputStream,
+    progress_base: f32,
+    progress_weight: f32,
     prompt: &str,
     schema: serde_json::Value,
     model_spec: &str,
@@ -2023,7 +2029,38 @@ pub(crate) async fn invoke_constrained_peer(
     let mut line_buffer = String::new();
     while let Some(item) = response.recv().await {
         match item {
-            capdag::PeerResponseItem::Log(_) => {}
+            capdag::PeerResponseItem::Log(frame) => {
+                let level = frame
+                    .log_level()
+                    .ok_or_else(|| anyhow::anyhow!("peer LOG frame missing required text level"))?;
+                let message = frame
+                    .log_message()
+                    .ok_or_else(|| anyhow::anyhow!("peer LOG frame missing required text message"))?;
+                if level == "progress" {
+                    let progress = frame.log_progress().ok_or_else(|| {
+                        anyhow::anyhow!("peer progress LOG frame missing numeric progress")
+                    })?;
+                    output.progress(
+                        progress_base + progress.clamp(0.0, 1.0) * progress_weight,
+                        message,
+                    );
+                } else {
+                    let attribution_class = frame
+                        .attribution_class()
+                        .map_err(|error| anyhow::anyhow!("invalid peer LOG attribution: {error}"))?;
+                    match frame.attribution_arg_urn().map_err(|error| {
+                        anyhow::anyhow!("invalid peer LOG argument attribution: {error}")
+                    })? {
+                        Some(arg_urn) => output.log_for_argument(
+                            level,
+                            attribution_class,
+                            message,
+                            arg_urn,
+                        ),
+                        None => output.log(level, attribution_class, message),
+                    }
+                }
+            }
             capdag::PeerResponseItem::Data(Err(e), _) => {
                 anyhow::bail!("peer response stream error: {}", e);
             }

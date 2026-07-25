@@ -15,8 +15,8 @@
 
 use anyhow::Result;
 use capdag::{
-    async_trait, DryContext, Op, OpError, OpResult, PeerInvoker, Request, StreamMeta, WetContext,
-    WET_KEY_REQUEST,
+    async_trait, DryContext, Op, OpError, OpResult, OutputStream, PeerInvoker, Request, StreamMeta,
+    WetContext, WET_KEY_REQUEST,
 };
 use machfab_cartridge_sdk::structured_queries::{
     MakeDecisionResult, MakeMultipleDecisionsResult, StructuredQueryRegistry,
@@ -271,6 +271,7 @@ async fn execute_generate_json(
     model_spec: &str,
     params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
+    output: &OutputStream,
 ) -> Result<serde_json::Value> {
     let schema_json = serde_json::to_string_pretty(&output_schema)
         .unwrap_or_else(|_| output_schema.to_string());
@@ -283,7 +284,7 @@ async fn execute_generate_json(
     );
 
     let result_json =
-        invoke_constrained_peer(peer, &prompt, output_schema, model_spec, params)
+        invoke_constrained_peer(peer, output, 0.0, 0.95, &prompt, output_schema, model_spec, params)
             .await?;
 
     serde_json::from_str::<serde_json::Value>(&result_json).map_err(|e| {
@@ -309,6 +310,7 @@ async fn execute_extract(
     model_spec: &str,
     params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
+    output: &OutputStream,
 ) -> Result<serde_json::Value> {
     let envelope_schema = serde_json::json!({
         "type": "object",
@@ -337,7 +339,7 @@ async fn execute_extract(
     );
 
     let result_json =
-        invoke_constrained_peer(peer, &prompt, envelope_schema, model_spec, params)
+        invoke_constrained_peer(peer, output, 0.0, 0.95, &prompt, envelope_schema, model_spec, params)
             .await?;
 
     let judgment: serde_json::Value = serde_json::from_str(&result_json).map_err(|e| {
@@ -369,6 +371,7 @@ async fn execute_make_decision(
     model_spec: &str,
     params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
+    output: &OutputStream,
 ) -> Result<(bool, f32, String)> {
     let registry = StructuredQueryRegistry::new();
 
@@ -400,6 +403,9 @@ async fn execute_make_decision(
 
     let result_json = invoke_constrained_peer(
         peer,
+        output,
+        0.0,
+        0.95,
         &prompt_with_schema,
         query.output_schema.clone(),
         model_spec,
@@ -437,6 +443,7 @@ async fn execute_make_multiple_decisions(
     model_spec: &str,
     params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
+    output: &OutputStream,
 ) -> Result<Vec<(bool, f32, String)>> {
     let registry = StructuredQueryRegistry::new();
 
@@ -484,6 +491,9 @@ async fn execute_make_multiple_decisions(
 
     let result_json = invoke_constrained_peer(
         peer,
+        output,
+        0.0,
+        0.95,
         &prompt_with_schema,
         output_schema,
         model_spec,
@@ -544,6 +554,7 @@ async fn execute_judgment_query(
     model_spec: &str,
     params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
+    output: &OutputStream,
 ) -> Result<serde_json::Value> {
     let registry = StructuredQueryRegistry::new();
 
@@ -574,6 +585,9 @@ async fn execute_judgment_query(
 
     let result_json = invoke_constrained_peer(
         peer,
+        output,
+        0.0,
+        0.95,
         &prompt_with_schema,
         output_schema,
         model_spec,
@@ -617,6 +631,7 @@ async fn execute_same(
     model_spec: &str,
     params: &crate::InferenceParams,
     peer: &dyn PeerInvoker,
+    output: &OutputStream,
 ) -> Result<serde_json::Value> {
     let registry = StructuredQueryRegistry::new();
 
@@ -644,6 +659,9 @@ async fn execute_same(
 
     let result_json = invoke_constrained_peer(
         peer,
+        output,
+        0.0,
+        0.95,
         &prompt_with_schema,
         query.output_schema.clone(),
         model_spec,
@@ -900,7 +918,14 @@ impl Op<()> for GenerateJsonOp {
             .unwrap_or(DEFAULT_SEED);
         let inference_params = resolve_inference_params(&streams, temperature, seed)?;
 
-        let result = execute_generate_json(&content, output_schema, &model_spec, &inference_params, req.peer())
+        let result = execute_generate_json(
+            &content,
+            output_schema,
+            &model_spec,
+            &inference_params,
+            req.peer(),
+            req.output(),
+        )
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute generate_json: {}", e)))?;
 
@@ -931,7 +956,14 @@ impl Op<()> for ExtractOp {
         let model_spec = resolve_model_spec(&streams)?;
         let inference_params = resolve_judgment_params(&streams)?;
 
-        let judgment = execute_extract(&content, user_schema, &model_spec, &inference_params, req.peer())
+        let judgment = execute_extract(
+            &content,
+            user_schema,
+            &model_spec,
+            &inference_params,
+            req.peer(),
+            req.output(),
+        )
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute extract: {}", e)))?;
 
@@ -966,7 +998,15 @@ impl Op<()> for MakeDecisionOp {
         let inference_params = resolve_judgment_params(&streams)?;
 
         let (value, confidence, reason) =
-            execute_make_decision(&content, &question, max_content_length, &model_spec, &inference_params, req.peer())
+            execute_make_decision(
+                &content,
+                &question,
+                max_content_length,
+                &model_spec,
+                &inference_params,
+                req.peer(),
+                req.output(),
+            )
                 .await
                 .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute Make Decision: {}", e)))?;
 
@@ -1024,6 +1064,7 @@ impl Op<()> for MakeMultipleDecisionsOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute Make Multiple Decisions: {}", e)))?;
@@ -1077,7 +1118,15 @@ impl Op<()> for SameOp {
         let model_spec = resolve_model_spec(&streams)?;
         let inference_params = resolve_judgment_params(&streams)?;
 
-        let judgment = execute_same(&left, &right, context.as_deref(), &model_spec, &inference_params, req.peer())
+        let judgment = execute_same(
+            &left,
+            &right,
+            context.as_deref(),
+            &model_spec,
+            &inference_params,
+            req.peer(),
+            req.output(),
+        )
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute same: {}", e)))?;
 
@@ -1137,6 +1186,7 @@ impl Op<()> for ClassifyOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute classify: {}", e)))?;
@@ -1197,6 +1247,7 @@ impl Op<()> for ScoreOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute score: {}", e)))?;
@@ -1241,6 +1292,7 @@ impl Op<()> for VerifyOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute verify: {}", e)))?;
@@ -1307,6 +1359,7 @@ impl Op<()> for RouteOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute route: {}", e)))?;
@@ -1363,6 +1416,7 @@ impl Op<()> for NormalizeOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute normalize: {}", e)))?;
@@ -1404,6 +1458,7 @@ impl Op<()> for AskOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute ask: {}", e)))?;
@@ -1450,6 +1505,7 @@ impl Op<()> for ExplainOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute explain: {}", e)))?;
@@ -1522,6 +1578,7 @@ impl Op<()> for SummarizeOp {
             &model_spec,
             &inference_params,
             req.peer(),
+            req.output(),
         )
         .await
         .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute summarize: {}", e)))?;
@@ -2103,7 +2160,7 @@ mod tests {
         let err = resolve_inference_params(&streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
             .expect_err("a malformed numeric arg must fail, not default over it");
         assert!(err.to_string().contains("max_tokens"), "error must name the param: {err}");
-        assert_eq!(err.failure_class(), capdag::FailureClass::Input);
+        assert_eq!(err.attribution_class(), capdag::AttributionClass::Input);
         assert_eq!(err.failure_code(), Some("INVALID_INPUT"));
         assert_eq!(err.failure_arg_urn(), Some(MAX_TOKENS_URN));
     }
@@ -2115,7 +2172,7 @@ mod tests {
         let streams = vec![(TOP_P_URN.to_string(), vec![0xff], None)];
         let err = resolve_inference_params(&streams, JUDGMENT_TEMPERATURE, JUDGMENT_SEED)
             .expect_err("invalid UTF-8 must not fall back to the TOML default");
-        assert_eq!(err.failure_class(), capdag::FailureClass::Input);
+        assert_eq!(err.attribution_class(), capdag::AttributionClass::Input);
         assert_eq!(err.failure_code(), Some("INVALID_INPUT"));
         assert_eq!(err.failure_arg_urn(), Some(TOP_P_URN));
     }
