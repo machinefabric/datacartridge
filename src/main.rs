@@ -828,6 +828,12 @@ impl Op<()> for DataAdapterSelectionOp {
 async fn main() -> Result<()> {
     let manifest = build_manifest();
     let mut runtime = CartridgeRuntime::with_manifest(manifest);
+    // Semantic operations in this cartridge share the single-capacity
+    // constrained-generation peer. Keep ownership at the relay boundary so a
+    // cartridge loss fails only the active body; queued ForEach bodies can be
+    // admitted to the replacement process instead of all becoming in-flight
+    // against the failed generation.
+    runtime.set_capacity(1);
 
     // Register adapter selection handler
     runtime.register_op(CAP_ADAPTER_SELECTION, || Box::new(DataAdapterSelectionOp));
