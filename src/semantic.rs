@@ -709,7 +709,7 @@ fn bound_content(content: &str, max_content_length: Option<usize>) -> String {
                     total_chars = total,
                     max_content_length = max,
                     "content exceeds the explicit --max-content-length bound; \
-                     truncating to the bound (pass 0 to use the whole content)"
+                     truncating to the bound (omit the flag to use the whole content)"
                 );
                 content.chars().take(max).collect()
             } else {

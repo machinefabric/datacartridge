@@ -2514,7 +2514,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-decision;out=\"media:decision;fmt=json;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Make a Decision (Constrained, English)",
     "aliases": [
       "make-decision-en"
@@ -2568,8 +2568,7 @@
             "cli_flag": "--max-content-length"
           }
         ],
-        "arg_description": "Optional bound on content length in characters. 0 (the default) uses the whole content — the inference backend auto-sizes its context to the prompt. A positive value truncates to that bound WITH a logged warning, never silently.",
-        "default_value": 0
+        "arg_description": "Optional bound on content length in characters. Leave unset to use the whole content — the inference backend auto-sizes its context to the prompt. A value truncates to that bound WITH a logged warning, never silently."
       },
       {
         "media_urn": "media:confidence-threshold;numeric",
@@ -2712,7 +2711,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-multiple-decisions;out=\"media:decision;fmt=json;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Make Multiple Decisions (Constrained, English)",
     "aliases": [
       "make-multiple-decisions-en"
@@ -2766,8 +2765,7 @@
             "cli_flag": "--max-content-length"
           }
         ],
-        "arg_description": "Optional bound on content length in characters. 0 (the default) uses the whole content — the inference backend auto-sizes its context to the prompt. A positive value truncates to that bound WITH a logged warning, never silently.",
-        "default_value": 0
+        "arg_description": "Optional bound on content length in characters. Leave unset to use the whole content — the inference backend auto-sizes its context to the prompt. A value truncates to that bound WITH a logged warning, never silently."
       },
       {
         "media_urn": "media:confidence-threshold;numeric",
@@ -3313,7 +3311,7 @@
       "same-en"
     ],
     "cap_description": "Judge whether two items refer to the same thing, with confidence and rationale",
-    "documentation": "## Purpose\n\nThe semantic `cmp`: decides whether two items refer to the same real-world thing — not whether they are textually equal. `same --context \"company names in invoices\" \"OpenAI LLC\" \"Open AI\"` returns `{\"same\": true, \"confidence\": 0.94, \"reason\": \"spacing/legal suffix variation\"}`. Use it in loops and joins wherever fuzzy identity matters: entity deduplication, record matching, reconciliation.\n\nThe first of the semantic-primitive cap family (see docs/semantic-primitives.md): Unix-style stdin→transform→stdout tools whose transform is a machine judgment with a guaranteed structured shape.\n\n## Inputs\n\n- The first item (stdin or first positional argument).\n- The second item (second positional argument).\n- An optional `--context` framing what \"the same\" means here (e.g. \"company names on invoices\"). One sentence; it configures the judgment, it is not a conversation.\n- A model spec (defaults to the offline-travel-kit GGUF LLM).\n\n## Outputs\n\nA semantic-judgment record: `{\"same\": <bool>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`. The shape is guaranteed by token-level constrained generation (LLGuidance) — downstream code parses it without error handling for malformed text.\n\n## Notes\n\n- Judgment caps are deterministic by default (temperature 0 semantics at the backend; law P4 in the design doc): the same items, context, and model produce the same judgment.\n- Spelling variants, abbreviations, legal suffixes, and formatting differences do not make two references to one thing different; two genuinely different things are not the same however similar they look. The `reason` field names the decisive evidence.\n- Served by the engine's generative-text provider over constrained GGUF inference (like [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nThe semantic `cmp`: decides whether two items refer to the same real-world thing — not whether they are textually equal. `same --context \"company names in invoices\" \"OpenAI LLC\" \"Open AI\"` returns `{\"same\": true, \"confidence\": 0.94, \"reason\": \"spacing/legal suffix variation\"}`. Use it in loops and joins wherever fuzzy identity matters: entity deduplication, record matching, reconciliation.\n\nThe first of the semantic-primitive cap family (see docs/semantic-primitives.md): Unix-style stdin→transform→stdout tools whose transform is a machine judgment with a guaranteed structured shape.\n\n## Inputs\n\n- The first item (stdin or first positional argument).\n- The second item (second positional argument).\n- An optional `--context` framing what \"the same\" means here (e.g. \"company names on invoices\"). One sentence; it configures the judgment, it is not a conversation.\n- A model spec (defaults to the offline-travel-kit GGUF LLM).\n\n## Outputs\n\nA semantic-judgment record: `{\"same\": <bool>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`. The shape is guaranteed by token-level constrained generation (LLGuidance) — downstream code parses it without error handling for malformed text.\n\n## Notes\n\n- Judgment caps are deterministic by default (temperature 0 semantics at the backend; law P4 in the design doc): the same items, context, and model produce the same judgment.\n- Spelling variants, abbreviations, legal suffixes, and formatting differences do not make two references to one thing different; two genuinely different things are not the same however similar they look. The `reason` field names the decisive evidence.\n- Served by the engine's generative-text cartridge over constrained GGUF inference (like [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
     "args": [
       {
         "media_urn": "media:enc=utf-8",
