@@ -2024,6 +2024,7 @@ pub(crate) async fn invoke_constrained_peer(
         .await
         .map_err(|e| anyhow::anyhow!("peer arg write failed: {}", e))?;
     arg.close()
+        .await
         .map_err(|e| anyhow::anyhow!("peer arg close failed: {}", e))?;
 
     let mut response = call
