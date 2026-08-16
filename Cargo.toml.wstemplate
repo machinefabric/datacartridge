@@ -19,7 +19,8 @@ tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
 tracing = "0.1"
 
 [dependencies.capdag]
-path = "../../capdag/capdag-rs"
+git = "https://github.com/machinefabric/capdag-rs"
+tag = "v{{ projects.capdag_rs.latest_remote_version }}"
 
 [dependencies.machfab-cartridge-sdk]
 path = "../../machfab-cartridge-sdk"
