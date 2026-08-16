@@ -827,13 +827,19 @@ impl Op<()> for DataAdapterSelectionOp {
 #[tokio::main]
 async fn main() -> Result<()> {
     let manifest = build_manifest();
-    let mut runtime = CartridgeRuntime::with_manifest(manifest);
     // Semantic operations in this cartridge share the single-capacity
-    // constrained-generation peer. Keep ownership at the relay boundary so a
-    // cartridge loss fails only the active body; queued ForEach bodies can be
-    // admitted to the replacement process instead of all becoming in-flight
-    // against the failed generation.
-    runtime.set_capacity(1);
+    // constrained-generation peer. Declare `all` at 1 to keep ownership at
+    // the relay boundary so a cartridge loss fails only the active body;
+    // queued ForEach bodies can be admitted to the replacement process
+    // instead of all becoming in-flight against the failed generation.
+    let mut pool_declarations = capdag::PoolDeclarations::default();
+    pool_declarations
+        .capacities
+        .insert(capdag::POOL_ALL.to_string(), 1);
+    let manifest = manifest
+        .with_pool_declarations(pool_declarations)
+        .expect("data pool declarations must validate against the manifest");
+    let mut runtime = CartridgeRuntime::with_manifest(manifest);
 
     // Register adapter selection handler
     runtime.register_op(CAP_ADAPTER_SELECTION, || Box::new(DataAdapterSelectionOp));
