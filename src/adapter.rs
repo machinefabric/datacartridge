@@ -407,7 +407,7 @@ mod tests {
     /// `media:enc=utf-8;list;psv`, and other URN forms that did
     /// not exist in the catalog because no anchor declared them.
     /// This test exhaustively enumerates the URN forms the adapter
-    /// is allowed to return; cross-validation at `dx publish fabric`
+    /// is allowed to return; cross-validation at `sdx publish fabric`
     /// time catches any of these strings drifting away from
     /// catalog truth.
     #[test]
