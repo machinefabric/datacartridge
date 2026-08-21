@@ -1832,6 +1832,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             "media:decision;fmt=json;record",
             "One decision per question, each as a JSON object with identifier and value",
             true,
+            false,
             None,
         ));
         caps.push(cap);
