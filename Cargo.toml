@@ -1,6 +1,6 @@
 [package]
 name = "datacartridge"
-version = "1.75.268"
+version = "1.77.276"
 edition = "2021"
 license = "AGPL-3.0-or-later"
 description = "JSON/YAML/CSV format conversion cartridge for MachineFabric"
