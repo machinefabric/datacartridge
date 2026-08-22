@@ -30,7 +30,7 @@ tag = "v{{ projects.capdag_rs.latest_remote_version }}"
 {%- endif %}
 
 [dependencies.machfab-cartridge-sdk]
-path = "{{ projects.machfab_cartridge_sdk.path_from_here }}"
+path = "{{ projects.machfab_cartridge_sdk_rs.path_from_here }}"
 
 [dependencies.serde]
 features = ["derive"]
