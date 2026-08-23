@@ -1,6 +1,6 @@
 [package]
 name = "datacartridge"
-version = "1.80.287"
+version = "1.81.289"
 edition = "2021"
 license = "AGPL-3.0-or-later"
 description = "JSON/YAML/CSV format conversion cartridge for MachineFabric"
@@ -23,7 +23,8 @@ git = "https://github.com/machinefabric/capdag-rs"
 tag = "v1.695.18"
 
 [dependencies.machfab-cartridge-sdk]
-path = "../../cartridge-sdks/machfab-cartridge-sdk-rs"
+git = "https://github.com/machinefabric/machfab-cartridge-sdk-rs"
+tag = "v1.138.667"
 
 [dependencies.serde]
 features = ["derive"]

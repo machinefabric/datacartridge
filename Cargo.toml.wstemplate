@@ -30,7 +30,16 @@ tag = "v{{ projects.capdag_rs.latest_remote_version }}"
 {%- endif %}
 
 [dependencies.machfab-cartridge-sdk]
+{%- if env.MFR_LOCAL_LIBS %}
+# MFR_LOCAL_LIBS was set when this was rendered: the working copy in this
+# workspace rather than a published tag. Re-render without it before
+# committing or releasing — a path crosses out of this repository and
+# resolves on a machine that has the whole workspace checked out.
 path = "{{ projects.machfab_cartridge_sdk_rs.path_from_here }}"
+{%- else %}
+git = "https://github.com/machinefabric/machfab-cartridge-sdk-rs"
+tag = "v{{ projects.machfab_cartridge_sdk_rs.latest_remote_version }}"
+{%- endif %}
 
 [dependencies.serde]
 features = ["derive"]
