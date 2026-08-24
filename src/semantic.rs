@@ -2205,7 +2205,7 @@ mod tests {
     /// Only the free-generation cap exposes temperature/seed as configurable args;
     /// judgment caps keep determinism intrinsic and must NOT expose them.
     #[test]
-    fn test0304_temperature_seed_only_on_generate_json() {
+    fn test11014_temperature_seed_only_on_generate_json() {
         let caps = semantic_caps();
         let gj_urn = capdag::standard::generate_json_urn("en").to_string();
         let gj = caps.iter().find(|c| c.urn.to_string() == gj_urn).expect("generate_json cap present");
