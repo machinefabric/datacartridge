@@ -7,7 +7,7 @@
 //! services (`config_service`/`llm_service`), each cap builds the constrained
 //! request and peer-calls the constrained-inference cap itself, exactly as
 //! this cartridge's `edit` cap already does. The prompt/dynamic-schema
-//! registry (`structured_queries`) is shared through `machfab-cartridge-sdk`.
+//! registry (`structured_queries`) is shared through `capdag-cartridge-sdk`.
 //!
 //! Every judgment cap is deterministic (greedy sampling + fixed seed) — the
 //! same input, model, and args produce the same judgment. `generate_json` is
