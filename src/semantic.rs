@@ -18,7 +18,7 @@ use capdag::{
     async_trait, DryContext, Op, OpError, OpResult, OutputStream, PeerInvoker, Request, StreamMeta,
     WetContext, WET_KEY_REQUEST,
 };
-use machfab_cartridge_sdk::structured_queries::{
+use capdag_cartridge_sdk::structured_queries::{
     MakeDecisionResult, MakeMultipleDecisionsResult, StructuredQueryRegistry,
 };
 use std::collections::HashMap;
