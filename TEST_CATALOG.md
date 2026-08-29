@@ -1,6 +1,6 @@
 # Test catalogue — cartridges/datacartridge
 
-Generated from the catalogue table by `sdx catalog export`. Edit the tests, not this file.
+Generated from the test catalogue. Edit the tests, not this file.
 
 83 tests: 80 numbered, 3 unnumbered.
 
