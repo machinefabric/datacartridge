@@ -1,6 +1,6 @@
 [package]
 name = "datacartridge"
-version = "1.100.340"
+version = "1.101.342"
 edition = "2021"
 license = "AGPL-3.0-or-later"
 description = "JSON/YAML/CSV format conversion cartridge for CapDAG"
