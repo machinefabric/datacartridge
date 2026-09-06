@@ -1988,7 +1988,7 @@ pub(crate) async fn invoke_constrained_peer(
     model_spec: &str,
     params: &InferenceParams,
 ) -> Result<String> {
-    use capdag_cartridge_sdk::llm::{
+    use capdag::llm::protocol::{
         ConstraintSpec, LlmGenerationRequest, LlmStreamMessage, CAP_LLM_INFERENCE_CONSTRAINED,
     };
 
