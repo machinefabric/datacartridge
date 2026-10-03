@@ -654,49 +654,54 @@ fn collect_json_objects_to(items: &[Vec<u8>], out_media: &str) -> Result<Vec<u8>
 }
 
 /// Collect records (CSV or YAML) into the target format.
+///
+/// Each item is read exactly as `convert-format` reads that format, so one
+/// record has one meaning whichever cap it went through: a CSV field becomes
+/// a number or a boolean only when nothing is lost (`infer_csv_value`), and a
+/// YAML mapping is converted with the same handling of tags and non-string
+/// keys. Collection used to keep every CSV field a string, so `alpha,1`
+/// collected to `"value": "1"` while converting the same row gave
+/// `"value": 1`.
+///
+/// The formats come from the media URNs' tags (`format_of_str`), not from
+/// looking for `"csv"` inside the URN's text.
 fn collect_records_to(items: &[Vec<u8>], in_media: &str, out_media: &str) -> Result<Vec<u8>> {
-    // Parse each item into JSON objects based on source format
+    let from = format_of_str(in_media)?;
+    let to = format_of_str(out_media)?;
     let mut all_objects: Vec<serde_json::Value> = Vec::new();
-
     for (i, bytes) in items.iter().enumerate() {
-        if in_media.contains("csv") {
-            // Parse CSV rows as JSON objects
-            let mut rdr = csv::Reader::from_reader(strip_utf8_bom(&bytes[..]));
-            let headers: Vec<String> = rdr.headers()
-                .map_err(|e| anyhow::anyhow!("CSV item {} has no headers: {}", i, e))?
-                .iter()
-                .map(|h| h.to_string())
-                .collect();
-            for row_result in rdr.records() {
-                let row = row_result
-                    .map_err(|e| anyhow::anyhow!("CSV item {} row error: {}", i, e))?;
-                let mut obj = serde_json::Map::new();
-                for (h, v) in headers.iter().zip(row.iter()) {
-                    obj.insert(h.clone(), serde_json::Value::String(v.to_string()));
-                }
-                all_objects.push(serde_json::Value::Object(obj));
+        match from {
+            Fmt::Csv => {
+                let rows: Vec<serde_json::Value> = serde_json::from_slice(
+                    &csv_to_json_records(bytes).map_err(|e| anyhow::anyhow!("CSV item {}: {}", i, e))?,
+                )
+                .map_err(|e| anyhow::anyhow!("CSV item {} did not convert to records: {}", i, e))?;
+                all_objects.extend(rows);
             }
-        } else if in_media.contains("yaml") {
-            // Parse YAML mapping as JSON object
-            let value: serde_json::Value = serde_yaml::from_slice(bytes)
-                .map_err(|e| anyhow::anyhow!("YAML item {} parse error: {}", i, e))?;
-            all_objects.push(value);
-        } else {
-            // Try JSON
-            let value: serde_json::Value = serde_json::from_slice(bytes)
-                .map_err(|e| anyhow::anyhow!("JSON item {} parse error: {}", i, e))?;
-            all_objects.push(value);
+            Fmt::Yaml => {
+                let value: serde_yaml::Value = serde_yaml::from_slice(bytes)
+                    .map_err(|e| anyhow::anyhow!("YAML item {} parse error: {}", i, e))?;
+                all_objects.push(yaml_value_to_json_value(value)?);
+            }
+            Fmt::Json => {
+                let value: serde_json::Value = serde_json::from_slice(bytes)
+                    .map_err(|e| anyhow::anyhow!("JSON item {} parse error: {}", i, e))?;
+                all_objects.push(value);
+            }
+            Fmt::TextList => anyhow::bail!(
+                "a text list is not a record format; collect-records takes CSV, YAML or JSON records"
+            ),
         }
     }
 
-    // Produce output
-    if out_media.contains("csv") {
-        json_objects_to_csv(&all_objects)
-    } else if out_media.contains("yaml") {
-        json_objects_to_yaml(&all_objects)
-    } else {
-        serde_json::to_vec_pretty(&all_objects)
-            .map_err(|e| anyhow::anyhow!("Failed to serialize JSON array: {}", e))
+    match to {
+        Fmt::Csv => json_objects_to_csv(&all_objects),
+        Fmt::Yaml => json_objects_to_yaml(&all_objects),
+        Fmt::Json => serde_json::to_vec_pretty(&all_objects)
+            .map_err(|e| anyhow::anyhow!("Failed to serialize JSON array: {}", e)),
+        Fmt::TextList => anyhow::bail!(
+            "a text list is not a record format; collect-records writes CSV, YAML or JSON records"
+        ),
     }
 }
 
@@ -1027,8 +1032,8 @@ enum Fmt {
     Json,
     Yaml,
     Csv,
-    /// Bare UTF-8 text list (`media:enc=utf-8;list`) — CBOR sequence of byte
-    /// strings, carrying an encoding but no serialization-format (`fmt=`) tag.
+    /// Bare UTF-8 text list (`media:enc=utf-8;list`) — one value per line,
+    /// carrying an encoding but no serialization-format (`fmt=`) tag.
     TextList,
 }
 
@@ -1266,8 +1271,6 @@ fn strip_utf8_bom(data: &[u8]) -> &[u8] {
 // TEXTABLE LIST CONVERSIONS
 // =============================================================================
 
-/// Decode a CBOR sequence of byte strings into a Vec of raw UTF-8 strings.
-/// Each item in the CBOR sequence is expected to be a Value::Bytes containing UTF-8 text.
 /// Decode a text list: plain text with one value per line.
 /// Empty lines are skipped. Trailing newline is tolerated.
 fn decode_textable_list(data: &[u8]) -> Result<Vec<String>> {
@@ -1289,7 +1292,7 @@ fn encode_textable_list(items: &[String]) -> Vec<u8> {
     result.into_bytes()
 }
 
-/// Textable list (CBOR sequence) -> JSON array.
+/// Textable list (one value per line) -> JSON array.
 /// Each item is parsed as a JSON value if possible, otherwise kept as a JSON string.
 fn text_list_to_json(data: &[u8]) -> Result<Vec<u8>> {
     let items = decode_textable_list(data)?;
@@ -1989,7 +1992,8 @@ pub(crate) async fn invoke_constrained_peer(
     params: &InferenceParams,
 ) -> Result<String> {
     use capdag::llm::protocol::{
-        ConstraintSpec, LlmGenerationRequest, LlmStreamMessage, CAP_LLM_INFERENCE_CONSTRAINED,
+        finish_reason, ConstraintSpec, LlmGenerationRequest, LlmStreamMessage,
+        CAP_LLM_INFERENCE_CONSTRAINED,
     };
 
     // Backstop: reject a schema too deep/wide for the model to follow under grammar
@@ -2039,6 +2043,9 @@ pub(crate) async fn invoke_constrained_peer(
         .map_err(|e| anyhow::anyhow!("peer call failed: {}", e))?;
 
     let mut generated = String::new();
+    // How the generation ended, from its `complete` message. Required: a
+    // stream that stopped without one did not finish, whatever text it sent.
+    let mut finished: Option<(String, usize)> = None;
     let mut line_buffer = String::new();
     while let Some(item) = response.recv().await {
         match item {
@@ -2092,9 +2099,15 @@ pub(crate) async fn invoke_constrained_peer(
                     }
                     match LlmStreamMessage::from_line(line) {
                         Ok(LlmStreamMessage::Token { text }) => generated.push_str(&text),
-                        Ok(LlmStreamMessage::Complete { generated_text, .. }) => {
+                        Ok(LlmStreamMessage::Complete {
+                            generated_text,
+                            tokens_generated,
+                            finish_reason,
+                            ..
+                        }) => {
                             // Authoritative full text.
                             generated = generated_text;
+                            finished = Some((finish_reason, tokens_generated));
                         }
                         Ok(LlmStreamMessage::Error { code, message }) => {
                             anyhow::bail!("constrained inference failed: {} — {}", code, message);
@@ -2112,6 +2125,21 @@ pub(crate) async fn invoke_constrained_peer(
             }
         }
     }
+    let (reason, tokens) = finished.ok_or_else(|| {
+        anyhow::anyhow!("constrained inference ended without completing ({} characters sent)", generated.len())
+    })?;
+    // A judgment cut off at the token limit is not a judgment. Its JSON is
+    // unfinished, and parsing it would fail as "model output failed JSON parse
+    // despite schema constraint" — blaming the constraint for what the limit
+    // did. Said as what it is, with the numbers that matter.
+    if reason == finish_reason::LENGTH {
+        anyhow::bail!(
+            "the model reached its limit of {} tokens before finishing (it had written {} characters); \
+             a longer limit, a smaller input, or a model that answers more briefly is needed",
+            tokens,
+            generated.len()
+        );
+    }
     if generated.trim().is_empty() {
         anyhow::bail!("constrained inference produced no output");
     }
@@ -2120,6 +2148,44 @@ pub(crate) async fn invoke_constrained_peer(
 
 #[cfg(test)]
 mod tests {
+
+    // TEST12430: records collected from CSV carry the types converting the
+    // same CSV gives them.
+    //
+    // Collection kept every CSV field a string and conversion inferred types,
+    // so one row meant two things depending on the cap it went through. The
+    // collected records are held to the converted ones, field for field.
+    #[test]
+    fn test12430_collected_csv_records_are_typed_like_converted_ones() {
+        let csv_items: Vec<Vec<u8>> = vec![
+            b"name,value,ok,code\nalpha,1,true,007\n".to_vec(),
+            b"name,value,ok,code\nbeta,2.5,false,42\n".to_vec(),
+        ];
+        let collected: serde_json::Value = serde_json::from_slice(
+            &collect_records_to(&csv_items, "media:fmt=csv;list;record", "media:fmt=json;list;record")
+                .expect("CSV records collect"),
+        )
+        .expect("the collection is JSON");
+        let converted: Vec<serde_json::Value> = csv_items
+            .iter()
+            .flat_map(|item| {
+                serde_json::from_slice::<Vec<serde_json::Value>>(&csv_to_json_records(item).expect("CSV converts"))
+                    .expect("the conversion is JSON")
+            })
+            .collect();
+        assert_eq!(collected, serde_json::Value::Array(converted));
+        assert_eq!(
+            collected,
+            serde_json::json!([
+                {"name": "alpha", "value": 1, "ok": true, "code": "007"},
+                {"name": "beta", "value": 2.5, "ok": false, "code": 42},
+            ]),
+            "a field converts only when nothing is lost: 007 stays text"
+        );
+
+        // A text list is not records, either way round, and says so.
+        assert!(collect_records_to(&csv_items, "media:enc=utf-8;list", "media:fmt=json;list;record").is_err());
+    }
     use super::*;
 
     /// The schema-complexity backstop (formerly the `max-guidance-*` settings): a
