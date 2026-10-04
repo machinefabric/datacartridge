@@ -15,22 +15,29 @@ use serde_json::Value;
 /// keys in any order (the constraint does not fix one).
 pub(crate) fn outline(schema: &Value) -> String {
     let mut lines = Vec::new();
-    describe(schema, 0, "", &mut lines);
+    describe(schema, 0, &(String::new(), ""), &mut lines);
     lines.join("\n")
 }
 
-/// Push `label` followed by what `schema` is, and under it whatever it is made
-/// of, at `depth`.
-fn describe(schema: &Value, depth: usize, label: &str, lines: &mut Vec<String>) {
+/// How a part is introduced: what comes before its phrase and after it. A
+/// property's phrase sits inside parentheses after its key — `- "name"
+/// (required, a string)` — never where its value would go: written
+/// `"name": text`, the outline was copied, and an extraction answered
+/// `{"name": "text"}`.
+type Label = (String, &'static str);
+
+/// Push `label` around what `schema` is, and under it whatever it is made of,
+/// at `depth`.
+fn describe(schema: &Value, depth: usize, label: &Label, lines: &mut Vec<String>) {
     let (summary, children) = summarize(schema);
-    lines.push(format!("{}{}{}", "  ".repeat(depth), label, summary));
+    lines.push(format!("{}{}{}{}", "  ".repeat(depth), label.0, summary, label.1));
     for (child_label, child) in children {
         describe(child, depth + 1, &child_label, lines);
     }
 }
 
 /// What `schema` is, in a phrase, and the parts listed under it.
-fn summarize(schema: &Value) -> (String, Vec<(String, &Value)>) {
+fn summarize(schema: &Value) -> (String, Vec<(Label, &Value)>) {
     let Some(map) = schema.as_object() else {
         // `true` (or anything that is not a schema object) allows any value.
         return ("any JSON value".to_string(), Vec::new());
@@ -57,7 +64,7 @@ fn summarize(schema: &Value) -> (String, Vec<(String, &Value)>) {
     }
     for key in ["oneOf", "anyOf"] {
         if let Some(alternatives) = map.get(key).and_then(Value::as_array) {
-            let children = alternatives.iter().map(|a| ("- ".to_string(), a)).collect();
+            let children = alternatives.iter().map(|a| (("- ".to_string(), ""), a)).collect();
             return (note("one of:".to_string()), children);
         }
     }
@@ -73,7 +80,7 @@ fn summarize(schema: &Value) -> (String, Vec<(String, &Value)>) {
             .and_then(Value::as_array)
             .map(|r| r.iter().filter_map(Value::as_str).collect())
             .unwrap_or_default();
-        let mut children: Vec<(String, &Value)> = map
+        let mut children: Vec<(Label, &Value)> = map
             .get("properties")
             .and_then(Value::as_object)
             .map(|properties| {
@@ -85,7 +92,7 @@ fn summarize(schema: &Value) -> (String, Vec<(String, &Value)>) {
                         } else {
                             "optional"
                         };
-                        (format!("- {} ({presence}): ", Value::String(name.clone())), property)
+                        ((format!("- {} ({presence}, ", Value::String(name.clone())), ")"), property)
                     })
                     .collect()
             })
@@ -93,7 +100,7 @@ fn summarize(schema: &Value) -> (String, Vec<(String, &Value)>) {
         match map.get("additionalProperties") {
             Some(Value::Bool(false)) => {}
             Some(other) if other.is_object() => {
-                children.push(("- any other key: ".to_string(), other));
+                children.push((("- any other key (".to_string(), ")"), other));
             }
             _ if children.is_empty() => {
                 return (note("an object with any keys".to_string()), Vec::new());
@@ -120,7 +127,7 @@ fn summarize(schema: &Value) -> (String, Vec<(String, &Value)>) {
         if item_children.is_empty() {
             return (note(format!("a list of {count}, each {item_summary}")), Vec::new());
         }
-        return (note(format!("a list of {count}, each:")), vec![("".to_string(), items)]);
+        return (note(format!("a list of {count}, each:")), vec![((String::new(), ""), items)]);
     }
 
     let mut phrase = if types.is_empty() {
@@ -149,7 +156,7 @@ fn summarize(schema: &Value) -> (String, Vec<(String, &Value)>) {
 
 fn kind(json_type: &str) -> &str {
     match json_type {
-        "string" => "text",
+        "string" => "a string",
         "integer" => "an integer",
         "number" => "a number",
         "boolean" => "true or false",
@@ -183,10 +190,10 @@ mod tests {
             outline(&schema),
             [
                 "an object with:",
-                "  - \"confidence\" (required): a number, at least 0, at most 1",
-                "  - \"reason\" (required): text, at most 300 characters — the decisive evidence",
-                "  - \"same\" (required): true or false",
-                "  - \"tier\" (optional): one of \"low\", \"high\"",
+                "  - \"confidence\" (required, a number, at least 0, at most 1)",
+                "  - \"reason\" (required, a string, at most 300 characters — the decisive evidence)",
+                "  - \"same\" (required, true or false)",
+                "  - \"tier\" (optional, one of \"low\", \"high\")",
             ]
             .join("\n")
         );
@@ -234,14 +241,14 @@ mod tests {
             outline(&schema),
             [
                 "an object with:",
-                "  - \"ops\" (required): a list of 1 to 32 items, each:",
+                "  - \"ops\" (required, a list of 1 to 32 items, each:)",
                 "    one of:",
                 "      - an object with:",
-                "        - \"fields\" (required): a list of at least 1 items, each one of \"a\", \"b\"",
-                "        - \"op\" (required): exactly \"drop_fields\"",
+                "        - \"fields\" (required, a list of at least 1 items, each one of \"a\", \"b\")",
+                "        - \"op\" (required, exactly \"drop_fields\")",
                 "      - an object with:",
-                "        - \"op\" (required): exactly \"set_field\"",
-                "        - \"value\" (required): any JSON value",
+                "        - \"op\" (required, exactly \"set_field\")",
+                "        - \"value\" (required, any JSON value)",
             ]
             .join("\n")
         );
