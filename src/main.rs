@@ -2134,11 +2134,25 @@ pub(crate) async fn invoke_constrained_peer(
     // despite schema constraint" — blaming the constraint for what the limit
     // did. Said as what it is, with the numbers that matter.
     if reason == finish_reason::LENGTH {
+        // What it wrote, its start and its end: whether a field ran on, or
+        // whitespace did, is the difference between a limit too small and a
+        // generation that would never have ended.
+        let chars: Vec<char> = generated.chars().collect();
+        let shown = if chars.len() <= 400 {
+            generated.clone()
+        } else {
+            format!(
+                "{} … {}",
+                chars[..200].iter().collect::<String>(),
+                chars[chars.len() - 200..].iter().collect::<String>()
+            )
+        };
         anyhow::bail!(
-            "the model reached its limit of {} tokens before finishing (it had written {} characters); \
+            "the model reached its limit of {} tokens before finishing (it had written {} characters: {:?}); \
              a longer limit, a smaller input, or a model that answers more briefly is needed",
             tokens,
-            generated.len()
+            chars.len(),
+            shown
         );
     }
     if generated.trim().is_empty() {
