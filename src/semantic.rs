@@ -245,16 +245,19 @@ async fn take_request_streams(
 // PROMPT + SCHEMA SUFFIX
 // =============================================================================
 
-/// The mandatory JSON-shape suffix appended to every registry-rendered prompt,
-/// pinning the exact schema the model must emit. Identical wording to the
-/// former cartridge so the constrained decode behaves the same.
-fn with_schema_suffix(base_prompt: &str, schema: &serde_json::Value) -> String {
-    let schema_json =
-        serde_json::to_string_pretty(schema).unwrap_or_else(|_| schema.to_string());
-    format!(
-        "{}\n\nYou MUST respond with valid JSON matching this exact schema:\n```json\n{}\n```\n\nRespond with ONLY the JSON object, no other text.",
-        base_prompt, schema_json
-    )
+/// The last line of every prompt whose output is constrained to JSON. The
+/// constraint enforces the shape token by token, so the prompt never pastes a
+/// schema: each registry prompt names its fields in words, and a caller's
+/// schema is described by [`crate::schema_outline::outline`]. A pasted schema
+/// is mostly JSON-Schema vocabulary the model imitates (its strongest first
+/// key under constraint was `"type"`). This line is about the form alone: the
+/// model's strongest first token was a code fence.
+pub(crate) const OUTPUT_INSTRUCTION: &str =
+    "Respond with only the JSON object: no code fence and no other text.";
+
+/// A registry-rendered prompt, ending with [`OUTPUT_INSTRUCTION`].
+fn with_output_instruction(base_prompt: &str) -> String {
+    format!("{base_prompt}\n\n{OUTPUT_INSTRUCTION}")
 }
 
 // =============================================================================
@@ -273,14 +276,13 @@ async fn execute_generate_json(
     peer: &dyn PeerInvoker,
     output: &OutputStream,
 ) -> Result<serde_json::Value> {
-    let schema_json = serde_json::to_string_pretty(&output_schema)
-        .unwrap_or_else(|_| output_schema.to_string());
     let prompt = format!(
-        "Analyze the content below and produce a JSON object matching the given schema exactly.\n\n\
+        "Analyze the content below and produce a JSON value of this shape:\n{}\n\n\
          Content:\n{}\n\n\
-         You MUST respond with valid JSON matching this exact schema:\n```json\n{}\n```\n\n\
-         Respond with ONLY the JSON object, no other text.",
-        content, schema_json
+         {}",
+        crate::schema_outline::outline(&output_schema),
+        content,
+        OUTPUT_INSTRUCTION
     );
 
     let result_json =
@@ -323,19 +325,19 @@ async fn execute_extract(
         "additionalProperties": false
     });
 
-    let schema_json = serde_json::to_string_pretty(&envelope_schema)
-        .unwrap_or_else(|_| envelope_schema.to_string());
     let prompt = format!(
-        "Extract the structured fields described by the schema from the content below.\n\n\
+        "Extract the structured fields described below from the content.\n\n\
          Content:\n{}\n\n\
-         Fill \"result\" with the extracted instance. Extract only what the content \
-         actually states — never invent values; where the schema permits, omit or \
-         null what is absent. \"confidence\" is your confidence between 0.0 and 1.0 \
-         that every extracted field is faithful to the content, and \"reason\" is one \
-         short sentence noting anything ambiguous or missing.\n\n\
-         You MUST respond with valid JSON matching this exact schema:\n```json\n{}\n```\n\n\
-         Respond with ONLY the JSON object, no other text.",
-        content, schema_json
+         Respond with a JSON object: \"result\" is the extracted instance, of this shape:\n{}\n\n\
+         Extract only what the content actually states — never invent values; where an \
+         optional field or null is allowed, use it for what is absent. \"confidence\" is \
+         your confidence between 0.0 and 1.0 that every extracted field is faithful to the \
+         content, and \"reason\" is one short sentence noting anything ambiguous or \
+         missing.\n\n\
+         {}",
+        content,
+        crate::schema_outline::outline(&user_schema),
+        OUTPUT_INSTRUCTION
     );
 
     let result_json =
@@ -399,14 +401,14 @@ async fn execute_make_decision(
     })?;
 
     let base_prompt = query.generate_prompt(&substitutions)?;
-    let prompt_with_schema = with_schema_suffix(&base_prompt, &query.output_schema);
+    let full_prompt = with_output_instruction(&base_prompt);
 
     let result_json = invoke_constrained_peer(
         peer,
         output,
         0.0,
         0.95,
-        &prompt_with_schema,
+        &full_prompt,
         query.output_schema.clone(),
         model_spec,
         params,
@@ -487,14 +489,14 @@ async fn execute_make_multiple_decisions(
         query.output_schema.clone()
     };
 
-    let prompt_with_schema = with_schema_suffix(&base_prompt, &output_schema);
+    let full_prompt = with_output_instruction(&base_prompt);
 
     let result_json = invoke_constrained_peer(
         peer,
         output,
         0.0,
         0.95,
-        &prompt_with_schema,
+        &full_prompt,
         output_schema,
         model_spec,
         params,
@@ -581,14 +583,14 @@ async fn execute_judgment_query(
         }
     };
 
-    let prompt_with_schema = with_schema_suffix(&base_prompt, &output_schema);
+    let full_prompt = with_output_instruction(&base_prompt);
 
     let result_json = invoke_constrained_peer(
         peer,
         output,
         0.0,
         0.95,
-        &prompt_with_schema,
+        &full_prompt,
         output_schema,
         model_spec,
         params,
@@ -655,14 +657,14 @@ async fn execute_same(
     })?;
 
     let base_prompt = query.generate_prompt(&substitutions)?;
-    let prompt_with_schema = with_schema_suffix(&base_prompt, &query.output_schema);
+    let full_prompt = with_output_instruction(&base_prompt);
 
     let result_json = invoke_constrained_peer(
         peer,
         output,
         0.0,
         0.95,
-        &prompt_with_schema,
+        &full_prompt,
         query.output_schema.clone(),
         model_spec,
         params,

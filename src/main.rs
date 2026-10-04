@@ -13,6 +13,7 @@
 
 mod adapter;
 mod repair;
+mod schema_outline;
 mod semantic;
 mod transform;
 
@@ -1774,13 +1775,12 @@ impl Op<()> for EditOp {
         // doesn't exist (`set_field` still adds new fields — see the schema doc).
         let field_names = transform::input_field_names(records);
         let program_schema = transform::program_schema_with_fields(&field_names);
-        let schema_pretty = serde_json::to_string_pretty(&program_schema)
-            .expect("schema serializes");
+        let program_outline = crate::schema_outline::outline(&program_schema);
 
         let prompt = format!(
             "Translate the instruction into a transform program for a table of JSON records.\n\n\
              The program is an ordered list of operations applied to every record. Use ONLY \
-             the operations the schema defines; the program must implement the instruction \
+             the operations listed below; the program must implement the instruction \
              EXACTLY — no extra operations. Pick the operation that matches the instruction's \
              verb: add/set a field → `set_field`; change a field's text → `map_field`; keep/remove \
              rows → `filter`; rename → `rename_field`; keep/remove columns → `select_fields`/\
@@ -1796,12 +1796,13 @@ impl Op<()> for EditOp {
              {{\"ops\":[{{\"op\":\"filter\",\"field\":\"age\",\"predicate\":\"ge\",\"value\":18}}]}}\n\n\
              Instruction: {}\n\n\
              Record structure ({} records total):\n{}\n\n\
-             You MUST respond with valid JSON matching this exact schema:\n```json\n{}\n```\n\n\
-             Respond with ONLY the JSON object, no other text.",
+             The program is a JSON object of this shape:\n{}\n\n\
+             {}",
             instruction.trim(),
             records.len(),
             sample,
-            schema_pretty
+            program_outline,
+            crate::semantic::OUTPUT_INSTRUCTION
         );
 
         // Transform-program generation is deterministic — resolve the judgment
