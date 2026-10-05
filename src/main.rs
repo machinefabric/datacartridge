@@ -1688,9 +1688,11 @@ impl Op<()> for RepairCsvOp {
 struct EditOp;
 
 /// Default GGUF model for the constrained caps (`edit` and the semantic
-/// judgment caps) — the offline-travel-kit model the fabric catalog declares
-/// as the default for every one of them.
-pub(crate) const DEFAULT_LLM_MODEL: &str = "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*";
+/// judgment caps) — the one the fabric catalog declares as the default for
+/// every one of them. Qwen3-4B-Instruct-2507: of the models compared on the
+/// judgment scenarios (TEST1764–1776), the smallest that answered all of them
+/// correctly; Llama-3.2-1B, the default before it, answered three.
+pub(crate) const DEFAULT_LLM_MODEL: &str = "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf";
 
 #[async_trait]
 impl Op<()> for EditOp {

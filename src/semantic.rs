@@ -253,7 +253,9 @@ async fn take_request_streams(
 /// key under constraint was `"type"`). This line is about the form alone: the
 /// model's strongest first token was a code fence.
 pub(crate) const OUTPUT_INSTRUCTION: &str =
-    "Respond with only the JSON object: no code fence and no other text.";
+    "Respond with only the JSON object: no code fence and no other text. Inside a text \
+     value, quote in your own words with single quotes ('like this'); a double quote \
+     copied from the content is written \\\".";
 
 /// A registry-rendered prompt, ending with [`OUTPUT_INSTRUCTION`].
 fn with_output_instruction(base_prompt: &str) -> String {
@@ -278,7 +280,7 @@ async fn execute_generate_json(
 ) -> Result<serde_json::Value> {
     let prompt = format!(
         "Analyze the content below and produce a JSON value of this shape:\n{}\n\n\
-         Content:\n{}\n\n\
+         Content:\n<content>\n{}\n</content>\n\n\
          {}",
         crate::schema_outline::outline(&output_schema),
         content,
@@ -327,7 +329,7 @@ async fn execute_extract(
 
     let prompt = format!(
         "Extract the structured fields described below from the content.\n\n\
-         Content:\n{}\n\n\
+         Content:\n<content>\n{}\n</content>\n\n\
          Respond with a JSON object: \"result\" is the extracted instance, of this shape:\n{}\n\n\
          Extract only what the content actually states — never invent values; where an \
          optional field or null is allowed, use it for what is absent. \"confidence\" is \
