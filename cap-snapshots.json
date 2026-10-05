@@ -1,7 +1,7 @@
 [
   {
     "urn": "cap:ask;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 1,
+    "version": 2,
     "title": "Ask (Grounded Question Answering) (Constrained, English)",
     "aliases": [
       "ask-en"
@@ -47,7 +47,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -176,7 +176,7 @@
   },
   {
     "urn": "cap:classify;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 1,
+    "version": 2,
     "title": "Classify (Closed-Set Labeling) (Constrained, English)",
     "aliases": [
       "classify-en"
@@ -234,7 +234,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -2065,7 +2065,7 @@
   },
   {
     "urn": "cap:edit;in=\"media:fmt=json;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Edit (Instruction-Driven Transform)",
     "aliases": [
       "edit-records"
@@ -2111,7 +2111,7 @@
           }
         ],
         "arg_description": "Model spec used to generate the transform program",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       }
     ],
     "output": {
@@ -2123,7 +2123,7 @@
   },
   {
     "urn": "cap:constrained;explain;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 1,
+    "version": 2,
     "title": "Explain (Root-Cause Hypothesis) (Constrained, English)",
     "aliases": [
       "explain-en"
@@ -2169,7 +2169,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -2298,7 +2298,7 @@
   },
   {
     "urn": "cap:constrained;extract;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 1,
+    "version": 2,
     "title": "Extract (Schema-Guided Extraction) (Constrained, English)",
     "aliases": [
       "extract-en"
@@ -2344,7 +2344,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -2473,14 +2473,14 @@
   },
   {
     "urn": "cap:constrained;generate-json;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Generate JSON (Constrained, English)",
     "aliases": [
       "generate-json-en",
       "generate-json"
     ],
     "cap_description": "Generate JSON from text content, constrained to validate against a caller-supplied JSON schema.",
-    "documentation": "## Purpose\n\nRuns constrained LLM generation over the supplied content to produce a JSON\nobject that validates against the supplied JSON schema. Token-level schema\nenforcement (via LLGuidance on the GGUF backend) guarantees the output parses\nand satisfies the schema — downstream code can `serde_json::from_str::<T>` or\nits equivalent without defensive error handling.\n\n## Inputs\n\n- Content to analyze — plain text (the cap's stdin-flowing input).\n- `--schema`: a JSON Schema object describing the required output shape.\n- Language code (default: `en`).\n- A model spec (defaults to `bartowski/Llama-3.2-1B-Instruct-GGUF` Q4_K_M, the offline-travel-kit GGUF LLM).\n\n## Outputs\n\nA JSON object conforming to the supplied schema.\n\n## Notes\n\n- The output schema is supplied per-call, not looked up from any registry.\n  Callers who want a fixed-shape \"named query\" endpoint should define their\n  own cap that wraps this one with a baked-in schema.\n- Constraint enforcement is at the token-sampling level — the model cannot\n  emit tokens that would violate the schema.\n- See also: [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  and [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  for fixed-shape boolean classification caps.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nRuns constrained LLM generation over the supplied content to produce a JSON\nobject that validates against the supplied JSON schema. Token-level schema\nenforcement (via LLGuidance on the GGUF backend) guarantees the output parses\nand satisfies the schema — downstream code can `serde_json::from_str::<T>` or\nits equivalent without defensive error handling.\n\n## Inputs\n\n- Content to analyze — plain text (the cap's stdin-flowing input).\n- `--schema`: a JSON Schema object describing the required output shape.\n- Language code (default: `en`).\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA JSON object conforming to the supplied schema.\n\n## Notes\n\n- The output schema is supplied per-call, not looked up from any registry.\n  Callers who want a fixed-shape \"named query\" endpoint should define their\n  own cap that wraps this one with a baked-in schema.\n- Constraint enforcement is at the token-sampling level — the model cannot\n  emit tokens that would violate the schema.\n- See also: [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  and [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  for fixed-shape boolean classification caps.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -2533,7 +2533,7 @@
           }
         ],
         "arg_description": "Model spec to use for constrained generation.",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -2688,13 +2688,13 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-decision;out=\"media:decision;fmt=json;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Make a Decision (Constrained, English)",
     "aliases": [
       "make-decision-en"
     ],
     "cap_description": "Make a single binary (yes/no, true/false) decision based on content and a question",
-    "documentation": "## Purpose\n\nClassifies content against a single yes/no question using constrained LLM generation, guaranteeing a structured JSON boolean output. Use this for routing, filtering, and classification steps in pipelines where downstream code expects a machine-readable true/false value.\n\n## Inputs\n\n- Content to analyze (text).\n- A binary question about that content (e.g. \"Does this document contain personally identifiable information?\").\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content; the backend auto-sizes its context window to the prompt, so nothing needs to \"fit\").\n- Confidence threshold (default 0.7) — decisions below this threshold may be flagged.\n- A model spec (defaults to `bartowski/Llama-3.2-1B-Instruct-GGUF` Q4_K_M, the offline-travel-kit GGUF LLM).\n\n## Outputs\n\nA JSON record with a `value` boolean field and a confidence score.\n\n## Notes\n\n- Output is guaranteed to be valid JSON (via LLGuidance constraint) — no parsing of free-form text required.\n- For multiple simultaneous questions against the same content, use [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") to avoid redundant model loads.\n- For decisions with natural-language explanations, run an LLM-inference cap directly (the `inference-*-en` orchestrator caps were removed; use `cap:llm-text-generation-*` plus your own prompt).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nClassifies content against a single yes/no question using constrained LLM generation, guaranteeing a structured JSON boolean output. Use this for routing, filtering, and classification steps in pipelines where downstream code expects a machine-readable true/false value.\n\n## Inputs\n\n- Content to analyze (text).\n- A binary question about that content (e.g. \"Does this document contain personally identifiable information?\").\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content; the backend auto-sizes its context window to the prompt, so nothing needs to \"fit\").\n- Confidence threshold (default 0.7) — decisions below this threshold may be flagged.\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA JSON record with a `value` boolean field and a confidence score.\n\n## Notes\n\n- Output is guaranteed to be valid JSON (via LLGuidance constraint) — no parsing of free-form text required.\n- For multiple simultaneous questions against the same content, use [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") to avoid redundant model loads.\n- For decisions with natural-language explanations, run an LLM-inference cap directly (the `inference-*-en` orchestrator caps were removed; use `cap:llm-text-generation-*` plus your own prompt).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -2772,7 +2772,7 @@
           }
         ],
         "arg_description": "Model spec to use for decision making",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -2901,13 +2901,13 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-multiple-decisions;out=\"media:decision;fmt=json;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Make Multiple Decisions (Constrained, English)",
     "aliases": [
       "make-multiple-decisions-en"
     ],
     "cap_description": "Make multiple binary (yes/no, true/false) decisions based on content and multiple questions",
-    "documentation": "## Purpose\n\nClassifies content against multiple yes/no questions in a single model call using constrained LLM generation. More efficient than calling [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") repeatedly when you have several questions about the same document.\n\n## Inputs\n\n- Content to analyze (text).\n- A sequence of binary questions (one per line, passed as a multi-value argument). All questions are evaluated against the same content in one inference pass.\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content).\n- Confidence threshold (default 0.7).\n- A model spec (defaults to `bartowski/Llama-3.2-1B-Instruct-GGUF` Q4_K_M, the offline-travel-kit GGUF LLM).\n\n## Outputs\n\nA sequence of JSON records, one per question, each containing a question identifier and a boolean `value`.\n\n## Notes\n\n- Output order matches the input question order.\n- All questions share the same content context in a single inference call, which is significantly more efficient than one call per question.\n- Output is guaranteed structured JSON via LLGuidance constraint.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nClassifies content against multiple yes/no questions in a single model call using constrained LLM generation. More efficient than calling [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") repeatedly when you have several questions about the same document.\n\n## Inputs\n\n- Content to analyze (text).\n- A sequence of binary questions (one per line, passed as a multi-value argument). All questions are evaluated against the same content in one inference pass.\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content).\n- Confidence threshold (default 0.7).\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA sequence of JSON records, one per question, each containing a question identifier and a boolean `value`.\n\n## Notes\n\n- Output order matches the input question order.\n- All questions share the same content context in a single inference call, which is significantly more efficient than one call per question.\n- Output is guaranteed structured JSON via LLGuidance constraint.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -2985,7 +2985,7 @@
           }
         ],
         "arg_description": "Model spec to use for decision making",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -3114,7 +3114,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;normalize;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 1,
+    "version": 2,
     "title": "Normalize (Entity Canonicalization) (Constrained, English)",
     "aliases": [
       "normalize-en"
@@ -3172,7 +3172,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -3367,7 +3367,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";route",
-    "version": 1,
+    "version": 2,
     "title": "Route (Dispatch Judgment) (Constrained, English)",
     "aliases": [
       "route-en"
@@ -3413,7 +3413,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -3542,7 +3542,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";same",
-    "version": 1,
+    "version": 2,
     "title": "Same (Semantic Equivalence) (Constrained, English)",
     "aliases": [
       "same-en"
@@ -3600,7 +3600,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -3762,7 +3762,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";score",
-    "version": 1,
+    "version": 2,
     "title": "Score (Rubric Scoring) (Constrained, English)",
     "aliases": [
       "score-en"
@@ -3821,7 +3821,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -3950,7 +3950,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:enc=utf-8;ext=txt;plain-text\";summarize",
-    "version": 1,
+    "version": 2,
     "title": "Summarize (Purpose-Driven Compression) (Constrained, English)",
     "aliases": [
       "summarize-en"
@@ -4008,7 +4008,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
@@ -4137,7 +4137,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";verify",
-    "version": 1,
+    "version": 2,
     "title": "Verify (Requirements Check) (Constrained, English)",
     "aliases": [
       "verify-en"
@@ -4183,7 +4183,7 @@
           }
         ],
         "arg_description": "Model spec to use for the judgment",
-        "default_value": "hf:bartowski/Llama-3.2-1B-Instruct-GGUF?include=*Q4_K_M*.gguf,*.json,*.txt,README*&exclude=*IQ1*,*IQ2*,*fp16*"
+        "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
