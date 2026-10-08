@@ -1,6 +1,6 @@
 [package]
 name = "datacartridge"
-version = "1.208.572"
+version = "1.209.574"
 edition = "2021"
 license = "AGPL-3.0-or-later"
 description = "JSON/YAML/CSV format conversion cartridge for CapDAG"
@@ -20,7 +20,7 @@ tracing = "0.1"
 
 [dependencies.capdag]
 git = "https://github.com/machinefabric/capdag-rs"
-tag = "v1.888.6"
+tag = "v1.890.6"
 
 [dependencies.serde]
 features = ["derive"]
