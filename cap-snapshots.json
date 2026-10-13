@@ -363,14 +363,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8;list\";out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Boolean Array to String",
     "aliases": [
       "coerce-boolean-array-to-string",
       "bool-list2str"
     ],
     "cap_description": "Convert an array of booleans to its string representation",
-    "documentation": "## Purpose\n\nConverts a list of boolean values to a single string representation (e.g. `[true, false, true]`). Use this when a downstream cap expects a text value but the upstream produces a boolean array.\n\n## Inputs\n\nA list of boolean values (media type `media:bool;enc=utf-8;list`).\n\n## Outputs\n\nA string representation of the boolean array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual booleans, use [Coerce Boolean to String](https://capdag.com/browse/cap:coerce;in=\"media:bool;enc=utf-8\";out=media:enc=utf-8).",
+    "documentation": "## Purpose\n\nConverts a list of boolean values to a single string representation (e.g. `[true, false, true]`). Use this when a downstream cap expects a text value but the upstream produces a boolean array.\n\n## Inputs\n\nA list of boolean values (media type `media:bool;enc=utf-8;list`).\n\n## Outputs\n\nA string representation of the boolean array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual booleans, use [Coerce Boolean to String](https://capdag.com/browse/cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:enc=utf-8\").",
     "args": [
       {
         "media_urn": "media:bool;enc=utf-8;list",
@@ -499,14 +499,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Boolean to String",
     "aliases": [
       "coerce-boolean-to-string",
       "bool2str"
     ],
     "cap_description": "Convert a boolean value to its string representation",
-    "documentation": "## Purpose\n\nConverts a boolean media value to its text string form (`\"true\"` or `\"false\"`). Use this when a downstream cap requires a string type but the upstream cap produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool;enc=utf-8`).\n\n## Outputs\n\nThe string `\"true\"` or `\"false\"`.\n\n## Notes\n\n- This is a type-level adapter for the capfab planner. The planner inserts coerce caps automatically when a boolean output needs to connect to a string input.\n- For the reverse, see [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=media:enc=utf-8;out=\"media:integer;numeric\") or parse the string downstream.",
+    "documentation": "## Purpose\n\nConverts a boolean media value to its text string form (`\"true\"` or `\"false\"`). Use this when a downstream cap requires a string type but the upstream cap produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool;enc=utf-8`).\n\n## Outputs\n\nThe string `\"true\"` or `\"false\"`.\n\n## Notes\n\n- This is a type-level adapter for the capfab planner. The planner inserts coerce caps automatically when a boolean output needs to connect to a string input.\n- For the reverse, see [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\") or parse the string downstream.",
     "args": [
       {
         "media_urn": "media:bool;enc=utf-8",
@@ -533,14 +533,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;list;numeric\";out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Integer Array to String",
     "aliases": [
       "coerce-integer-array-to-string",
       "int-list2str"
     ],
     "cap_description": "Convert an array of integers to its string representation",
-    "documentation": "## Purpose\n\nConverts a list of integers to a single string representation. Use this when a downstream cap expects a text value but the upstream produces an integer array.\n\n## Inputs\n\nA list of integer values (media type `media:integer;list;numeric`).\n\n## Outputs\n\nA string representation of the integer array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual integers, use [Coerce Integer to String](https://capdag.com/browse/cap:coerce;in=\"media:integer;numeric\";out=media:enc=utf-8).",
+    "documentation": "## Purpose\n\nConverts a list of integers to a single string representation. Use this when a downstream cap expects a text value but the upstream produces an integer array.\n\n## Inputs\n\nA list of integer values (media type `media:integer;list;numeric`).\n\n## Outputs\n\nA string representation of the integer array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual integers, use [Coerce Integer to String](https://capdag.com/browse/cap:coerce;in=\"media:integer;numeric\";out=\"media:enc=utf-8\").",
     "args": [
       {
         "media_urn": "media:integer;list;numeric",
@@ -668,14 +668,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Integer to String",
     "aliases": [
       "coerce-integer-to-string",
       "int2str"
     ],
     "cap_description": "Convert an integer value to its string representation",
-    "documentation": "## Purpose\n\nConverts an integer to its decimal string representation. Use this when a downstream cap requires a text value but the upstream produces an integer.\n\n## Inputs\n\nAn integer value (media type `media:integer;numeric`).\n\n## Outputs\n\nThe decimal string representation of the integer (e.g. `42` becomes `\"42\"`).\n\n## Notes\n\n- No locale-specific formatting — output is always plain decimal digits.\n- For the reverse conversion, use [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=media:enc=utf-8;out=\"media:integer;numeric\").",
+    "documentation": "## Purpose\n\nConverts an integer to its decimal string representation. Use this when a downstream cap requires a text value but the upstream produces an integer.\n\n## Inputs\n\nAn integer value (media type `media:integer;numeric`).\n\n## Outputs\n\nThe decimal string representation of the integer (e.g. `42` becomes `\"42\"`).\n\n## Notes\n\n- No locale-specific formatting — output is always plain decimal digits.\n- For the reverse conversion, use [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\").",
     "args": [
       {
         "media_urn": "media:integer;numeric",
@@ -702,14 +702,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:list;numeric\";out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Number Array to String",
     "aliases": [
       "coerce-number-array-to-string",
       "num-list2str"
     ],
     "cap_description": "Convert an array of numbers to its string representation",
-    "documentation": "## Purpose\n\nConverts a list of floating-point numbers to a single string representation. Use this when a downstream cap expects text but the upstream produces a numeric array.\n\n## Inputs\n\nA list of numeric values (media type `media:list;numeric`).\n\n## Outputs\n\nA string representation of the number array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual numbers, use [Coerce Number to String](https://capdag.com/browse/cap:coerce;in=\"media:numeric\";out=media:enc=utf-8).",
+    "documentation": "## Purpose\n\nConverts a list of floating-point numbers to a single string representation. Use this when a downstream cap expects text but the upstream produces a numeric array.\n\n## Inputs\n\nA list of numeric values (media type `media:list;numeric`).\n\n## Outputs\n\nA string representation of the number array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual numbers, use [Coerce Number to String](https://capdag.com/browse/cap:coerce;in=\"media:numeric\";out=\"media:enc=utf-8\").",
     "args": [
       {
         "media_urn": "media:list;numeric",
@@ -837,14 +837,14 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Number to String",
     "aliases": [
       "coerce-number-to-string",
       "num2str"
     ],
     "cap_description": "Convert a numeric value to its string representation",
-    "documentation": "## Purpose\n\nConverts a floating-point number to its string representation. Use this when a downstream cap requires a text value but the upstream produces a numeric value.\n\n## Inputs\n\nA numeric (float) value (media type `media:numeric`).\n\n## Outputs\n\nThe string representation of the number.\n\n## Notes\n\n- Output format follows standard floating-point decimal notation.\n- For the reverse conversion, use [Coerce String to Number](https://capdag.com/browse/cap:coerce;in=media:enc=utf-8;out=\"media:numeric\").",
+    "documentation": "## Purpose\n\nConverts a floating-point number to its string representation. Use this when a downstream cap requires a text value but the upstream produces a numeric value.\n\n## Inputs\n\nA numeric (float) value (media type `media:numeric`).\n\n## Outputs\n\nThe string representation of the number.\n\n## Notes\n\n- Output format follows standard floating-point decimal notation.\n- For the reverse conversion, use [Coerce String to Number](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=\"media:numeric\").",
     "args": [
       {
         "media_urn": "media:numeric",
@@ -871,14 +871,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:list;record\";out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Object Array to String",
     "aliases": [
       "coerce-object-array-to-string",
       "obj-list2str"
     ],
     "cap_description": "Convert an array of records to its string representation",
-    "documentation": "## Purpose\n\nConverts a list of records to a single string representation. Use this when a downstream cap expects text but the upstream produces a list of objects.\n\n## Inputs\n\nA list of records (media type `media:list;record`).\n\n## Outputs\n\nA string representation of the record array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- Output is typically serialized as a JSON array.\n- For converting individual records, use [Coerce Object to String](https://capdag.com/browse/cap:coerce;in=media:record;out=media:enc=utf-8).",
+    "documentation": "## Purpose\n\nConverts a list of records to a single string representation. Use this when a downstream cap expects text but the upstream produces a list of objects.\n\n## Inputs\n\nA list of records (media type `media:list;record`).\n\n## Outputs\n\nA string representation of the record array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- Output is typically serialized as a JSON array.\n- For converting individual records, use [Coerce Object to String](https://capdag.com/browse/cap:coerce;in=media:record;out=\"media:enc=utf-8\").",
     "args": [
       {
         "media_urn": "media:list;record",
@@ -905,14 +905,14 @@
   },
   {
     "urn": "cap:coerce;in=media:record;out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Object to String",
     "aliases": [
       "coerce-object-to-string",
       "obj2str"
     ],
     "cap_description": "Convert a record/object to its string representation",
-    "documentation": "## Purpose\n\nConverts a record (object) to its string representation. Use this when a downstream cap requires text but the upstream produces a structured record.\n\n## Inputs\n\nA record value (media type `media:record`).\n\n## Outputs\n\nA string representation of the record.\n\n## Notes\n\n- The output format is typically JSON or a similar serialized form.\n- For wrapping a string in a record (the reverse), use [Coerce String to Object](https://capdag.com/browse/cap:coerce;in=media:enc=utf-8;out=media:record).\n- For human-readable text output from a record, a format conversion cap (JSON-to-YAML, etc.) may produce better output than this coerce.",
+    "documentation": "## Purpose\n\nConverts a record (object) to its string representation. Use this when a downstream cap requires text but the upstream produces a structured record.\n\n## Inputs\n\nA record value (media type `media:record`).\n\n## Outputs\n\nA string representation of the record.\n\n## Notes\n\n- The output format is typically JSON or a similar serialized form.\n- For wrapping a string in a record (the reverse), use [Coerce String to Object](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=media:record).\n- For human-readable text output from a record, a format conversion cap (JSON-to-YAML, etc.) may produce better output than this coerce.",
     "args": [
       {
         "media_urn": "media:record",
@@ -1006,14 +1006,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce String to Integer",
     "aliases": [
       "coerce-string-to-integer",
       "str2int"
     ],
     "cap_description": "Parse a string value as an integer",
-    "documentation": "## Purpose\n\nParses a text string as an integer. Use this when a string-producing cap outputs a number as text (e.g. from a file or LLM output) and a downstream cap requires an integer type.\n\n## Inputs\n\nA UTF-8 text string value representing an integer (media type `media:enc=utf-8`).\n\n## Outputs\n\nThe parsed integer.\n\n## Notes\n\n- Fails hard if the input is not a valid integer string. Ensure upstream output is numeric text before using this coerce.\n- For floating-point strings, use [Coerce String to Number](https://capdag.com/browse/cap:coerce;in=media:enc=utf-8;out=\"media:numeric\") instead.",
+    "documentation": "## Purpose\n\nParses a text string as an integer. Use this when a string-producing cap outputs a number as text (e.g. from a file or LLM output) and a downstream cap requires an integer type.\n\n## Inputs\n\nA UTF-8 text string value representing an integer (media type `media:enc=utf-8`).\n\n## Outputs\n\nThe parsed integer.\n\n## Notes\n\n- Fails hard if the input is not a valid integer string. Ensure upstream output is numeric text before using this coerce.\n- For floating-point strings, use [Coerce String to Number](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=\"media:numeric\") instead.",
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -1040,14 +1040,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=media:numeric",
-    "version": 1,
+    "version": 2,
     "title": "Coerce String to Number",
     "aliases": [
       "coerce-string-to-number",
       "str2num"
     ],
     "cap_description": "Parse a string value as a number",
-    "documentation": "## Purpose\n\nParses a text string as a floating-point number. Use this when a string-producing cap outputs a numeric value as text and a downstream cap requires a numeric type.\n\n## Inputs\n\nA UTF-8 text string representing a number (media type `media:enc=utf-8`).\n\n## Outputs\n\nThe parsed floating-point number.\n\n## Notes\n\n- Fails hard if the string is not a valid numeric value.\n- For integers specifically, use [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=media:enc=utf-8;out=\"media:integer;numeric\").\n- For the reverse, use [Coerce Number to String](https://capdag.com/browse/cap:coerce;in=\"media:numeric\";out=media:enc=utf-8).",
+    "documentation": "## Purpose\n\nParses a text string as a floating-point number. Use this when a string-producing cap outputs a numeric value as text and a downstream cap requires a numeric type.\n\n## Inputs\n\nA UTF-8 text string representing a number (media type `media:enc=utf-8`).\n\n## Outputs\n\nThe parsed floating-point number.\n\n## Notes\n\n- Fails hard if the string is not a valid numeric value.\n- For integers specifically, use [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\").\n- For the reverse, use [Coerce Number to String](https://capdag.com/browse/cap:coerce;in=\"media:numeric\";out=\"media:enc=utf-8\").",
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -1074,14 +1074,14 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=media:record",
-    "version": 1,
+    "version": 2,
     "title": "Coerce String to Object",
     "aliases": [
       "coerce-string-to-object",
       "str2obj"
     ],
     "cap_description": "Wrap a string value in a record",
-    "documentation": "## Purpose\n\nWraps a string value in a record so it can be passed to caps that expect a structured record input. The string is stored under a standard key in the output record.\n\n## Inputs\n\nA UTF-8 text string value (media type `media:enc=utf-8`).\n\n## Outputs\n\nA record containing the string value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For the reverse, use [Coerce Object to String](https://capdag.com/browse/cap:coerce;in=media:record;out=media:enc=utf-8).",
+    "documentation": "## Purpose\n\nWraps a string value in a record so it can be passed to caps that expect a structured record input. The string is stored under a standard key in the output record.\n\n## Inputs\n\nA UTF-8 text string value (media type `media:enc=utf-8`).\n\n## Outputs\n\nA record containing the string value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For the reverse, use [Coerce Object to String](https://capdag.com/browse/cap:coerce;in=media:record;out=\"media:enc=utf-8\").",
     "args": [
       {
         "media_urn": "media:enc=utf-8",
