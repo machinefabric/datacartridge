@@ -1,7 +1,7 @@
 [
   {
     "urn": "cap:ask;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 2,
+    "version": 3,
     "title": "Ask (Grounded Question Answering) (Constrained, English)",
     "aliases": [
       "ask-en"
@@ -11,6 +11,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -26,6 +27,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;question",
+        "name": "question",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -38,6 +40,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -51,6 +54,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -64,6 +68,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -77,6 +82,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -90,6 +96,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -103,6 +110,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -116,6 +124,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -129,6 +138,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -142,6 +152,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -155,6 +166,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -167,16 +179,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: answer, verified verbatim quotes, confidence, reason",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: answer, verified verbatim quotes, confidence, reason",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:classify;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 2,
+    "version": 3,
     "title": "Classify (Closed-Set Labeling) (Constrained, English)",
     "aliases": [
       "classify-en"
@@ -186,6 +202,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -201,6 +218,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;label-set",
+        "name": "labels",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -213,6 +231,7 @@
       },
       {
         "media_urn": "media:criterion;enc=utf-8",
+        "name": "context",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -225,6 +244,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -238,6 +258,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -251,6 +272,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -264,6 +286,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -277,6 +300,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -290,6 +314,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -303,6 +328,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -316,6 +342,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -329,6 +356,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -342,6 +370,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -354,16 +383,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: label (from the allowed set), confidence (0-1), reason (one sentence)",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: label (from the allowed set), confidence (0-1), reason (one sentence)",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8;list\";out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Boolean Array to String",
     "aliases": [
       "coerce-boolean-array-to-string",
@@ -374,6 +407,7 @@
     "args": [
       {
         "media_urn": "media:bool;enc=utf-8;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -388,16 +422,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:integer;numeric\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Boolean to Integer",
     "aliases": [
       "coerce-boolean-to-integer",
@@ -408,6 +446,7 @@
     "args": [
       {
         "media_urn": "media:bool;enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -422,16 +461,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:integer;numeric",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:integer;numeric",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=media:numeric",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Boolean to Number",
     "aliases": [
       "coerce-boolean-to-number",
@@ -442,6 +485,7 @@
     "args": [
       {
         "media_urn": "media:bool;enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -456,16 +500,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:numeric",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:numeric",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=media:record",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Boolean to Object",
     "aliases": [
       "coerce-boolean-to-object",
@@ -476,6 +524,7 @@
     "args": [
       {
         "media_urn": "media:bool;enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -490,16 +539,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:record",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:record",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Boolean to String",
     "aliases": [
       "coerce-boolean-to-string",
@@ -510,6 +563,7 @@
     "args": [
       {
         "media_urn": "media:bool;enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -524,16 +578,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:integer;list;numeric\";out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Integer Array to String",
     "aliases": [
       "coerce-integer-array-to-string",
@@ -544,6 +602,7 @@
     "args": [
       {
         "media_urn": "media:integer;list;numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -558,16 +617,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:bool;enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Integer to Boolean",
     "aliases": [
       "coerce-integer-to-boolean"
@@ -577,6 +640,7 @@
     "args": [
       {
         "media_urn": "media:integer;numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -591,16 +655,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:bool;enc=utf-8",
-      "output_description": "Coerced boolean value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:bool;enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced boolean value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:numeric",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Integer to Number",
     "aliases": [
       "coerce-integer-to-number",
@@ -611,6 +679,7 @@
     "args": [
       {
         "media_urn": "media:integer;numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -625,16 +694,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:numeric",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:numeric",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:record",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Integer to Object",
     "aliases": [
       "coerce-integer-to-object",
@@ -645,6 +718,7 @@
     "args": [
       {
         "media_urn": "media:integer;numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -659,16 +733,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:record",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:record",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Integer to String",
     "aliases": [
       "coerce-integer-to-string",
@@ -679,6 +757,7 @@
     "args": [
       {
         "media_urn": "media:integer;numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -693,16 +772,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:list;numeric\";out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Number Array to String",
     "aliases": [
       "coerce-number-array-to-string",
@@ -713,6 +796,7 @@
     "args": [
       {
         "media_urn": "media:list;numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -727,16 +811,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:bool;enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Number to Boolean",
     "aliases": [
       "coerce-number-to-boolean"
@@ -746,6 +834,7 @@
     "args": [
       {
         "media_urn": "media:numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -760,16 +849,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:bool;enc=utf-8",
-      "output_description": "Coerced boolean value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:bool;enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced boolean value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:integer;numeric\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Number to Integer",
     "aliases": [
       "coerce-number-to-integer",
@@ -780,6 +873,7 @@
     "args": [
       {
         "media_urn": "media:numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -794,16 +888,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:integer;numeric",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:integer;numeric",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=media:record",
-    "version": 1,
+    "version": 2,
     "title": "Coerce Number to Object",
     "aliases": [
       "coerce-number-to-object",
@@ -814,6 +912,7 @@
     "args": [
       {
         "media_urn": "media:numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -828,16 +927,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:record",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:record",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Number to String",
     "aliases": [
       "coerce-number-to-string",
@@ -848,6 +951,7 @@
     "args": [
       {
         "media_urn": "media:numeric",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -862,16 +966,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:list;record\";out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Object Array to String",
     "aliases": [
       "coerce-object-array-to-string",
@@ -882,6 +990,7 @@
     "args": [
       {
         "media_urn": "media:list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -896,16 +1005,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=media:record;out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Object to String",
     "aliases": [
       "coerce-object-to-string",
@@ -916,6 +1029,7 @@
     "args": [
       {
         "media_urn": "media:record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -930,16 +1044,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8;list\";out=\"media:enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce String Array to String",
     "aliases": [
       "coerce-string-array-to-string",
@@ -950,6 +1068,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -964,16 +1083,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=\"media:bool;enc=utf-8\"",
-    "version": 1,
+    "version": 2,
     "title": "Coerce String to Boolean",
     "aliases": [
       "coerce-string-to-boolean"
@@ -983,6 +1106,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -997,16 +1121,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:bool;enc=utf-8",
-      "output_description": "Coerced boolean value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:bool;enc=utf-8",
+        "name": "output",
+        "output_description": "Coerced boolean value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce String to Integer",
     "aliases": [
       "coerce-string-to-integer",
@@ -1017,6 +1145,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1031,16 +1160,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:integer;numeric",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:integer;numeric",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=media:numeric",
-    "version": 2,
+    "version": 3,
     "title": "Coerce String to Number",
     "aliases": [
       "coerce-string-to-number",
@@ -1051,6 +1184,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1065,16 +1199,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:numeric",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:numeric",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=media:record",
-    "version": 2,
+    "version": 3,
     "title": "Coerce String to Object",
     "aliases": [
       "coerce-string-to-object",
@@ -1085,6 +1223,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1099,16 +1238,20 @@
         "arg_description": "Input value to coerce"
       }
     ],
-    "output": {
-      "media_urn": "media:record",
-      "output_description": "Coerced value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:record",
+        "name": "output",
+        "output_description": "Coerced value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=csv;list;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Merge CSV Files",
     "aliases": [
       "collect-csv-records-to-csv",
@@ -1119,6 +1262,7 @@
     "args": [
       {
         "media_urn": "media:fmt=csv;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1133,16 +1277,20 @@
         "arg_description": "CSV files to merge"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=csv;list;record",
-      "output_description": "Single CSV file with all rows merged",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=csv;list;record",
+        "name": "output",
+        "output_description": "Single CSV file with all rows merged",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=csv;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Merge CSV Files into JSON Array",
     "aliases": [
       "collect-csv-records-to-json-array"
@@ -1152,6 +1300,7 @@
     "args": [
       {
         "media_urn": "media:fmt=csv;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1166,16 +1315,20 @@
         "arg_description": "CSV files to merge"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list;record",
-      "output_description": "JSON array with all CSV rows as objects",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "output",
+        "output_description": "JSON array with all CSV rows as objects",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=csv;list;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Merge CSV Files into YAML List",
     "aliases": [
       "collect-csv-records-to-yaml-list"
@@ -1185,6 +1338,7 @@
     "args": [
       {
         "media_urn": "media:fmt=csv;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1199,16 +1353,20 @@
         "arg_description": "CSV files to merge"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;list;record",
-      "output_description": "YAML sequence with all CSV rows as mappings",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;list;record",
+        "name": "output",
+        "output_description": "YAML sequence with all CSV rows as mappings",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-json-objects;in=\"media:fmt=json;record\";out=\"media:fmt=json;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Collect JSON Objects into Array",
     "aliases": [
       "collect-json-objects-to-array",
@@ -1219,6 +1377,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1233,16 +1392,20 @@
         "arg_description": "JSON objects to collect into an array"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list;record",
-      "output_description": "JSON array containing all input objects",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "output",
+        "output_description": "JSON array containing all input objects",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-json-objects;in=\"media:fmt=json;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Collect JSON Objects into CSV",
     "aliases": [
       "collect-json-objects-to-csv",
@@ -1253,6 +1416,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1267,16 +1431,20 @@
         "arg_description": "JSON objects to collect into a CSV"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=csv;list;record",
-      "output_description": "CSV file with one row per input object",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=csv;list;record",
+        "name": "output",
+        "output_description": "CSV file with one row per input object",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-json-objects;in=\"media:fmt=json;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Collect JSON Objects into YAML List",
     "aliases": [
       "collect-json-objects-to-yaml-list",
@@ -1287,6 +1455,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1301,16 +1470,20 @@
         "arg_description": "JSON objects to collect into a YAML sequence"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;list;record",
-      "output_description": "YAML sequence containing all input objects as mappings",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;list;record",
+        "name": "output",
+        "output_description": "YAML sequence containing all input objects as mappings",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=yaml;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Merge YAML Mappings into CSV",
     "aliases": [
       "collect-yaml-mappings-to-csv",
@@ -1321,6 +1494,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1335,16 +1509,20 @@
         "arg_description": "YAML mapping files to merge"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=csv;list;record",
-      "output_description": "CSV file with one row per YAML mapping",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=csv;list;record",
+        "name": "output",
+        "output_description": "CSV file with one row per YAML mapping",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=yaml;record\";out=\"media:fmt=json;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Merge YAML Mappings into JSON Array",
     "aliases": [
       "collect-yaml-mappings-to-json-array",
@@ -1355,6 +1533,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1369,16 +1548,20 @@
         "arg_description": "YAML mapping files to merge"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list;record",
-      "output_description": "JSON array containing all YAML mappings as objects",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "output",
+        "output_description": "JSON array containing all YAML mappings as objects",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=yaml;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Merge YAML Mappings",
     "aliases": [
       "collect-yaml-mappings-to-yaml-list",
@@ -1389,6 +1572,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;record",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -1403,16 +1587,20 @@
         "arg_description": "YAML mapping files to merge"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;list;record",
-      "output_description": "Single YAML sequence containing all input mappings",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;list;record",
+        "name": "output",
+        "output_description": "Single YAML sequence containing all input mappings",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=csv;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert CSV to JSON Array of Objects",
     "aliases": [
       "convert-csv-to-json-list-records",
@@ -1423,6 +1611,7 @@
     "args": [
       {
         "media_urn": "media:fmt=csv;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1437,16 +1626,20 @@
         "arg_description": "CSV data to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list;record",
-      "output_description": "JSON formatted array of objects",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "output",
+        "output_description": "JSON formatted array of objects",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=csv;list;record\";out=\"media:enc=utf-8;list\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert CSV to Text List",
     "aliases": [
       "convert-csv-to-text-list",
@@ -1457,6 +1650,7 @@
     "args": [
       {
         "media_urn": "media:fmt=csv;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1471,16 +1665,20 @@
         "arg_description": "CSV data to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8;list",
-      "output_description": "List of text values",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8;list",
+        "name": "output",
+        "output_description": "List of text values",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=csv;list;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert CSV to YAML List of Mappings",
     "aliases": [
       "convert-csv-to-yaml-list-records"
@@ -1490,6 +1688,7 @@
     "args": [
       {
         "media_urn": "media:fmt=csv;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1504,16 +1703,20 @@
         "arg_description": "CSV data to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;list;record",
-      "output_description": "YAML formatted sequence of mappings",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;list;record",
+        "name": "output",
+        "output_description": "YAML formatted sequence of mappings",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert JSON Array of Objects to CSV",
     "aliases": [
       "convert-json-list-records-to-csv",
@@ -1524,6 +1727,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1538,16 +1742,20 @@
         "arg_description": "JSON array of objects to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=csv;list;record",
-      "output_description": "CSV formatted data with header row",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=csv;list;record",
+        "name": "output",
+        "output_description": "CSV formatted data with header row",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert JSON Array of Objects to YAML List of Mappings",
     "aliases": [
       "convert-json-list-records-to-yaml-list-records",
@@ -1558,6 +1766,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1572,16 +1781,20 @@
         "arg_description": "JSON array of objects to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;list;record",
-      "output_description": "YAML formatted sequence of mappings",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;list;record",
+        "name": "output",
+        "output_description": "YAML formatted sequence of mappings",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list\";out=\"media:enc=utf-8;list\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert JSON Array to Text List",
     "aliases": [
       "convert-json-list-to-text-list",
@@ -1592,6 +1805,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1606,16 +1820,20 @@
         "arg_description": "JSON array to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8;list",
-      "output_description": "List of text values",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8;list",
+        "name": "output",
+        "output_description": "List of text values",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list\";out=\"media:fmt=yaml;list\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert JSON Array to YAML List",
     "aliases": [
       "convert-json-list-to-yaml-list",
@@ -1626,6 +1844,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1640,16 +1859,20 @@
         "arg_description": "JSON array to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;list",
-      "output_description": "YAML formatted sequence",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;list",
+        "name": "output",
+        "output_description": "YAML formatted sequence",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;record\";out=\"media:fmt=yaml;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert JSON Object to YAML Mapping",
     "aliases": [
       "convert-json-record-to-yaml-record",
@@ -1660,6 +1883,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1674,16 +1898,20 @@
         "arg_description": "JSON object to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;record",
-      "output_description": "YAML formatted mapping",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;record",
+        "name": "output",
+        "output_description": "YAML formatted mapping",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json\";out=\"media:fmt=yaml\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert JSON Value to YAML",
     "aliases": [
       "convert-json-value-to-yaml-value",
@@ -1694,6 +1922,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1708,16 +1937,20 @@
         "arg_description": "JSON value to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml",
-      "output_description": "YAML formatted value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml",
+        "name": "output",
+        "output_description": "YAML formatted value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf-8;list\";out=\"media:fmt=csv;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert Text List to CSV",
     "aliases": [
       "convert-text-list-to-csv",
@@ -1728,6 +1961,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1742,16 +1976,20 @@
         "arg_description": "List of text values to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=csv;list;record",
-      "output_description": "CSV formatted data",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=csv;list;record",
+        "name": "output",
+        "output_description": "CSV formatted data",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf-8;list\";out=\"media:fmt=json;list\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert Text List to JSON Array",
     "aliases": [
       "convert-text-list-to-json-list",
@@ -1762,6 +2000,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1776,16 +2015,20 @@
         "arg_description": "List of text values to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list",
-      "output_description": "JSON formatted array",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list",
+        "name": "output",
+        "output_description": "JSON formatted array",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf-8;list\";out=\"media:fmt=yaml;list\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert Text List to YAML Sequence",
     "aliases": [
       "convert-text-list-to-yaml-list",
@@ -1796,6 +2039,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1810,16 +2054,20 @@
         "arg_description": "List of text values to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=yaml;list",
-      "output_description": "YAML formatted sequence",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=yaml;list",
+        "name": "output",
+        "output_description": "YAML formatted sequence",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert YAML List of Mappings to CSV",
     "aliases": [
       "convert-yaml-list-records-to-csv",
@@ -1830,6 +2078,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1844,16 +2093,20 @@
         "arg_description": "YAML sequence of mappings to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=csv;list;record",
-      "output_description": "CSV formatted data with header row",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=csv;list;record",
+        "name": "output",
+        "output_description": "CSV formatted data with header row",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert YAML List of Mappings to JSON Array of Objects",
     "aliases": [
       "convert-yaml-list-records-to-json-list-records",
@@ -1864,6 +2117,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1878,16 +2132,20 @@
         "arg_description": "YAML sequence of mappings to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list;record",
-      "output_description": "JSON formatted array of objects",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "output",
+        "output_description": "JSON formatted array of objects",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list\";out=\"media:fmt=json;list\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert YAML List to JSON Array",
     "aliases": [
       "convert-yaml-list-to-json-list",
@@ -1898,6 +2156,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1912,16 +2171,20 @@
         "arg_description": "YAML sequence to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list",
-      "output_description": "JSON formatted array",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list",
+        "name": "output",
+        "output_description": "JSON formatted array",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list\";out=\"media:enc=utf-8;list\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert YAML Sequence to Text List",
     "aliases": [
       "convert-yaml-list-to-text-list",
@@ -1932,6 +2195,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;list",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1946,16 +2210,20 @@
         "arg_description": "YAML sequence to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8;list",
-      "output_description": "List of text values",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8;list",
+        "name": "output",
+        "output_description": "List of text values",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;record\";out=\"media:fmt=json;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert YAML Mapping to JSON Object",
     "aliases": [
       "convert-yaml-record-to-json-record",
@@ -1966,6 +2234,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -1980,16 +2249,20 @@
         "arg_description": "YAML mapping to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record",
-      "output_description": "JSON formatted object",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record",
+        "name": "output",
+        "output_description": "JSON formatted object",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml\";out=\"media:fmt=json\"",
-    "version": 1,
+    "version": 2,
     "title": "Convert YAML Value to JSON",
     "aliases": [
       "convert-yaml-value-to-json-value",
@@ -2000,6 +2273,7 @@
     "args": [
       {
         "media_urn": "media:fmt=yaml",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2014,16 +2288,20 @@
         "arg_description": "YAML value to convert"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json",
-      "output_description": "JSON formatted value",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json",
+        "name": "output",
+        "output_description": "JSON formatted value",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:decimate-sequence;effect=none",
-    "version": 1,
+    "version": 2,
     "title": "Decimate Sequence",
     "aliases": [
       "decimate-sequence"
@@ -2033,6 +2311,7 @@
     "args": [
       {
         "media_urn": "media:",
+        "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -2045,6 +2324,7 @@
       },
       {
         "media_urn": "media:keep-every;numeric",
+        "name": "keep-every",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2056,16 +2336,20 @@
         "arg_description": "Stride N: keep one item out of every N. Positive integer. Omit for passthrough."
       }
     ],
-    "output": {
-      "media_urn": "media:",
-      "output_description": "Decimated sequence (same media type as input)",
-      "is_sequence": true,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:",
+        "name": "output",
+        "output_description": "Decimated sequence (same media type as input)",
+        "optional": false,
+        "is_sequence": true,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:edit;in=\"media:fmt=json;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Edit (Instruction-Driven Transform)",
     "aliases": [
       "edit-records"
@@ -2075,6 +2359,7 @@
     "args": [
       {
         "media_urn": "media:fmt=json;list;record",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2090,6 +2375,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;instruction",
+        "name": "instruction",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2102,6 +2388,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2114,16 +2401,20 @@
         "default_value": "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF?include=Qwen3-4B-Instruct-2507-Q4_K_M.gguf"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;list;record",
-      "output_description": "The transformed JSON records",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "output",
+        "output_description": "The transformed JSON records",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;explain;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 2,
+    "version": 3,
     "title": "Explain (Root-Cause Hypothesis) (Constrained, English)",
     "aliases": [
       "explain-en"
@@ -2133,6 +2424,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2148,6 +2440,7 @@
       },
       {
         "media_urn": "media:criterion;enc=utf-8",
+        "name": "goal",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2160,6 +2453,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2173,6 +2467,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2186,6 +2481,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2199,6 +2495,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2212,6 +2509,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2225,6 +2523,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2238,6 +2537,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2251,6 +2551,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2264,6 +2565,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2277,6 +2579,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2289,16 +2592,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: hypothesis, verified evidence, next checks, confidence, reason",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: hypothesis, verified evidence, next checks, confidence, reason",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;extract;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 2,
+    "version": 3,
     "title": "Extract (Schema-Guided Extraction) (Constrained, English)",
     "aliases": [
       "extract-en"
@@ -2308,6 +2615,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2323,6 +2631,7 @@
       },
       {
         "media_urn": "media:fmt=json;json-schema;record",
+        "name": "schema",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2335,6 +2644,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2348,6 +2658,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2361,6 +2672,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2374,6 +2686,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2387,6 +2700,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2400,6 +2714,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2413,6 +2728,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2426,6 +2742,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2439,6 +2756,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2452,6 +2770,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2464,16 +2783,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: result (instance of the supplied schema), confidence, reason",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: result (instance of the supplied schema), confidence, reason",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;generate-json;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Generate JSON (Constrained, English)",
     "aliases": [
       "generate-json-en",
@@ -2484,6 +2807,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2499,6 +2823,7 @@
       },
       {
         "media_urn": "media:fmt=json;json-schema;record",
+        "name": "schema",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2511,6 +2836,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;language-code",
+        "name": "language",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2524,6 +2850,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2537,6 +2864,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2550,6 +2878,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2563,6 +2892,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2576,6 +2906,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2589,6 +2920,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2602,6 +2934,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2615,6 +2948,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2628,6 +2962,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2641,6 +2976,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2654,6 +2990,7 @@
       },
       {
         "media_urn": "media:temperature;inference;sampling;user;task;numeric",
+        "name": "temperature",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2667,6 +3004,7 @@
       },
       {
         "media_urn": "media:sampling-seed;inference;sampling;user;task;numeric",
+        "name": "seed",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2679,16 +3017,20 @@
         "default_value": 1234
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record",
-      "output_description": "JSON object conforming to the supplied schema.",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record",
+        "name": "output",
+        "output_description": "JSON object conforming to the supplied schema.",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-decision;out=\"media:decision;fmt=json;record\"",
-    "version": 3,
+    "version": 4,
     "title": "Make a Decision (Constrained, English)",
     "aliases": [
       "make-decision-en"
@@ -2698,6 +3040,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2713,6 +3056,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;question",
+        "name": "question",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2725,6 +3069,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;language-code",
+        "name": "language",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2738,6 +3083,7 @@
       },
       {
         "media_urn": "media:max-content-length;numeric",
+        "name": "max-content-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2750,6 +3096,7 @@
       },
       {
         "media_urn": "media:confidence-threshold;numeric",
+        "name": "confidence-threshold",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2763,6 +3110,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2776,6 +3124,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2789,6 +3138,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2802,6 +3152,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2815,6 +3166,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2828,6 +3180,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2841,6 +3194,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2854,6 +3208,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2867,6 +3222,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2880,6 +3236,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2892,16 +3249,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:decision;fmt=json;record",
-      "output_description": "Binary decision result (true/false)",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:decision;fmt=json;record",
+        "name": "output",
+        "output_description": "Binary decision result (true/false)",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-multiple-decisions;out=\"media:decision;fmt=json;record\"",
-    "version": 3,
+    "version": 4,
     "title": "Make Multiple Decisions (Constrained, English)",
     "aliases": [
       "make-multiple-decisions-en"
@@ -2911,6 +3272,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -2926,6 +3288,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;question",
+        "name": "questions",
         "required": true,
         "is_sequence": true,
         "streaming": false,
@@ -2938,6 +3301,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;language-code",
+        "name": "language",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2951,6 +3315,7 @@
       },
       {
         "media_urn": "media:max-content-length;numeric",
+        "name": "max-content-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2963,6 +3328,7 @@
       },
       {
         "media_urn": "media:confidence-threshold;numeric",
+        "name": "confidence-threshold",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2976,6 +3342,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -2989,6 +3356,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3002,6 +3370,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3015,6 +3384,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3028,6 +3398,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3041,6 +3412,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3054,6 +3426,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3067,6 +3440,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3080,6 +3454,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3093,6 +3468,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3105,16 +3481,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:decision;fmt=json;record",
-      "output_description": "One decision per question, each as a JSON object with identifier and value",
-      "is_sequence": true,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:decision;fmt=json;record",
+        "name": "output",
+        "output_description": "One decision per question, each as a JSON object with identifier and value",
+        "optional": false,
+        "is_sequence": true,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;normalize;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 2,
+    "version": 3,
     "title": "Normalize (Entity Canonicalization) (Constrained, English)",
     "aliases": [
       "normalize-en"
@@ -3124,6 +3504,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3139,6 +3520,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;entity-type",
+        "name": "type",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3151,6 +3533,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;locale",
+        "name": "locale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3163,6 +3546,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3176,6 +3560,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3189,6 +3574,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3202,6 +3588,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3215,6 +3602,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3228,6 +3616,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3241,6 +3630,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3254,6 +3644,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3267,6 +3658,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3280,6 +3672,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3292,16 +3685,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: canonical (string; empty with confidence 0.0 when unreadable), confidence, reason",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: canonical (string; empty with confidence 0.0 when unreadable), confidence, reason",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:in=\"media:enc=utf-8\";out=\"media:fmt=csv;list;record\";repair",
-    "version": 1,
+    "version": 2,
     "title": "Repair CSV",
     "aliases": [
       "repair-csv"
@@ -3311,6 +3708,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3325,16 +3723,20 @@
         "arg_description": "The broken CSV text to repair"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=csv;list;record",
-      "output_description": "Repaired CSV with uniform row width and normalized quoting",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=csv;list;record",
+        "name": "output",
+        "output_description": "Repaired CSV with uniform row width and normalized quoting",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:in=\"media:enc=utf-8\";out=\"media:fmt=json\";repair",
-    "version": 1,
+    "version": 2,
     "title": "Repair JSON",
     "aliases": [
       "repair-json"
@@ -3344,6 +3746,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3358,16 +3761,20 @@
         "arg_description": "The broken JSON text to repair"
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json",
-      "output_description": "Repaired, strictly valid JSON",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json",
+        "name": "output",
+        "output_description": "Repaired, strictly valid JSON",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";route",
-    "version": 2,
+    "version": 3,
     "title": "Route (Dispatch Judgment) (Constrained, English)",
     "aliases": [
       "route-en"
@@ -3377,6 +3784,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3392,6 +3800,7 @@
       },
       {
         "media_urn": "media:fmt=json;record;target-set",
+        "name": "targets",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3404,6 +3813,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3417,6 +3827,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3430,6 +3841,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3443,6 +3855,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3456,6 +3869,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3469,6 +3883,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3482,6 +3897,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3495,6 +3911,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3508,6 +3925,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3521,6 +3939,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3533,16 +3952,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: target (from the given set), confidence (0-1), reason (one sentence)",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: target (from the given set), confidence (0-1), reason (one sentence)",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";same",
-    "version": 2,
+    "version": 3,
     "title": "Same (Semantic Equivalence) (Constrained, English)",
     "aliases": [
       "same-en"
@@ -3552,6 +3975,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3567,6 +3991,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;second-item",
+        "name": "second",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3579,6 +4004,7 @@
       },
       {
         "media_urn": "media:criterion;enc=utf-8",
+        "name": "context",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3591,6 +4017,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3604,6 +4031,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3617,6 +4045,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3630,6 +4059,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3643,6 +4073,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3656,6 +4087,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3669,6 +4101,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3682,6 +4115,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3695,6 +4129,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3708,6 +4143,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3720,16 +4156,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: same (bool), confidence (0-1), reason (one sentence)",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: same (bool), confidence (0-1), reason (one sentence)",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:in=\"media:enc=utf-8;ext=txt;plain-text\";out=\"media:enc=utf-8;ext=txt;plain-text\";save-as-txt",
-    "version": 2,
+    "version": 3,
     "title": "Save as Plain Text",
     "aliases": [
       "save-as-txt"
@@ -3739,6 +4179,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8;ext=txt;plain-text",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3753,16 +4194,20 @@
         "arg_description": "The finalised plain-text value to persist as a `.txt` file"
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8;ext=txt;plain-text",
-      "output_description": "The same bytes, persisted as a `.txt` file",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8;ext=txt;plain-text",
+        "name": "output",
+        "output_description": "The same bytes, persisted as a `.txt` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";score",
-    "version": 2,
+    "version": 3,
     "title": "Score (Rubric Scoring) (Constrained, English)",
     "aliases": [
       "score-en"
@@ -3772,6 +4217,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3787,6 +4233,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;rubric",
+        "name": "rubric",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3799,6 +4246,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;scale",
+        "name": "scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3812,6 +4260,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3825,6 +4274,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3838,6 +4288,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3851,6 +4302,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3864,6 +4316,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3877,6 +4330,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3890,6 +4344,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3903,6 +4358,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3916,6 +4372,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3929,6 +4386,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3941,16 +4399,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: score (integer on the scale), confidence (0-1), reason (one sentence)",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: score (integer on the scale), confidence (0-1), reason (one sentence)",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:enc=utf-8;ext=txt;plain-text\";summarize",
-    "version": 2,
+    "version": 3,
     "title": "Summarize (Purpose-Driven Compression) (Constrained, English)",
     "aliases": [
       "summarize-en"
@@ -3960,6 +4422,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3975,6 +4438,7 @@
       },
       {
         "media_urn": "media:criterion;enc=utf-8",
+        "name": "for",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -3987,6 +4451,7 @@
       },
       {
         "media_urn": "media:numeric;word-budget",
+        "name": "budget",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -3999,6 +4464,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4012,6 +4478,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4025,6 +4492,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4038,6 +4506,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4051,6 +4520,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4064,6 +4534,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4077,6 +4548,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4090,6 +4562,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4103,6 +4576,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4116,6 +4590,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4128,16 +4603,20 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:enc=utf-8;ext=txt;plain-text",
-      "output_description": "The purpose-driven summary as plain text",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf-8;ext=txt;plain-text",
+        "name": "output",
+        "output_description": "The purpose-driven summary as plain text",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";verify",
-    "version": 2,
+    "version": 3,
     "title": "Verify (Requirements Check) (Constrained, English)",
     "aliases": [
       "verify-en"
@@ -4147,6 +4626,7 @@
     "args": [
       {
         "media_urn": "media:enc=utf-8",
+        "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -4162,6 +4642,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;rubric",
+        "name": "against",
         "required": true,
         "is_sequence": false,
         "streaming": false,
@@ -4174,6 +4655,7 @@
       },
       {
         "media_urn": "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "name": "model-spec",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4187,6 +4669,7 @@
       },
       {
         "media_urn": "media:max-tokens;inference;limit;user;task;numeric",
+        "name": "max-tokens",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4200,6 +4683,7 @@
       },
       {
         "media_urn": "media:top-k;inference;sampling;user;task;numeric",
+        "name": "top-k",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4213,6 +4697,7 @@
       },
       {
         "media_urn": "media:top-p;inference;sampling;user;task;numeric",
+        "name": "top-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4226,6 +4711,7 @@
       },
       {
         "media_urn": "media:min-p;inference;sampling;user;task;numeric",
+        "name": "min-p",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4239,6 +4725,7 @@
       },
       {
         "media_urn": "media:repeat-penalty;inference;sampling;user;task;numeric",
+        "name": "repeat-penalty",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4252,6 +4739,7 @@
       },
       {
         "media_urn": "media:max-context-length;inference;limit;operator;model;numeric",
+        "name": "max-context-length",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4265,6 +4753,7 @@
       },
       {
         "media_urn": "media:batch-size;inference;limit;operator;task;numeric",
+        "name": "batch-size",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4278,6 +4767,7 @@
       },
       {
         "media_urn": "media:rope-frequency-base;inference;policy;operator;model;numeric",
+        "name": "rope-freq-base",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4291,6 +4781,7 @@
       },
       {
         "media_urn": "media:rope-frequency-scale;inference;policy;operator;model;numeric",
+        "name": "rope-freq-scale",
         "required": false,
         "is_sequence": false,
         "streaming": false,
@@ -4303,11 +4794,15 @@
         "default_value": 1
       }
     ],
-    "output": {
-      "media_urn": "media:fmt=json;record;semantic-judgment",
-      "output_description": "Semantic-judgment record: pass (bool), violations (requirement/evidence/severity), confidence, reason",
-      "is_sequence": false,
-      "streaming": false
-    }
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;semantic-judgment",
+        "name": "output",
+        "output_description": "Semantic-judgment record: pass (bool), violations (requirement/evidence/severity), confidence, reason",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   }
 ]
