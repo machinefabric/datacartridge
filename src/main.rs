@@ -2084,6 +2084,9 @@ pub(crate) async fn invoke_constrained_peer(
                     }
                 }
             }
+            // Another output the inference cap declares: the answer is its
+            // main output, and nothing here reads the others.
+            capdag::PeerResponseItem::Output { .. } => {}
             capdag::PeerResponseItem::Data(Err(e), _) => {
                 anyhow::bail!("peer response stream error: {}", e);
             }

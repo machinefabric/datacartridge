@@ -1650,6 +1650,7 @@ pub fn register_semantic_ops(runtime: &mut capdag::CartridgeRuntime) {
 fn model_spec_arg() -> capdag::CapArg {
     let mut a = capdag::CapArg::with_description(
         "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "model-spec",
         false,
         vec![capdag::ArgSource::CliFlag { cli_flag: "--model-spec".to_string() }],
         "Model spec used for the constrained inference".to_string(),
@@ -1664,6 +1665,7 @@ fn model_spec_arg() -> capdag::CapArg {
 fn num_arg(media: &str, flag: &str, desc: &str, default: serde_json::Value) -> capdag::CapArg {
     let mut a = capdag::CapArg::with_description(
         media,
+        flag_name(flag),
         false,
         vec![capdag::ArgSource::CliFlag { cli_flag: flag.to_string() }],
         desc.to_string(),
@@ -1708,10 +1710,20 @@ fn add_llm_args(cap: &mut capdag::Cap) {
     }
 }
 
+/// The name the fabric gives an arg read from a CLI flag: the flag without
+/// its dashes (`--max-tokens` → `max-tokens`). The cap's TOML is the
+/// definition; these must agree with it.
+fn flag_name(flag: &str) -> &str {
+    let name = flag.trim_start_matches('-');
+    assert!(!name.is_empty() && name.len() < flag.len(), "'{flag}' is not a CLI flag");
+    name
+}
+
 /// The primary content arg (stdin / positional 0) every semantic cap shares.
 fn content_arg(desc: &str) -> capdag::CapArg {
     capdag::CapArg::with_description(
         "media:enc=utf-8",
+        "input",
         true,
         vec![
             capdag::ArgSource::Stdin { stdin: "media:enc=utf-8".to_string() },
@@ -1726,6 +1738,7 @@ fn content_arg(desc: &str) -> capdag::CapArg {
 fn language_arg() -> capdag::CapArg {
     let mut a = capdag::CapArg::with_description(
         "media:enc=utf-8;language-code",
+        "language",
         false,
         vec![capdag::ArgSource::CliFlag { cli_flag: "--language".to_string() }],
         "Language code for processing".to_string(),
@@ -1738,6 +1751,7 @@ fn language_arg() -> capdag::CapArg {
 fn flag_arg(media: &str, flag: &str, desc: &str) -> capdag::CapArg {
     capdag::CapArg::with_description(
         media,
+        flag_name(flag),
         true,
         vec![capdag::ArgSource::CliFlag { cli_flag: flag.to_string() }],
         desc.to_string(),
@@ -1748,6 +1762,7 @@ fn flag_arg(media: &str, flag: &str, desc: &str) -> capdag::CapArg {
 fn opt_flag_arg(media: &str, flag: &str, desc: &str, default: Option<serde_json::Value>) -> capdag::CapArg {
     let mut a = capdag::CapArg::with_description(
         media,
+        flag_name(flag),
         false,
         vec![capdag::ArgSource::CliFlag { cli_flag: flag.to_string() }],
         desc.to_string(),
@@ -1779,7 +1794,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         for a in sampling_temperature_args() {
             cap.add_arg(a);
         }
-        cap.set_output(CapOutput::new("media:fmt=json;record", "JSON object conforming to the supplied schema."));
+        cap.add_output(CapOutput::new("media:fmt=json;record", "output", "JSON object conforming to the supplied schema."));
         caps.push(cap);
     }
 
@@ -1793,7 +1808,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to extract from"));
         cap.add_arg(flag_arg("media:fmt=json;json-schema;record", "--schema", "The JSON Schema describing the fields to extract"));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: result (instance of the supplied schema), confidence, reason"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: result (instance of the supplied schema), confidence, reason"));
         caps.push(cap);
     }
 
@@ -1810,7 +1825,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(opt_flag_arg("media:max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
         cap.add_arg(opt_flag_arg("media:confidence-threshold;numeric", "--confidence-threshold", "Minimum confidence threshold for decisions", Some(serde_json::json!(0.7))));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new("media:decision;fmt=json;record", "Binary decision result (true/false)"));
+        cap.add_output(CapOutput::new("media:decision;fmt=json;record", "output", "Binary decision result (true/false)"));
         caps.push(cap);
     }
 
@@ -1832,8 +1847,9 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         // `[output] is_sequence = true`, else the cartridge runtime sets up a
         // scalar output channel while the Op emits a sequence — the mismatch
         // prepends a phantom empty item to the terminal.
-        cap.set_output(CapOutput::with_full_definition(
+        cap.add_output(CapOutput::with_full_definition(
             "media:decision;fmt=json;record",
+            "output",
             "One decision per question, each as a JSON object with identifier and value",
             true,
             false,
@@ -1852,13 +1868,14 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("The first item"));
         cap.add_arg(capdag::CapArg::with_description(
             "media:enc=utf-8;second-item",
+            "second",
             true,
             vec![capdag::ArgSource::Position { position: 1 }],
             "The second item".to_string(),
         ));
         cap.add_arg(opt_flag_arg("media:criterion;enc=utf-8", "--context", "Optional context framing what \"the same\" means", None));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: same (bool), confidence (0-1), reason (one sentence)"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: same (bool), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
 
@@ -1873,7 +1890,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(flag_arg("media:enc=utf-8;label-set", "--labels", "The allowed labels, comma- or newline-separated (2..=64)"));
         cap.add_arg(opt_flag_arg("media:criterion;enc=utf-8", "--context", "Optional context framing the classification", None));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: label (from the allowed set), confidence (0-1), reason (one sentence)"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: label (from the allowed set), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
 
@@ -1888,7 +1905,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--rubric", "The rubric describing what to score"));
         cap.add_arg(opt_flag_arg("media:enc=utf-8;scale", "--scale", "The integer scale as min..max (default 0..10)", Some(serde_json::json!("0..10"))));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: score (integer on the scale), confidence (0-1), reason (one sentence)"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: score (integer on the scale), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
 
@@ -1902,7 +1919,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("The artifact to verify"));
         cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--against", "The requirements to verify against"));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: pass (bool), violations (requirement/evidence/severity), confidence, reason"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: pass (bool), violations (requirement/evidence/severity), confidence, reason"));
         caps.push(cap);
     }
 
@@ -1916,7 +1933,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to route"));
         cap.add_arg(flag_arg("media:fmt=json;record;target-set", "--targets", "A JSON object mapping target name to its contract description (2..=64)"));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: target (from the given set), confidence (0-1), reason (one sentence)"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: target (from the given set), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
     }
 
@@ -1931,7 +1948,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(flag_arg("media:enc=utf-8;entity-type", "--type", "The entity type (e.g. date, currency, phone)"));
         cap.add_arg(opt_flag_arg("media:enc=utf-8;locale", "--locale", "Optional locale hint for normalization", None));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: canonical (string; empty with confidence 0.0 when unreadable), confidence, reason"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: canonical (string; empty with confidence 0.0 when unreadable), confidence, reason"));
         caps.push(cap);
     }
 
@@ -1945,7 +1962,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to answer against"));
         cap.add_arg(flag_arg("media:enc=utf-8;question", "--question", "The question to answer about the content"));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: answer, verified verbatim quotes, confidence, reason"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: answer, verified verbatim quotes, confidence, reason"));
         caps.push(cap);
     }
 
@@ -1959,7 +1976,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("The data to explain"));
         cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--goal", "The goal the explanation should serve"));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new(judgment_out, "Semantic-judgment record: hypothesis, verified evidence, next checks, confidence, reason"));
+        cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: hypothesis, verified evidence, next checks, confidence, reason"));
         caps.push(cap);
     }
 
@@ -1974,7 +1991,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--for", "The purpose the summary should serve"));
         cap.add_arg(opt_flag_arg("media:numeric;word-budget", "--budget", "Optional positive word budget for the summary", None));
         add_llm_args(&mut cap);
-        cap.set_output(CapOutput::new("media:enc=utf-8;ext=txt;plain-text", "The purpose-driven summary as plain text"));
+        cap.add_output(CapOutput::new("media:enc=utf-8;ext=txt;plain-text", "output", "The purpose-driven summary as plain text"));
         caps.push(cap);
     }
 
