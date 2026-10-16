@@ -1,15 +1,15 @@
 //! Steps over time series: resample, change, lag, rolling statistics, align, combine,
 //! filter, summarize, describe, regress and correlate. Each is MarketOS's own pipeline step
-//! (`mos_quant::steps`, `mos_quant::stats`, copied into crates/), over series as the
+//! (`datacartridge_quant::steps`, `datacartridge_quant::stats`, in crates/), over series as the
 //! time-series media carries them: `[{time, value}]`, oldest first.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::Arc;
 
 use capdag::{async_trait, DryContext, Op, OpError, OpResult, Request, WetContext, WET_KEY_REQUEST};
-use mos_core::error::Error;
-use mos_core::time::Timestamp;
-use mos_quant::steps::{self, Aggregate, ChangeHow, Every, Keep, Operation, Point, Statistic, Summary};
+use datacartridge_core::error::Error;
+use datacartridge_core::time::Timestamp;
+use datacartridge_quant::steps::{self, Aggregate, ChangeHow, Every, Keep, Operation, Point, Statistic, Summary};
 use serde_json::{json, Value};
 
 use crate::input_arg_error;
@@ -161,7 +161,7 @@ pub fn regress(y: &[Point], xs: &[Vec<Point>]) -> Result<(Value, Vec<Point>), Op
     let rows = shared(&all);
     let ys: Vec<f64> = rows.iter().map(|(_, v)| v[0]).collect();
     let regressors: Vec<Vec<f64>> = (1..all.len()).map(|j| rows.iter().map(|(_, v)| v[j]).collect()).collect();
-    let fit = mos_quant::stats::ols(&ys, &regressors).map_err(|e| refused(e, TIME_SERIES))?;
+    let fit = datacartridge_quant::stats::ols(&ys, &regressors).map_err(|e| refused(e, TIME_SERIES))?;
     let residuals = rows.iter().map(|(time, v)| (*time, v[0] - fit.alpha - fit.betas.iter().zip(&v[1..]).map(|(b, x)| b * x).sum::<f64>())).collect();
     let value = json!({ "alpha": fit.alpha, "betas": fit.betas, "r_squared": fit.r_squared, "residual_std": fit.residual_std, "observations": fit.observations });
     Ok((value, residuals))
@@ -175,7 +175,7 @@ pub fn correlate(left: &[Point], right: &[Point]) -> Result<Value, OpError> {
     if rows.len() < 3 {
         return Err(input_arg_error("NOT_DEFINED", format!("a correlation needs three shared instants, and the series share {}", rows.len()), RIGHT_SERIES));
     }
-    let correlation = mos_quant::stats::correlation(&a, &b).map_err(|e| refused(e, TIME_SERIES))?;
+    let correlation = datacartridge_quant::stats::correlation(&a, &b).map_err(|e| refused(e, TIME_SERIES))?;
     Ok(json!({ "correlation": correlation, "n": rows.len() }))
 }
 
@@ -341,7 +341,7 @@ mod tests {
     use super::*;
 
     fn day(n: i64) -> Timestamp {
-        Timestamp::from_ymd(2030, 1, 1).unwrap().checked_add(mos_core::time::Duration::from_days(n)).unwrap()
+        Timestamp::from_ymd(2030, 1, 1).unwrap().checked_add(datacartridge_core::time::Duration::from_days(n)).unwrap()
     }
 
     fn series(values: &[f64]) -> Vec<Point> {

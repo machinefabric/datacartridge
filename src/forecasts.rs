@@ -1,16 +1,16 @@
 //! Forecasts scored, and ways of forecasting tried on a series' history: MarketOS's scoring
 //! and hindcast, decided by its proved model (`Mos.Forecast`, `Mos.Hindcast`, generated into
-//! crates/mos-formal).
+//! crates/datacartridge-formal).
 
 use std::collections::BTreeMap;
 use std::sync::Arc;
 
 use capdag::{async_trait, DryContext, Op, OpError, OpResult, Request, WetContext, WET_KEY_REQUEST};
-use mos_core::time::{Duration, Timestamp};
-use mos_formal::spec::forecast as spec;
-use mos_formal::spec::hindcast as trial_spec;
-use mos_formal::{Int, List, Nat};
-use mos_quant::steps::Point;
+use datacartridge_core::time::{Duration, Timestamp};
+use datacartridge_formal::spec::forecast as spec;
+use datacartridge_formal::spec::hindcast as trial_spec;
+use datacartridge_formal::{Int, List, Nat};
+use datacartridge_quant::steps::Point;
 use serde_json::{json, Value};
 
 use crate::input_arg_error;
@@ -286,7 +286,7 @@ fn swings(moves: &[f64], ahead: f64, asked: &Asked) -> Option<f64> {
     } else if spread == 0.0 {
         if asked.comparison.holds(0.0, asked.change_pct) { 1.0 } else { 0.0 }
     } else {
-        let above = 1.0 - mos_quant::options::norm_cdf((1.0 + asked.change_pct / 100.0).ln() / (spread * ahead.sqrt()));
+        let above = 1.0 - datacartridge_quant::options::norm_cdf((1.0 + asked.change_pct / 100.0).ln() / (spread * ahead.sqrt()));
         if up { above } else { 1.0 - above }
     };
     Some(match asked.window {
@@ -369,7 +369,7 @@ pub fn trial(series: &[Point], asked: &Asked) -> Result<Value, OpError> {
     }
     let ways: Vec<(Kind, Option<u32>)> = WAYS.iter().copied().filter(|(kind, days)| trial_spec::speaks(*kind == Kind::Often, days.map(|d| nat(u64::from(d))), nat(u64::from(asked.days)))).collect();
     let (ahead, every) = (Duration::from_days(i64::from(asked.days)), Duration::from_days(i64::from(asked.every_days)));
-    let fail = |e: mos_core::error::Error| OpError::ExecutionFailed(e.to_string());
+    let fail = |e: datacartridge_core::error::Error| OpError::ExecutionFailed(e.to_string());
     let (Some(first), Some(last)) = (series.first().map(|(t, _)| *t), series.last().map(|(t, _)| *t)) else {
         return Err(input("NOTHING_TO_TRY", "the series holds no values".to_string(), crate::series::TIME_SERIES));
     };

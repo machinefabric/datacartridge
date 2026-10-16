@@ -1,6 +1,6 @@
 //! Descriptive statistics, risk measures and regression.
 
-use mos_core::error::{Error, Result};
+use datacartridge_core::error::{Error, Result};
 use serde::{Deserialize, Serialize};
 
 use crate::linalg::{Matrix, solve_spd};

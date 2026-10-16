@@ -1,6 +1,7 @@
-# Copied from MarketOS (crates/mos-core), as are its sources: the modules the series steps use.
+# datacartridge's statistics, linear algebra, option maths and pipeline steps, which
+# marketcartridge takes from here.
 [package]
-name = "mos-core"
+name = "datacartridge-quant"
 publish = false
 version = "0.1.0"
 edition = "2024"
@@ -8,8 +9,8 @@ license = "Apache-2.0"
 
 [dependencies]
 chrono = { version = "0.4.45", default-features = false, features = ["std", "clock"] }
+datacartridge-core = { version = "0.1.0", path = "../datacartridge-core" }
 serde = { version = "1.0.229", features = ["derive"] }
-thiserror = "2.0.21"
 
 [lints]
 workspace = true

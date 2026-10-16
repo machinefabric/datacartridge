@@ -1,9 +1,8 @@
 //! Deterministic quantitative library (CMP-002).
 //!
-//! Copied from MarketOS (crates/mos-quant): the statistics, linear algebra, option maths
-//! (its normal distribution, which forecast trials use) and pipeline steps the series and
-//! forecast caps use. Its other modules (cash flows, counterfactuals, event studies, Monte
-//! Carlo, regimes, scenarios, calculations) are not served here.
+//! datacartridge's statistics, linear algebra, option maths (its normal distribution, which
+//! forecast trials use) and pipeline steps, which the series and forecast caps use.
+//! marketcartridge takes them from here, and MarketOS is to rather than keep its own.
 //!
 //! Every number MarketOS shows comes from here or from SQL — never from a language
 //! model. Functions are pure, operate on `f64`, validate their inputs and fail explicitly
@@ -17,7 +16,7 @@ pub mod steps;
 /// Version of the numerical code, recorded in every run that uses it.
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");
 
-use mos_core::error::{Error, Result};
+use datacartridge_core::error::{Error, Result};
 
 pub(crate) fn finite(what: &'static str, xs: &[f64]) -> Result<()> {
     match xs.iter().position(|x| !x.is_finite()) {

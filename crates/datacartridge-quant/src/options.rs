@@ -1,7 +1,7 @@
 //! Option pricing: Black-Scholes-Merton with greeks, implied volatility, and a
 //! Cox-Ross-Rubinstein lattice for American exercise.
 
-use mos_core::error::{Error, Result};
+use datacartridge_core::error::{Error, Result};
 use serde::{Deserialize, Serialize};
 
 use crate::{bisect, finite};

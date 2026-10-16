@@ -1,6 +1,6 @@
-# The cartridge, and the MarketOS crates its series steps are made from: copied from
-# MarketOS's workspace into crates/ with their own manifests, so the copied code compiles
-# as it is.
+# The cartridge, and the crates its series steps and forecasts are made from (crates/).
+# They are datacartridge's: marketcartridge takes datacartridge-core and datacartridge-quant
+# from here, and MarketOS is to consume them rather than own its own copies.
 [workspace]
 resolver = "3"
 members = [".", "crates/*"]
@@ -41,15 +41,15 @@ git = "https://github.com/machinefabric/capdag-rs"
 tag = "v{{ projects.capdag_rs.latest_remote_version }}"
 {%- endif %}
 
-# MarketOS's series steps (see crates/).
-[dependencies.mos-core]
-path = "crates/mos-core"
+# The series steps, forecasts and the proved model they decide by (see crates/).
+[dependencies.datacartridge-core]
+path = "crates/datacartridge-core"
 
-[dependencies.mos-formal]
-path = "crates/mos-formal"
+[dependencies.datacartridge-formal]
+path = "crates/datacartridge-formal"
 
-[dependencies.mos-quant]
-path = "crates/mos-quant"
+[dependencies.datacartridge-quant]
+path = "crates/datacartridge-quant"
 
 [dependencies.serde]
 features = ["derive"]

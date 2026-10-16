@@ -1,6 +1,5 @@
 # datacartridge's forecast scoring and trials are decided by code generated from the proved
-# model in formal/ (Lean), checked in under crates/mos-formal/src/generated. The modules are
-# MarketOS's, copied unchanged.
+# model in formal/ (Lean), checked in under crates/datacartridge-formal/src/generated.
 #
 # Regenerate after changing the model: `lungo generate` here. `lungo generate --verify` fails
 # when the checked-in copy is not what the model generates.
@@ -18,8 +17,8 @@ deny-unsafe = true
 require-claims = ["."]
 
 [rust]
-out-dir = "crates/mos-formal/src/generated"
-# As MarketOS's build shapes them (crates/mos-formal/build.rs), so the copied code uses them unchanged.
+out-dir = "crates/datacartridge-formal/src/generated"
+# The shapes the calling code uses: serde on every type, Copy on the small enums.
 type-attributes = [
   { path = ".", attribute = "#[derive(serde::Serialize, serde::Deserialize)]" },
 ]

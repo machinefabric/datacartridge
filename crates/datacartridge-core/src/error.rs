@@ -49,6 +49,11 @@ pub enum Error {
 
     #[error("integrity violation: {0}")]
     Integrity(String),
+
+    /// The host's network policy does not allow reaching a service now (capdag 12.2
+    /// §Policy). Nothing was sent; it holds until the operator changes the setting.
+    #[error("{0}")]
+    NetworkRefused(String),
 }
 
 impl Error {
@@ -87,6 +92,7 @@ impl Error {
             Error::RiskRejected { .. } => "risk_rejected",
             Error::Storage(_) => "storage",
             Error::Integrity(_) => "integrity",
+            Error::NetworkRefused(_) => "network_refused",
         }
     }
 }

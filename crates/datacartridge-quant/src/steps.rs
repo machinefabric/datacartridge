@@ -5,10 +5,10 @@
 //! the instants both have.
 
 use chrono::Datelike;
-use mos_core::time::Timestamp;
+use datacartridge_core::time::Timestamp;
 use serde::{Deserialize, Serialize};
 
-use mos_core::error::{Error, Result};
+use datacartridge_core::error::{Error, Result};
 
 /// One value of a series, at the instant it is of.
 pub type Point = (Timestamp, f64);
@@ -508,7 +508,7 @@ mod tests {
 
     #[test]
     fn a_price_path_is_measured_as_the_quant_library_measures_it() {
-        let day = |n: i64| Timestamp::from_ymd(2030, 1, 1).unwrap().checked_add(mos_core::time::Duration::from_days(n)).unwrap();
+        let day = |n: i64| Timestamp::from_ymd(2030, 1, 1).unwrap().checked_add(datacartridge_core::time::Duration::from_days(n)).unwrap();
         // 100, up to 120, down to 90, back to 110: returns +20%, -25%, +22.2…%.
         let path: Vec<Point> = [100.0, 120.0, 90.0, 110.0].iter().enumerate().map(|(n, v)| (day(n as i64), *v)).collect();
         let near = |a: f64, b: f64| (a - b).abs() < 1e-9;
@@ -551,7 +551,7 @@ mod tests {
 
     #[test]
     fn a_sharpe_ratio_is_measured_against_a_rate() {
-        let day = |n: i64| Timestamp::from_ymd(2030, 1, 1).unwrap().checked_add(mos_core::time::Duration::from_days(n)).unwrap();
+        let day = |n: i64| Timestamp::from_ymd(2030, 1, 1).unwrap().checked_add(datacartridge_core::time::Duration::from_days(n)).unwrap();
         let path: Vec<Point> = [100.0, 102.0, 101.0, 104.0].iter().enumerate().map(|(n, v)| (day(n as i64), *v)).collect();
         let returns = [0.02, 101.0 / 102.0 - 1.0, 104.0 / 101.0 - 1.0];
         let rf = 1.0252f64.powf(1.0 / 252.0) - 1.0;

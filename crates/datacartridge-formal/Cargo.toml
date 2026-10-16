@@ -1,0 +1,12 @@
+# The code datacartridge's forecasts decide by: the `spec` module, generated from the proved
+# model in ../../formal by `lungo generate` (see ../../lungo.toml) and checked in.
+[package]
+name = "datacartridge-formal"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+lungo = { version = "=1.108.38", features = ["serde"] }
+serde = { version = "1.0", features = ["derive"] }

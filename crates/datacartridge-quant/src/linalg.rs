@@ -1,6 +1,6 @@
 //! Small dense linear algebra: just what regression and correlated simulation need.
 
-use mos_core::error::{Error, Result};
+use datacartridge_core::error::{Error, Result};
 
 pub type Matrix = Vec<Vec<f64>>;
 

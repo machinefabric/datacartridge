@@ -1,6 +1,6 @@
-//! Formally specified MarketOS logic, as MarketOS's mos-formal exposes it.
+//! The proved decisions datacartridge's forecasts make.
 //!
-//! The Lean modules in `formal/` are MarketOS's, copied unchanged; lungo generated the Rust
+//! The Lean modules in `formal/` are datacartridge's; lungo generated the Rust
 //! in [`spec`] from them (`lungo generate`, checked by `lungo generate --verify`). The other
 //! crates call these functions; they do not re-implement them.
 
