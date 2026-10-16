@@ -80,3 +80,4 @@ summarize-series
 describe-series
 regress-series
 correlate-series
+transform-records

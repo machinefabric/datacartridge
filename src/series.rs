@@ -315,7 +315,7 @@ impl Op<()> for RegressOp {
 /// A handler, made new for each request.
 pub type Factory = fn() -> Box<dyn Op<()>>;
 
-/// Every series op, by the fabric alias of the cap it answers.
+/// Every series op, and transform-records, by the fabric alias of the cap it answers.
 pub fn handlers() -> Vec<(&'static str, Factory)> {
     vec![
         ("resample-series", || Box::new(ResampleOp)),
@@ -329,6 +329,7 @@ pub fn handlers() -> Vec<(&'static str, Factory)> {
         ("describe-series", || Box::new(DescribeOp)),
         ("regress-series", || Box::new(RegressOp)),
         ("correlate-series", || Box::new(CorrelateOp)),
+        ("transform-records", || Box::new(crate::records::TransformRecordsOp)),
     ]
 }
 

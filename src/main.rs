@@ -14,6 +14,7 @@
 mod adapter;
 mod repair;
 mod schema_outline;
+mod records;
 mod semantic;
 mod series;
 mod transform;

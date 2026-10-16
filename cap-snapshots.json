@@ -5394,5 +5394,53 @@
         "streaming": false
       }
     ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;list;record\";out=\"media:fmt=json;list;record\";transform-records",
+    "version": 1,
+    "title": "Transform Records",
+    "aliases": [
+      "transform-records"
+    ],
+    "cap_description": "Transform a list of JSON records by a program: select, drop, rename, set, filter, map, sort, limit, reverse",
+    "documentation": "## Purpose\n\nRuns a record program over a list of records, exactly as written, with no model involved.\n\n## Inputs\n\n- A JSON array of objects.\n- `program`: the record program.\n\n## Outputs\n\nThe transformed JSON records.\n\n## Notes\n\nThe program language is the one edit-records has its model write; here it is given directly. A program that does not parse, or that names an unknown operation, is an input error.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "records",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record"
+          }
+        ],
+        "arg_description": "The records"
+      },
+      {
+        "media_urn": "media:fmt=json;record;record-program",
+        "name": "program",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--program"
+          }
+        ],
+        "arg_description": "The program to run"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record",
+        "name": "output",
+        "output_description": "The transformed records",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   }
 ]

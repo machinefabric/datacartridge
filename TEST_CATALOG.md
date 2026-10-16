@@ -2,7 +2,7 @@
 
 Generated from the test catalogue. Edit the tests, not this file.
 
-109 tests: 85 numbered, 24 unnumbered.
+111 tests: 87 numbered, 24 unnumbered.
 
 ## Numbered
 
@@ -91,6 +91,8 @@ Generated from the test catalogue. Edit the tests, not this file.
 | TEST307 | cartridges/datacartridge | rust | `test0307_steps_over_several_series` | src/series.rs:389 | series side by side, combined, correlated and regressed at the instants they all have: aligning keeps only shared instants, combining divides value by value, a regression of a series on two others recovers their coefficients, and its residuals are what the fit leaves at each instant. |
 | TEST308 | cartridges/datacartridge | rust | `test0308_filter_summarize_describe` | src/series.rs:412 | a filter keeps what passes and gives what fails apart; a summary is one of the plain ones (a measure of a price path is marketcartridge's); a description holds a series' count, span, first and last, mean, spread and extremes. |
 | TEST309 | cartridges/datacartridge | rust | `test0309_only_generation_is_pooled` | src/main.rs:2814 | the caps that generate with the constrained-generation peer share one pool of capacity 1, and every other cap (the conversions, the series steps) runs unpooled, never queued behind generation; every series step has its embedded definition. |
+| TEST310 | cartridges/datacartridge | rust | `test0310_a_program_runs_as_written` | src/records.rs:62 | a record program runs exactly as written, every operation of the language in one program: filter, map, set, rename, drop, select, sort, limit, reverse. |
+| TEST311 | cartridges/datacartridge | rust | `test0311_what_cannot_run_is_refused` | src/records.rs:88 | what cannot run is refused as what was given: a program with no operations, one naming an operation the language does not have, records that are not a list of objects. |
 | TEST1859 | cartridges/datacartridge | rust | `test1859_advertised_caps_resolve_in_catalog` | src/main.rs:2171 | TEST1859: every cap URN this cartridge advertises must resolve in the pinned fabric catalog. A drifted/bare-marker URN absent from the catalog is silently dropped by LiveCapFab at runtime; this guard turns that into a hard failure naming the exact URN. `get_cap` consults the same canonical manifest map LiveCapFab resolves against. Network-mediated against the env-configured registry (set by `sdx test`), pinned at FABRIC_MANIFEST_VERSION. The identity cap is engine-provided, not a catalog entry, so it is excluded. |
 | TEST11014 | cartridges/datacartridge | rust | `test11014_temperature_seed_only_on_generate_json` | src/semantic.rs:2208 | Only the free-generation cap exposes temperature/seed as configurable args; judgment caps keep determinism intrinsic and must NOT expose them. |
 
