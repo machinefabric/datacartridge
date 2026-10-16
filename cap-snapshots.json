@@ -5200,9 +5200,9 @@
         "name": "dropped",
         "output_description": "The observations that do not pass, when there are any",
         "optional": true,
+        "carries": "input",
         "is_sequence": false,
-        "streaming": false,
-        "carries": "input"
+        "streaming": false
       }
     ]
   },
