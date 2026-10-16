@@ -12,6 +12,7 @@
 //! - To object: from string, integer, number, boolean
 
 mod adapter;
+mod forecasts;
 mod repair;
 mod schema_outline;
 mod records;

@@ -45,6 +45,9 @@ tag = "v{{ projects.capdag_rs.latest_remote_version }}"
 [dependencies.mos-core]
 path = "crates/mos-core"
 
+[dependencies.mos-formal]
+path = "crates/mos-formal"
+
 [dependencies.mos-quant]
 path = "crates/mos-quant"
 

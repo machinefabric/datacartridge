@@ -38,6 +38,9 @@ tag = "v1.929.432"
 [dependencies.mos-core]
 path = "crates/mos-core"
 
+[dependencies.mos-formal]
+path = "crates/mos-formal"
+
 [dependencies.mos-quant]
 path = "crates/mos-quant"
 

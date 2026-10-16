@@ -1,0 +1,13 @@
+# MarketOS's mos-formal, as this cartridge builds it: the same `spec` module, generated
+# ahead of time by `lungo generate` (see ../../lungo.toml) and checked in, where MarketOS
+# compiles the Lean at build time. The copied code calls it unchanged.
+[package]
+name = "mos-formal"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+publish = false
+
+[dependencies]
+lungo = { version = "=1.108.38", features = ["serde"] }
+serde = { version = "1.0", features = ["derive"] }

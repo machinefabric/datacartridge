@@ -5442,5 +5442,40 @@
         "streaming": false
       }
     ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;forecast-outcomes;list;record\";out=\"media:fmt=json;forecast-score;record\";score-forecasts",
+    "version": 1,
+    "title": "Score Forecasts",
+    "aliases": [
+      "score-forecasts"
+    ],
+    "cap_description": "Score settled forecasts: Brier score, against saying 50% every time, and calibration by tenths",
+    "documentation": "## Purpose\n\nScores a record of forecasts of yes-or-no statements.\n\n## Inputs\n\n- Forecast outcomes: {probability, came_true} each.\n\n## Outputs\n\nA forecast score.\n\n## Notes\n\nAn empty record is refused: there is nothing to score.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;forecast-outcomes;list;record",
+        "name": "outcomes",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;forecast-outcomes;list;record"
+          }
+        ],
+        "arg_description": "The settled forecasts"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;forecast-score;record",
+        "name": "output",
+        "output_description": "The score",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   }
 ]

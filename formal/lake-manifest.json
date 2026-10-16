@@ -1,0 +1,13 @@
+{"version": "1.2.0",
+ "packagesDir": ".lake/packages",
+ "packages":
+ [{"type": "path",
+   "scope": "",
+   "name": "lungo",
+   "manifestFile": "lake-manifest.json",
+   "inherited": false,
+   "dir": "../../../lungo/lungo-rs/lean",
+   "configFile": "lakefile.toml"}],
+ "name": "datacartridgeFormal",
+ "lakeDir": ".lake",
+ "fixedToolchain": false}

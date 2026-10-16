@@ -1,0 +1,1100 @@
+[
+  {
+    "lean_name": "Mos.Forecast.Call",
+    "kind": "type",
+    "rust_path": "forecast::Call",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Claim",
+    "kind": "type",
+    "rust_path": "forecast::Claim",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Clash",
+    "kind": "type",
+    "rust_path": "forecast::Clash",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Group",
+    "kind": "type",
+    "rust_path": "forecast::Group",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Hearing",
+    "kind": "type",
+    "rust_path": "forecast::Hearing",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Leave",
+    "kind": "type",
+    "rust_path": "forecast::Leave",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Link",
+    "kind": "type",
+    "rust_path": "forecast::Link",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Outcome",
+    "kind": "type",
+    "rust_path": "forecast::Outcome",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Split",
+    "kind": "type",
+    "rust_path": "forecast::Split",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Stand",
+    "kind": "type",
+    "rust_path": "forecast::Stand",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Sureness",
+    "kind": "type",
+    "rust_path": "forecast::Sureness",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Trend",
+    "kind": "type",
+    "rust_path": "forecast::Trend",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Tried",
+    "kind": "type",
+    "rust_path": "forecast::Tried",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.View",
+    "kind": "type",
+    "rust_path": "forecast::View",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.When",
+    "kind": "type",
+    "rust_path": "forecast::When",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Window",
+    "kind": "type",
+    "rust_path": "forecast::Window",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.HeldUp",
+    "kind": "type",
+    "rust_path": "hindcast::HeldUp",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.Tried",
+    "kind": "type",
+    "rust_path": "hindcast::Tried",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Claim.opposite",
+    "kind": "function",
+    "rust_path": "forecast::claim::opposite",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Clash.ofNat",
+    "kind": "function",
+    "rust_path": "forecast::clash::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Group.gap",
+    "kind": "function",
+    "rust_path": "forecast::group::gap",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Group.squares",
+    "kind": "function",
+    "rust_path": "forecast::group::squares",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Hearing.ofNat",
+    "kind": "function",
+    "rust_path": "forecast::hearing::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Leave.ofNat",
+    "kind": "function",
+    "rust_path": "forecast::leave::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Outcome.ofNat",
+    "kind": "function",
+    "rust_path": "forecast::outcome::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Sureness.ofNat",
+    "kind": "function",
+    "rust_path": "forecast::sureness::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Trend.ofNat",
+    "kind": "function",
+    "rust_path": "forecast::trend::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.When.counts",
+    "kind": "function",
+    "rust_path": "forecast::when::counts",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Window.ofNat",
+    "kind": "function",
+    "rust_path": "forecast::window::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.all",
+    "kind": "function",
+    "rust_path": "forecast::all",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.any",
+    "kind": "function",
+    "rust_path": "forecast::any",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.apartBeyondChance",
+    "kind": "function",
+    "rust_path": "forecast::apart_beyond_chance",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.asForecast",
+    "kind": "function",
+    "rust_path": "forecast::as_forecast",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.askNext",
+    "kind": "function",
+    "rust_path": "forecast::ask_next",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.askedOf",
+    "kind": "function",
+    "rust_path": "forecast::asked_of",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.asks",
+    "kind": "function",
+    "rust_path": "forecast::asks",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.back",
+    "kind": "function",
+    "rust_path": "forecast::back",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.backing",
+    "kind": "function",
+    "rust_path": "forecast::backing",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.baseRate",
+    "kind": "function",
+    "rust_path": "forecast::base_rate",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.bestReading",
+    "kind": "function",
+    "rust_path": "forecast::best_reading",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.better",
+    "kind": "function",
+    "rust_path": "forecast::better",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.brier",
+    "kind": "function",
+    "rust_path": "forecast::brier",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.calibrated",
+    "kind": "function",
+    "rust_path": "forecast::calibrated",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.carried",
+    "kind": "function",
+    "rust_path": "forecast::carried",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.choosesAt",
+    "kind": "function",
+    "rust_path": "forecast::chooses_at",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.clash",
+    "kind": "function",
+    "rust_path": "forecast::clash",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.clashHappening",
+    "kind": "function",
+    "rust_path": "forecast::clash_happening",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.clashWhen",
+    "kind": "function",
+    "rust_path": "forecast::clash_when",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.conditional",
+    "kind": "function",
+    "rust_path": "forecast::conditional",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.conviction",
+    "kind": "function",
+    "rust_path": "forecast::conviction",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.discerning",
+    "kind": "function",
+    "rust_path": "forecast::discerning",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.evenWeight",
+    "kind": "function",
+    "rust_path": "forecast::even_weight",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.expected",
+    "kind": "function",
+    "rust_path": "forecast::expected",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.expectedFirst",
+    "kind": "function",
+    "rust_path": "forecast::expected_first",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.lastWeek",
+    "kind": "function",
+    "rust_path": "forecast::last_week",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.later",
+    "kind": "function",
+    "rust_path": "forecast::later",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.laterOf",
+    "kind": "function",
+    "rust_path": "forecast::later_of",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.leastFromParts",
+    "kind": "function",
+    "rust_path": "forecast::least_from_parts",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.leastWhenAll",
+    "kind": "function",
+    "rust_path": "forecast::least_when_all",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.leave",
+    "kind": "function",
+    "rust_path": "forecast::leave",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.lifeBrier",
+    "kind": "function",
+    "rust_path": "forecast::life_brier",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.likelihood",
+    "kind": "function",
+    "rust_path": "forecast::likelihood",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.mayStateAgain",
+    "kind": "function",
+    "rust_path": "forecast::may_state_again",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.mean",
+    "kind": "function",
+    "rust_path": "forecast::mean",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.nextPeriod",
+    "kind": "function",
+    "rust_path": "forecast::next_period",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.occurs",
+    "kind": "function",
+    "rust_path": "forecast::occurs",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.pairedBeyondChance",
+    "kind": "function",
+    "rust_path": "forecast::paired_beyond_chance",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.partsCarry",
+    "kind": "function",
+    "rust_path": "forecast::parts_carry",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.pool",
+    "kind": "function",
+    "rust_path": "forecast::pool",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.previousPeriod",
+    "kind": "function",
+    "rust_path": "forecast::previous_period",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.proven",
+    "kind": "function",
+    "rust_path": "forecast::proven",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.provenAt",
+    "kind": "function",
+    "rust_path": "forecast::proven_at",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.recalibrated",
+    "kind": "function",
+    "rust_path": "forecast::recalibrated",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.settle",
+    "kind": "function",
+    "rust_path": "forecast::settle",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.settleReported",
+    "kind": "function",
+    "rust_path": "forecast::settle_reported",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.settled",
+    "kind": "function",
+    "rust_path": "forecast::settled",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.silenceCounts",
+    "kind": "function",
+    "rust_path": "forecast::silence_counts",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.skill",
+    "kind": "function",
+    "rust_path": "forecast::skill",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.split",
+    "kind": "function",
+    "rust_path": "forecast::split",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.sureness",
+    "kind": "function",
+    "rust_path": "forecast::sureness",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.surenessOf",
+    "kind": "function",
+    "rust_path": "forecast::sureness_of",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.telling",
+    "kind": "function",
+    "rust_path": "forecast::telling",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.tenth",
+    "kind": "function",
+    "rust_path": "forecast::tenth",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.tooLikelyAcross",
+    "kind": "function",
+    "rust_path": "forecast::too_likely_across",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.trend",
+    "kind": "function",
+    "rust_path": "forecast::trend",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.weekStart",
+    "kind": "function",
+    "rust_path": "forecast::week_start",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.weight",
+    "kind": "function",
+    "rust_path": "forecast::weight",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.weighted",
+    "kind": "function",
+    "rust_path": "forecast::weighted",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.weights",
+    "kind": "function",
+    "rust_path": "forecast::weights",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.worse",
+    "kind": "function",
+    "rust_path": "forecast::worse",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.yearBefore",
+    "kind": "function",
+    "rust_path": "forecast::year_before",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.HeldUp.ofNat",
+    "kind": "function",
+    "rust_path": "hindcast::held_up::of_nat",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.alike",
+    "kind": "function",
+    "rust_path": "hindcast::alike",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.alikeRate",
+    "kind": "function",
+    "rust_path": "hindcast::alike_rate",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.atLeastPerStretch",
+    "kind": "function",
+    "rust_path": "hindcast::at_least_per_stretch",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.callsBetter",
+    "kind": "function",
+    "rust_path": "hindcast::calls_better",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.chooseAgain",
+    "kind": "function",
+    "rust_path": "hindcast::choose_again",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.chosen",
+    "kind": "function",
+    "rust_path": "hindcast::chosen",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.countsBeside",
+    "kind": "function",
+    "rust_path": "hindcast::counts_beside",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.cut",
+    "kind": "function",
+    "rust_path": "hindcast::cut",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.enough",
+    "kind": "function",
+    "rust_path": "hindcast::enough",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.heldUp",
+    "kind": "function",
+    "rust_path": "hindcast::held_up",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.learnable",
+    "kind": "function",
+    "rust_path": "hindcast::learnable",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.mean",
+    "kind": "function",
+    "rust_path": "hindcast::mean",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.moment",
+    "kind": "function",
+    "rust_path": "hindcast::moment",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.mostTriable",
+    "kind": "function",
+    "rust_path": "hindcast::most_triable",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.needed",
+    "kind": "function",
+    "rust_path": "hindcast::needed",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.said",
+    "kind": "function",
+    "rust_path": "hindcast::said",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.settledToChooseAgain",
+    "kind": "function",
+    "rust_path": "hindcast::settled_to_choose_again",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.sharedFrom",
+    "kind": "function",
+    "rust_path": "hindcast::shared_from",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.sharedFromAll",
+    "kind": "function",
+    "rust_path": "hindcast::shared_from_all",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.speaks",
+    "kind": "function",
+    "rust_path": "hindcast::speaks",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.total",
+    "kind": "function",
+    "rust_path": "hindcast::total",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.triable",
+    "kind": "function",
+    "rust_path": "hindcast::triable",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Hindcast.turned",
+    "kind": "function",
+    "rust_path": "hindcast::turned",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Call.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::Call",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Call.statedBps",
+    "kind": "field",
+    "rust_path": "forecast::Call.stated_bps",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Call.cameTrue",
+    "kind": "field",
+    "rust_path": "forecast::Call.came_true",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Claim.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::Claim",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Claim.up",
+    "kind": "field",
+    "rust_path": "forecast::Claim.up",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Claim.strict",
+    "kind": "field",
+    "rust_path": "forecast::Claim.strict",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Claim.level",
+    "kind": "field",
+    "rust_path": "forecast::Claim.level",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Claim.bps",
+    "kind": "field",
+    "rust_path": "forecast::Claim.bps",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Clash.agree",
+    "kind": "constructor",
+    "rust_path": "forecast::Clash::Agree",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Clash.firstTooLikely",
+    "kind": "constructor",
+    "rust_path": "forecast::Clash::FirstTooLikely",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Clash.secondTooLikely",
+    "kind": "constructor",
+    "rust_path": "forecast::Clash::SecondTooLikely",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Clash.tooMuch",
+    "kind": "constructor",
+    "rust_path": "forecast::Clash::TooMuch",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Clash.tooLittle",
+    "kind": "constructor",
+    "rust_path": "forecast::Clash::TooLittle",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Group.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::Group",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Group.said",
+    "kind": "field",
+    "rust_path": "forecast::Group.said",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Group.calls",
+    "kind": "field",
+    "rust_path": "forecast::Group.calls",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Group.came",
+    "kind": "field",
+    "rust_path": "forecast::Group.came",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Hearing.ofThis",
+    "kind": "constructor",
+    "rust_path": "forecast::Hearing::OfThis",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Hearing.ofOthers",
+    "kind": "constructor",
+    "rust_path": "forecast::Hearing::OfOthers",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Hearing.never",
+    "kind": "constructor",
+    "rust_path": "forecast::Hearing::Never",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Leave.stay",
+    "kind": "constructor",
+    "rust_path": "forecast::Leave::Stay",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Leave.stop",
+    "kind": "constructor",
+    "rust_path": "forecast::Leave::Stop",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Leave.target",
+    "kind": "constructor",
+    "rust_path": "forecast::Leave::Target",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Leave.time",
+    "kind": "constructor",
+    "rust_path": "forecast::Leave::Time",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Link.part",
+    "kind": "constructor",
+    "rust_path": "forecast::Link::Part",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Link.part.others",
+    "kind": "field",
+    "rust_path": "forecast::Link::Part.others",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Link.whole",
+    "kind": "constructor",
+    "rust_path": "forecast::Link::Whole",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Link.whole.others",
+    "kind": "field",
+    "rust_path": "forecast::Link::Whole.others",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Link.under",
+    "kind": "constructor",
+    "rust_path": "forecast::Link::Under",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Link.over",
+    "kind": "constructor",
+    "rust_path": "forecast::Link::Over",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Outcome.open",
+    "kind": "constructor",
+    "rust_path": "forecast::Outcome::Open",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Outcome.cameTrue",
+    "kind": "constructor",
+    "rust_path": "forecast::Outcome::CameTrue",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Outcome.didNot",
+    "kind": "constructor",
+    "rust_path": "forecast::Outcome::DidNot",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Outcome.void",
+    "kind": "constructor",
+    "rust_path": "forecast::Outcome::Void",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Split.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::Split",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Split.total",
+    "kind": "field",
+    "rust_path": "forecast::Split.total",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Split.offBy",
+    "kind": "field",
+    "rust_path": "forecast::Split.off_by",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Split.toldApart",
+    "kind": "field",
+    "rust_path": "forecast::Split.told_apart",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Split.howHard",
+    "kind": "field",
+    "rust_path": "forecast::Split.how_hard",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Stand.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::Stand",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Stand.statedBps",
+    "kind": "field",
+    "rust_path": "forecast::Stand.stated_bps",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Stand.duration",
+    "kind": "field",
+    "rust_path": "forecast::Stand.duration",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Sureness.untold",
+    "kind": "constructor",
+    "rust_path": "forecast::Sureness::Untold",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Sureness.about",
+    "kind": "constructor",
+    "rust_path": "forecast::Sureness::About",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Sureness.tooHigh",
+    "kind": "constructor",
+    "rust_path": "forecast::Sureness::TooHigh",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Sureness.tooLow",
+    "kind": "constructor",
+    "rust_path": "forecast::Sureness::TooLow",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Trend.better",
+    "kind": "constructor",
+    "rust_path": "forecast::Trend::Better",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Trend.worse",
+    "kind": "constructor",
+    "rust_path": "forecast::Trend::Worse",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Trend.same",
+    "kind": "constructor",
+    "rust_path": "forecast::Trend::Same",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Trend.untold",
+    "kind": "constructor",
+    "rust_path": "forecast::Trend::Untold",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Tried.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::Tried",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Tried.countsAs",
+    "kind": "field",
+    "rust_path": "forecast::Tried.counts_as",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Tried.meanBrier",
+    "kind": "field",
+    "rust_path": "forecast::Tried.mean_brier",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.View.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::View",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.View.weightBps",
+    "kind": "field",
+    "rust_path": "forecast::View.weight_bps",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.View.statedBps",
+    "kind": "field",
+    "rust_path": "forecast::View.stated_bps",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.When.mk",
+    "kind": "constructor",
+    "rust_path": "forecast::When",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.When.anyTime",
+    "kind": "field",
+    "rust_path": "forecast::When.any_time",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.When.since",
+    "kind": "field",
+    "rust_path": "forecast::When.since",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.When.till",
+    "kind": "field",
+    "rust_path": "forecast::When.till",
+    "renamed": false
+  },
+  {
+    "lean_name": "Mos.Forecast.Window.atDeadline",
+    "kind": "constructor",
+    "rust_path": "forecast::Window::AtDeadline",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Forecast.Window.anyTime",
+    "kind": "constructor",
+    "rust_path": "forecast::Window::AnyTime",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.HeldUp.tooSoon",
+    "kind": "constructor",
+    "rust_path": "hindcast::HeldUp::TooSoon",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.HeldUp.betterThanEven",
+    "kind": "constructor",
+    "rust_path": "hindcast::HeldUp::BetterThanEven",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.HeldUp.noBetter",
+    "kind": "constructor",
+    "rust_path": "hindcast::HeldUp::NoBetter",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.Tried.mk",
+    "kind": "constructor",
+    "rust_path": "hindcast::Tried",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.Tried.statedBps",
+    "kind": "field",
+    "rust_path": "hindcast::Tried.stated_bps",
+    "renamed": true
+  },
+  {
+    "lean_name": "Mos.Hindcast.Tried.cameTrue",
+    "kind": "field",
+    "rust_path": "hindcast::Tried.came_true",
+    "renamed": true
+  }
+]
