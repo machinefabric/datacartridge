@@ -1,0 +1,15 @@
+# Copied from MarketOS (crates/mos-quant), as are its sources: the modules the series steps use.
+[package]
+name = "mos-quant"
+publish = false
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+
+[dependencies]
+chrono = { version = "0.4.45", default-features = false, features = ["std", "clock"] }
+mos-core = { version = "0.1.0", path = "../mos-core" }
+serde = { version = "1.0.229", features = ["derive"] }
+
+[lints]
+workspace = true

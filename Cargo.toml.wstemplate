@@ -1,3 +1,15 @@
+# The cartridge, and the MarketOS crates its series steps are made from: copied from
+# MarketOS's workspace into crates/ with their own manifests, so the copied code compiles
+# as it is.
+[workspace]
+resolver = "3"
+members = [".", "crates/*"]
+
+[workspace.lints.clippy]
+type_complexity = "allow"
+too_many_arguments = "allow"
+needless_range_loop = "allow"
+
 [package]
 name = "datacartridge"
 version = "{{ project.version }}"
@@ -28,6 +40,13 @@ path = "{{ projects.capdag_rs.path_from_here }}"
 git = "https://github.com/machinefabric/capdag-rs"
 tag = "v{{ projects.capdag_rs.latest_remote_version }}"
 {%- endif %}
+
+# MarketOS's series steps (see crates/).
+[dependencies.mos-core]
+path = "crates/mos-core"
+
+[dependencies.mos-quant]
+path = "crates/mos-quant"
 
 [dependencies.serde]
 features = ["derive"]

@@ -15,11 +15,12 @@ mod adapter;
 mod repair;
 mod schema_outline;
 mod semantic;
+mod series;
 mod transform;
 
 use anyhow::Result;
 use capdag::{
-    async_trait, ArgSource, Cap, CapArg, CapGroup, CapManifest, DryContext, Op, OpError, OpResult,
+    async_trait, CapGroup, CapManifest, DryContext, Op, OpError, OpResult,
     CartridgeRuntime, OutputStream, Request, WetContext, WET_KEY_REQUEST, CAP_ADAPTER_SELECTION,
 };
 use std::sync::Arc;
@@ -826,6 +827,40 @@ impl Op<()> for DataAdapterSelectionOp {
     }
 }
 
+/// The pool the caps that generate with the constrained-generation peer share.
+const GENERATION_POOL: &str = "constrained-generation";
+
+/// Whether a cap generates with the constrained-generation peer: the semantic judgment caps
+/// (their aliases end `-en`) and edit-records, which has the peer write its program.
+fn generates(cap: &capdag::Cap) -> bool {
+    cap.aliases.iter().any(|alias| alias.ends_with("-en") || alias == "edit-records")
+}
+
+/// The caps that generate share the single-capacity constrained-generation peer: one pool
+/// of capacity 1 holds them, keeping ownership at the relay boundary so a cartridge loss
+/// fails only the active body, and queued ForEach bodies can be admitted to the replacement
+/// process instead of all becoming in-flight against the failed generation. Every other cap
+/// is deterministic and runs unpooled, never queued behind generation.
+fn pool_declarations(manifest: &CapManifest) -> capdag::PoolDeclarations {
+    let mut declarations = capdag::PoolDeclarations::default();
+    let members: Vec<String> = manifest.all_caps().into_iter().filter(|cap| generates(cap)).map(|cap| cap.urn_string()).collect();
+    declarations.pools.insert(GENERATION_POOL.to_string(), members);
+    declarations.capacities.insert(GENERATION_POOL.to_string(), 1);
+    declarations
+}
+
+/// The series steps, each under the URN of its embedded definition. A handler whose alias
+/// no embedded definition has is a defect of the build.
+fn series_handlers(manifest: &CapManifest) -> Vec<(String, series::Factory)> {
+    series::handlers()
+        .into_iter()
+        .map(|(alias, factory)| {
+            let cap = manifest.all_caps().into_iter().find(|cap| cap.aliases.iter().any(|a| a == alias)).unwrap_or_else(|| panic!("a handler answers '{alias}', which no embedded cap definition has; list it in cap-aliases.txt and rebuild"));
+            (cap.urn_string(), factory)
+        })
+        .collect()
+}
+
 // =============================================================================
 // MAIN
 // =============================================================================
@@ -833,18 +868,11 @@ impl Op<()> for DataAdapterSelectionOp {
 #[tokio::main]
 async fn main() -> Result<()> {
     let manifest = build_manifest();
-    // Semantic operations in this cartridge share the single-capacity
-    // constrained-generation peer. Declare `all` at 1 to keep ownership at
-    // the relay boundary so a cartridge loss fails only the active body;
-    // queued ForEach bodies can be admitted to the replacement process
-    // instead of all becoming in-flight against the failed generation.
-    let mut pool_declarations = capdag::PoolDeclarations::default();
-    pool_declarations
-        .capacities
-        .insert(capdag::POOL_ALL.to_string(), 1);
+    let pool_declarations = pool_declarations(&manifest);
     let manifest = manifest
         .with_pool_declarations(pool_declarations)
         .expect("data pool declarations must validate against the manifest");
+    let series_handlers = series_handlers(&manifest);
     let mut runtime = CartridgeRuntime::with_manifest(manifest);
 
     // Register adapter selection handler
@@ -911,6 +939,11 @@ async fn main() -> Result<()> {
     // Semantic-primitive judgment caps: register each Op under its canonical
     // cap URN (the same URNs advertised by semantic::semantic_caps()).
     semantic::register_semantic_ops(&mut runtime);
+
+    // Steps over time series (MarketOS's), each under its embedded definition's URN.
+    for (urn, factory) in series_handlers {
+        runtime.register_op(&urn, factory);
+    }
 
     // Collect JSON objects → JSON array / CSV / YAML
     {
@@ -2772,5 +2805,23 @@ mod tests {
         assert_eq!(cap.urn.in_spec(), "media:enc=utf-8;ext=txt;plain-text");
         assert_eq!(cap.urn.out_spec(), "media:enc=utf-8;ext=txt;plain-text");
         assert!(cap.has_alias("save-as-txt"), "save-as-txt cap must carry its fabric alias");
+    }
+
+    // TEST309: the caps that generate with the constrained-generation peer share one pool of
+    // capacity 1, and every other cap (the conversions, the series steps) runs unpooled, never
+    // queued behind generation; every series step has its embedded definition.
+    #[test]
+    fn test0309_only_generation_is_pooled() {
+        let manifest = build_manifest();
+        let declarations = pool_declarations(&manifest);
+        let pooled = &declarations.pools[GENERATION_POOL];
+        assert_eq!(declarations.capacities.get(GENERATION_POOL), Some(&1));
+        assert!(!declarations.capacities.contains_key(capdag::POOL_ALL), "no cap is held to one at a time but those that generate");
+        let caps = manifest.all_caps();
+        let urn = |alias: &str| caps.iter().find(|c| c.aliases.iter().any(|a| a == alias)).unwrap_or_else(|| panic!("{alias}")).urn_string();
+        assert!(pooled.contains(&urn("ask-en")) && pooled.contains(&urn("edit-records")));
+        assert!(!pooled.contains(&urn("change-series")) && !pooled.contains(&urn("decimate-sequence")));
+        assert_eq!(series_handlers(&manifest).len(), series::handlers().len());
+        manifest.with_pool_declarations(declarations).expect("the pools validate against the manifest");
     }
 }

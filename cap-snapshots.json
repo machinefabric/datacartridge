@@ -4804,5 +4804,595 @@
         "streaming": false
       }
     ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\";resample-series",
+    "version": 1,
+    "title": "Resample Series",
+    "aliases": [
+      "resample-series"
+    ],
+    "cap_description": "Resample a series to a calendar period: one value per period, its observations combined",
+    "documentation": "## Purpose\n\nTurns a series of any frequency into one of a calendar period (daily to annual): each period with observations gets one value, combined by the aggregate chosen and stamped at the period's last observation.\n\n## Inputs\n\n- A time series.\n- `every`: the period.\n- `aggregate`: last, mean or sum.\n\n## Outputs\n\nA time series with one value per period that has observations.\n\n## Notes\n\nPeriods with no observation are left out, not filled.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      },
+      {
+        "media_urn": "media:enc=utf-8;resample-every",
+        "name": "every",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--every"
+          }
+        ],
+        "arg_description": "The period: daily, weekly, monthly, quarterly or annual"
+      },
+      {
+        "media_urn": "media:enc=utf-8;resample-aggregate",
+        "name": "aggregate",
+        "required": false,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--aggregate"
+          }
+        ],
+        "arg_description": "How a period's observations become its value: last, mean or sum",
+        "default_value": "last"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "output",
+        "output_description": "The series resampled",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:change-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\"",
+    "version": 1,
+    "title": "Change Series",
+    "aliases": [
+      "change-series"
+    ],
+    "cap_description": "Measure how a series changes: in percent, as a log ratio or as a difference, over so many observations",
+    "documentation": "## Purpose\n\nTurns a series into its changes: each value compared with the one `over` observations before it.\n\n## Inputs\n\n- A time series.\n- `how`: percent, log or difference.\n- `over`: how many observations back.\n\n## Outputs\n\nA time series of the changes, starting `over` observations in.\n\n## Notes\n\nA percent or log change from zero or below is refused for that instant and counted; a series with no instant left is refused.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      },
+      {
+        "media_urn": "media:change-how;enc=utf-8",
+        "name": "how",
+        "required": false,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--how"
+          }
+        ],
+        "arg_description": "How the change is measured: percent, log or difference",
+        "default_value": "percent"
+      },
+      {
+        "media_urn": "media:change-over;numeric",
+        "name": "over",
+        "required": false,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--over"
+          }
+        ],
+        "arg_description": "How many observations back to compare with",
+        "default_value": 1
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "output",
+        "output_description": "The changes",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;list;record;time-series\";lag-series;out=\"media:fmt=json;list;record;time-series\"",
+    "version": 1,
+    "title": "Lag Series",
+    "aliases": [
+      "lag-series"
+    ],
+    "cap_description": "Move a series later by so many observations",
+    "documentation": "## Purpose\n\nShifts a series so that each instant carries the value from `by` observations before, for comparing a series with its own past or leading one series against another.\n\n## Inputs\n\n- A time series.\n- `by`: how many observations.\n\n## Outputs\n\nThe lagged series, starting `by` observations in.\n\n## Notes\n\nInstants are kept; values move. The first `by` instants are left out.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      },
+      {
+        "media_urn": "media:lag-by;numeric",
+        "name": "by",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--by"
+          }
+        ],
+        "arg_description": "How many observations to move the values by"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "output",
+        "output_description": "The lagged series",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\";rolling-statistic",
+    "version": 1,
+    "title": "Rolling Statistic",
+    "aliases": [
+      "rolling-statistic"
+    ],
+    "cap_description": "Take a statistic of a series over a moving window: its mean, standard deviation or z-score",
+    "documentation": "## Purpose\n\nTurns a series into a rolling statistic: at each instant, the mean, standard deviation or z-score of the `window` observations ending there.\n\n## Inputs\n\n- A time series.\n- `window`: how many observations.\n- `statistic`: mean, sd or zscore.\n\n## Outputs\n\nThe rolling statistic, starting where the first full window ends.\n\n## Notes\n\nA z-score over a window that does not move is left out for that instant and counted.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      },
+      {
+        "media_urn": "media:numeric;rolling-window",
+        "name": "window",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--window"
+          }
+        ],
+        "arg_description": "How many observations each value is taken over"
+      },
+      {
+        "media_urn": "media:enc=utf-8;rolling-statistic-kind",
+        "name": "statistic",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--statistic"
+          }
+        ],
+        "arg_description": "Which statistic: mean, sd or zscore"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "output",
+        "output_description": "The rolling statistic",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:align-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:aligned-series;fmt=json;list;record\"",
+    "version": 1,
+    "title": "Align Series",
+    "aliases": [
+      "align-series"
+    ],
+    "cap_description": "Line several series up on the instants they all have",
+    "documentation": "## Purpose\n\nPuts two or more series side by side on their shared instants.\n\n## Inputs\n\n- Two or more time series, gathered in the order the machine gives them.\n\n## Outputs\n\nAligned series: each shared instant with every series' value, in input order.\n\n## Notes\n\nThe series are interchangeable items of one list; a machine gathers them: `(a, b, c) -> align-series -> aligned`.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": true,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series to line up"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:aligned-series;fmt=json;list;record",
+        "name": "output",
+        "output_description": "The series on their shared instants",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:combine-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\"",
+    "version": 1,
+    "title": "Combine Series",
+    "aliases": [
+      "combine-series"
+    ],
+    "cap_description": "Add, subtract, multiply or divide two series at the instants both have",
+    "documentation": "## Purpose\n\nCombines a left and a right series value by value at their shared instants.\n\n## Inputs\n\n- `left`: a time series (the main input).\n- `right`: a time series.\n- `operation`: add, subtract, multiply or divide.\n\n## Outputs\n\nA time series of the results.\n\n## Notes\n\nName the right-hand series in a machine: `(a, right=b) -> combine-series -> c`. Instants either lacks are left out; a division by zero leaves that instant out.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "left",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The left-hand series"
+      },
+      {
+        "media_urn": "media:fmt=json;list;record;right-series",
+        "name": "right",
+        "accepts": "media:fmt=json;list;record;time-series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--right"
+          }
+        ],
+        "arg_description": "The right-hand series"
+      },
+      {
+        "media_urn": "media:combine-operation;enc=utf-8",
+        "name": "operation",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--operation"
+          }
+        ],
+        "arg_description": "add, subtract, multiply or divide"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "output",
+        "output_description": "The combined series",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:filter-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\"",
+    "version": 1,
+    "title": "Filter Series",
+    "aliases": [
+      "filter-series"
+    ],
+    "cap_description": "Keep the observations of a series that pass a comparison with a threshold, and give those that fail on their own",
+    "documentation": "## Purpose\n\nSplits a series by comparing each value with a threshold: the values that pass are the main output, those that do not an optional second output.\n\n## Inputs\n\n- A time series.\n- `keep`: above, below, at_least or at_most.\n- `threshold`: the number compared with.\n\n## Outputs\n\n- `kept`: the observations that pass (always given, possibly empty).\n- `dropped`: those that do not, given only when there are any, as the input's type.\n\n## Notes\n\nA router: `s -> filter-series -> (kept=k, dropped=d)`. What reads `dropped` is skipped when nothing was dropped.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      },
+      {
+        "media_urn": "media:comparison;enc=utf-8",
+        "name": "keep",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--keep"
+          }
+        ],
+        "arg_description": "Which values to keep: above, below, at_least or at_most the threshold"
+      },
+      {
+        "media_urn": "media:numeric;threshold",
+        "name": "threshold",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--threshold"
+          }
+        ],
+        "arg_description": "The number each value is compared with"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "kept",
+        "output_description": "The observations that pass",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      },
+      {
+        "media_urn": "media:filtered-out;fmt=json;list;record",
+        "name": "dropped",
+        "output_description": "The observations that do not pass, when there are any",
+        "optional": true,
+        "is_sequence": false,
+        "streaming": false,
+        "carries": "input"
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;record;series-summary\";summarize-series",
+    "version": 1,
+    "title": "Summarize Series",
+    "aliases": [
+      "summarize-series"
+    ],
+    "cap_description": "Sum a series up as one number: its last, first, mean, standard deviation, least or greatest value, or count",
+    "documentation": "## Purpose\n\nGives one summary of a series with the name of the summary taken.\n\n## Inputs\n\n- A time series.\n- `summary`: last, first, mean, stdev, min, max or count.\n\n## Outputs\n\nA series summary: {summary, value}.\n\n## Notes\n\nA series with too few values for the summary (none, or one for a standard deviation) is refused.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      },
+      {
+        "media_urn": "media:enc=utf-8;summary-kind",
+        "name": "summary",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--summary"
+          }
+        ],
+        "arg_description": "Which summary to take"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;series-summary",
+        "name": "output",
+        "output_description": "The summary",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:describe-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;record;series-description\"",
+    "version": 1,
+    "title": "Describe Series",
+    "aliases": [
+      "describe-series"
+    ],
+    "cap_description": "Describe a series: count, span, first and last, mean, spread, least and greatest",
+    "documentation": "## Purpose\n\nGives what a series holds at a glance.\n\n## Inputs\n\n- A time series.\n\n## Outputs\n\nA series description.\n\n## Notes\n\nA series with no values is refused.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;series-description",
+        "name": "output",
+        "output_description": "The description",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;record;regression\";regress-series",
+    "version": 1,
+    "title": "Regress Series",
+    "aliases": [
+      "regress-series"
+    ],
+    "cap_description": "Fit one series on one or more others by ordinary least squares, giving the fit and its residuals",
+    "documentation": "## Purpose\n\nMeasures how much a dependent series moves with one or more regressors, on the instants they all have: `y = alpha + betas · x`.\n\n## Inputs\n\n- `y`: the dependent time series (the main input).\n- `x`: one or more regressor series, in order.\n\n## Outputs\n\n- The regression (main output).\n- `residuals`: what the fit leaves at each instant, as a time series.\n\n## Notes\n\nName the regressors in a machine, once each: `(y, x=a, x=b) -> regress-series -> (fit, residuals=res)`. Refused with too few shared instants to identify the coefficients, or regressors that do not move or move together.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "y",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The dependent series"
+      },
+      {
+        "media_urn": "media:fmt=json;list;record;regressor-series",
+        "name": "x",
+        "accepts": "media:fmt=json;list;record;time-series",
+        "required": true,
+        "is_sequence": true,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--x"
+          }
+        ],
+        "arg_description": "The regressor series, in order"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;record;regression",
+        "name": "fit",
+        "output_description": "The fit",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      },
+      {
+        "media_urn": "media:fmt=json;list;record;regression-residuals;time-series",
+        "name": "residuals",
+        "output_description": "What the fit leaves unexplained at each instant",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:correlate-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:correlation;fmt=json;record\"",
+    "version": 1,
+    "title": "Correlate Series",
+    "aliases": [
+      "correlate-series"
+    ],
+    "cap_description": "Measure how closely two series move together on the instants both have",
+    "documentation": "## Purpose\n\nGives the Pearson correlation of two series at their shared instants.\n\n## Inputs\n\n- `left`: a time series (the main input).\n- `right`: a time series.\n\n## Outputs\n\nA correlation: {correlation, n}.\n\n## Notes\n\nName the right-hand series in a machine: `(a, right=b) -> correlate-series -> c`.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "left",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "One series"
+      },
+      {
+        "media_urn": "media:fmt=json;list;record;right-series",
+        "name": "right",
+        "accepts": "media:fmt=json;list;record;time-series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--right"
+          }
+        ],
+        "arg_description": "The other series"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:correlation;fmt=json;record",
+        "name": "output",
+        "output_description": "The correlation",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   }
 ]

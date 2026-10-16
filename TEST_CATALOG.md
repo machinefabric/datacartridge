@@ -2,7 +2,7 @@
 
 Generated from the test catalogue. Edit the tests, not this file.
 
-83 tests: 80 numbered, 3 unnumbered.
+109 tests: 85 numbered, 24 unnumbered.
 
 ## Numbered
 
@@ -86,6 +86,11 @@ Generated from the test catalogue. Edit the tests, not this file.
 | TEST302 | cartridges/datacartridge | rust | `test0302_inference_params_malformed_value_fails_hard` | src/semantic.rs:2159 | A supplied-but-unparseable value fails hard — it exposes bad input rather than silently substituting the default over a malformed override. |
 | TEST303 | cartridges/datacartridge | rust | `test0303_llm_caps_declare_inference_args` | src/semantic.rs:2186 | Every semantic cap declares all nine configurable inference args, so the engine surfaces and delivers them. A cap that forgot `add_llm_args` would silently lose its tunable inference params (and, with the reader's backstop, run on defaults with no way to override) — this catches that. |
 | TEST304 | cartridges/datacartridge | rust | `test0304_optional_argument_invalid_utf8_is_attributed` | src/semantic.rs:2172 | A present but non-UTF-8 optional argument is invalid input, never indistinguishable from an absent argument that legitimately defaults. |
+| TEST305 | cartridges/datacartridge | rust | `test0305_series_are_read_in_time_order` | src/series.rs:358 | a series is read as the time-series media carries it and written back the same; one out of order, repeating an instant, or with a value that is no finite number is refused as input. |
+| TEST306 | cartridges/datacartridge | rust | `test0306_one_series_steps` | src/series.rs:371 | resample, change, lag and rolling are MarketOS's steps: a month's last value, a percent change, values moved one later, a rolling mean; a choice the option does not allow is refused, and a rolling volatility for a year is left to marketcartridge. |
+| TEST307 | cartridges/datacartridge | rust | `test0307_steps_over_several_series` | src/series.rs:389 | series side by side, combined, correlated and regressed at the instants they all have: aligning keeps only shared instants, combining divides value by value, a regression of a series on two others recovers their coefficients, and its residuals are what the fit leaves at each instant. |
+| TEST308 | cartridges/datacartridge | rust | `test0308_filter_summarize_describe` | src/series.rs:412 | a filter keeps what passes and gives what fails apart; a summary is one of the plain ones (a measure of a price path is marketcartridge's); a description holds a series' count, span, first and last, mean, spread and extremes. |
+| TEST309 | cartridges/datacartridge | rust | `test0309_only_generation_is_pooled` | src/main.rs:2814 | the caps that generate with the constrained-generation peer share one pool of capacity 1, and every other cap (the conversions, the series steps) runs unpooled, never queued behind generation; every series step has its embedded definition. |
 | TEST1859 | cartridges/datacartridge | rust | `test1859_advertised_caps_resolve_in_catalog` | src/main.rs:2171 | TEST1859: every cap URN this cartridge advertises must resolve in the pinned fabric catalog. A drifted/bare-marker URN absent from the catalog is silently dropped by LiveCapFab at runtime; this guard turns that into a hard failure naming the exact URN. `get_cap` consults the same canonical manifest map LiveCapFab resolves against. Network-mediated against the env-configured registry (set by `sdx test`), pinned at FABRIC_MANIFEST_VERSION. The identity cap is engine-provided, not a catalog entry, so it is excluded. |
 | TEST11014 | cartridges/datacartridge | rust | `test11014_temperature_seed_only_on_generate_json` | src/semantic.rs:2208 | Only the free-generation cap exposes temperature/seed as configurable args; judgment caps keep determinism intrinsic and must NOT expose them. |
 
@@ -96,3 +101,24 @@ Generated from the test catalogue. Edit the tests, not this file.
 | cartridges/datacartridge | rust | `test_guard_schema_complexity` | src/main.rs:2130 |
 | cartridges/datacartridge | rust | `test0292b_decision_record_envelope_and_threshold` | src/semantic.rs:2043 |
 | cartridges/datacartridge | rust | `test0293b_parse_label_set_strict` | src/semantic.rs:2057 |
+| cartridges/datacartridge | rust | `parse_and_format_round_trip` | crates/mos-core/src/time.rs:413 |
+| cartridges/datacartridge | rust | `validity_is_half_open` | crates/mos-core/src/time.rs:430 |
+| cartridges/datacartridge | rust | `period_round_trip_and_span` | crates/mos-core/src/time.rs:444 |
+| cartridges/datacartridge | rust | `sim_clock_is_monotonic` | crates/mos-core/src/time.rs:460 |
+| cartridges/datacartridge | rust | `cholesky_reconstructs_and_solves` | crates/mos-quant/src/linalg.rs:79 |
+| cartridges/datacartridge | rust | `rejects_non_spd` | crates/mos-quant/src/linalg.rs:91 |
+| cartridges/datacartridge | rust | `moments` | crates/mos-quant/src/stats.rs:263 |
+| cartridges/datacartridge | rust | `covariance_and_correlation` | crates/mos-quant/src/stats.rs:273 |
+| cartridges/datacartridge | rust | `returns_and_volatility` | crates/mos-quant/src/stats.rs:287 |
+| cartridges/datacartridge | rust | `drawdown` | crates/mos-quant/src/stats.rs:300 |
+| cartridges/datacartridge | rust | `tail_risk` | crates/mos-quant/src/stats.rs:308 |
+| cartridges/datacartridge | rust | `sharpe_and_sortino` | crates/mos-quant/src/stats.rs:320 |
+| cartridges/datacartridge | rust | `regression_recovers_known_coefficients` | crates/mos-quant/src/stats.rs:332 |
+| cartridges/datacartridge | rust | `rolling_and_zscores` | crates/mos-quant/src/stats.rs:349 |
+| cartridges/datacartridge | rust | `changes_lag_and_windows` | crates/mos-quant/src/steps.rs:484 |
+| cartridges/datacartridge | rust | `two_series_on_the_instants_both_have` | crates/mos-quant/src/steps.rs:498 |
+| cartridges/datacartridge | rust | `a_price_path_is_measured_as_the_quant_library_measures_it` | crates/mos-quant/src/steps.rs:510 |
+| cartridges/datacartridge | rust | `what_a_rate_earned_is_taken_out_of_a_path` | crates/mos-quant/src/steps.rs:535 |
+| cartridges/datacartridge | rust | `a_sharpe_ratio_is_measured_against_a_rate` | crates/mos-quant/src/steps.rs:553 |
+| cartridges/datacartridge | rust | `a_path_is_measured_against_its_benchmark` | crates/mos-quant/src/steps.rs:566 |
+| cartridges/datacartridge | rust | `periods_summaries_and_filters` | crates/mos-quant/src/steps.rs:589 |

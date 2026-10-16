@@ -69,3 +69,14 @@ save-as-txt
 score-en
 summarize-en
 verify-en
+resample-series
+change-series
+lag-series
+rolling-statistic
+align-series
+combine-series
+filter-series
+summarize-series
+describe-series
+regress-series
+correlate-series
