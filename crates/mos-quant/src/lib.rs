@@ -1,14 +1,16 @@
 //! Deterministic quantitative library (CMP-002).
 //!
-//! Copied from MarketOS (crates/mos-quant): the statistics, linear algebra and pipeline
-//! steps the series caps use. Its other modules (cash flows, counterfactuals, event
-//! studies, Monte Carlo, options, regimes, scenarios, calculations) are not served here.
+//! Copied from MarketOS (crates/mos-quant): the statistics, linear algebra, option maths
+//! (its normal distribution, which forecast trials use) and pipeline steps the series and
+//! forecast caps use. Its other modules (cash flows, counterfactuals, event studies, Monte
+//! Carlo, regimes, scenarios, calculations) are not served here.
 //!
 //! Every number MarketOS shows comes from here or from SQL — never from a language
 //! model. Functions are pure, operate on `f64`, validate their inputs and fail explicitly
 //! rather than return NaN.
 
 pub mod linalg;
+pub mod options;
 pub mod stats;
 pub mod steps;
 
@@ -29,4 +31,23 @@ pub(crate) fn need(what: &'static str, xs: &[f64], min: usize) -> Result<()> {
         return Err(Error::invalid(what, format!("needs at least {min} values, got {}", xs.len())));
     }
     finite(what, xs)
+}
+
+/// Finds a root of `f` in `[lo, hi]` by bisection, given a sign change at the ends.
+pub(crate) fn bisect(mut lo: f64, mut hi: f64, f: impl Fn(f64) -> f64) -> f64 {
+    let mut f_lo = f(lo);
+    for _ in 0..200 {
+        let mid = 0.5 * (lo + hi);
+        let f_mid = f(mid);
+        if f_mid == 0.0 || (hi - lo).abs() < 1e-14 * (1.0 + mid.abs()) {
+            return mid;
+        }
+        if (f_mid < 0.0) == (f_lo < 0.0) {
+            lo = mid;
+            f_lo = f_mid;
+        } else {
+            hi = mid;
+        }
+    }
+    0.5 * (lo + hi)
 }

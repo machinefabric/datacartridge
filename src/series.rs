@@ -332,6 +332,7 @@ pub fn handlers() -> Vec<(&'static str, Factory)> {
         ("correlate-series", || Box::new(CorrelateOp)),
         ("transform-records", || Box::new(crate::records::TransformRecordsOp)),
         ("score-forecasts", || Box::new(crate::forecasts::ScoreForecastsOp)),
+        ("try-forecasting-ways", || Box::new(crate::forecasts::TryForecastingWaysOp)),
     ]
 }
 

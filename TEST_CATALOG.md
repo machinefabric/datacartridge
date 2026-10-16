@@ -2,7 +2,7 @@
 
 Generated from the test catalogue. Edit the tests, not this file.
 
-113 tests: 89 numbered, 24 unnumbered.
+123 tests: 92 numbered, 31 unnumbered.
 
 ## Numbered
 
@@ -95,6 +95,9 @@ Generated from the test catalogue. Edit the tests, not this file.
 | TEST311 | cartridges/datacartridge | rust | `test0311_what_cannot_run_is_refused` | src/records.rs:88 | what cannot run is refused as what was given: a program with no operations, one naming an operation the language does not have, records that are not a list of objects. |
 | TEST312 | cartridges/datacartridge | rust | `test0312_forecasts_are_scored` | src/forecasts.rs:103 | settled forecasts are scored as MarketOS scores a forecaster: the mean of their Brier scores, whether that beats saying 50% every time, and by tenths how many said about that and how often they came true; a record no better than even odds says so. |
 | TEST313 | cartridges/datacartridge | rust | `test0313_what_cannot_be_scored_is_refused` | src/forecasts.rs:121 | what cannot be scored is refused as what was given: nothing to score, a probability outside 0 to 1, a forecast that does not say how it came out. |
+| TEST314 | cartridges/datacartridge | rust | `test0314_ways_are_tried_on_history` | src/forecasts.rs:583 | ways of forecasting are tried on a series' history as MarketOS tries them: a series that rises every day comes true at every moment, the ways that count how often it held learn that and say it near certainly, and the way chosen on each stretch beats saying 50% every time; every way is tried as it is and read through its record. |
+| TEST315 | cartridges/datacartridge | rust | `test0315_too_short_a_history_is_refused` | src/forecasts.rs:600 | a history too short for the stretches asked is refused, saying how many it could be tried on; a trial asking nothing ahead is refused. |
+| TEST316 | cartridges/datacartridge | rust | `test0316_a_statement_is_judged_as_marketos_judges_it` | src/forecasts.rs:615 | a moment's statement comes out as MarketOS judges it (`Mos.Forecast.settle`): at the deadline on the last value by then, at any time on the first that holds. |
 | TEST1859 | cartridges/datacartridge | rust | `test1859_advertised_caps_resolve_in_catalog` | src/main.rs:2171 | TEST1859: every cap URN this cartridge advertises must resolve in the pinned fabric catalog. A drifted/bare-marker URN absent from the catalog is silently dropped by LiveCapFab at runtime; this guard turns that into a hard failure naming the exact URN. `get_cap` consults the same canonical manifest map LiveCapFab resolves against. Network-mediated against the env-configured registry (set by `sdx test`), pinned at FABRIC_MANIFEST_VERSION. The identity cap is engine-provided, not a catalog entry, so it is excluded. |
 | TEST11014 | cartridges/datacartridge | rust | `test11014_temperature_seed_only_on_generate_json` | src/semantic.rs:2208 | Only the free-generation cap exposes temperature/seed as configurable args; judgment caps keep determinism intrinsic and must NOT expose them. |
 
@@ -126,3 +129,10 @@ Generated from the test catalogue. Edit the tests, not this file.
 | cartridges/datacartridge | rust | `a_sharpe_ratio_is_measured_against_a_rate` | crates/mos-quant/src/steps.rs:553 |
 | cartridges/datacartridge | rust | `a_path_is_measured_against_its_benchmark` | crates/mos-quant/src/steps.rs:566 |
 | cartridges/datacartridge | rust | `periods_summaries_and_filters` | crates/mos-quant/src/steps.rs:589 |
+| cartridges/datacartridge | rust | `normal_distribution_reference_values` | crates/mos-quant/src/options.rs:208 |
+| cartridges/datacartridge | rust | `black_scholes_reference_values` | crates/mos-quant/src/options.rs:218 |
+| cartridges/datacartridge | rust | `put_call_parity_with_dividends` | crates/mos-quant/src/options.rs:232 |
+| cartridges/datacartridge | rust | `greeks_match_finite_differences` | crates/mos-quant/src/options.rs:241 |
+| cartridges/datacartridge | rust | `implied_volatility_round_trip_and_bounds` | crates/mos-quant/src/options.rs:258 |
+| cartridges/datacartridge | rust | `american_exercise` | crates/mos-quant/src/options.rs:270 |
+| cartridges/datacartridge | rust | `invalid_inputs` | crates/mos-quant/src/options.rs:286 |

@@ -82,3 +82,4 @@ regress-series
 correlate-series
 transform-records
 score-forecasts
+try-forecasting-ways

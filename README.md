@@ -24,6 +24,8 @@ Do not build the crate directly: the build requires registry versions, channel, 
 - `src/transform.rs` contains structured transformations: the record program language, which edit-records has the constrained-generation peer write and transform-records (`src/records.rs`) runs as given.
 - `src/series.rs` implements the steps over time series: resample, change, lag, rolling statistics, align, combine, filter (a router: what passes, and what does not when anything does not), summarize, describe, regress (with its residuals as a second output) and correlate. They are MarketOS's own pipeline steps, copied into `crates/` with the parts of MarketOS they use (`mos-core`'s errors and instants, `mos-quant`'s statistics, linear algebra and steps) so the copy stays diffable with MarketOS.
 
+- `src/forecasts.rs` scores settled forecasts (score-forecasts) and tries ways of forecasting a change in a series on its history (try-forecasting-ways): MarketOS's scoring and hindcast, their decisions made by MarketOS's proved model (`formal/`: `Mos.Forecast`, `Mos.Hindcast`), generated into `crates/mos-formal` by lungo and checked in (`lungo generate --verify`).
+
 The caps that generate with the constrained-generation peer (the semantic judgment caps and edit-records) share one pool of capacity 1. Every other cap is deterministic and runs unpooled, so a conversion or a series step never waits behind generation.
 
 Inputs that cannot be parsed or safely coerced fail explicitly. The cartridge does not silently relabel incompatible data.

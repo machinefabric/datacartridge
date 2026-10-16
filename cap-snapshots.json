@@ -5477,5 +5477,120 @@
         "streaming": false
       }
     ]
+  },
+  {
+    "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;forecast-trial;record\";try-forecasting-ways",
+    "version": 1,
+    "title": "Try Forecasting Ways",
+    "aliases": [
+      "try-forecasting-ways"
+    ],
+    "cap_description": "Try ways of forecasting a change in a series on its history: choose on each stretch, score on the next",
+    "documentation": "## Purpose\n\nHindcasts a statement about a series (will it end, or ever be, so many percent above or below where it stands, so many days ahead): through history, at moments `every-days` apart, each way of forecasting says a probability from what was known then; the moments are cut into stretches, the way that did best before each stretch is chosen and scored on it.\n\n## Inputs\n\n- A time series.\n- `comparison`, `change-pct`, `window`: the statement.\n- `days`, `every-days`, `stretches`: the trial.\n\n## Outputs\n\nA forecast trial.\n\n## Notes\n\nA rule that only looked good on the history it was chosen on shows here as a chosen score no better than saying 50% every time.",
+    "args": [
+      {
+        "media_urn": "media:fmt=json;list;record;time-series",
+        "name": "series",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:fmt=json;list;record;time-series"
+          }
+        ],
+        "arg_description": "The series"
+      },
+      {
+        "media_urn": "media:comparison;enc=utf-8",
+        "name": "comparison",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--comparison"
+          }
+        ],
+        "arg_description": "How the change is compared: above, below, at_least or at_most"
+      },
+      {
+        "media_urn": "media:change-pct;numeric",
+        "name": "change-pct",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--change-pct"
+          }
+        ],
+        "arg_description": "The change asked about, in percent"
+      },
+      {
+        "media_urn": "media:enc=utf-8;statement-window",
+        "name": "window",
+        "required": false,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--window"
+          }
+        ],
+        "arg_description": "When the statement must hold: at_deadline or any_time",
+        "default_value": "at_deadline"
+      },
+      {
+        "media_urn": "media:horizon-days;numeric",
+        "name": "days",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--days"
+          }
+        ],
+        "arg_description": "How far ahead each forecast looks, in days"
+      },
+      {
+        "media_urn": "media:every-days;numeric",
+        "name": "every-days",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--every-days"
+          }
+        ],
+        "arg_description": "Days between moments"
+      },
+      {
+        "media_urn": "media:numeric;stretches",
+        "name": "stretches",
+        "required": false,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--stretches"
+          }
+        ],
+        "arg_description": "How many test stretches",
+        "default_value": 5
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:fmt=json;forecast-trial;record",
+        "name": "output",
+        "output_description": "The trial",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
   }
 ]
