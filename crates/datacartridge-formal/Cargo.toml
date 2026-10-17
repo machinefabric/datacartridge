@@ -8,5 +8,10 @@ license = "Apache-2.0"
 publish = false
 
 [dependencies]
-lungo = { version = "=1.108.38", features = ["serde"] }
 serde = { version = "1.0", features = ["derive"] }
+
+# The runtime the generated code runs on. The generated code is lungo's of the same
+# version, so the runtime is pinned exactly.
+[dependencies.lungo]
+features = ["serde"]
+version = "=1.108.38"
