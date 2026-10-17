@@ -84,6 +84,2448 @@
     ]
   },
   {
+    "lean_name": "Datacartridge.Forecast.Claim.opposite",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1200,
+      1
+    ],
+    "end": [
+      1202,
+      90
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.agree.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      856,
+      3
+    ],
+    "end": [
+      856,
+      10
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      854,
+      1
+    ],
+    "end": [
+      865,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.firstTooLikely.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      857,
+      3
+    ],
+    "end": [
+      858,
+      19
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.ofNat",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.secondTooLikely.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      859,
+      3
+    ],
+    "end": [
+      860,
+      20
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.tooLittle.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      863,
+      3
+    ],
+    "end": [
+      864,
+      14
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Clash.tooMuch.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      861,
+      3
+    ],
+    "end": [
+      862,
+      12
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Group.gap",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      389,
+      1
+    ],
+    "end": [
+      390,
+      94
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Group.squares",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      384,
+      1
+    ],
+    "end": [
+      387,
+      64
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Hearing.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      212,
+      1
+    ],
+    "end": [
+      220,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Hearing.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Hearing.never.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      218,
+      3
+    ],
+    "end": [
+      219,
+      10
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Hearing.ofNat",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Hearing.ofOthers.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      216,
+      3
+    ],
+    "end": [
+      217,
+      13
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Hearing.ofThis.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      214,
+      3
+    ],
+    "end": [
+      215,
+      11
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Leave.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1516,
+      1
+    ],
+    "end": [
+      1521,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Leave.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Leave.ofNat",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Leave.stay.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1517,
+      3
+    ],
+    "end": [
+      1517,
+      9
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Leave.stop.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1518,
+      3
+    ],
+    "end": [
+      1518,
+      9
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Leave.target.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1519,
+      3
+    ],
+    "end": [
+      1519,
+      11
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Leave.time.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1520,
+      3
+    ],
+    "end": [
+      1520,
+      9
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Link.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1017,
+      1
+    ],
+    "end": [
+      1029,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Link.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Link.over.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1027,
+      3
+    ],
+    "end": [
+      1028,
+      9
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Link.part.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1019,
+      3
+    ],
+    "end": [
+      1022,
+      24
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Link.under.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1025,
+      3
+    ],
+    "end": [
+      1026,
+      10
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Link.whole.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1023,
+      3
+    ],
+    "end": [
+      1024,
+      25
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Outcome.cameTrue.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      27,
+      3
+    ],
+    "end": [
+      27,
+      13
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Outcome.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      24,
+      1
+    ],
+    "end": [
+      31,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Outcome.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Outcome.didNot.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      28,
+      3
+    ],
+    "end": [
+      28,
+      11
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Outcome.ofNat",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Outcome.open.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      25,
+      3
+    ],
+    "end": [
+      26,
+      9
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Outcome.void.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      29,
+      3
+    ],
+    "end": [
+      30,
+      9
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Sureness.about.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1575,
+      3
+    ],
+    "end": [
+      1576,
+      10
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Sureness.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1571,
+      1
+    ],
+    "end": [
+      1581,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Sureness.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Sureness.ofNat",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Sureness.tooHigh.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1577,
+      3
+    ],
+    "end": [
+      1578,
+      12
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Sureness.tooLow.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1579,
+      3
+    ],
+    "end": [
+      1580,
+      11
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Sureness.untold.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1573,
+      3
+    ],
+    "end": [
+      1574,
+      11
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Trend.better.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      786,
+      3
+    ],
+    "end": [
+      786,
+      11
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Trend.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      785,
+      1
+    ],
+    "end": [
+      791,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Trend.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Trend.ofNat",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Trend.same.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      788,
+      3
+    ],
+    "end": [
+      788,
+      9
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Trend.untold.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      789,
+      3
+    ],
+    "end": [
+      790,
+      11
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Trend.worse.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      787,
+      3
+    ],
+    "end": [
+      787,
+      10
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.When.counts",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      930,
+      1
+    ],
+    "end": [
+      933,
+      104
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Window.anyTime.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      20,
+      3
+    ],
+    "end": [
+      21,
+      12
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Window.atDeadline.elim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      18,
+      3
+    ],
+    "end": [
+      19,
+      15
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Window.ctorElim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      16,
+      1
+    ],
+    "end": [
+      22,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Window.ctorIdx",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.Window.ofNat",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.all",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      263,
+      1
+    ],
+    "end": [
+      268,
+      13
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.any",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      270,
+      1
+    ],
+    "end": [
+      275,
+      15
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.apartBeyondChance",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1817,
+      1
+    ],
+    "end": [
+      1829,
+      73
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.asForecast",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      684,
+      1
+    ],
+    "end": [
+      685,
+      67
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.askNext",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      719,
+      1
+    ],
+    "end": [
+      722,
+      73
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.askedOf",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1743,
+      1
+    ],
+    "end": [
+      1745,
+      68
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.asks",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      702,
+      1
+    ],
+    "end": [
+      705,
+      99
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.back",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1681,
+      1
+    ],
+    "end": [
+      1684,
+      64
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.backing",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      757,
+      1
+    ],
+    "end": [
+      760,
+      117
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.baseRate",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      663,
+      1
+    ],
+    "end": [
+      665,
+      74
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.bestReading",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1357,
+      1
+    ],
+    "end": [
+      1361,
+      92
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.better",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1350,
+      1
+    ],
+    "end": [
+      1355,
+      48
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.brier",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      351,
+      1
+    ],
+    "end": [
+      355,
+      22
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.calibrated",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      427,
+      1
+    ],
+    "end": [
+      430,
+      60
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.carried",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1038,
+      1
+    ],
+    "end": [
+      1047,
+      43
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.choosesAt",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1339,
+      1
+    ],
+    "end": [
+      1341,
+      36
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.clash",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      867,
+      1
+    ],
+    "end": [
+      872,
+      14
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.clashHappening",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1216,
+      1
+    ],
+    "end": [
+      1224,
+      14
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.clashWhen",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      960,
+      1
+    ],
+    "end": [
+      970,
+      14
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.conditional",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      277,
+      1
+    ],
+    "end": [
+      287,
+      19
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.conviction",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1470,
+      1
+    ],
+    "end": [
+      1474,
+      71
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.discerning",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      432,
+      1
+    ],
+    "end": [
+      432,
+      100
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.evenWeight",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      529,
+      1
+    ],
+    "end": [
+      530,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.expected",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1444,
+      1
+    ],
+    "end": [
+      1448,
+      128
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.expectedFirst",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1487,
+      1
+    ],
+    "end": [
+      1495,
+      42
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqCall",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1569,
+      18
+    ],
+    "end": [
+      1569,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqCall.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1569,
+      18
+    ],
+    "end": [
+      1569,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqClaim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      831,
+      18
+    ],
+    "end": [
+      831,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqClaim.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      831,
+      18
+    ],
+    "end": [
+      831,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqClash",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      865,
+      18
+    ],
+    "end": [
+      865,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqGroup",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      382,
+      18
+    ],
+    "end": [
+      382,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqGroup.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      382,
+      18
+    ],
+    "end": [
+      382,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqHearing",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      220,
+      18
+    ],
+    "end": [
+      220,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqLeave",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1521,
+      18
+    ],
+    "end": [
+      1521,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqLink",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1029,
+      18
+    ],
+    "end": [
+      1029,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqLink.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1029,
+      18
+    ],
+    "end": [
+      1029,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqOutcome",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      31,
+      18
+    ],
+    "end": [
+      31,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqSplit",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      407,
+      18
+    ],
+    "end": [
+      407,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqSplit.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      407,
+      18
+    ],
+    "end": [
+      407,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqStand",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      469,
+      18
+    ],
+    "end": [
+      469,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqStand.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      469,
+      18
+    ],
+    "end": [
+      469,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqSureness",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1581,
+      18
+    ],
+    "end": [
+      1581,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqTrend",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      791,
+      18
+    ],
+    "end": [
+      791,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqTried",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1348,
+      18
+    ],
+    "end": [
+      1348,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqTried.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1348,
+      18
+    ],
+    "end": [
+      1348,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqView",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      591,
+      18
+    ],
+    "end": [
+      591,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqView.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      591,
+      18
+    ],
+    "end": [
+      591,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqWhen",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      915,
+      18
+    ],
+    "end": [
+      915,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqWhen.decEq",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      915,
+      18
+    ],
+    "end": [
+      915,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instDecidableEqWindow",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      22,
+      18
+    ],
+    "end": [
+      22,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprCall",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1569,
+      12
+    ],
+    "end": [
+      1569,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprCall.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1569,
+      12
+    ],
+    "end": [
+      1569,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprClaim",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      831,
+      12
+    ],
+    "end": [
+      831,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprClaim.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      831,
+      12
+    ],
+    "end": [
+      831,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprClash",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      865,
+      12
+    ],
+    "end": [
+      865,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprClash.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      865,
+      12
+    ],
+    "end": [
+      865,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprGroup",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      382,
+      12
+    ],
+    "end": [
+      382,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprGroup.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      382,
+      12
+    ],
+    "end": [
+      382,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprHearing",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      220,
+      12
+    ],
+    "end": [
+      220,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprHearing.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      220,
+      12
+    ],
+    "end": [
+      220,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprLeave",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1521,
+      12
+    ],
+    "end": [
+      1521,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprLeave.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1521,
+      12
+    ],
+    "end": [
+      1521,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprLink",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1029,
+      12
+    ],
+    "end": [
+      1029,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprLink.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1029,
+      12
+    ],
+    "end": [
+      1029,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprOutcome",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      31,
+      12
+    ],
+    "end": [
+      31,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprOutcome.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      31,
+      12
+    ],
+    "end": [
+      31,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprSplit",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      407,
+      12
+    ],
+    "end": [
+      407,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprSplit.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      407,
+      12
+    ],
+    "end": [
+      407,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprStand",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      469,
+      12
+    ],
+    "end": [
+      469,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprStand.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      469,
+      12
+    ],
+    "end": [
+      469,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprSureness",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1581,
+      12
+    ],
+    "end": [
+      1581,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprSureness.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1581,
+      12
+    ],
+    "end": [
+      1581,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprTrend",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      791,
+      12
+    ],
+    "end": [
+      791,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprTrend.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      791,
+      12
+    ],
+    "end": [
+      791,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprTried",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1348,
+      12
+    ],
+    "end": [
+      1348,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprTried.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1348,
+      12
+    ],
+    "end": [
+      1348,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprView",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      591,
+      12
+    ],
+    "end": [
+      591,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprView.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      591,
+      12
+    ],
+    "end": [
+      591,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprWhen",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      915,
+      12
+    ],
+    "end": [
+      915,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprWhen.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      915,
+      12
+    ],
+    "end": [
+      915,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprWindow",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      22,
+      12
+    ],
+    "end": [
+      22,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.instReprWindow.repr",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      22,
+      12
+    ],
+    "end": [
+      22,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.lastWeek",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1419,
+      1
+    ],
+    "end": [
+      1421,
+      81
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.later",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1732,
+      1
+    ],
+    "end": [
+      1733,
+      103
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.laterOf",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1735,
+      1
+    ],
+    "end": [
+      1736,
+      72
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.leastFromParts",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1195,
+      1
+    ],
+    "end": [
+      1198,
+      90
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.leastWhenAll",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1158,
+      1
+    ],
+    "end": [
+      1162,
+      83
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.leave",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1523,
+      1
+    ],
+    "end": [
+      1532,
+      13
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.lifeBrier",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      477,
+      1
+    ],
+    "end": [
+      483,
+      103
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.likelihood",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      348,
+      1
+    ],
+    "end": [
+      349,
+      50
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.mayStateAgain",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1887,
+      1
+    ],
+    "end": [
+      1891,
+      61
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.mean",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      498,
+      1
+    ],
+    "end": [
+      500,
+      81
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.nextPeriod",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1649,
+      1
+    ],
+    "end": [
+      1650,
+      63
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.occurs",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      228,
+      1
+    ],
+    "end": [
+      235,
+      13
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.pairedBeyondChance",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1856,
+      1
+    ],
+    "end": [
+      1864,
+      78
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.partsCarry",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1096,
+      1
+    ],
+    "end": [
+      1101,
+      112
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.pool",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      601,
+      1
+    ],
+    "end": [
+      603,
+      76
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.previousPeriod",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1646,
+      1
+    ],
+    "end": [
+      1647,
+      63
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.proven",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      527,
+      1
+    ],
+    "end": [
+      527,
+      54
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.provenAt",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      524,
+      1
+    ],
+    "end": [
+      525,
+      24
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.recalibrated",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1265,
+      1
+    ],
+    "end": [
+      1272,
+      89
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.settle",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      39,
+      1
+    ],
+    "end": [
+      58,
+      30
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.settleReported",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      156,
+      1
+    ],
+    "end": [
+      164,
+      45
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.settled",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      60,
+      1
+    ],
+    "end": [
+      64,
+      14
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.silenceCounts",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      222,
+      1
+    ],
+    "end": [
+      226,
+      14
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.skill",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      502,
+      1
+    ],
+    "end": [
+      507,
+      80
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.split",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      409,
+      1
+    ],
+    "end": [
+      420,
+      55
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.sureness",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1597,
+      1
+    ],
+    "end": [
+      1599,
+      76
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.surenessOf",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1583,
+      1
+    ],
+    "end": [
+      1589,
+      14
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.telling",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      661,
+      1
+    ],
+    "end": [
+      661,
+      58
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.tenth",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      491,
+      1
+    ],
+    "end": [
+      493,
+      73
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.tooLikelyAcross",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1058,
+      1
+    ],
+    "end": [
+      1065,
+      18
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.trend",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      793,
+      1
+    ],
+    "end": [
+      801,
+      20
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.weekStart",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1416,
+      1
+    ],
+    "end": [
+      1417,
+      55
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.weight",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      532,
+      1
+    ],
+    "end": [
+      540,
+      63
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.weighted",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      597,
+      1
+    ],
+    "end": [
+      599,
+      70
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.weights",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      593,
+      1
+    ],
+    "end": [
+      595,
+      44
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.worse",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      509,
+      1
+    ],
+    "end": [
+      510,
+      55
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Forecast.yearBefore",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1679,
+      1
+    ],
+    "end": [
+      1679,
+      75
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.HeldUp.betterThanEven.elim",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      205,
+      3
+    ],
+    "end": [
+      205,
+      19
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.HeldUp.ctorElim",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      203,
+      1
+    ],
+    "end": [
+      207,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.HeldUp.ctorIdx",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.HeldUp.noBetter.elim",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      206,
+      3
+    ],
+    "end": [
+      206,
+      13
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.HeldUp.ofNat",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.HeldUp.tooSoon.elim",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      204,
+      3
+    ],
+    "end": [
+      204,
+      12
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.alike",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      156,
+      1
+    ],
+    "end": [
+      157,
+      69
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.alikeRate",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      171,
+      1
+    ],
+    "end": [
+      174,
+      81
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.atLeastPerStretch",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      55,
+      1
+    ],
+    "end": [
+      55,
+      33
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.callsBetter",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      295,
+      1
+    ],
+    "end": [
+      301,
+      21
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.chooseAgain",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      185,
+      1
+    ],
+    "end": [
+      185,
+      108
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.chosen",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      129,
+      1
+    ],
+    "end": [
+      132,
+      52
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.countsBeside",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      255,
+      1
+    ],
+    "end": [
+      256,
+      72
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.cut",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      23,
+      1
+    ],
+    "end": [
+      24,
+      47
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.enough",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      60,
+      1
+    ],
+    "end": [
+      60,
+      83
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.heldUp",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      209,
+      1
+    ],
+    "end": [
+      214,
+      17
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.instDecidableEqHeldUp",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      207,
+      18
+    ],
+    "end": [
+      207,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.instDecidableEqTried",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      91,
+      18
+    ],
+    "end": [
+      91,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.instDecidableEqTried.decEq",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      91,
+      18
+    ],
+    "end": [
+      91,
+      29
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.instReprHeldUp",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      207,
+      12
+    ],
+    "end": [
+      207,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.instReprHeldUp.repr",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      207,
+      12
+    ],
+    "end": [
+      207,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.instReprTried",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      91,
+      12
+    ],
+    "end": [
+      91,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.instReprTried.repr",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      91,
+      12
+    ],
+    "end": [
+      91,
+      16
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.learnable",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      40,
+      1
+    ],
+    "end": [
+      42,
+      95
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.mean",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      96,
+      1
+    ],
+    "end": [
+      98,
+      71
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.moment",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      400,
+      1
+    ],
+    "end": [
+      402,
+      70
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.mostTriable",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      74,
+      1
+    ],
+    "end": [
+      76,
+      119
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.needed",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      57,
+      1
+    ],
+    "end": [
+      58,
+      74
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.said",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      397,
+      1
+    ],
+    "end": [
+      398,
+      57
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.settledToChooseAgain",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      182,
+      1
+    ],
+    "end": [
+      183,
+      36
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.sharedFrom",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      253,
+      1
+    ],
+    "end": [
+      253,
+      60
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.sharedFromAll",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      270,
+      1
+    ],
+    "end": [
+      272,
+      91
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.speaks",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      368,
+      1
+    ],
+    "end": [
+      373,
+      37
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.total",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      93,
+      1
+    ],
+    "end": [
+      94,
+      104
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.triable",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      68,
+      1
+    ],
+    "end": [
+      72,
+      20
+    ]
+  },
+  {
+    "lean_name": "Datacartridge.Hindcast.turned",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      233,
+      1
+    ],
+    "end": [
+      235,
+      93
+    ]
+  },
+  {
     "lean_name": "IO.Error.fopenErrorToString",
     "file": "<lean>/Init/System/IOError.lean",
     "start": [
@@ -960,2448 +3402,6 @@
     ]
   },
   {
-    "lean_name": "Mos.Forecast.Claim.opposite",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1200,
-      1
-    ],
-    "end": [
-      1202,
-      90
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.agree.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      856,
-      3
-    ],
-    "end": [
-      856,
-      10
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      854,
-      1
-    ],
-    "end": [
-      865,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.firstTooLikely.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      857,
-      3
-    ],
-    "end": [
-      858,
-      19
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.ofNat",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.secondTooLikely.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      859,
-      3
-    ],
-    "end": [
-      860,
-      20
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.tooLittle.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      863,
-      3
-    ],
-    "end": [
-      864,
-      14
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Clash.tooMuch.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      861,
-      3
-    ],
-    "end": [
-      862,
-      12
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Group.gap",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      389,
-      1
-    ],
-    "end": [
-      390,
-      94
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Group.squares",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      384,
-      1
-    ],
-    "end": [
-      387,
-      64
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Hearing.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      212,
-      1
-    ],
-    "end": [
-      220,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Hearing.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Hearing.never.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      218,
-      3
-    ],
-    "end": [
-      219,
-      10
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Hearing.ofNat",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Hearing.ofOthers.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      216,
-      3
-    ],
-    "end": [
-      217,
-      13
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Hearing.ofThis.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      214,
-      3
-    ],
-    "end": [
-      215,
-      11
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Leave.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1516,
-      1
-    ],
-    "end": [
-      1521,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Leave.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Leave.ofNat",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Leave.stay.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1517,
-      3
-    ],
-    "end": [
-      1517,
-      9
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Leave.stop.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1518,
-      3
-    ],
-    "end": [
-      1518,
-      9
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Leave.target.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1519,
-      3
-    ],
-    "end": [
-      1519,
-      11
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Leave.time.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1520,
-      3
-    ],
-    "end": [
-      1520,
-      9
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Link.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1017,
-      1
-    ],
-    "end": [
-      1029,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Link.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Link.over.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1027,
-      3
-    ],
-    "end": [
-      1028,
-      9
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Link.part.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1019,
-      3
-    ],
-    "end": [
-      1022,
-      24
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Link.under.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1025,
-      3
-    ],
-    "end": [
-      1026,
-      10
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Link.whole.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1023,
-      3
-    ],
-    "end": [
-      1024,
-      25
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Outcome.cameTrue.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      27,
-      3
-    ],
-    "end": [
-      27,
-      13
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Outcome.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      24,
-      1
-    ],
-    "end": [
-      31,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Outcome.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Outcome.didNot.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      28,
-      3
-    ],
-    "end": [
-      28,
-      11
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Outcome.ofNat",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Outcome.open.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      25,
-      3
-    ],
-    "end": [
-      26,
-      9
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Outcome.void.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      29,
-      3
-    ],
-    "end": [
-      30,
-      9
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Sureness.about.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1575,
-      3
-    ],
-    "end": [
-      1576,
-      10
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Sureness.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1571,
-      1
-    ],
-    "end": [
-      1581,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Sureness.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Sureness.ofNat",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Sureness.tooHigh.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1577,
-      3
-    ],
-    "end": [
-      1578,
-      12
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Sureness.tooLow.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1579,
-      3
-    ],
-    "end": [
-      1580,
-      11
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Sureness.untold.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1573,
-      3
-    ],
-    "end": [
-      1574,
-      11
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Trend.better.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      786,
-      3
-    ],
-    "end": [
-      786,
-      11
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Trend.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      785,
-      1
-    ],
-    "end": [
-      791,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Trend.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Trend.ofNat",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Trend.same.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      788,
-      3
-    ],
-    "end": [
-      788,
-      9
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Trend.untold.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      789,
-      3
-    ],
-    "end": [
-      790,
-      11
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Trend.worse.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      787,
-      3
-    ],
-    "end": [
-      787,
-      10
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.When.counts",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      930,
-      1
-    ],
-    "end": [
-      933,
-      104
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Window.anyTime.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      20,
-      3
-    ],
-    "end": [
-      21,
-      12
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Window.atDeadline.elim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      18,
-      3
-    ],
-    "end": [
-      19,
-      15
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Window.ctorElim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      16,
-      1
-    ],
-    "end": [
-      22,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.Window.ctorIdx",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.Window.ofNat",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Forecast.all",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      263,
-      1
-    ],
-    "end": [
-      268,
-      13
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.any",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      270,
-      1
-    ],
-    "end": [
-      275,
-      15
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.apartBeyondChance",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1817,
-      1
-    ],
-    "end": [
-      1829,
-      73
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.asForecast",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      684,
-      1
-    ],
-    "end": [
-      685,
-      67
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.askNext",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      719,
-      1
-    ],
-    "end": [
-      722,
-      73
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.askedOf",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1743,
-      1
-    ],
-    "end": [
-      1745,
-      68
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.asks",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      702,
-      1
-    ],
-    "end": [
-      705,
-      99
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.back",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1681,
-      1
-    ],
-    "end": [
-      1684,
-      64
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.backing",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      757,
-      1
-    ],
-    "end": [
-      760,
-      117
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.baseRate",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      663,
-      1
-    ],
-    "end": [
-      665,
-      74
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.bestReading",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1357,
-      1
-    ],
-    "end": [
-      1361,
-      92
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.better",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1350,
-      1
-    ],
-    "end": [
-      1355,
-      48
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.brier",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      351,
-      1
-    ],
-    "end": [
-      355,
-      22
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.calibrated",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      427,
-      1
-    ],
-    "end": [
-      430,
-      60
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.carried",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1038,
-      1
-    ],
-    "end": [
-      1047,
-      43
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.choosesAt",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1339,
-      1
-    ],
-    "end": [
-      1341,
-      36
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.clash",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      867,
-      1
-    ],
-    "end": [
-      872,
-      14
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.clashHappening",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1216,
-      1
-    ],
-    "end": [
-      1224,
-      14
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.clashWhen",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      960,
-      1
-    ],
-    "end": [
-      970,
-      14
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.conditional",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      277,
-      1
-    ],
-    "end": [
-      287,
-      19
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.conviction",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1470,
-      1
-    ],
-    "end": [
-      1474,
-      71
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.discerning",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      432,
-      1
-    ],
-    "end": [
-      432,
-      100
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.evenWeight",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      529,
-      1
-    ],
-    "end": [
-      530,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.expected",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1444,
-      1
-    ],
-    "end": [
-      1448,
-      128
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.expectedFirst",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1487,
-      1
-    ],
-    "end": [
-      1495,
-      42
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqCall",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1569,
-      18
-    ],
-    "end": [
-      1569,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqCall.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1569,
-      18
-    ],
-    "end": [
-      1569,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqClaim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      831,
-      18
-    ],
-    "end": [
-      831,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqClaim.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      831,
-      18
-    ],
-    "end": [
-      831,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqClash",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      865,
-      18
-    ],
-    "end": [
-      865,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqGroup",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      382,
-      18
-    ],
-    "end": [
-      382,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqGroup.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      382,
-      18
-    ],
-    "end": [
-      382,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqHearing",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      220,
-      18
-    ],
-    "end": [
-      220,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqLeave",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1521,
-      18
-    ],
-    "end": [
-      1521,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqLink",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1029,
-      18
-    ],
-    "end": [
-      1029,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqLink.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1029,
-      18
-    ],
-    "end": [
-      1029,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqOutcome",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      31,
-      18
-    ],
-    "end": [
-      31,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqSplit",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      407,
-      18
-    ],
-    "end": [
-      407,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqSplit.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      407,
-      18
-    ],
-    "end": [
-      407,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqStand",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      469,
-      18
-    ],
-    "end": [
-      469,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqStand.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      469,
-      18
-    ],
-    "end": [
-      469,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqSureness",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1581,
-      18
-    ],
-    "end": [
-      1581,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqTrend",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      791,
-      18
-    ],
-    "end": [
-      791,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqTried",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1348,
-      18
-    ],
-    "end": [
-      1348,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqTried.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1348,
-      18
-    ],
-    "end": [
-      1348,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqView",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      591,
-      18
-    ],
-    "end": [
-      591,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqView.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      591,
-      18
-    ],
-    "end": [
-      591,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqWhen",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      915,
-      18
-    ],
-    "end": [
-      915,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqWhen.decEq",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      915,
-      18
-    ],
-    "end": [
-      915,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instDecidableEqWindow",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      22,
-      18
-    ],
-    "end": [
-      22,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprCall",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1569,
-      12
-    ],
-    "end": [
-      1569,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprCall.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1569,
-      12
-    ],
-    "end": [
-      1569,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprClaim",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      831,
-      12
-    ],
-    "end": [
-      831,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprClaim.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      831,
-      12
-    ],
-    "end": [
-      831,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprClash",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      865,
-      12
-    ],
-    "end": [
-      865,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprClash.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      865,
-      12
-    ],
-    "end": [
-      865,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprGroup",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      382,
-      12
-    ],
-    "end": [
-      382,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprGroup.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      382,
-      12
-    ],
-    "end": [
-      382,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprHearing",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      220,
-      12
-    ],
-    "end": [
-      220,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprHearing.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      220,
-      12
-    ],
-    "end": [
-      220,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprLeave",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1521,
-      12
-    ],
-    "end": [
-      1521,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprLeave.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1521,
-      12
-    ],
-    "end": [
-      1521,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprLink",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1029,
-      12
-    ],
-    "end": [
-      1029,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprLink.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1029,
-      12
-    ],
-    "end": [
-      1029,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprOutcome",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      31,
-      12
-    ],
-    "end": [
-      31,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprOutcome.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      31,
-      12
-    ],
-    "end": [
-      31,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprSplit",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      407,
-      12
-    ],
-    "end": [
-      407,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprSplit.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      407,
-      12
-    ],
-    "end": [
-      407,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprStand",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      469,
-      12
-    ],
-    "end": [
-      469,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprStand.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      469,
-      12
-    ],
-    "end": [
-      469,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprSureness",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1581,
-      12
-    ],
-    "end": [
-      1581,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprSureness.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1581,
-      12
-    ],
-    "end": [
-      1581,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprTrend",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      791,
-      12
-    ],
-    "end": [
-      791,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprTrend.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      791,
-      12
-    ],
-    "end": [
-      791,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprTried",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1348,
-      12
-    ],
-    "end": [
-      1348,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprTried.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1348,
-      12
-    ],
-    "end": [
-      1348,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprView",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      591,
-      12
-    ],
-    "end": [
-      591,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprView.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      591,
-      12
-    ],
-    "end": [
-      591,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprWhen",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      915,
-      12
-    ],
-    "end": [
-      915,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprWhen.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      915,
-      12
-    ],
-    "end": [
-      915,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprWindow",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      22,
-      12
-    ],
-    "end": [
-      22,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.instReprWindow.repr",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      22,
-      12
-    ],
-    "end": [
-      22,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.lastWeek",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1419,
-      1
-    ],
-    "end": [
-      1421,
-      81
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.later",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1732,
-      1
-    ],
-    "end": [
-      1733,
-      103
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.laterOf",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1735,
-      1
-    ],
-    "end": [
-      1736,
-      72
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.leastFromParts",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1195,
-      1
-    ],
-    "end": [
-      1198,
-      90
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.leastWhenAll",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1158,
-      1
-    ],
-    "end": [
-      1162,
-      83
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.leave",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1523,
-      1
-    ],
-    "end": [
-      1532,
-      13
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.lifeBrier",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      477,
-      1
-    ],
-    "end": [
-      483,
-      103
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.likelihood",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      348,
-      1
-    ],
-    "end": [
-      349,
-      50
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.mayStateAgain",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1887,
-      1
-    ],
-    "end": [
-      1891,
-      61
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.mean",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      498,
-      1
-    ],
-    "end": [
-      500,
-      81
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.nextPeriod",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1649,
-      1
-    ],
-    "end": [
-      1650,
-      63
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.occurs",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      228,
-      1
-    ],
-    "end": [
-      235,
-      13
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.pairedBeyondChance",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1856,
-      1
-    ],
-    "end": [
-      1864,
-      78
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.partsCarry",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1096,
-      1
-    ],
-    "end": [
-      1101,
-      112
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.pool",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      601,
-      1
-    ],
-    "end": [
-      603,
-      76
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.previousPeriod",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1646,
-      1
-    ],
-    "end": [
-      1647,
-      63
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.proven",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      527,
-      1
-    ],
-    "end": [
-      527,
-      54
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.provenAt",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      524,
-      1
-    ],
-    "end": [
-      525,
-      24
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.recalibrated",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1265,
-      1
-    ],
-    "end": [
-      1272,
-      89
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.settle",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      39,
-      1
-    ],
-    "end": [
-      58,
-      30
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.settleReported",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      156,
-      1
-    ],
-    "end": [
-      164,
-      45
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.settled",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      60,
-      1
-    ],
-    "end": [
-      64,
-      14
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.silenceCounts",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      222,
-      1
-    ],
-    "end": [
-      226,
-      14
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.skill",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      502,
-      1
-    ],
-    "end": [
-      507,
-      80
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.split",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      409,
-      1
-    ],
-    "end": [
-      420,
-      55
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.sureness",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1597,
-      1
-    ],
-    "end": [
-      1599,
-      76
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.surenessOf",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1583,
-      1
-    ],
-    "end": [
-      1589,
-      14
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.telling",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      661,
-      1
-    ],
-    "end": [
-      661,
-      58
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.tenth",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      491,
-      1
-    ],
-    "end": [
-      493,
-      73
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.tooLikelyAcross",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1058,
-      1
-    ],
-    "end": [
-      1065,
-      18
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.trend",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      793,
-      1
-    ],
-    "end": [
-      801,
-      20
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.weekStart",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1416,
-      1
-    ],
-    "end": [
-      1417,
-      55
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.weight",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      532,
-      1
-    ],
-    "end": [
-      540,
-      63
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.weighted",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      597,
-      1
-    ],
-    "end": [
-      599,
-      70
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.weights",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      593,
-      1
-    ],
-    "end": [
-      595,
-      44
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.worse",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      509,
-      1
-    ],
-    "end": [
-      510,
-      55
-    ]
-  },
-  {
-    "lean_name": "Mos.Forecast.yearBefore",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1679,
-      1
-    ],
-    "end": [
-      1679,
-      75
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.HeldUp.betterThanEven.elim",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      205,
-      3
-    ],
-    "end": [
-      205,
-      19
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.HeldUp.ctorElim",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      203,
-      1
-    ],
-    "end": [
-      207,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.HeldUp.ctorIdx",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Hindcast.HeldUp.noBetter.elim",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      206,
-      3
-    ],
-    "end": [
-      206,
-      13
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.HeldUp.ofNat",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "Mos.Hindcast.HeldUp.tooSoon.elim",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      204,
-      3
-    ],
-    "end": [
-      204,
-      12
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.alike",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      156,
-      1
-    ],
-    "end": [
-      157,
-      69
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.alikeRate",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      171,
-      1
-    ],
-    "end": [
-      174,
-      71
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.atLeastPerStretch",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      55,
-      1
-    ],
-    "end": [
-      55,
-      33
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.callsBetter",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      295,
-      1
-    ],
-    "end": [
-      301,
-      21
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.chooseAgain",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      185,
-      1
-    ],
-    "end": [
-      185,
-      108
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.chosen",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      129,
-      1
-    ],
-    "end": [
-      132,
-      52
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.countsBeside",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      255,
-      1
-    ],
-    "end": [
-      256,
-      72
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.cut",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      23,
-      1
-    ],
-    "end": [
-      24,
-      47
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.enough",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      60,
-      1
-    ],
-    "end": [
-      60,
-      83
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.heldUp",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      209,
-      1
-    ],
-    "end": [
-      214,
-      17
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.instDecidableEqHeldUp",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      207,
-      18
-    ],
-    "end": [
-      207,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.instDecidableEqTried",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      91,
-      18
-    ],
-    "end": [
-      91,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.instDecidableEqTried.decEq",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      91,
-      18
-    ],
-    "end": [
-      91,
-      29
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.instReprHeldUp",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      207,
-      12
-    ],
-    "end": [
-      207,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.instReprHeldUp.repr",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      207,
-      12
-    ],
-    "end": [
-      207,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.instReprTried",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      91,
-      12
-    ],
-    "end": [
-      91,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.instReprTried.repr",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      91,
-      12
-    ],
-    "end": [
-      91,
-      16
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.learnable",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      40,
-      1
-    ],
-    "end": [
-      42,
-      95
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.mean",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      96,
-      1
-    ],
-    "end": [
-      98,
-      71
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.moment",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      400,
-      1
-    ],
-    "end": [
-      402,
-      70
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.mostTriable",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      74,
-      1
-    ],
-    "end": [
-      76,
-      119
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.needed",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      57,
-      1
-    ],
-    "end": [
-      58,
-      74
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.said",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      397,
-      1
-    ],
-    "end": [
-      398,
-      57
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.settledToChooseAgain",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      182,
-      1
-    ],
-    "end": [
-      183,
-      36
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.sharedFrom",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      253,
-      1
-    ],
-    "end": [
-      253,
-      60
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.sharedFromAll",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      270,
-      1
-    ],
-    "end": [
-      272,
-      91
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.speaks",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      368,
-      1
-    ],
-    "end": [
-      373,
-      37
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.total",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      93,
-      1
-    ],
-    "end": [
-      94,
-      104
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.triable",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      68,
-      1
-    ],
-    "end": [
-      72,
-      20
-    ]
-  },
-  {
-    "lean_name": "Mos.Hindcast.turned",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      233,
-      1
-    ],
-    "end": [
-      235,
-      93
-    ]
-  },
-  {
     "lean_name": "Nat.add",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
@@ -3840,6 +3840,306 @@
     ]
   },
   {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.Claim.covers",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      847,
+      1
+    ],
+    "end": [
+      852,
+      114
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.Claim.excludes",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      840,
+      1
+    ],
+    "end": [
+      845,
+      113
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.Claim.implies",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      833,
+      1
+    ],
+    "end": [
+      838,
+      13
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.Link.binds.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.When.inside",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      917,
+      1
+    ],
+    "end": [
+      925,
+      46
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.When.meet",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      935,
+      1
+    ],
+    "end": [
+      942,
+      18
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.When.together",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      927,
+      1
+    ],
+    "end": [
+      928,
+      102
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.allHold.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.askNow",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      699,
+      1
+    ],
+    "end": [
+      700,
+      57
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.back.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.bestReading.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.cameTrue",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1591,
+      1
+    ],
+    "end": [
+      1591,
+      109
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.instReprLink.repr.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.instReprWindow.repr.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.last?",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      33,
+      1
+    ],
+    "end": [
+      37,
+      28
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.last?.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.latestPeriod",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1738,
+      1
+    ],
+    "end": [
+      1741,
+      41
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.latestPeriod.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.settle.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.settle.match_3.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.settled.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.silenceCounts.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.spread",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1595,
+      1
+    ],
+    "end": [
+      1595,
+      141
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.statedSum",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      1593,
+      1
+    ],
+    "end": [
+      1593,
+      109
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.tellingAt",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      658,
+      1
+    ],
+    "end": [
+      659,
+      34
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.tooLikelyAcross.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.totalDuration",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      474,
+      1
+    ],
+    "end": [
+      475,
+      49
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.trend.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.weightedSum",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": [
+      471,
+      1
+    ],
+    "end": [
+      472,
+      78
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Forecast.0.Datacartridge.Forecast.weights.match_1.splitter",
+    "file": "formal/Datacartridge/Forecast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Hindcast.0.Datacartridge.Hindcast.callsBetter.match_1.splitter",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Hindcast.0.Datacartridge.Hindcast.lowest",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": [
+      100,
+      1
+    ],
+    "end": [
+      103,
+      37
+    ]
+  },
+  {
+    "lean_name": "_private.Datacartridge.Hindcast.0.Datacartridge.Hindcast.lowest.match_1.splitter",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": null,
+    "end": null
+  },
+  {
+    "lean_name": "_private.Datacartridge.Hindcast.0.Datacartridge.Hindcast.speaks.match_1.splitter",
+    "file": "formal/Datacartridge/Hindcast.lean",
+    "start": null,
+    "end": null
+  },
+  {
     "lean_name": "_private.Init.Data.Random.0.initFn._@.Init.Data.Random.2456098205._hygCtx._hyg.2",
     "file": "<lean>/Init/Data/Random.lean",
     "start": [
@@ -3886,306 +4186,6 @@
       254,
       66
     ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.Claim.covers",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      847,
-      1
-    ],
-    "end": [
-      852,
-      114
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.Claim.excludes",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      840,
-      1
-    ],
-    "end": [
-      845,
-      113
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.Claim.implies",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      833,
-      1
-    ],
-    "end": [
-      838,
-      13
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.Link.binds.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.When.inside",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      917,
-      1
-    ],
-    "end": [
-      925,
-      46
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.When.meet",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      935,
-      1
-    ],
-    "end": [
-      942,
-      18
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.When.together",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      927,
-      1
-    ],
-    "end": [
-      928,
-      102
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.allHold.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.askNow",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      699,
-      1
-    ],
-    "end": [
-      700,
-      57
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.back.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.bestReading.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.cameTrue",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1591,
-      1
-    ],
-    "end": [
-      1591,
-      109
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.instReprLink.repr.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.instReprWindow.repr.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.last?",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      33,
-      1
-    ],
-    "end": [
-      37,
-      28
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.last?.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.latestPeriod",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1738,
-      1
-    ],
-    "end": [
-      1741,
-      41
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.latestPeriod.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.settle.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.settle.match_3.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.settled.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.silenceCounts.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.spread",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1595,
-      1
-    ],
-    "end": [
-      1595,
-      141
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.statedSum",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      1593,
-      1
-    ],
-    "end": [
-      1593,
-      109
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.tellingAt",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      658,
-      1
-    ],
-    "end": [
-      659,
-      34
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.tooLikelyAcross.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.totalDuration",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      474,
-      1
-    ],
-    "end": [
-      475,
-      49
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.trend.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.weightedSum",
-    "file": "formal/Mos/Forecast.lean",
-    "start": [
-      471,
-      1
-    ],
-    "end": [
-      472,
-      78
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Forecast.0.Mos.Forecast.weights.match_1.splitter",
-    "file": "formal/Mos/Forecast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Hindcast.0.Mos.Hindcast.callsBetter.match_1.splitter",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Hindcast.0.Mos.Hindcast.lowest",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": [
-      100,
-      1
-    ],
-    "end": [
-      103,
-      37
-    ]
-  },
-  {
-    "lean_name": "_private.Mos.Hindcast.0.Mos.Hindcast.lowest.match_1.splitter",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": null,
-    "end": null
-  },
-  {
-    "lean_name": "_private.Mos.Hindcast.0.Mos.Hindcast.speaks.match_1.splitter",
-    "file": "formal/Mos/Hindcast.lean",
-    "start": null,
-    "end": null
   },
   {
     "lean_name": "instDecidableEqOrdering",

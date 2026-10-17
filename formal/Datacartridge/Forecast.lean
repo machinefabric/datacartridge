@@ -11,7 +11,7 @@ Whether one observation satisfies the forecast ("the close was above 100,000") i
 arithmetic on numbers and is done where the numbers are. What is decided here is what
 follows from those answers.
 -/
-namespace Mos.Forecast
+namespace Datacartridge.Forecast
 
 /-- When the forecast must hold. -/
 inductive Window where
@@ -90,7 +90,7 @@ noncomputable def Settling : Contract (Window × Bool × List Bool) Outcome wher
       (o = .void ↔ (due = true ∧ observed = []))
 
 open Lungo.Spec in
-@[lungo_claim "lungo.satisfies" subject Mos.Forecast.settle spec Mos.Forecast.Settling]
+@[lungo_claim "lungo.satisfies" subject Datacartridge.Forecast.settle spec Datacartridge.Forecast.Settling]
 theorem settle_satisfies_settling : Satisfies (fun (input : Window × Bool × List Bool) => settle input.1 input.2.1 input.2.2) Settling := by
   rintro ⟨window, due, observed⟩ -
   cases window <;> cases due <;> simp only [Settling, settle, last?_is_getLast?] <;>
@@ -101,19 +101,19 @@ theorem settle_satisfies_settling : Satisfies (fun (input : Window × Bool × Li
 
 /-- Before its deadline, a forecast that must hold at the deadline is open whatever
 has been seen: nothing seen early decides it. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settle]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settle]
 theorem at_deadline_waits (observed : List Bool) : settle .atDeadline false observed = .open := by
   simp [settle]
 
 /-- A forecast that may hold at any time is decided the moment it is seen to hold,
 deadline or no. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settle]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settle]
 theorem any_time_settles_early (due : Bool) (observed : List Bool) (h : observed.any id = true) :
     settle .anyTime due observed = .cameTrue := by
   simp [settle, h]
 
 /-- Once the deadline has passed, every forecast is settled. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settled Mos.Forecast.settle]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settled Datacartridge.Forecast.settle]
 theorem due_is_settled (window : Window) (observed : List Bool) : settled (settle window true observed) = true := by
   cases window with
   | anyTime =>
@@ -130,13 +130,13 @@ theorem due_is_settled (window : Window) (observed : List Bool) : settled (settl
 
 /-- With nothing observed, a forecast is never judged right or wrong: it is open until
 its deadline and void after. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settle]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settle]
 theorem nothing_observed (window : Window) (due : Bool) :
     settle window due [] = (if due then .void else .open) := by
   cases window <;> cases due <;> simp [settle, last?]
 
 /-- What was seen after a forecast that may hold at any time came true does not undo it. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settle]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settle]
 theorem any_time_stays_true (due due' : Bool) (observed later : List Bool)
     (h : settle .anyTime due observed = .cameTrue) : settle .anyTime due' (observed ++ later) = .cameTrue := by
   have seen : observed.any id = true := by
@@ -175,7 +175,7 @@ noncomputable def ReportedSettling : Contract (Window × Bool × List Bool × Bo
       (¬ (window = .atDeadline ∧ due = true ∧ contested = true) → Settling.post (window, due, observed) o)
 
 open Lungo.Spec in
-@[lungo_claim "lungo.satisfies" subject Mos.Forecast.settleReported spec Mos.Forecast.ReportedSettling]
+@[lungo_claim "lungo.satisfies" subject Datacartridge.Forecast.settleReported spec Datacartridge.Forecast.ReportedSettling]
 theorem settle_reported_satisfies :
     Satisfies (fun (input : Window × Bool × List Bool × Bool) => settleReported input.1 input.2.1 input.2.2.1 input.2.2.2) ReportedSettling := by
   rintro ⟨window, due, observed, contested⟩ -
@@ -183,19 +183,19 @@ theorem settle_reported_satisfies :
   cases window <;> cases due <;> cases contested <;> simp_all [ReportedSettling, settleReported]
 
 /-- With nothing contested it is judged as any measurement is. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.settleReported Mos.Forecast.settle]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.settleReported Datacartridge.Forecast.settle]
 theorem agreed_is_settled_as_usual (window : Window) (due : Bool) (observed : List Bool) :
     settleReported window due observed false = settle window due observed := by
   cases window <;> simp [settleReported]
 
 /-- Sources that disagree at the deadline leave a forecast for the deadline unjudged. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settleReported]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settleReported]
 theorem contested_at_the_deadline_is_void (observed : List Bool) : settleReported .atDeadline true observed true = .void := by
   simp [settleReported]
 
 /-- A moment of agreement that it held is enough for a forecast that needed only one,
 whatever the sources say now. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settleReported]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settleReported]
 theorem any_time_is_not_undone_by_a_later_dispute (due contested : Bool) (observed : List Bool) (h : observed.any id = true) :
     settleReported .anyTime due observed contested = .cameTrue := by
   simp [settleReported, settle, h]
@@ -234,23 +234,23 @@ def occurs (due seen : Bool) (hearing : Hearing) : Outcome :=
   else if silenceCounts hearing then .didNot
   else .void
 
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settled Mos.Forecast.occurs]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settled Datacartridge.Forecast.occurs]
 theorem occurs_settles_at_the_deadline (seen : Bool) (hearing : Hearing) : settled (occurs true seen hearing) = true := by
   cases seen <;> cases hearing <;> decide
 
 /-- Once it has happened, nothing else matters. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.occurs]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.occurs]
 theorem occurs_stays_true (due : Bool) (hearing : Hearing) : occurs due true hearing = .cameTrue := by
   cases due <;> cases hearing <;> decide
 
 /-- It is called wrong only where it could have been heard. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.occurs Mos.Forecast.silenceCounts]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.occurs Datacartridge.Forecast.silenceCounts]
 theorem wrong_only_where_it_could_be_heard (due seen : Bool) (hearing : Hearing) (h : occurs due seen hearing = .didNot) :
     silenceCounts hearing = true := by
   cases due <;> cases seen <;> cases hearing <;> simp_all [occurs, silenceCounts]
 
 /-- Where nothing of the kind has ever been heard, silence at the deadline leaves it unjudged. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.occurs]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.occurs]
 theorem unheard_silence_is_void : occurs true false .never = .void := by decide
 
 /-! ## Statements made of several
@@ -286,30 +286,30 @@ def conditional (condition consequence : Outcome) : Outcome :=
   | .didNot => .void
   | .void => .void
 
-@[lungo_claim "lungo.equals" subject Mos.Forecast.all]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.all]
 theorem all_of_one (o : Outcome) : all [o] = o := by cases o <;> decide
-@[lungo_claim "lungo.equals" subject Mos.Forecast.any]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.any]
 theorem any_of_one (o : Outcome) : any [o] = o := by cases o <;> decide
 
 /-- One part that did not come true refutes the whole, whatever the rest are doing. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.all]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.all]
 theorem all_refuted (parts : List Outcome) (h : .didNot ∈ parts) : all parts = .didNot := by
   have : parts.any (· == .didNot) = true := List.any_eq_true.mpr ⟨.didNot, h, by decide⟩
   simp [all, this]
 
 /-- One part that came true confirms the whole, whatever the rest are doing. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.any]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.any]
 theorem any_confirmed (parts : List Outcome) (h : .cameTrue ∈ parts) : any parts = .cameTrue := by
   have : parts.any (· == .cameTrue) = true := List.any_eq_true.mpr ⟨.cameTrue, h, by decide⟩
   simp [any, this]
 
 /-- A conditional statement is never judged wrong because its condition failed. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.conditional]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.conditional]
 theorem conditional_is_not_refuted_by_its_condition (consequence : Outcome) :
     conditional .didNot consequence = .void := rfl
 
 /-- When every part is settled, so is the whole. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settled Mos.Forecast.all]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settled Datacartridge.Forecast.all]
 theorem all_settles (parts : List Outcome) (h : ∀ o ∈ parts, settled o = true) : settled (all parts) = true := by
   have none_open : parts.any (· == .open) = false := by
     rw [List.any_eq_false]
@@ -323,7 +323,7 @@ theorem all_settles (parts : List Outcome) (h : ∀ o ∈ parts, settled o = tru
     · simp [a, b, settled]
     · simp [a, b, none_open, settled]
 
-@[lungo_claim "lungo.equals" subject Mos.Forecast.settled Mos.Forecast.any]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.settled Datacartridge.Forecast.any]
 theorem any_settles (parts : List Outcome) (h : ∀ o ∈ parts, settled o = true) : settled (any parts) = true := by
   have none_open : parts.any (· == .open) = false := by
     rw [List.any_eq_false]
@@ -354,7 +354,7 @@ def brier (statedBps : Nat) (cameTrue : Bool) : Nat :=
   let miss := if cameTrue then 10000 - p else p
   miss * miss / 10000
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.brier]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.brier]
 theorem brier_is_bounded (statedBps : Nat) (cameTrue : Bool) : brier statedBps cameTrue ≤ 10000 := by
   have hp : likelihood statedBps ≤ 10000 := Nat.min_le_right _ _
   have step (m : Nat) (hm : m ≤ 10000) : m * m / 10000 ≤ 10000 := by
@@ -390,7 +390,7 @@ def Group.squares (g : Group) : Int :=
 def Group.gap (g : Group) : Int := ((g.calls : Int) * likelihood g.said - 10000 * g.came) ^ 2
 
 /-- Within a group, its squared misses are its calibration gap and the mix of its outcomes: nothing else. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.Group.squares Mos.Forecast.Group.gap]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.Group.squares Datacartridge.Forecast.Group.gap]
 theorem group_split (g : Group) : (g.calls : Int) * g.squares = g.gap + 100000000 * (g.came * ((g.calls : Int) - g.came)) := by
   unfold Group.squares Group.gap
   grind
@@ -420,7 +420,7 @@ def split (groups : List Group) : Option Split :=
     howHard := (10000 * o * (n - o) / (n * n)).toNat }
 
 /-- No forecasts have no split. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.split]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.split]
 theorem split_of_none (groups : List Group) (h : (groups.map (·.calls)).sum = 0) : split groups = none := by
   simp [split, h]
 
@@ -431,27 +431,27 @@ def calibrated (s : Split) : Bool := decide (s.offBy ≤ 100)
 
 def discerning (s : Split) : Bool := decide (0 < s.howHard) && decide (s.howHard ≤ 4 * s.toldApart)
 
-@[lungo_claim "lungo.decides" subject Mos.Forecast.calibrated]
+@[lungo_claim "lungo.decides" subject Datacartridge.Forecast.calibrated]
 theorem calibrated_iff (s : Split) : calibrated s = true ↔ s.offBy ≤ 100 := by
   simp [calibrated]
 
-@[lungo_claim "lungo.decides" subject Mos.Forecast.discerning]
+@[lungo_claim "lungo.decides" subject Datacartridge.Forecast.discerning]
 theorem discerning_iff (s : Split) : discerning s = true ↔ 0 < s.howHard ∧ s.howHard ≤ 4 * s.toldApart := by
   simp [discerning]
 
 
 /-- Certainty that was right scores nothing; certainty that was wrong scores everything. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.brier]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.brier]
 theorem brier_of_certainty : brier 10000 true = 0 ∧ brier 10000 false = 10000 ∧ brier 0 false = 0 ∧ brier 0 true = 10000 := by
   decide
 
 /-- Even odds earn 2500 whatever happens: the score to beat. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.brier]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.brier]
 theorem brier_of_even_odds (cameTrue : Bool) : brier 5000 cameTrue = 2500 := by
   cases cameTrue <;> decide
 
 /-- Saying something that happened was more likely never scores worse. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.brier]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.brier]
 theorem brier_rewards_being_right (p q : Nat) (h : p ≤ q) : brier q true ≤ brier p true := by
   have hl : likelihood p ≤ likelihood q := by
     unfold likelihood
@@ -483,7 +483,7 @@ def lifeBrier (stands : List Stand) (cameTrue : Bool) : Option Nat :=
   if totalDuration stands = 0 then none else some (weightedSum stands cameTrue / totalDuration stands)
 
 /-- A forecast never revised scores what its one likelihood scores. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.lifeBrier Mos.Forecast.brier]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.lifeBrier Datacartridge.Forecast.brier]
 theorem life_of_one (statedBps duration : Nat) (cameTrue : Bool) (h : 0 < duration) :
     lifeBrier [⟨statedBps, duration⟩] cameTrue = some (brier statedBps cameTrue) := by
   simp [lifeBrier, totalDuration, weightedSum, Nat.pos_iff_ne_zero.mp h, Nat.mul_div_cancel _ h]
@@ -492,7 +492,7 @@ theorem life_of_one (statedBps duration : Nat) (cameTrue : Bool) (h : 0 < durati
 tenth are compared with how often they came true. Certainty goes with the nineties. -/
 def tenth (statedBps : Nat) : Nat := min (likelihood statedBps / 1000) 9
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.tenth]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.tenth]
 theorem tenth_is_bounded (statedBps : Nat) : tenth statedBps ≤ 9 := Nat.min_le_right _ _
 
 /-- The average of scores, in basis points; nothing scored has no average. -/
@@ -509,7 +509,7 @@ def skill (meanBrier : Nat) : Nat := (2500 - min meanBrier 2500) * 10000 / 2500
 /-- Whether an average score is worse than always saying "even odds". -/
 def worse (meanBrier : Nat) : Bool := 2500 < meanBrier
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.skill]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.skill]
 theorem skill_is_bounded (meanBrier : Nat) : skill meanBrier ≤ 10000 := by
   unfold skill
   omega
@@ -539,7 +539,7 @@ def weight (scored meanBrier : Nat) : Nat :=
   else if meanBrier ≤ 2500 then evenWeight + skill meanBrier / 2
   else evenWeight - (min meanBrier 10000 - 2500) * 4000 / 7500
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.weight]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.weight]
 theorem weight_is_bounded (scored meanBrier : Nat) : 1000 ≤ weight scored meanBrier ∧ weight scored meanBrier ≤ 10000 := by
   unfold weight evenWeight
   by_cases h : scored < provenAt
@@ -552,18 +552,18 @@ theorem weight_is_bounded (scored meanBrier : Nat) : 1000 ≤ weight scored mean
       omega
 
 /-- Until a record is proven it changes nothing, however good or bad it looks. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.provenAt Mos.Forecast.weight Mos.Forecast.evenWeight]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.provenAt Datacartridge.Forecast.weight Datacartridge.Forecast.evenWeight]
 theorem unproven_counts_as_anyone (scored meanBrier : Nat) (h : scored < provenAt) : weight scored meanBrier = evenWeight := by
   simp [weight, h]
 
 /-- Even odds, proven, still counts as anyone does: the record says nothing either way. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.weight Mos.Forecast.evenWeight]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.weight Datacartridge.Forecast.evenWeight]
 theorem even_odds_counts_as_anyone (scored : Nat) : weight scored 2500 = evenWeight := by
   unfold weight evenWeight skill
   by_cases h : scored < provenAt <;> simp [h]
 
 /-- Among the proven, a better average never counts for less. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.weight]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.weight]
 theorem better_counts_for_no_less (scored better worse : Nat) (h : better ≤ worse) :
     weight scored worse ≤ weight scored better := by
   unfold weight evenWeight skill
@@ -602,7 +602,7 @@ def weighted : List View → Nat
 def pool (views : List View) : Option Nat :=
   if weights views = 0 then none else some (weighted views / weights views)
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.weighted Mos.Forecast.weights]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.weighted Datacartridge.Forecast.weights]
 theorem weighted_is_bounded (views : List View) : weighted views ≤ 10000 * weights views := by
   induction views with
   | nil => simp [weighted, weights]
@@ -613,7 +613,7 @@ theorem weighted_is_bounded (views : List View) : weighted views ≤ 10000 * wei
     omega
 
 /-- A pool is a likelihood: never beyond certainty. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.pool]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.pool]
 theorem pool_is_bounded (views : List View) (p : Nat) (h : pool views = some p) : p ≤ 10000 := by
   unfold pool at h
   by_cases z : weights views = 0
@@ -624,13 +624,13 @@ theorem pool_is_bounded (views : List View) (p : Nat) (h : pool views = some p) 
     exact Nat.div_le_of_le_mul (by rw [Nat.mul_comm]; exact this)
 
 /-- One view pools to itself, whatever it counts for. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.pool Mos.Forecast.likelihood]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.pool Datacartridge.Forecast.likelihood]
 theorem pool_of_one (weightBps statedBps : Nat) (h : 0 < weightBps) :
     pool [⟨weightBps, statedBps⟩] = some (likelihood statedBps) := by
   simp [pool, weights, weighted, Nat.pos_iff_ne_zero.mp h, Nat.mul_div_cancel_left _ h]
 
 /-- Views that agree pool to what they agree on. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.likelihood Mos.Forecast.weights Mos.Forecast.pool]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.likelihood Datacartridge.Forecast.weights Datacartridge.Forecast.pool]
 theorem pool_of_agreement (views : List View) (statedBps : Nat) (h : ∀ v ∈ views, likelihood v.statedBps = statedBps)
     (w : 0 < weights views) : pool views = some statedBps := by
   have sum : weighted views = weights views * statedBps := by
@@ -664,7 +664,7 @@ def telling (windows : Nat) : Bool := tellingAt ≤ windows
 def baseRate (held windows : Nat) : Option Nat :=
   if windows = 0 then none else some (min held windows * 10000 / windows)
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.baseRate]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.baseRate]
 theorem base_rate_is_bounded (held windows r : Nat) (h : baseRate held windows = some r) : r ≤ 10000 := by
   unfold baseRate at h
   by_cases z : windows = 0
@@ -675,7 +675,7 @@ theorem base_rate_is_bounded (held windows r : Nat) (h : baseRate held windows =
     exact Nat.div_le_of_le_mul (by omega)
 
 /-- Held in every stretch is certainty; in none, impossibility. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.baseRate]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.baseRate]
 theorem base_rate_extremes (windows : Nat) (h : 0 < windows) :
     baseRate windows windows = some 10000 ∧ baseRate 0 windows = some 0 := by
   have z : windows ≠ 0 := Nat.pos_iff_ne_zero.mp h
@@ -684,7 +684,7 @@ theorem base_rate_extremes (windows : Nat) (h : 0 < windows) :
 /-- A base rate stated as a forecast: never certainty either way, as no forecast is. -/
 def asForecast (rateBps : Nat) : Nat := max 100 (min rateBps 9900)
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.asForecast]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.asForecast]
 theorem as_forecast_is_a_likelihood (rateBps : Nat) : 100 ≤ asForecast rateBps ∧ asForecast rateBps ≤ 9900 := by
   unfold asForecast
   omega
@@ -705,12 +705,12 @@ there is nothing to state until they have said what they believe. -/
 def asks (active answered : Bool) (now next : Nat) : Bool := active && answered && askNow now next
 
 /-- Nothing is stated in the name of someone who has not said what they believe. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.asks]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.asks]
 theorem unanswered_is_not_asked (active : Bool) (now next : Nat) : asks active false now next = false := by
   simp [asks]
 
 /-- A question that is asked is one still kept, answered, and due. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.asks]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.asks]
 theorem asked_means_due (active answered : Bool) (now next : Nat) (h : asks active answered now next = true) :
     active = true ∧ answered = true ∧ next ≤ now := by
   simp [asks, askNow] at h
@@ -722,7 +722,7 @@ def askNext (now next every : Nat) : Nat :=
   if now < next then next else next + ((now - next) / every + 1) * every
 
 /-- The next asking is always ahead of now, for a question asked every so often. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.askNext]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.askNext]
 theorem ask_next_is_ahead (now next every : Nat) (h : 0 < every) : now < askNext now next every := by
   unfold askNext
   by_cases e : now < next
@@ -735,13 +735,13 @@ theorem ask_next_is_ahead (now next every : Nat) (h : 0 < every) : now < askNext
     omega
 
 /-- It keeps to its regular times: the next asking is a whole number of intervals on. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.askNext]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.askNext]
 theorem ask_next_keeps_time (now next every : Nat) (h : next ≤ now) : (askNext now next every - next) % every = 0 := by
   have e : ¬ now < next := by omega
   simp [askNext, e]
 
 /-- Asked on time, the next asking is one interval on. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.askNext]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.askNext]
 theorem ask_next_on_time (next every : Nat) : askNext next next every = next + every := by
   simp [askNext, Nat.zero_div]
 
@@ -760,18 +760,18 @@ def backing (believedBps : Nat) (baseBps : Option Nat) (weightBps : Nat) : Int :
   ((likelihood believedBps : Int) - (likelihood (baseBps.getD 5000) : Int)) * (weightBps : Int) / (evenWeight : Int)
 
 /-- Believing what history says has nothing behind it, whoever believes it. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.backing]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.backing]
 theorem no_backing_without_a_difference (bps weightBps : Nat) : backing bps (some bps) weightBps = 0 := by
   simp [backing]
 
 /-- From someone who counts as anyone does, the backing is the plain difference. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.backing Mos.Forecast.evenWeight]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.backing Datacartridge.Forecast.evenWeight]
 theorem backing_of_anyone (believedBps baseBps : Nat) :
     backing believedBps (some baseBps) evenWeight = (likelihood believedBps : Int) - (likelihood baseBps : Int) := by
   simp [backing, evenWeight]
 
 /-- With no base rate known, a belief is measured against even odds. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.backing]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.backing]
 theorem backing_without_history (believedBps weightBps : Nat) :
     backing believedBps none weightBps = backing believedBps (some 5000) weightBps := by
   simp [backing]
@@ -801,13 +801,13 @@ def trend (during before : Option Nat) (scoredDuring scoredBefore : Nat) : Trend
   | _, _ => .untold
 
 /-- A stretch is not called better or worse on fewer scored forecasts than make a record. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.provenAt Mos.Forecast.trend]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.provenAt Datacartridge.Forecast.trend]
 theorem few_forecasts_tell_nothing (during before : Option Nat) (scoredDuring scoredBefore : Nat)
     (h : scoredDuring < provenAt ∨ scoredBefore < provenAt) : trend during before scoredDuring scoredBefore = .untold := by
   cases during <;> cases before <;> simp [trend, h]
 
 /-- When it is called, better means a lower average score, and worse a higher one. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.trend]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.trend]
 theorem better_is_lower (d b scoredDuring scoredBefore : Nat) :
     (trend (some d) (some b) scoredDuring scoredBefore = .better → d < b) ∧
     (trend (some d) (some b) scoredDuring scoredBefore = .worse → b < d) := by
@@ -872,13 +872,13 @@ def clash (a b : Claim) : Clash :=
   else .agree
 
 /-- A claim does not disagree with itself. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.clash]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.clash]
 theorem clash_with_itself (a : Claim) : clash a a = .agree := by
   simp [clash, Claim.implies, Claim.excludes, Claim.covers]
 
 /-- Two claims that agree, the first of which cannot happen without the second, do not
 call the first the likelier. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.clash Mos.Forecast.likelihood]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.clash Datacartridge.Forecast.likelihood]
 theorem agreeing_respects_implication (a b : Claim) (h : clash a b = .agree) (hi : a.implies b = true) :
     likelihood a.bps ≤ likelihood b.bps := by
   simp only [clash, hi, Bool.true_and] at h
@@ -887,7 +887,7 @@ theorem agreeing_respects_implication (a b : Claim) (h : clash a b = .agree) (hi
   · omega
 
 /-- Two claims that agree and cannot both happen are not together called more than certain. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.clash Mos.Forecast.likelihood]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.clash Datacartridge.Forecast.likelihood]
 theorem agreeing_exclusive_within_certainty (a b : Claim) (h : clash a b = .agree) (he : a.excludes b = true) :
     likelihood a.bps + likelihood b.bps ≤ 10000 := by
   have hup : a.up ≠ b.up := by
@@ -970,7 +970,7 @@ def clashWhen (a b : Claim) (wa wb : When) : Clash :=
   else .agree
 
 /-- About the end of the same stretch, it is the disagreement of the claims themselves. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.clashWhen Mos.Forecast.clash]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.clashWhen Datacartridge.Forecast.clash]
 theorem clashWhen_at_one_moment (a b : Claim) (since₁ since₂ till : Int) :
     clashWhen a b ⟨false, since₁, till⟩ ⟨false, since₂, till⟩ = clash a b := by
   simp [clashWhen, clash, When.inside, When.together, When.meet]
@@ -981,14 +981,14 @@ theorem any_time_implies_no_ending (a b : When) (ha : a.anyTime = true) (hb : b.
   simp [When.inside, ha, hb]
 
 /-- Claims about different moments are never said to exclude each other. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.clashWhen]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.clashWhen]
 theorem only_together_excludes (a b : Claim) (wa wb : When) (h : wa.together wb = false) :
     clashWhen a b wa wb ≠ .tooMuch := by
   simp only [clashWhen, h, Bool.false_and]
   (repeat' split) <;> simp_all
 
 /-- Claims with no moment both count are never said to cover everything between them. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.clashWhen]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.clashWhen]
 theorem only_meeting_covers (a b : Claim) (wa wb : When) (h : wa.meet wb = false) :
     clashWhen a b wa wb ≠ .tooLittle := by
   simp only [clashWhen, h, Bool.false_and]
@@ -1048,7 +1048,7 @@ def carried (link : Link) (a : Claim) : Option Claim :=
 
 /-- What is carried over is true of the second number whenever the claim is true of
 the first and the numbers are bound as the link says. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.carried]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.carried]
 theorem carried_holds (link : Link) (a c : Claim) (x y : Int) (hb : link.binds x y) (hc : carried link a = some c)
     (ha : a.holdsOf x) : c.holdsOf y := by
   cases link <;> simp only [carried] at hc <;> split at hc <;> simp_all <;> subst hc <;>
@@ -1066,7 +1066,7 @@ def tooLikelyAcross (link : Link) (a b : Claim) (wa wb : When) : Bool :=
 
 /-- It is said only where the first claim cannot be true of its number without the
 second being true of its own, and the first is called the likelier. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.tooLikelyAcross Mos.Forecast.likelihood]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.tooLikelyAcross Datacartridge.Forecast.likelihood]
 theorem too_likely_across_is_sound (link : Link) (a b : Claim) (wa wb : When) (x y : Int)
     (h : tooLikelyAcross link a b wa wb = true) (hb : link.binds x y) :
     (a.holdsOf x → b.holdsOf y) ∧ likelihood b.bps < likelihood a.bps := by
@@ -1079,7 +1079,7 @@ theorem too_likely_across_is_sound (link : Link) (a b : Claim) (wa wb : When) (x
 
 /-- Nothing is said of a claim about any moment of a stretch: a report that once put a
 number on one side says nothing of where the related number ends. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.tooLikelyAcross]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.tooLikelyAcross]
 theorem across_only_at_endings (link : Link) (a b : Claim) (wa wb : When) (h : wa.anyTime = true ∨ wb.anyTime = true) :
     tooLikelyAcross link a b wa wb = false := by
   unfold tooLikelyAcross
@@ -1135,7 +1135,7 @@ theorem levels_under_values (parts : List Claim) (xs : List Int) (hup : parts.al
 
 /-- Where the parts carry, the whole's claim holds whenever every part's does and the
 whole is at least its parts and the others known. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.partsCarry]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.partsCarry]
 theorem parts_carry_is_sound (parts : List Claim) (others : Int) (whole : Claim) (xs : List Int) (y : Int)
     (hc : partsCarry parts others whole = true) (h : allHold parts xs) (hy : xs.sum + others ≤ y) : whole.holdsOf y := by
   simp only [partsCarry, Bool.and_eq_true, Bool.or_eq_true, decide_eq_true_eq] at hc
@@ -1162,12 +1162,12 @@ def leastWhenAll (bps : List Nat) : Int :=
   (bps.map (fun b => (likelihood b : Int))).sum - 10000 * ((bps.length : Int) - 1)
 
 /-- Of one thing it is that thing's own likelihood. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.leastWhenAll]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.leastWhenAll]
 theorem least_of_one (b : Nat) : leastWhenAll [b] = (likelihood b : Int) := by
   simp [leastWhenAll]
 
 /-- It is never more than any one of them is called. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.leastWhenAll]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.leastWhenAll]
 theorem least_is_under_each (bps : List Nat) (b : Nat) (h : b ∈ bps) : leastWhenAll bps ≤ (likelihood b : Int) := by
   induction bps with
   | nil => cases h
@@ -1225,26 +1225,26 @@ def clashHappening (firstWithin secondWithin : Bool) (firstBps secondBps : Nat) 
 
 /-- Two forecasts that something happens are never said to exclude each other, or to
 cover everything between them. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.clashHappening]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.clashHappening]
 theorem happening_only_implies (firstWithin secondWithin : Bool) (p q : Nat) (a b : When) :
     clashHappening firstWithin secondWithin p q a b ≠ .tooMuch ∧ clashHappening firstWithin secondWithin p q a b ≠ .tooLittle := by
   simp only [clashHappening]
   constructor <;> (repeat' split) <;> simp_all
 
 /-- Called equally likely, they agree whatever they count. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.clashHappening]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.clashHappening]
 theorem happening_as_likely_agrees (firstWithin secondWithin : Bool) (p : Nat) (a b : When) :
     clashHappening firstWithin secondWithin p p a b = .agree := by
   simp [clashHappening]
 
 /-- One that counts nothing the other counts, either way, agrees with it. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.clashHappening]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.clashHappening]
 theorem happening_apart_agrees (p q : Nat) (a b : When) : clashHappening false false p q a b = .agree := by
   simp [clashHappening]
 
 /-- The first is said to be too likely only when it is the likelier, and the second
 counts what it counts over a stretch that holds its own. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.clashHappening Mos.Forecast.likelihood]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.clashHappening Datacartridge.Forecast.likelihood]
 theorem happening_first_too_likely (firstWithin secondWithin : Bool) (p q : Nat) (a b : When)
     (h : clashHappening firstWithin secondWithin p q a b = .firstTooLikely) :
     firstWithin = true ∧ b.since ≤ a.since ∧ a.till ≤ b.till ∧ likelihood q < likelihood p := by
@@ -1272,7 +1272,7 @@ def recalibrated (statedBps came scored countsAs : Nat) : Nat :=
   else (min came scored * 10000 + countsAs * likelihood statedBps) / (scored + countsAs)
 
 /-- With no record, a likelihood is read as it was said, whatever what is said counts as. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.recalibrated Mos.Forecast.likelihood]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.recalibrated Datacartridge.Forecast.likelihood]
 theorem no_record_reads_as_said (statedBps countsAs : Nat) : recalibrated statedBps 0 0 countsAs = likelihood statedBps := by
   simp only [recalibrated, Nat.min_self, Nat.zero_mul, Nat.zero_add]
   split
@@ -1281,7 +1281,7 @@ theorem no_record_reads_as_said (statedBps countsAs : Nat) : recalibrated stated
     exact Nat.mul_div_cancel_left _ (by omega)
 
 /-- However it is read, it is a likelihood. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.recalibrated]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.recalibrated]
 theorem recalibrated_is_a_likelihood (statedBps came scored countsAs : Nat) : recalibrated statedBps came scored countsAs ≤ 10000 := by
   simp only [recalibrated, likelihood]
   have h2 : min statedBps 10000 ≤ 10000 := Nat.min_le_right _ _
@@ -1295,7 +1295,7 @@ theorem recalibrated_is_a_likelihood (statedBps came scored countsAs : Nat) : re
     omega
 
 /-- A forecaster whose such forecasts all came true is never read as less sure than they said. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.likelihood Mos.Forecast.recalibrated]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.likelihood Datacartridge.Forecast.recalibrated]
 theorem always_right_reads_no_lower (statedBps scored countsAs : Nat) :
     likelihood statedBps ≤ recalibrated statedBps scored scored countsAs := by
   simp only [recalibrated, likelihood, Nat.min_self]
@@ -1311,7 +1311,7 @@ theorem always_right_reads_no_lower (statedBps scored countsAs : Nat) :
     omega
 
 /-- One whose such forecasts never came true is never read as more sure than they said. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.recalibrated Mos.Forecast.likelihood]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.recalibrated Datacartridge.Forecast.likelihood]
 theorem never_right_reads_no_higher (statedBps scored countsAs : Nat) :
     recalibrated statedBps 0 scored countsAs ≤ likelihood statedBps := by
   simp only [recalibrated, likelihood, Nat.zero_min, Nat.zero_mul, Nat.zero_add]
@@ -1324,7 +1324,7 @@ theorem never_right_reads_no_higher (statedBps scored countsAs : Nat) :
 
 /-- With what is said counting for nothing, a record is taken at its word: of things
 called about this likely, the share that came true. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.recalibrated]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.recalibrated]
 theorem counting_for_nothing_reads_the_record (statedBps came scored : Nat) (h : 0 < scored) :
     recalibrated statedBps came scored 0 = min came scored * 10000 / scored := by
   have hne : scored ≠ 0 := by omega
@@ -1360,12 +1360,12 @@ def bestReading (forecasts : Nat) : List Tried → Option Tried
   | [] => none
   | first :: rest => if forecasts < choosesAt then none else some (rest.foldl better first)
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.better]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.better]
 theorem better_scores_no_worse (a b : Tried) : (better a b).meanBrier ≤ a.meanBrier ∧ (better a b).meanBrier ≤ b.meanBrier := by
   simp only [better]
   constructor <;> (repeat' split) <;> omega
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.better]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.better]
 theorem best_of_fold_scores_no_worse (rest : List Tried) (first : Tried) :
     (rest.foldl better first).meanBrier ≤ first.meanBrier ∧ ∀ t ∈ rest, (rest.foldl better first).meanBrier ≤ t.meanBrier := by
   induction rest generalizing first with
@@ -1384,12 +1384,12 @@ theorem best_of_fold_scores_no_worse (rest : List Tried) (first : Tried) :
       | inr h => exact later.2 t h
 
 /-- No way of reading is chosen on fewer forecasts than it takes to say. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.choosesAt Mos.Forecast.bestReading]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.choosesAt Datacartridge.Forecast.bestReading]
 theorem too_few_choose_nothing (forecasts : Nat) (tried : List Tried) (h : forecasts < choosesAt) : bestReading forecasts tried = none := by
   cases tried <;> simp [bestReading, h]
 
 /-- The way chosen scored no worse than any that was tried. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.bestReading]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.bestReading]
 theorem chosen_scores_no_worse (forecasts : Nat) (tried : List Tried) (best : Tried) (h : bestReading forecasts tried = some best) :
     ∀ t ∈ tried, best.meanBrier ≤ t.meanBrier := by
   cases tried with
@@ -1421,14 +1421,14 @@ Monday of the week the day is in. -/
 def lastWeek (today : Nat) : Nat × Nat := (weekStart today - 7, weekStart today)
 
 /-- A week starts on a Monday, on or before the day, and less than a week before it. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.weekStart]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.weekStart]
 theorem weekStart_is_the_monday (day : Nat) (h : 6 ≤ day) :
     (weekStart day + 3) % 7 = 0 ∧ weekStart day ≤ day ∧ day < weekStart day + 7 := by
   simp only [weekStart]
   omega
 
 /-- The last whole week is seven days long and over by the day it is asked on. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.lastWeek]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.lastWeek]
 theorem lastWeek_is_whole_and_over (today : Nat) (h : 13 ≤ today) :
     (lastWeek today).2 = (lastWeek today).1 + 7 ∧ (lastWeek today).2 ≤ today := by
   simp only [lastWeek, weekStart]
@@ -1448,14 +1448,14 @@ def expected (believedBps : Nat) (gainBps lossBps : Int) (costBps : Nat) : Int :
   ((likelihood believedBps : Int) * gainBps + (10000 - (likelihood believedBps : Int)) * lossBps) / 10000 - 2 * (costBps : Int)
 
 /-- Believed certain, it is expected to make its gain less costs; believed impossible, its loss. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.expected]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.expected]
 theorem expected_at_the_extremes (gainBps lossBps : Int) (costBps : Nat) :
     expected 10000 gainBps lossBps costBps = gainBps - 2 * (costBps : Int) ∧
     expected 0 gainBps lossBps costBps = lossBps - 2 * (costBps : Int) := by
   simp [expected, likelihood]
 
 /-- At even odds a gain and a loss of the same size expect nothing but the costs. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.expected]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.expected]
 theorem even_odds_expect_only_costs (sizeBps costBps : Nat) :
     expected 5000 (sizeBps : Int) (-(sizeBps : Int)) costBps = -(2 * (costBps : Int)) := by
   simp only [expected, likelihood]
@@ -1474,11 +1474,11 @@ as one far above: the action says which way the believer takes it. -/
 def conviction (backingBps : Int) : Nat := min backingBps.natAbs 10000
 
 /-- A forecast that only agrees with history adds nothing to what is said about an instrument. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.conviction]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.conviction]
 theorem no_backing_no_conviction : conviction 0 = 0 := by decide
 
 /-- Conviction does not depend on which way the belief departs from history, and is never more than the whole. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.conviction]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.conviction]
 theorem conviction_is_symmetric_and_bounded (backingBps : Int) :
     conviction (-backingBps) = conviction backingBps ∧ conviction backingBps ≤ 10000 := by
   simp only [conviction, Int.natAbs_neg]
@@ -1495,12 +1495,12 @@ def expectedFirst (a b : Option Int × Int) : Bool :=
   | none, none => b.2.natAbs < a.2.natAbs
 
 /-- An action whose stake can be said is never listed after one whose cannot. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.expectedFirst]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.expectedFirst]
 theorem said_before_unsaid (x backing other : Int) : expectedFirst (some x, backing) (none, other) = true ∧ expectedFirst (none, other) (some x, backing) = false := by
   simp [expectedFirst]
 
 /-- Nothing is listed before itself. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.expectedFirst]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.expectedFirst]
 theorem expectedFirst_irreflexive (a : Option Int × Int) : expectedFirst a a = false := by
   rcases a with ⟨stake, backing⟩
   cases stake <;> simp [expectedFirst]
@@ -1532,18 +1532,18 @@ def leave (returnBps : Int) (stopBps targetBps : Option Nat) (heldDays : Nat) (m
   else .stay
 
 /-- With no rule given, an action stays until its forecast settles. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.leave]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.leave]
 theorem no_rule_stays (returnBps : Int) (heldDays : Nat) : leave returnBps none none heldDays none = .stay := by
   simp [leave]
 
 /-- A loss as large as the stop gets out as a stop, whatever else has come. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.leave]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.leave]
 theorem stop_comes_first (returnBps : Int) (stop : Nat) (targetBps : Option Nat) (heldDays : Nat) (maxDays : Option Nat)
     (h : returnBps ≤ -(stop : Int)) : leave returnBps (some stop) targetBps heldDays maxDays = .stop := by
   simp [leave, h]
 
 /-- Between the stop and the target, and within its days, it stays. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.leave]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.leave]
 theorem within_bounds_stays (returnBps : Int) (stop target heldDays days : Nat)
     (lower : -(stop : Int) < returnBps) (upper : returnBps < (target : Int)) (young : heldDays < days) :
     leave returnBps (some stop) (some target) heldDays (some days) = .stay := by
@@ -1599,13 +1599,13 @@ def sureness (calls : List Call) : Sureness :=
   surenessOf calls.length (cameTrue calls) (statedSum calls) (spread calls)
 
 /-- Nothing is said of fewer forecasts than make a record. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.provenAt Mos.Forecast.surenessOf]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.provenAt Datacartridge.Forecast.surenessOf]
 theorem few_calls_tell_nothing (forecasts came statedSum spread : Nat) (h : forecasts < provenAt) :
     surenessOf forecasts came statedSum spread = .untold := by
   simp [surenessOf, h]
 
 /-- Said to be too high, less did happen than was said. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.surenessOf]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.surenessOf]
 theorem too_high_is_high (forecasts came statedSum spread : Nat) (h : surenessOf forecasts came statedSum spread = .tooHigh) :
     came * 10000 < statedSum := by
   simp only [surenessOf] at h
@@ -1617,7 +1617,7 @@ theorem too_high_is_high (forecasts came statedSum spread : Nat) (h : surenessOf
     · split at h <;> contradiction
 
 /-- Said to be too low, more did happen than was said. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.surenessOf]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.surenessOf]
 theorem too_low_is_low (forecasts came statedSum spread : Nat) (h : surenessOf forecasts came statedSum spread = .tooLow) :
     statedSum < came * 10000 := by
   simp only [surenessOf] at h
@@ -1631,7 +1631,7 @@ theorem too_low_is_low (forecasts came statedSum spread : Nat) (h : surenessOf f
       · contradiction
 
 /-- A record on which exactly as much happened as was said leans neither way. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.provenAt Mos.Forecast.surenessOf]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.provenAt Datacartridge.Forecast.surenessOf]
 theorem as_said_leans_neither_way (forecasts came spread : Nat) (h : provenAt ≤ forecasts) :
     surenessOf forecasts came (came * 10000) spread = .about := by
   have hn : ¬ forecasts < provenAt := by omega
@@ -1650,7 +1650,7 @@ def nextPeriod (year : Int) (index perYear : Nat) : Int × Nat :=
   if index < perYear then (year, index + 1) else (year + 1, 1)
 
 /-- The period after the one before is the period itself. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.nextPeriod Mos.Forecast.previousPeriod]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.nextPeriod Datacartridge.Forecast.previousPeriod]
 theorem next_of_previous (year : Int) (index perYear : Nat) (h1 : 1 ≤ index) (h2 : index ≤ perYear) :
     nextPeriod (previousPeriod year index perYear).1 (previousPeriod year index perYear).2 perYear = (year, index) := by
   unfold previousPeriod nextPeriod
@@ -1665,7 +1665,7 @@ theorem next_of_previous (year : Int) (index perYear : Nat) (h1 : 1 ≤ index) (
     simp [hi]
 
 /-- The period before is still a period of its year: numbered from 1 to `perYear`. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.previousPeriod]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.previousPeriod]
 theorem previous_is_a_period (year : Int) (index perYear : Nat) (h1 : 1 ≤ index) (h2 : index ≤ perYear) :
     1 ≤ (previousPeriod year index perYear).2 ∧ (previousPeriod year index perYear).2 ≤ perYear := by
   unfold previousPeriod
@@ -1683,14 +1683,14 @@ def back (perYear : Nat) : Nat → Int × Nat → Int × Nat
   | 0, p => p
   | k + 1, p => back perYear k (previousPeriod p.1 p.2 perYear)
 
-@[lungo_claim "lungo.equals" subject Mos.Forecast.back]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.back]
 theorem back_add (perYear m n : Nat) (p : Int × Nat) : back perYear (m + n) p = back perYear n (back perYear m p) := by
   induction m generalizing p with
   | zero => simp [back]
   | succ m ih =>
     rw [Nat.add_right_comm, back, back, ih]
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.back]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.back]
 theorem back_within_the_year (perYear : Nat) : ∀ (k : Nat) (year : Int) (index : Nat), k < index →
     back perYear k (year, index) = (year, index - k) := by
   intro k
@@ -1707,7 +1707,7 @@ theorem back_within_the_year (perYear : Nat) : ∀ (k : Nat) (year : Int) (index
     omega
 
 /-- The same period a year before is as many periods back as a year has. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.back Mos.Forecast.yearBefore]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.back Datacartridge.Forecast.yearBefore]
 theorem year_before_is_a_year_of_periods_back (year : Int) (index perYear : Nat) (h1 : 1 ≤ index) (h2 : index ≤ perYear) :
     back perYear perYear (year, index) = yearBefore year index := by
   have split : back perYear perYear (year, index) = back perYear ((index - 1) + 1 + (perYear - index)) (year, index) := by
@@ -1747,7 +1747,7 @@ def askedOf (reported : List (Int × Nat)) (perYear : Nat) : Option (Int × Nat)
 /-- Whether `a` is no later than `b`. -/
 def noLater (a b : Int × Nat) : Prop := a.1 < b.1 ∨ (a.1 = b.1 ∧ a.2 ≤ b.2)
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.laterOf]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.laterOf]
 theorem noLater_laterOf_left (a b : Int × Nat) : noLater a (laterOf a b) := by
   unfold laterOf later noLater
   by_cases h1 : a.1 < b.1
@@ -1759,7 +1759,7 @@ theorem noLater_laterOf_left (a b : Int × Nat) : noLater a (laterOf a b) := by
         simp only [Bool.and_eq_false_iff, decide_eq_false_iff_not]; omega
       simp [this]
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.laterOf]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.laterOf]
 theorem noLater_laterOf_right (a b : Int × Nat) : noLater b (laterOf a b) := by
   unfold laterOf later noLater
   by_cases h1 : a.1 < b.1
@@ -1776,7 +1776,7 @@ theorem noLater_trans (a b c : Int × Nat) (h1 : noLater a b) (h2 : noLater b c)
   unfold noLater at *
   omega
 
-@[lungo_claim "lungo.law" subject Mos.Forecast.laterOf]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.laterOf]
 theorem latest_is_latest (ps : List (Int × Nat)) (p : Int × Nat) : ∀ q ∈ p :: ps, noLater q (ps.foldl laterOf p) := by
   induction ps generalizing p with
   | nil => intro q hq; simp at hq; subst hq; simp only [List.foldl_nil]; unfold noLater; omega
@@ -1792,13 +1792,13 @@ theorem latest_is_latest (ps : List (Int × Nat)) (p : Int × Nat) : ∀ q ∈ p
       · exact ih (laterOf p r) q (List.mem_cons_of_mem _ h)
 
 /-- The next period comes after the period. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.later Mos.Forecast.nextPeriod]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.later Datacartridge.Forecast.nextPeriod]
 theorem next_is_later (year : Int) (index perYear : Nat) : later (year, index) (nextPeriod year index perYear) = true := by
   unfold nextPeriod later
   split <;> simp <;> omega
 
 /-- An asking is never of a period already reported: it comes after every one. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.askedOf Mos.Forecast.later]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.askedOf Datacartridge.Forecast.later]
 theorem asked_is_not_reported (reported : List (Int × Nat)) (perYear : Nat) (next : Int × Nat)
     (h : askedOf reported perYear = some next) : ∀ q ∈ reported, later q next = true := by
   intro q hq
@@ -1829,13 +1829,13 @@ def apartBeyondChance (n₁ s₁ q₁ n₂ s₂ q₂ : Nat) : Bool :=
     decide (4 * (v₁ + v₂) < d * d * ((n₁ : Int) - 1) * ((n₂ : Int) - 1))
 
 /-- Too few on either side are never told apart. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.apartBeyondChance Mos.Forecast.provenAt]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.apartBeyondChance Datacartridge.Forecast.provenAt]
 theorem few_are_never_apart (n₁ s₁ q₁ n₂ s₂ q₂ : Nat) (h : n₁ < provenAt ∨ n₂ < provenAt) :
     apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = false := by
   simp [apartBeyondChance, h]
 
 /-- Which group is named first makes no difference. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.apartBeyondChance]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.apartBeyondChance]
 theorem apart_either_way (n₁ s₁ q₁ n₂ s₂ q₂ : Nat) :
     apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = apartBeyondChance n₂ s₂ q₂ n₁ s₁ q₁ := by
   unfold apartBeyondChance
@@ -1849,7 +1849,7 @@ theorem apart_either_way (n₁ s₁ q₁ n₂ s₂ q₂ : Nat) :
     constructor <;> intro k <;> grind
 
 /-- Two groups scoring the same, forecast for forecast, are not apart. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.apartBeyondChance]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.apartBeyondChance]
 theorem the_same_are_not_apart : apartBeyondChance 5 10000 20000000 5 10000 20000000 = false := by
   decide
 
@@ -1864,19 +1864,19 @@ def pairedBeyondChance (n : Nat) (d : Int) (q : Nat) : Bool :=
   else decide (4 * (((n * q : Nat) : Int) - d * d) < d * d * ((n : Int) - 1))
 
 /-- Too few pairs are never told apart. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.pairedBeyondChance Mos.Forecast.provenAt]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.pairedBeyondChance Datacartridge.Forecast.provenAt]
 theorem few_pairs_are_never_apart (n : Nat) (d : Int) (q : Nat) (h : n < provenAt) :
     pairedBeyondChance n d q = false := by
   simp [pairedBeyondChance, h]
 
 /-- Which of each pair is taken from which makes no difference. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.pairedBeyondChance]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.pairedBeyondChance]
 theorem paired_either_way (n : Nat) (d : Int) (q : Nat) :
     pairedBeyondChance n (-d) q = pairedBeyondChance n d q := by
   simp [pairedBeyondChance, Int.neg_mul_neg]
 
 /-- Pairs that never differ are not apart. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.pairedBeyondChance]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.pairedBeyondChance]
 theorem no_difference_is_not_apart (n q : Nat) : pairedBeyondChance n 0 q = false := by
   unfold pairedBeyondChance
   split
@@ -1891,17 +1891,17 @@ def mayStateAgain (standing said : Nat) (stillStands : Bool) : Bool :=
   if stillStands then standing == said else standing != said
 
 /-- A change of mind to the likelihood already standing is no change. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.mayStateAgain]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.mayStateAgain]
 theorem no_change_is_not_a_change_of_mind (standing : Nat) : mayStateAgain standing standing false = false := by
   simp [mayStateAgain]
 
 /-- Saying a forecast still stands states the likelihood standing. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.mayStateAgain]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.mayStateAgain]
 theorem still_standing_is_the_same (standing : Nat) : mayStateAgain standing standing true = true := by
   simp [mayStateAgain]
 
 /-- Any likelihood may be stated again in exactly one of the two ways. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.mayStateAgain]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.mayStateAgain]
 theorem one_way_or_the_other (standing said : Nat) : mayStateAgain standing said true = !mayStateAgain standing said false := by
   unfold mayStateAgain
   cases h : (standing == said) <;> simp_all [bne]
@@ -1910,79 +1910,79 @@ theorem one_way_or_the_other (standing said : Nat) : mayStateAgain standing said
 
 The generated code passes a kind by its number; read back, it is the kind it was. -/
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Forecast.Clash.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Forecast.Clash.ofNat]
 theorem Clash.ofNat_reads_back (c : Clash) : Clash.ofNat c.ctorIdx = c := Clash.ofNat_ctorIdx c
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Forecast.Hearing.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Forecast.Hearing.ofNat]
 theorem Hearing.ofNat_reads_back (h : Hearing) : Hearing.ofNat h.ctorIdx = h := Hearing.ofNat_ctorIdx h
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Forecast.Leave.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Forecast.Leave.ofNat]
 theorem Leave.ofNat_reads_back (l : Leave) : Leave.ofNat l.ctorIdx = l := Leave.ofNat_ctorIdx l
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Forecast.Outcome.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Forecast.Outcome.ofNat]
 theorem Outcome.ofNat_reads_back (o : Outcome) : Outcome.ofNat o.ctorIdx = o := Outcome.ofNat_ctorIdx o
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Forecast.Sureness.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Forecast.Sureness.ofNat]
 theorem Sureness.ofNat_reads_back (s : Sureness) : Sureness.ofNat s.ctorIdx = s := Sureness.ofNat_ctorIdx s
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Forecast.Trend.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Forecast.Trend.ofNat]
 theorem Trend.ofNat_reads_back (t : Trend) : Trend.ofNat t.ctorIdx = t := Trend.ofNat_ctorIdx t
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Forecast.Window.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Forecast.Window.ofNat]
 theorem Window.ofNat_reads_back (w : Window) : Window.ofNat w.ctorIdx = w := Window.ofNat_ctorIdx w
 
 /-! ## Small rules the runtime reads -/
 
 /-- The opposite of a claim says the other side, at the rest of the likelihood. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.Claim.opposite]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.Claim.opposite]
 theorem opposite_says_the_rest (c : Claim) : c.opposite.up = !c.up ∧ c.opposite.level = c.level ∧ c.opposite.bps = 10000 - likelihood c.bps := ⟨rfl, rfl, rfl⟩
 
 /-- A moment counts towards a forecast for its deadline only at the deadline. -/
-@[lungo_claim "lungo.decides" subject Mos.Forecast.When.counts]
+@[lungo_claim "lungo.decides" subject Datacartridge.Forecast.When.counts]
 theorem counts_at_the_deadline (w : When) (h : w.anyTime = false) (moment : Int) : w.counts moment = true ↔ moment = w.till := by
   simp [When.counts, h]
 
 /-- For a forecast of any time before its deadline, every moment after it was stated up to the deadline counts. -/
-@[lungo_claim "lungo.decides" subject Mos.Forecast.When.counts]
+@[lungo_claim "lungo.decides" subject Datacartridge.Forecast.When.counts]
 theorem counts_any_time (w : When) (h : w.anyTime = true) (moment : Int) : w.counts moment = true ↔ w.since < moment ∧ moment ≤ w.till := by
   simp [When.counts, h]
 
 /-- What the parts leave of the whole is said only when the parts carry it. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.leastFromParts]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.leastFromParts]
 theorem least_from_parts_only_when_carried (parts : List Claim) (others : Int) (whole : Claim) :
     leastFromParts parts others whole = (if partsCarry parts others whole then some (leastWhenAll (parts.map (·.bps))) else none) := rfl
 
 /-- No scores have no mean. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.mean]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.mean]
 theorem mean_of_nothing : mean [] = none := rfl
 
 /-- The mean of one score is that score. -/
-@[lungo_claim "lungo.equals" subject Mos.Forecast.mean]
+@[lungo_claim "lungo.equals" subject Datacartridge.Forecast.mean]
 theorem mean_of_one (s : Nat) : mean [s] = some s := by
   simp [mean]
 
-@[lungo_claim "lungo.decides" subject Mos.Forecast.proven]
+@[lungo_claim "lungo.decides" subject Datacartridge.Forecast.proven]
 theorem proven_iff (scored : Nat) : proven scored = true ↔ provenAt ≤ scored := by
   simp [proven]
 
-@[lungo_claim "lungo.decides" subject Mos.Forecast.telling]
+@[lungo_claim "lungo.decides" subject Datacartridge.Forecast.telling]
 theorem telling_iff (windows : Nat) : telling windows = true ↔ tellingAt ≤ windows := by
   simp [telling]
 
 /-- Worse than even odds is a mean score above what saying 50% earns. -/
-@[lungo_claim "lungo.decides" subject Mos.Forecast.worse]
+@[lungo_claim "lungo.decides" subject Datacartridge.Forecast.worse]
 theorem worse_iff (meanBrier : Nat) : worse meanBrier = true ↔ brier 5000 true < meanBrier := by
   rw [show brier 5000 true = 2500 by decide]
   simp [worse]
 
 /-- Calls said to be too sure came true less often than they were called. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.sureness]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.sureness]
 theorem sureness_too_high (calls : List Call) (h : sureness calls = .tooHigh) : cameTrue calls * 10000 < statedSum calls :=
   too_high_is_high _ _ _ _ h
 
 /-- Calls said to be too unsure came true more often than they were called. -/
-@[lungo_claim "lungo.law" subject Mos.Forecast.sureness]
+@[lungo_claim "lungo.law" subject Datacartridge.Forecast.sureness]
 theorem sureness_too_low (calls : List Call) (h : sureness calls = .tooLow) : statedSum calls < cameTrue calls * 10000 :=
   too_low_is_low _ _ _ _ h
 
-end Mos.Forecast
+end Datacartridge.Forecast

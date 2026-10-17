@@ -4,7 +4,7 @@
 //! in [`spec`] from them (`lungo generate`, checked by `lungo generate --verify`). The other
 //! crates call these functions; they do not re-implement them.
 
-/// The generated module: Lean namespace `Mos.X` is `spec::x`.
+/// The generated module: Lean namespace `Datacartridge.X` is `spec::x`.
 #[allow(warnings, clippy::all, non_snake_case, non_camel_case_types, non_upper_case_globals)]
 pub mod spec {
     include!("generated/datacartridgeFormal/datacartridgeFormal.rs");

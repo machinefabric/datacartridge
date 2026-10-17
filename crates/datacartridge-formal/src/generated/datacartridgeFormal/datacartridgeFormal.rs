@@ -7,6 +7,8 @@ pub mod __lng {
     use rt::Obj;
     const _: () = rt::assert_abi::<2>();
 
+    include!("modules/Datacartridge-Forecast.rs");
+    include!("modules/Datacartridge-Hindcast.rs");
     include!("modules/Init-Data-ByteArray-Basic.rs");
     include!("modules/Init-Data-ByteArray-Extra.rs");
     include!("modules/Init-Data-Int-Basic.rs");
@@ -32,8 +34,6 @@ pub mod __lng {
     include!("modules/Init-Util.rs");
     include!("modules/Lean-Data-Iterators-Producers-PersistentHashMap.rs");
     include!("modules/Lean-Elab-Tactic-Omega-MinNatAbs.rs");
-    include!("modules/Mos-Forecast.rs");
-    include!("modules/Mos-Hindcast.rs");
 
     // The runtime calls IO.Error.toString as `lean_io_error_to_string`.
     unsafe extern "C" fn e_l_IO_dError_dtoString(a_0: Obj) -> Obj {
@@ -243,7 +243,7 @@ pub mod __lng {
 }
 
 pub mod forecast {
-    /// Lean: `Mos.Forecast.Call`
+    /// Lean: `Datacartridge.Forecast.Call`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct Call {
@@ -252,7 +252,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Call {
-        const FINGERPRINT: &'static str = "2d7d7ad4cf42bb79f1370f61853e84162d46ff08ba40b010067eea40ad81402b";
+        const FINGERPRINT: &'static str = "c84f94be483bd6e5c31c04d95a760378d9a77849ff1ccd7152a3a531f95f2e13";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -272,13 +272,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => Call { stated_bps: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), came_true: ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(rt::lean_ctor_get_uint8(o, ::core::mem::size_of::<usize>()) as usize) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Call")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Call")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Claim`
+    /// Lean: `Datacartridge.Forecast.Claim`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct Claim {
@@ -289,7 +289,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Claim {
-        const FINGERPRINT: &'static str = "0f14eef6d6c84c495cccf9507744bfc78f6c42be22d95185fddd8ce912aa5c82";
+        const FINGERPRINT: &'static str = "32f49554972aafb2b3e4b9af60bcdc0043f11a06f9580c66ce596c7c50e62cac";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -311,13 +311,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => Claim { up: ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(rt::lean_ctor_get_uint8(o, 2 * ::core::mem::size_of::<usize>()) as usize), strict: ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(rt::lean_ctor_get_uint8(o, 2 * ::core::mem::size_of::<usize>() + 1) as usize), level: <::lungo::Int as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), bps: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Claim")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Claim")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Clash`
+    /// Lean: `Datacartridge.Forecast.Clash`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -331,7 +331,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Clash {
-        const FINGERPRINT: &'static str = "73d8920cff82223c0bd969299421d08666866a1e23265edf7dd23b0e891f79c3";
+        const FINGERPRINT: &'static str = "6a69f16953cfed3b3537fc1b89ecc02520e57b53411730b2c4445d8de7a92ee3";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -357,13 +357,13 @@ pub mod forecast {
                     2 => Clash::SecondTooLikely,
                     3 => Clash::TooMuch,
                     4 => Clash::TooLittle,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Clash")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Clash")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Group`
+    /// Lean: `Datacartridge.Forecast.Group`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct Group {
@@ -373,7 +373,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Group {
-        const FINGERPRINT: &'static str = "643b2feb5f0391e27a26cabf5468475ea466843e5aeef5cffe9252be09e4066f";
+        const FINGERPRINT: &'static str = "13cbc06dde938d8822024f2554ea2c293f78362a86a385f73a2cc9bff259a773";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -394,13 +394,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => Group { said: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), calls: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)), came: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 2)) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Group")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Group")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Hearing`
+    /// Lean: `Datacartridge.Forecast.Hearing`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -412,7 +412,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Hearing {
-        const FINGERPRINT: &'static str = "7341f2a37038b2b8dac75c99fb46238e658488259e7fc52f38f623250053be05";
+        const FINGERPRINT: &'static str = "693ea0e2cc7e4ae6e98e86cb88679da4b6d64353439300068f81e1acc6937ba9";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -434,13 +434,13 @@ pub mod forecast {
                     0 => Hearing::OfThis,
                     1 => Hearing::OfOthers,
                     2 => Hearing::Never,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Hearing")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Hearing")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Leave`
+    /// Lean: `Datacartridge.Forecast.Leave`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -453,7 +453,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Leave {
-        const FINGERPRINT: &'static str = "077d9adcdfe3101b7b3fbe88b89ca688435d9a17032f0cdedbc8d9740897d23d";
+        const FINGERPRINT: &'static str = "845e898192ca2fe22d3fdb153fd0b12c0ab23a2fc1d658ca14eed61601fb105f";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -477,13 +477,13 @@ pub mod forecast {
                     1 => Leave::Stop,
                     2 => Leave::Target,
                     3 => Leave::Time,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Leave")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Leave")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Link`
+    /// Lean: `Datacartridge.Forecast.Link`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -495,7 +495,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Link {
-        const FINGERPRINT: &'static str = "9ead35176130fb124736d3308d6be1e63e6b3f8c28a9d59ee9b05b623945c241";
+        const FINGERPRINT: &'static str = "b9ccd2f8d1edcf4d2a8afdae2de72e2a1af92c4facd0704368eadc4a240ab3df";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -531,13 +531,13 @@ pub mod forecast {
                     1 => Link::Whole { others: <::lungo::Int as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)) },
                     2 => Link::Under,
                     3 => Link::Over,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Link")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Link")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Outcome`
+    /// Lean: `Datacartridge.Forecast.Outcome`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -550,7 +550,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Outcome {
-        const FINGERPRINT: &'static str = "9e0ab260f5fc6f0ffaffbcc6322d04c43beac891ae9151f3b71819e98cd67d59";
+        const FINGERPRINT: &'static str = "3a901ce16c0c06e61115d91caf3198930f0dcff42c9fc5ae46b6ebcd6eccd368";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -574,13 +574,13 @@ pub mod forecast {
                     1 => Outcome::CameTrue,
                     2 => Outcome::DidNot,
                     3 => Outcome::Void,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Outcome")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Outcome")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Split`
+    /// Lean: `Datacartridge.Forecast.Split`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct Split {
@@ -591,7 +591,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Split {
-        const FINGERPRINT: &'static str = "07032477e4f5ef7e36201f621104b4924d6035fa6e2d290ee814cfec742f915a";
+        const FINGERPRINT: &'static str = "e3f190a325d81313a619a4e7e8edbe3e5b64a70d4fb39b054c58c60687e4d29b";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -613,13 +613,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => Split { total: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), off_by: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)), told_apart: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 2)), how_hard: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 3)) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Split")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Split")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Stand`
+    /// Lean: `Datacartridge.Forecast.Stand`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct Stand {
@@ -628,7 +628,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Stand {
-        const FINGERPRINT: &'static str = "5df558abe95ddaffb16794daaf6204b3c702c072259fc16316fdf6179c6ff6fd";
+        const FINGERPRINT: &'static str = "49ad771175f8257a321df93a378bd624ed0a5dd6239f5becd8ef43f0f23f6607";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -648,13 +648,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => Stand { stated_bps: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), duration: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Stand")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Stand")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Sureness`
+    /// Lean: `Datacartridge.Forecast.Sureness`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -667,7 +667,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Sureness {
-        const FINGERPRINT: &'static str = "9a1b3d3b3b79290c4a75d3982575b0f20b65c594d1ed2c2d2b37ff95ce66f147";
+        const FINGERPRINT: &'static str = "8317b1513cfde3fa7f0d827aa3fbf4662a697d32abcf13258f9c8158996a8544";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -691,13 +691,13 @@ pub mod forecast {
                     1 => Sureness::About,
                     2 => Sureness::TooHigh,
                     3 => Sureness::TooLow,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Sureness")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Sureness")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Trend`
+    /// Lean: `Datacartridge.Forecast.Trend`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -710,7 +710,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Trend {
-        const FINGERPRINT: &'static str = "45dee9e0d1e97b72760208ee08a64e71f698556beacafb2937785c2da4f921c2";
+        const FINGERPRINT: &'static str = "e99c2d9768ce5170e7796ddd5b910d92d5304c1cab1d401e4b182abb01f96884";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -734,13 +734,13 @@ pub mod forecast {
                     1 => Trend::Worse,
                     2 => Trend::Same,
                     3 => Trend::Untold,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Trend")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Trend")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Tried`
+    /// Lean: `Datacartridge.Forecast.Tried`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct Tried {
@@ -749,7 +749,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Tried {
-        const FINGERPRINT: &'static str = "b275fae44cc4738aedfb018363a3a58ac4eddd7f682d62bad4ec779dc696888a";
+        const FINGERPRINT: &'static str = "5263973b1ca6e9e63a19d0606e710522e4d9b5d87274f0e2e1a3c58e46f1dfc1";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -769,13 +769,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => Tried { counts_as: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), mean_brier: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Tried")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Tried")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.View`
+    /// Lean: `Datacartridge.Forecast.View`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct View {
@@ -784,7 +784,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for View {
-        const FINGERPRINT: &'static str = "64b8a8153bde6216020ab6ca28f432ab5279afeec96125e8219c37b88c28b57f";
+        const FINGERPRINT: &'static str = "9f010f685b8059b087f78ebb46c7c0f7fdb3291ae90d1a4fe67d8437bf05d757";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -804,13 +804,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => View { weight_bps: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), stated_bps: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.View")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.View")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.When`
+    /// Lean: `Datacartridge.Forecast.When`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct When {
@@ -820,7 +820,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for When {
-        const FINGERPRINT: &'static str = "6896452b69702fa932b9c2588b3bf3f298306fd6d6eeef66c0c10e4073be49c3";
+        const FINGERPRINT: &'static str = "7effc945e530631ae42da9c9e1b03ea71d448b1f74a7e0cdecf56a93539873e6";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -841,13 +841,13 @@ pub mod forecast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => When { any_time: ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(rt::lean_ctor_get_uint8(o, 2 * ::core::mem::size_of::<usize>()) as usize), since: <::lungo::Int as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), till: <::lungo::Int as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 1)) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.When")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.When")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.Window`
+    /// Lean: `Datacartridge.Forecast.Window`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -858,7 +858,7 @@ pub mod forecast {
     }
 
     impl ::lungo::LeanLayout for Window {
-        const FINGERPRINT: &'static str = "d2eeb4f4d7700807036f793c732dcd2a013f06db59153ad6bb8ad15c7b8842b6";
+        const FINGERPRINT: &'static str = "3dc989c3db8b00da08fec4ac7d3d7cf689c7d687c91cd1c57eb51df6e06af2e3";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -878,45 +878,45 @@ pub mod forecast {
                 match rt::lean_obj_tag(o) {
                     0 => Window::AtDeadline,
                     1 => Window::AnyTime,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Forecast.Window")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Forecast.Window")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Forecast.all : List Mos.Forecast.Outcome → Mos.Forecast.Outcome`
+    /// Lean: `Datacartridge.Forecast.all : List Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome`
     /// 
-    /// Source: formal/Mos/Forecast.lean:263:1
+    /// Source: formal/Datacartridge/Forecast.lean:263:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn all(parts: ::lungo::List<super::forecast::Outcome>) -> super::forecast::Outcome {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(parts);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dall(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dall(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Outcome>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.any : List Mos.Forecast.Outcome → Mos.Forecast.Outcome`
+    /// Lean: `Datacartridge.Forecast.any : List Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome`
     /// 
-    /// Source: formal/Mos/Forecast.lean:270:1
+    /// Source: formal/Datacartridge/Forecast.lean:270:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn any(parts: ::lungo::List<super::forecast::Outcome>) -> super::forecast::Outcome {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(parts);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dany(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dany(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Outcome>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.apartBeyondChance : Nat → Nat → Nat → Nat → Nat → Nat → Bool`
+    /// Lean: `Datacartridge.Forecast.apartBeyondChance : Nat → Nat → Nat → Nat → Nat → Nat → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1817:1
+    /// Source: formal/Datacartridge/Forecast.lean:1817:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn apart_beyond_chance(nu2081: ::lungo::Nat, su2081: ::lungo::Nat, qu2081: ::lungo::Nat, nu2082: ::lungo::Nat, su2082: ::lungo::Nat, qu2082: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -928,29 +928,29 @@ pub mod forecast {
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(nu2082);
             let __p4: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(su2082);
             let __p5: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(qu2082);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dapartBeyondChance(__p0, __p1, __p2, __p3, __p4, __p5);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dapartBeyondChance(__p0, __p1, __p2, __p3, __p4, __p5);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.asForecast : Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.asForecast : Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:684:1
+    /// Source: formal/Datacartridge/Forecast.lean:684:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn as_forecast(rate_bps: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(rate_bps);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dasForecast(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dasForecast(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.askNext : Nat → Nat → Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.askNext : Nat → Nat → Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:719:1
+    /// Source: formal/Datacartridge/Forecast.lean:719:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn ask_next(now: ::lungo::Nat, next: ::lungo::Nat, every: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -959,7 +959,7 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(now);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(next);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(every);
-            let __r: Obj = super::__lng::l_Mos_dForecast_daskNext(__p0, __p1, __p2);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_daskNext(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -967,9 +967,9 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.askedOf : List (Int × Nat) → Nat → Option (Int × Nat)`
+    /// Lean: `Datacartridge.Forecast.askedOf : List (Int × Nat) → Nat → Option (Int × Nat)`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1743:1
+    /// Source: formal/Datacartridge/Forecast.lean:1743:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn asked_of(reported: ::lungo::List<(::lungo::Int, ::lungo::Nat)>, per_year: ::lungo::Nat) -> ::core::option::Option<(::lungo::Int, ::lungo::Nat)> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -977,15 +977,15 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(reported);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(per_year);
-            let __r: Obj = super::__lng::l_Mos_dForecast_daskedOf(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_daskedOf(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<(::lungo::Int, ::lungo::Nat)>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.asks : Bool → Bool → Nat → Nat → Bool`
+    /// Lean: `Datacartridge.Forecast.asks : Bool → Bool → Nat → Nat → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:702:1
+    /// Source: formal/Datacartridge/Forecast.lean:702:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn asks(active: bool, answered: bool, now: ::lungo::Nat, next: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -995,16 +995,16 @@ pub mod forecast {
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(answered) as u8;
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(now);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(next);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dasks(__p0, __p1, __p2, __p3);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dasks(__p0, __p1, __p2, __p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p3);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.back : Nat → Nat → Int × Nat → Int × Nat`
+    /// Lean: `Datacartridge.Forecast.back : Nat → Nat → Int × Nat → Int × Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1681:1
+    /// Source: formal/Datacartridge/Forecast.lean:1681:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn back(per_year: ::lungo::Nat, a: ::lungo::Nat, a_1: (::lungo::Int, ::lungo::Nat)) -> (::lungo::Int, ::lungo::Nat) {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1013,14 +1013,14 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(per_year);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a_1);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dback(__p0, __p1, __p2);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dback(__p0, __p1, __p2);
             ::lungo::__facade::take::<::lungo::RustBackend, (::lungo::Int, ::lungo::Nat)>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.backing : Nat → Option Nat → Nat → Int`
+    /// Lean: `Datacartridge.Forecast.backing : Nat → Option Nat → Nat → Int`
     /// 
-    /// Source: formal/Mos/Forecast.lean:757:1
+    /// Source: formal/Datacartridge/Forecast.lean:757:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn backing(believed_bps: ::lungo::Nat, base_bps: ::core::option::Option<::lungo::Nat>, weight_bps: ::lungo::Nat) -> ::lungo::Int {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1029,16 +1029,16 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(believed_bps);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(base_bps);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(weight_bps);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dbacking(__p0, __p1, __p2);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dbacking(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Int>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.baseRate : Nat → Nat → Option Nat`
+    /// Lean: `Datacartridge.Forecast.baseRate : Nat → Nat → Option Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:663:1
+    /// Source: formal/Datacartridge/Forecast.lean:663:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn base_rate(held: ::lungo::Nat, windows: ::lungo::Nat) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1046,16 +1046,16 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(held);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(windows);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dbaseRate(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dbaseRate(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.bestReading : Nat → List Mos.Forecast.Tried → Option Mos.Forecast.Tried`
+    /// Lean: `Datacartridge.Forecast.bestReading : Nat → List Datacartridge.Forecast.Tried → Option Datacartridge.Forecast.Tried`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1357:1
+    /// Source: formal/Datacartridge/Forecast.lean:1357:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn best_reading(forecasts: ::lungo::Nat, a: ::lungo::List<super::forecast::Tried>) -> ::core::option::Option<super::forecast::Tried> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1063,15 +1063,15 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(forecasts);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dbestReading(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dbestReading(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<super::forecast::Tried>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.better : Mos.Forecast.Tried → Mos.Forecast.Tried → Mos.Forecast.Tried`
+    /// Lean: `Datacartridge.Forecast.better : Datacartridge.Forecast.Tried → Datacartridge.Forecast.Tried → Datacartridge.Forecast.Tried`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1350:1
+    /// Source: formal/Datacartridge/Forecast.lean:1350:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn better(a: super::forecast::Tried, b: super::forecast::Tried) -> super::forecast::Tried {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1079,16 +1079,16 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(b);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dbetter(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dbetter(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, super::forecast::Tried>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.brier : Nat → Bool → Nat`
+    /// Lean: `Datacartridge.Forecast.brier : Nat → Bool → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:351:1
+    /// Source: formal/Datacartridge/Forecast.lean:351:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn brier(stated_bps: ::lungo::Nat, came_true: bool) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1096,30 +1096,30 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stated_bps);
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(came_true) as u8;
-            let __r: Obj = super::__lng::l_Mos_dForecast_dbrier(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dbrier(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.calibrated : Mos.Forecast.Split → Bool`
+    /// Lean: `Datacartridge.Forecast.calibrated : Datacartridge.Forecast.Split → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:427:1
+    /// Source: formal/Datacartridge/Forecast.lean:427:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn calibrated(s: super::forecast::Split) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dcalibrated(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dcalibrated(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.carried : Mos.Forecast.Link → Mos.Forecast.Claim → Option Mos.Forecast.Claim`
+    /// Lean: `Datacartridge.Forecast.carried : Datacartridge.Forecast.Link → Datacartridge.Forecast.Claim → Option Datacartridge.Forecast.Claim`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1038:1
+    /// Source: formal/Datacartridge/Forecast.lean:1038:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn carried(link: super::forecast::Link, a: super::forecast::Claim) -> ::core::option::Option<super::forecast::Claim> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1127,27 +1127,27 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(link);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dcarried(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dcarried(__p0, __p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<super::forecast::Claim>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.choosesAt : Nat`
+    /// Lean: `Datacartridge.Forecast.choosesAt : Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1339:1
+    /// Source: formal/Datacartridge/Forecast.lean:1339:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn chooses_at() -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
-            let __r: Obj = super::__lng::l_Mos_dForecast_dchoosesAt();
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dchoosesAt();
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.clash : Mos.Forecast.Claim → Mos.Forecast.Claim → Mos.Forecast.Clash`
+    /// Lean: `Datacartridge.Forecast.clash : Datacartridge.Forecast.Claim → Datacartridge.Forecast.Claim → Datacartridge.Forecast.Clash`
     /// 
-    /// Source: formal/Mos/Forecast.lean:867:1
+    /// Source: formal/Datacartridge/Forecast.lean:867:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn clash(a: super::forecast::Claim, b: super::forecast::Claim) -> super::forecast::Clash {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1155,16 +1155,16 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(b);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dclash(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dclash(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Clash>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.clashHappening : Bool → Bool → Nat → Nat → Mos.Forecast.When → Mos.Forecast.When → Mos.Forecast.Clash`
+    /// Lean: `Datacartridge.Forecast.clashHappening : Bool → Bool → Nat → Nat → Datacartridge.Forecast.When → Datacartridge.Forecast.When → Datacartridge.Forecast.Clash`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1216:1
+    /// Source: formal/Datacartridge/Forecast.lean:1216:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn clash_happening(first_within: bool, second_within: bool, first_bps: ::lungo::Nat, second_bps: ::lungo::Nat, first: super::forecast::When, second: super::forecast::When) -> super::forecast::Clash {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1176,7 +1176,7 @@ pub mod forecast {
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(second_bps);
             let __p4: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(first);
             let __p5: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(second);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dclashHappening(__p0, __p1, __p2, __p3, __p4, __p5);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dclashHappening(__p0, __p1, __p2, __p3, __p4, __p5);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p4);
@@ -1185,9 +1185,11 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.clashWhen : Mos.Forecast.Claim → Mos.Forecast.Claim → Mos.Forecast.When → Mos.Forecast.When → Mos.Forecast.Clash`
+    /// Lean: `Datacartridge.Forecast.clashWhen : Datacartridge.Forecast.Claim →
+      Datacartridge.Forecast.Claim →
+        Datacartridge.Forecast.When → Datacartridge.Forecast.When → Datacartridge.Forecast.Clash`
     /// 
-    /// Source: formal/Mos/Forecast.lean:960:1
+    /// Source: formal/Datacartridge/Forecast.lean:960:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn clash_when(a: super::forecast::Claim, b: super::forecast::Claim, wa: super::forecast::When, wb: super::forecast::When) -> super::forecast::Clash {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1197,7 +1199,7 @@ pub mod forecast {
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(b);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(wa);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(wb);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dclashWhen(__p0, __p1, __p2, __p3);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dclashWhen(__p0, __p1, __p2, __p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -1206,9 +1208,9 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.conditional : Mos.Forecast.Outcome → Mos.Forecast.Outcome → Mos.Forecast.Outcome`
+    /// Lean: `Datacartridge.Forecast.conditional : Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome`
     /// 
-    /// Source: formal/Mos/Forecast.lean:277:1
+    /// Source: formal/Datacartridge/Forecast.lean:277:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn conditional(condition: super::forecast::Outcome, consequence: super::forecast::Outcome) -> super::forecast::Outcome {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1216,57 +1218,57 @@ pub mod forecast {
         unsafe {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(condition) as u8;
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(consequence) as u8;
-            let __r: u8 = super::__lng::l_Mos_dForecast_dconditional(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dconditional(__p0, __p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Outcome>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.conviction : Int → Nat`
+    /// Lean: `Datacartridge.Forecast.conviction : Int → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1470:1
+    /// Source: formal/Datacartridge/Forecast.lean:1470:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn conviction(backing_bps: ::lungo::Int) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(backing_bps);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dconviction(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dconviction(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.discerning : Mos.Forecast.Split → Bool`
+    /// Lean: `Datacartridge.Forecast.discerning : Datacartridge.Forecast.Split → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:432:1
+    /// Source: formal/Datacartridge/Forecast.lean:432:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn discerning(s: super::forecast::Split) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(s);
-            let __r: u8 = super::__lng::l_Mos_dForecast_ddiscerning(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_ddiscerning(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.evenWeight : Nat`
+    /// Lean: `Datacartridge.Forecast.evenWeight : Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:529:1
+    /// Source: formal/Datacartridge/Forecast.lean:529:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn even_weight() -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
-            let __r: Obj = super::__lng::l_Mos_dForecast_devenWeight();
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_devenWeight();
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.expected : Nat → Int → Int → Nat → Int`
+    /// Lean: `Datacartridge.Forecast.expected : Nat → Int → Int → Nat → Int`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1444:1
+    /// Source: formal/Datacartridge/Forecast.lean:1444:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn expected(believed_bps: ::lungo::Nat, gain_bps: ::lungo::Int, loss_bps: ::lungo::Int, cost_bps: ::lungo::Nat) -> ::lungo::Int {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1276,7 +1278,7 @@ pub mod forecast {
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(gain_bps);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(loss_bps);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(cost_bps);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dexpected(__p0, __p1, __p2, __p3);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dexpected(__p0, __p1, __p2, __p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -1284,9 +1286,9 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.expectedFirst : Option Int × Int → Option Int × Int → Bool`
+    /// Lean: `Datacartridge.Forecast.expectedFirst : Option Int × Int → Option Int × Int → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1487:1
+    /// Source: formal/Datacartridge/Forecast.lean:1487:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn expected_first(a: (::core::option::Option<::lungo::Int>, ::lungo::Int), b: (::core::option::Option<::lungo::Int>, ::lungo::Int)) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1294,31 +1296,31 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(b);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dexpectedFirst(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dexpectedFirst(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.lastWeek : Nat → Nat × Nat`
+    /// Lean: `Datacartridge.Forecast.lastWeek : Nat → Nat × Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1419:1
+    /// Source: formal/Datacartridge/Forecast.lean:1419:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn last_week(today: ::lungo::Nat) -> (::lungo::Nat, ::lungo::Nat) {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(today);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dlastWeek(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dlastWeek(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, (::lungo::Nat, ::lungo::Nat)>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.later : Int × Nat → Int × Nat → Bool`
+    /// Lean: `Datacartridge.Forecast.later : Int × Nat → Int × Nat → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1732:1
+    /// Source: formal/Datacartridge/Forecast.lean:1732:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn later(a: (::lungo::Int, ::lungo::Nat), b: (::lungo::Int, ::lungo::Nat)) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1326,16 +1328,16 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(b);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dlater(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dlater(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.laterOf : Int × Nat → Int × Nat → Int × Nat`
+    /// Lean: `Datacartridge.Forecast.laterOf : Int × Nat → Int × Nat → Int × Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1735:1
+    /// Source: formal/Datacartridge/Forecast.lean:1735:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn later_of(a: (::lungo::Int, ::lungo::Nat), b: (::lungo::Int, ::lungo::Nat)) -> (::lungo::Int, ::lungo::Nat) {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1343,16 +1345,16 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(b);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dlaterOf(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dlaterOf(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, (::lungo::Int, ::lungo::Nat)>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.leastFromParts : List Mos.Forecast.Claim → Int → Mos.Forecast.Claim → Option Int`
+    /// Lean: `Datacartridge.Forecast.leastFromParts : List Datacartridge.Forecast.Claim → Int → Datacartridge.Forecast.Claim → Option Int`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1195:1
+    /// Source: formal/Datacartridge/Forecast.lean:1195:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn least_from_parts(parts: ::lungo::List<super::forecast::Claim>, others: ::lungo::Int, whole: super::forecast::Claim) -> ::core::option::Option<::lungo::Int> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1361,30 +1363,30 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(parts);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(others);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(whole);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dleastFromParts(__p0, __p1, __p2);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dleastFromParts(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Int>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.leastWhenAll : List Nat → Int`
+    /// Lean: `Datacartridge.Forecast.leastWhenAll : List Nat → Int`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1158:1
+    /// Source: formal/Datacartridge/Forecast.lean:1158:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn least_when_all(bps: ::lungo::List<::lungo::Nat>) -> ::lungo::Int {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(bps);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dleastWhenAll(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dleastWhenAll(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Int>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.leave : Int → Option Nat → Option Nat → Nat → Option Nat → Mos.Forecast.Leave`
+    /// Lean: `Datacartridge.Forecast.leave : Int → Option Nat → Option Nat → Nat → Option Nat → Datacartridge.Forecast.Leave`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1523:1
+    /// Source: formal/Datacartridge/Forecast.lean:1523:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn leave(return_bps: ::lungo::Int, stop_bps: ::core::option::Option<::lungo::Nat>, target_bps: ::core::option::Option<::lungo::Nat>, held_days: ::lungo::Nat, max_days: ::core::option::Option<::lungo::Nat>) -> super::forecast::Leave {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1395,7 +1397,7 @@ pub mod forecast {
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(target_bps);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(held_days);
             let __p4: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(max_days);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dleave(__p0, __p1, __p2, __p3, __p4);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dleave(__p0, __p1, __p2, __p3, __p4);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p4);
@@ -1403,9 +1405,9 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.lifeBrier : List Mos.Forecast.Stand → Bool → Option Nat`
+    /// Lean: `Datacartridge.Forecast.lifeBrier : List Datacartridge.Forecast.Stand → Bool → Option Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:477:1
+    /// Source: formal/Datacartridge/Forecast.lean:477:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn life_brier(stands: ::lungo::List<super::forecast::Stand>, came_true: bool) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1413,30 +1415,30 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stands);
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(came_true) as u8;
-            let __r: Obj = super::__lng::l_Mos_dForecast_dlifeBrier(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dlifeBrier(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.likelihood : Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.likelihood : Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:348:1
+    /// Source: formal/Datacartridge/Forecast.lean:348:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn likelihood(bps: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(bps);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dlikelihood(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dlikelihood(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.mayStateAgain : Nat → Nat → Bool → Bool`
+    /// Lean: `Datacartridge.Forecast.mayStateAgain : Nat → Nat → Bool → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1887:1
+    /// Source: formal/Datacartridge/Forecast.lean:1887:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn may_state_again(standing: ::lungo::Nat, said: ::lungo::Nat, still_stands: bool) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1445,31 +1447,31 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(standing);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(said);
             let __p2: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(still_stands) as u8;
-            let __r: u8 = super::__lng::l_Mos_dForecast_dmayStateAgain(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dmayStateAgain(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.mean : List Nat → Option Nat`
+    /// Lean: `Datacartridge.Forecast.mean : List Nat → Option Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:498:1
+    /// Source: formal/Datacartridge/Forecast.lean:498:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn mean(scores: ::lungo::List<::lungo::Nat>) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(scores);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dmean(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dmean(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.nextPeriod : Int → Nat → Nat → Int × Nat`
+    /// Lean: `Datacartridge.Forecast.nextPeriod : Int → Nat → Nat → Int × Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1649:1
+    /// Source: formal/Datacartridge/Forecast.lean:1649:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn next_period(year: ::lungo::Int, index: ::lungo::Nat, per_year: ::lungo::Nat) -> (::lungo::Int, ::lungo::Nat) {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1478,16 +1480,16 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(year);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(index);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(per_year);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dnextPeriod(__p0, __p1, __p2);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dnextPeriod(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::take::<::lungo::RustBackend, (::lungo::Int, ::lungo::Nat)>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.occurs : Bool → Bool → Mos.Forecast.Hearing → Mos.Forecast.Outcome`
+    /// Lean: `Datacartridge.Forecast.occurs : Bool → Bool → Datacartridge.Forecast.Hearing → Datacartridge.Forecast.Outcome`
     /// 
-    /// Source: formal/Mos/Forecast.lean:228:1
+    /// Source: formal/Datacartridge/Forecast.lean:228:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn occurs(due: bool, seen: bool, hearing: super::forecast::Hearing) -> super::forecast::Outcome {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1496,14 +1498,14 @@ pub mod forecast {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(due) as u8;
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(seen) as u8;
             let __p2: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(hearing) as u8;
-            let __r: u8 = super::__lng::l_Mos_dForecast_doccurs(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_doccurs(__p0, __p1, __p2);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Outcome>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.pairedBeyondChance : Nat → Int → Nat → Bool`
+    /// Lean: `Datacartridge.Forecast.pairedBeyondChance : Nat → Int → Nat → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1856:1
+    /// Source: formal/Datacartridge/Forecast.lean:1856:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn paired_beyond_chance(n: ::lungo::Nat, d: ::lungo::Int, q: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1512,16 +1514,16 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(n);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(d);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(q);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dpairedBeyondChance(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dpairedBeyondChance(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.partsCarry : List Mos.Forecast.Claim → Int → Mos.Forecast.Claim → Bool`
+    /// Lean: `Datacartridge.Forecast.partsCarry : List Datacartridge.Forecast.Claim → Int → Datacartridge.Forecast.Claim → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1096:1
+    /// Source: formal/Datacartridge/Forecast.lean:1096:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn parts_carry(parts: ::lungo::List<super::forecast::Claim>, others: ::lungo::Int, whole: super::forecast::Claim) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1530,31 +1532,31 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(parts);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(others);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(whole);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dpartsCarry(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dpartsCarry(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.pool : List Mos.Forecast.View → Option Nat`
+    /// Lean: `Datacartridge.Forecast.pool : List Datacartridge.Forecast.View → Option Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:601:1
+    /// Source: formal/Datacartridge/Forecast.lean:601:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn pool(views: ::lungo::List<super::forecast::View>) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(views);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dpool(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dpool(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.previousPeriod : Int → Nat → Nat → Int × Nat`
+    /// Lean: `Datacartridge.Forecast.previousPeriod : Int → Nat → Nat → Int × Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1646:1
+    /// Source: formal/Datacartridge/Forecast.lean:1646:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn previous_period(year: ::lungo::Int, index: ::lungo::Nat, per_year: ::lungo::Nat) -> (::lungo::Int, ::lungo::Nat) {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1563,43 +1565,43 @@ pub mod forecast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(year);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(index);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(per_year);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dpreviousPeriod(__p0, __p1, __p2);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dpreviousPeriod(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, (::lungo::Int, ::lungo::Nat)>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.proven : Nat → Bool`
+    /// Lean: `Datacartridge.Forecast.proven : Nat → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:527:1
+    /// Source: formal/Datacartridge/Forecast.lean:527:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn proven(scored: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(scored);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dproven(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dproven(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.provenAt : Nat`
+    /// Lean: `Datacartridge.Forecast.provenAt : Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:524:1
+    /// Source: formal/Datacartridge/Forecast.lean:524:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn proven_at() -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
-            let __r: Obj = super::__lng::l_Mos_dForecast_dprovenAt();
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dprovenAt();
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.recalibrated : Nat → Nat → Nat → Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.recalibrated : Nat → Nat → Nat → Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1265:1
+    /// Source: formal/Datacartridge/Forecast.lean:1265:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn recalibrated(stated_bps: ::lungo::Nat, came: ::lungo::Nat, scored: ::lungo::Nat, counts_as: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1609,7 +1611,7 @@ pub mod forecast {
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(came);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(scored);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(counts_as);
-            let __r: Obj = super::__lng::l_Mos_dForecast_drecalibrated(__p0, __p1, __p2, __p3);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_drecalibrated(__p0, __p1, __p2, __p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -1618,9 +1620,9 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.settle : Mos.Forecast.Window → Bool → List Bool → Mos.Forecast.Outcome`
+    /// Lean: `Datacartridge.Forecast.settle : Datacartridge.Forecast.Window → Bool → List Bool → Datacartridge.Forecast.Outcome`
     /// 
-    /// Source: formal/Mos/Forecast.lean:39:1
+    /// Source: formal/Datacartridge/Forecast.lean:39:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn settle(window: super::forecast::Window, due: bool, observed: ::lungo::List<bool>) -> super::forecast::Outcome {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1629,15 +1631,15 @@ pub mod forecast {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(window) as u8;
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(due) as u8;
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(observed);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dsettle(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dsettle(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Outcome>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.settleReported : Mos.Forecast.Window → Bool → List Bool → Bool → Mos.Forecast.Outcome`
+    /// Lean: `Datacartridge.Forecast.settleReported : Datacartridge.Forecast.Window → Bool → List Bool → Bool → Datacartridge.Forecast.Outcome`
     /// 
-    /// Source: formal/Mos/Forecast.lean:156:1
+    /// Source: formal/Datacartridge/Forecast.lean:156:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn settle_reported(window: super::forecast::Window, due: bool, observed: ::lungo::List<bool>, contested_at_end: bool) -> super::forecast::Outcome {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1647,87 +1649,87 @@ pub mod forecast {
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(due) as u8;
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(observed);
             let __p3: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(contested_at_end) as u8;
-            let __r: u8 = super::__lng::l_Mos_dForecast_dsettleReported(__p0, __p1, __p2, __p3);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dsettleReported(__p0, __p1, __p2, __p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Outcome>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.settled : Mos.Forecast.Outcome → Bool`
+    /// Lean: `Datacartridge.Forecast.settled : Datacartridge.Forecast.Outcome → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:60:1
+    /// Source: formal/Datacartridge/Forecast.lean:60:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn settled(o: super::forecast::Outcome) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(o) as u8;
-            let __r: u8 = super::__lng::l_Mos_dForecast_dsettled(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dsettled(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.silenceCounts : Mos.Forecast.Hearing → Bool`
+    /// Lean: `Datacartridge.Forecast.silenceCounts : Datacartridge.Forecast.Hearing → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:222:1
+    /// Source: formal/Datacartridge/Forecast.lean:222:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn silence_counts(h: super::forecast::Hearing) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(h) as u8;
-            let __r: u8 = super::__lng::l_Mos_dForecast_dsilenceCounts(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dsilenceCounts(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.skill : Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.skill : Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:502:1
+    /// Source: formal/Datacartridge/Forecast.lean:502:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn skill(mean_brier: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(mean_brier);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dskill(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dskill(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.split : List Mos.Forecast.Group → Option Mos.Forecast.Split`
+    /// Lean: `Datacartridge.Forecast.split : List Datacartridge.Forecast.Group → Option Datacartridge.Forecast.Split`
     /// 
-    /// Source: formal/Mos/Forecast.lean:409:1
+    /// Source: formal/Datacartridge/Forecast.lean:409:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn split(groups: ::lungo::List<super::forecast::Group>) -> ::core::option::Option<super::forecast::Split> {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(groups);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dsplit(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dsplit(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<super::forecast::Split>>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.sureness : List Mos.Forecast.Call → Mos.Forecast.Sureness`
+    /// Lean: `Datacartridge.Forecast.sureness : List Datacartridge.Forecast.Call → Datacartridge.Forecast.Sureness`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1597:1
+    /// Source: formal/Datacartridge/Forecast.lean:1597:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn sureness(calls: ::lungo::List<super::forecast::Call>) -> super::forecast::Sureness {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(calls);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dsureness(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dsureness(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, super::forecast::Sureness>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.surenessOf : Nat → Nat → Nat → Nat → Mos.Forecast.Sureness`
+    /// Lean: `Datacartridge.Forecast.surenessOf : Nat → Nat → Nat → Nat → Datacartridge.Forecast.Sureness`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1583:1
+    /// Source: formal/Datacartridge/Forecast.lean:1583:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn sureness_of(forecasts: ::lungo::Nat, came: ::lungo::Nat, stated_sum: ::lungo::Nat, spread: ::lungo::Nat) -> super::forecast::Sureness {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1737,7 +1739,7 @@ pub mod forecast {
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(came);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stated_sum);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(spread);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dsurenessOf(__p0, __p1, __p2, __p3);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dsurenessOf(__p0, __p1, __p2, __p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -1746,39 +1748,41 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.telling : Nat → Bool`
+    /// Lean: `Datacartridge.Forecast.telling : Nat → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:661:1
+    /// Source: formal/Datacartridge/Forecast.lean:661:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn telling(windows: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(windows);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dtelling(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dtelling(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.tenth : Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.tenth : Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:491:1
+    /// Source: formal/Datacartridge/Forecast.lean:491:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn tenth(stated_bps: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stated_bps);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dtenth(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dtenth(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.tooLikelyAcross : Mos.Forecast.Link → Mos.Forecast.Claim → Mos.Forecast.Claim → Mos.Forecast.When → Mos.Forecast.When → Bool`
+    /// Lean: `Datacartridge.Forecast.tooLikelyAcross : Datacartridge.Forecast.Link →
+      Datacartridge.Forecast.Claim →
+        Datacartridge.Forecast.Claim → Datacartridge.Forecast.When → Datacartridge.Forecast.When → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1058:1
+    /// Source: formal/Datacartridge/Forecast.lean:1058:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn too_likely_across(link: super::forecast::Link, a: super::forecast::Claim, b: super::forecast::Claim, wa: super::forecast::When, wb: super::forecast::When) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1789,7 +1793,7 @@ pub mod forecast {
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(b);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(wa);
             let __p4: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(wb);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dtooLikelyAcross(__p0, __p1, __p2, __p3, __p4);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dtooLikelyAcross(__p0, __p1, __p2, __p3, __p4);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p4);
@@ -1797,9 +1801,9 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.trend : Option Nat → Option Nat → Nat → Nat → Mos.Forecast.Trend`
+    /// Lean: `Datacartridge.Forecast.trend : Option Nat → Option Nat → Nat → Nat → Datacartridge.Forecast.Trend`
     /// 
-    /// Source: formal/Mos/Forecast.lean:793:1
+    /// Source: formal/Datacartridge/Forecast.lean:793:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn trend(during: ::core::option::Option<::lungo::Nat>, before: ::core::option::Option<::lungo::Nat>, scored_during: ::lungo::Nat, scored_before: ::lungo::Nat) -> super::forecast::Trend {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1809,7 +1813,7 @@ pub mod forecast {
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(before);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(scored_during);
             let __p3: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(scored_before);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dtrend(__p0, __p1, __p2, __p3);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dtrend(__p0, __p1, __p2, __p3);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -1818,24 +1822,24 @@ pub mod forecast {
         }
     }
 
-    /// Lean: `Mos.Forecast.weekStart : Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.weekStart : Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1416:1
+    /// Source: formal/Datacartridge/Forecast.lean:1416:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn week_start(day: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(day);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dweekStart(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dweekStart(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.weight : Nat → Nat → Nat`
+    /// Lean: `Datacartridge.Forecast.weight : Nat → Nat → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:532:1
+    /// Source: formal/Datacartridge/Forecast.lean:532:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn weight(scored: ::lungo::Nat, mean_brier: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1843,61 +1847,61 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(scored);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(mean_brier);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dweight(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dweight(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.weighted : List Mos.Forecast.View → Nat`
+    /// Lean: `Datacartridge.Forecast.weighted : List Datacartridge.Forecast.View → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:597:1
+    /// Source: formal/Datacartridge/Forecast.lean:597:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn weighted(a: ::lungo::List<super::forecast::View>) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dweighted(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dweighted(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.weights : List Mos.Forecast.View → Nat`
+    /// Lean: `Datacartridge.Forecast.weights : List Datacartridge.Forecast.View → Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:593:1
+    /// Source: formal/Datacartridge/Forecast.lean:593:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn weights(a: ::lungo::List<super::forecast::View>) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(a);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dweights(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dweights(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Forecast.worse : Nat → Bool`
+    /// Lean: `Datacartridge.Forecast.worse : Nat → Bool`
     /// 
-    /// Source: formal/Mos/Forecast.lean:509:1
+    /// Source: formal/Datacartridge/Forecast.lean:509:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn worse(mean_brier: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(mean_brier);
-            let __r: u8 = super::__lng::l_Mos_dForecast_dworse(__p0);
+            let __r: u8 = super::__lng::l_Datacartridge_dForecast_dworse(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Forecast.yearBefore : Int → Nat → Int × Nat`
+    /// Lean: `Datacartridge.Forecast.yearBefore : Int → Nat → Int × Nat`
     /// 
-    /// Source: formal/Mos/Forecast.lean:1679:1
+    /// Source: formal/Datacartridge/Forecast.lean:1679:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn year_before(year: ::lungo::Int, index: ::lungo::Nat) -> (::lungo::Int, ::lungo::Nat) {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -1905,39 +1909,39 @@ pub mod forecast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(year);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(index);
-            let __r: Obj = super::__lng::l_Mos_dForecast_dyearBefore(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dForecast_dyearBefore(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, (::lungo::Int, ::lungo::Nat)>(__r)
         }
     }
 
     pub mod claim {
-        /// Lean: `Mos.Forecast.Claim.opposite : Mos.Forecast.Claim → Mos.Forecast.Claim`
+        /// Lean: `Datacartridge.Forecast.Claim.opposite : Datacartridge.Forecast.Claim → Datacartridge.Forecast.Claim`
         /// 
-        /// Source: formal/Mos/Forecast.lean:1200:1
+        /// Source: formal/Datacartridge/Forecast.lean:1200:1
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn opposite(c: super::super::forecast::Claim) -> super::super::forecast::Claim {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(c);
-                let __r: Obj = super::super::__lng::l_Mos_dForecast_dClaim_dopposite(__p0);
+                let __r: Obj = super::super::__lng::l_Datacartridge_dForecast_dClaim_dopposite(__p0);
                 ::lungo::__facade::take::<::lungo::RustBackend, super::super::forecast::Claim>(__r)
             }
         }
 
     }
     pub mod clash {
-        /// Lean: `Mos.Forecast.Clash.ofNat : Nat → Mos.Forecast.Clash`
+        /// Lean: `Datacartridge.Forecast.Clash.ofNat : Nat → Datacartridge.Forecast.Clash`
         /// 
-        /// Source: formal/Mos/Forecast.lean
+        /// Source: formal/Datacartridge/Forecast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::forecast::Clash {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dClash_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dClash_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::forecast::Clash>(__r as usize)
             }
@@ -1945,46 +1949,46 @@ pub mod forecast {
 
     }
     pub mod group {
-        /// Lean: `Mos.Forecast.Group.gap : Mos.Forecast.Group → Int`
+        /// Lean: `Datacartridge.Forecast.Group.gap : Datacartridge.Forecast.Group → Int`
         /// 
-        /// Source: formal/Mos/Forecast.lean:389:1
+        /// Source: formal/Datacartridge/Forecast.lean:389:1
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn gap(g: super::super::forecast::Group) -> ::lungo::Int {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(g);
-                let __r: Obj = super::super::__lng::l_Mos_dForecast_dGroup_dgap(__p0);
+                let __r: Obj = super::super::__lng::l_Datacartridge_dForecast_dGroup_dgap(__p0);
                 ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Int>(__r)
             }
         }
 
-        /// Lean: `Mos.Forecast.Group.squares : Mos.Forecast.Group → Int`
+        /// Lean: `Datacartridge.Forecast.Group.squares : Datacartridge.Forecast.Group → Int`
         /// 
-        /// Source: formal/Mos/Forecast.lean:384:1
+        /// Source: formal/Datacartridge/Forecast.lean:384:1
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn squares(g: super::super::forecast::Group) -> ::lungo::Int {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(g);
-                let __r: Obj = super::super::__lng::l_Mos_dForecast_dGroup_dsquares(__p0);
+                let __r: Obj = super::super::__lng::l_Datacartridge_dForecast_dGroup_dsquares(__p0);
                 ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Int>(__r)
             }
         }
 
     }
     pub mod hearing {
-        /// Lean: `Mos.Forecast.Hearing.ofNat : Nat → Mos.Forecast.Hearing`
+        /// Lean: `Datacartridge.Forecast.Hearing.ofNat : Nat → Datacartridge.Forecast.Hearing`
         /// 
-        /// Source: formal/Mos/Forecast.lean
+        /// Source: formal/Datacartridge/Forecast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::forecast::Hearing {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dHearing_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dHearing_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::forecast::Hearing>(__r as usize)
             }
@@ -1992,16 +1996,16 @@ pub mod forecast {
 
     }
     pub mod leave {
-        /// Lean: `Mos.Forecast.Leave.ofNat : Nat → Mos.Forecast.Leave`
+        /// Lean: `Datacartridge.Forecast.Leave.ofNat : Nat → Datacartridge.Forecast.Leave`
         /// 
-        /// Source: formal/Mos/Forecast.lean
+        /// Source: formal/Datacartridge/Forecast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::forecast::Leave {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dLeave_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dLeave_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::forecast::Leave>(__r as usize)
             }
@@ -2009,16 +2013,16 @@ pub mod forecast {
 
     }
     pub mod outcome {
-        /// Lean: `Mos.Forecast.Outcome.ofNat : Nat → Mos.Forecast.Outcome`
+        /// Lean: `Datacartridge.Forecast.Outcome.ofNat : Nat → Datacartridge.Forecast.Outcome`
         /// 
-        /// Source: formal/Mos/Forecast.lean
+        /// Source: formal/Datacartridge/Forecast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::forecast::Outcome {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dOutcome_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dOutcome_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::forecast::Outcome>(__r as usize)
             }
@@ -2026,16 +2030,16 @@ pub mod forecast {
 
     }
     pub mod sureness {
-        /// Lean: `Mos.Forecast.Sureness.ofNat : Nat → Mos.Forecast.Sureness`
+        /// Lean: `Datacartridge.Forecast.Sureness.ofNat : Nat → Datacartridge.Forecast.Sureness`
         /// 
-        /// Source: formal/Mos/Forecast.lean
+        /// Source: formal/Datacartridge/Forecast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::forecast::Sureness {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dSureness_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dSureness_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::forecast::Sureness>(__r as usize)
             }
@@ -2043,16 +2047,16 @@ pub mod forecast {
 
     }
     pub mod trend {
-        /// Lean: `Mos.Forecast.Trend.ofNat : Nat → Mos.Forecast.Trend`
+        /// Lean: `Datacartridge.Forecast.Trend.ofNat : Nat → Datacartridge.Forecast.Trend`
         /// 
-        /// Source: formal/Mos/Forecast.lean
+        /// Source: formal/Datacartridge/Forecast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::forecast::Trend {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dTrend_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dTrend_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::forecast::Trend>(__r as usize)
             }
@@ -2060,9 +2064,9 @@ pub mod forecast {
 
     }
     pub mod when {
-        /// Lean: `Mos.Forecast.When.counts : Mos.Forecast.When → Int → Bool`
+        /// Lean: `Datacartridge.Forecast.When.counts : Datacartridge.Forecast.When → Int → Bool`
         /// 
-        /// Source: formal/Mos/Forecast.lean:930:1
+        /// Source: formal/Datacartridge/Forecast.lean:930:1
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn counts(w: super::super::forecast::When, moment: ::lungo::Int) -> bool {
             use ::lungo::__runtime::{self as rt, Obj};
@@ -2070,7 +2074,7 @@ pub mod forecast {
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(w);
                 let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(moment);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dWhen_dcounts(__p0, __p1);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dWhen_dcounts(__p0, __p1);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
@@ -2079,16 +2083,16 @@ pub mod forecast {
 
     }
     pub mod window {
-        /// Lean: `Mos.Forecast.Window.ofNat : Nat → Mos.Forecast.Window`
+        /// Lean: `Datacartridge.Forecast.Window.ofNat : Nat → Datacartridge.Forecast.Window`
         /// 
-        /// Source: formal/Mos/Forecast.lean
+        /// Source: formal/Datacartridge/Forecast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::forecast::Window {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dForecast_dWindow_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dForecast_dWindow_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::forecast::Window>(__r as usize)
             }
@@ -2097,7 +2101,7 @@ pub mod forecast {
     }
 }
 pub mod hindcast {
-    /// Lean: `Mos.Hindcast.HeldUp`
+    /// Lean: `Datacartridge.Hindcast.HeldUp`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     #[serde(rename_all = "snake_case")]
@@ -2109,7 +2113,7 @@ pub mod hindcast {
     }
 
     impl ::lungo::LeanLayout for HeldUp {
-        const FINGERPRINT: &'static str = "f9e3cd601fd3e8a4487e5f56f45b9e22f5ba843e3fb6ac09f272bce252cfdd3f";
+        const FINGERPRINT: &'static str = "bf11bb27c6f7a45c14375f249880530ea15588ef1a04964638ae3ea5d2b17967";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -2131,13 +2135,13 @@ pub mod hindcast {
                     0 => HeldUp::TooSoon,
                     1 => HeldUp::BetterThanEven,
                     2 => HeldUp::NoBetter,
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Hindcast.HeldUp")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Hindcast.HeldUp")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Hindcast.Tried`
+    /// Lean: `Datacartridge.Hindcast.Tried`
     #[derive(Clone, Debug, PartialEq, Eq, Hash)]
     #[derive(serde::Serialize, serde::Deserialize)]
     pub struct Tried {
@@ -2146,7 +2150,7 @@ pub mod hindcast {
     }
 
     impl ::lungo::LeanLayout for Tried {
-        const FINGERPRINT: &'static str = "4e4b34869e287dfa82e785c1e3b00ab66b56b18111c86f7e65e6878d344a54be";
+        const FINGERPRINT: &'static str = "ff4699f98659aa205dc6397609a80337f74dad38d92d0850adc4510acf7609d4";
     }
 
     #[allow(unused_imports, unused_unsafe)]
@@ -2166,15 +2170,15 @@ pub mod hindcast {
             unsafe {
                 match rt::lean_obj_tag(o) {
                     0 => Tried { stated_bps: <::lungo::Nat as ::lungo::LeanType<::lungo::RustBackend>>::from_lean(rt::lean_ctor_get(o, 0)), came_true: ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(rt::lean_ctor_get_uint8(o, ::core::mem::size_of::<usize>()) as usize) },
-                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Mos.Hindcast.Tried")),
+                    tag => rt::lean_internal_panic(&::std::format!("invalid constructor tag {tag} for Datacartridge.Hindcast.Tried")),
                 }
             }
         }
     }
 
-    /// Lean: `Mos.Hindcast.alike : Int → Int → Bool`
+    /// Lean: `Datacartridge.Hindcast.alike : Int → Int → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:156:1
+    /// Source: formal/Datacartridge/Hindcast.lean:156:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn alike(now: ::lungo::Int, past: ::lungo::Int) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2182,16 +2186,16 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(now);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(past);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dalike(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dalike(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Hindcast.alikeRate : Int → List (Int × Bool) → Option Nat`
+    /// Lean: `Datacartridge.Hindcast.alikeRate : Int → List (Int × Bool) → Option Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:171:1
+    /// Source: formal/Datacartridge/Hindcast.lean:171:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn alike_rate(now: ::lungo::Int, stretches: ::lungo::List<(::lungo::Int, bool)>) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2199,28 +2203,28 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(now);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stretches);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dalikeRate(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dalikeRate(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.atLeastPerStretch : Nat`
+    /// Lean: `Datacartridge.Hindcast.atLeastPerStretch : Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:55:1
+    /// Source: formal/Datacartridge/Hindcast.lean:55:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn at_least_per_stretch() -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
-            let __r: Obj = super::__lng::l_Mos_dHindcast_datLeastPerStretch();
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_datLeastPerStretch();
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.callsBetter : Option Nat → Option Nat → Bool`
+    /// Lean: `Datacartridge.Hindcast.callsBetter : Option Nat → Option Nat → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:295:1
+    /// Source: formal/Datacartridge/Hindcast.lean:295:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn calls_better(mine: ::core::option::Option<::lungo::Nat>, theirs: ::core::option::Option<::lungo::Nat>) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2228,16 +2232,16 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(mine);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(theirs);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dcallsBetter(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dcallsBetter(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Hindcast.chooseAgain : Bool → Nat → Bool`
+    /// Lean: `Datacartridge.Hindcast.chooseAgain : Bool → Nat → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:185:1
+    /// Source: formal/Datacartridge/Hindcast.lean:185:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn choose_again(active: bool, settled: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2245,30 +2249,30 @@ pub mod hindcast {
         unsafe {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(active) as u8;
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(settled);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dchooseAgain(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dchooseAgain(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Hindcast.chosen : List Nat → Option Nat`
+    /// Lean: `Datacartridge.Hindcast.chosen : List Nat → Option Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:129:1
+    /// Source: formal/Datacartridge/Hindcast.lean:129:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn chosen(totals: ::lungo::List<::lungo::Nat>) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(totals);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dchosen(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dchosen(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.countsBeside : Int → Int → Bool`
+    /// Lean: `Datacartridge.Hindcast.countsBeside : Int → Int → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:255:1
+    /// Source: formal/Datacartridge/Hindcast.lean:255:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn counts_beside(from: ::lungo::Int, made_at: ::lungo::Int) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2276,16 +2280,16 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(from);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(made_at);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dcountsBeside(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dcountsBeside(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Hindcast.cut : Nat → Nat → Nat → Nat`
+    /// Lean: `Datacartridge.Hindcast.cut : Nat → Nat → Nat → Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:23:1
+    /// Source: formal/Datacartridge/Hindcast.lean:23:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn cut(n: ::lungo::Nat, k: ::lungo::Nat, i: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2294,7 +2298,7 @@ pub mod hindcast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(n);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(k);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(i);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dcut(__p0, __p1, __p2);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dcut(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -2302,9 +2306,9 @@ pub mod hindcast {
         }
     }
 
-    /// Lean: `Mos.Hindcast.enough : Nat → Nat → Bool`
+    /// Lean: `Datacartridge.Hindcast.enough : Nat → Nat → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:60:1
+    /// Source: formal/Datacartridge/Hindcast.lean:60:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn enough(moments: ::lungo::Nat, stretches: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2312,16 +2316,16 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(moments);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stretches);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_denough(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_denough(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Hindcast.heldUp : Nat → Nat → Nat → Mos.Hindcast.HeldUp`
+    /// Lean: `Datacartridge.Hindcast.heldUp : Nat → Nat → Nat → Datacartridge.Hindcast.HeldUp`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:209:1
+    /// Source: formal/Datacartridge/Hindcast.lean:209:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn held_up(settled: ::lungo::Nat, forward: ::lungo::Nat, even: ::lungo::Nat) -> super::hindcast::HeldUp {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2330,7 +2334,7 @@ pub mod hindcast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(settled);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(forward);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(even);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dheldUp(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dheldUp(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -2338,9 +2342,9 @@ pub mod hindcast {
         }
     }
 
-    /// Lean: `Mos.Hindcast.learnable : Int → Int → Int → Bool`
+    /// Lean: `Datacartridge.Hindcast.learnable : Int → Int → Int → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:40:1
+    /// Source: formal/Datacartridge/Hindcast.lean:40:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn learnable(made_at: ::lungo::Int, horizon: ::lungo::Int, test_start: ::lungo::Int) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2349,7 +2353,7 @@ pub mod hindcast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(made_at);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(horizon);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(test_start);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dlearnable(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dlearnable(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -2357,38 +2361,38 @@ pub mod hindcast {
         }
     }
 
-    /// Lean: `Mos.Hindcast.mean : List Mos.Hindcast.Tried → Option Nat`
+    /// Lean: `Datacartridge.Hindcast.mean : List Datacartridge.Hindcast.Tried → Option Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:96:1
+    /// Source: formal/Datacartridge/Hindcast.lean:96:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn mean(tried: ::lungo::List<super::hindcast::Tried>) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(tried);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dmean(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dmean(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.moment : List (Option Nat) → Option (List Nat)`
+    /// Lean: `Datacartridge.Hindcast.moment : List (Option Nat) → Option (List Nat)`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:400:1
+    /// Source: formal/Datacartridge/Hindcast.lean:400:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn moment(stated: ::lungo::List<::core::option::Option<::lungo::Nat>>) -> ::core::option::Option<::lungo::List<::lungo::Nat>> {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stated);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dmoment(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dmoment(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::List<::lungo::Nat>>>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.mostTriable : List Int → Int → Option Nat`
+    /// Lean: `Datacartridge.Hindcast.mostTriable : List Int → Int → Option Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:74:1
+    /// Source: formal/Datacartridge/Hindcast.lean:74:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn most_triable(times: ::lungo::List<::lungo::Int>, horizon: ::lungo::Int) -> ::core::option::Option<::lungo::Nat> {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2396,59 +2400,59 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(times);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(horizon);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dmostTriable(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dmostTriable(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::core::option::Option<::lungo::Nat>>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.needed : Nat → Nat`
+    /// Lean: `Datacartridge.Hindcast.needed : Nat → Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:57:1
+    /// Source: formal/Datacartridge/Hindcast.lean:57:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn needed(stretches: ::lungo::Nat) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stretches);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dneeded(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dneeded(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.said : Option Nat → Nat`
+    /// Lean: `Datacartridge.Hindcast.said : Option Nat → Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:397:1
+    /// Source: formal/Datacartridge/Hindcast.lean:397:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn said(stated: ::core::option::Option<::lungo::Nat>) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stated);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dsaid(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dsaid(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.settledToChooseAgain : Nat`
+    /// Lean: `Datacartridge.Hindcast.settledToChooseAgain : Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:182:1
+    /// Source: formal/Datacartridge/Hindcast.lean:182:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn settled_to_choose_again() -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dsettledToChooseAgain();
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dsettledToChooseAgain();
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.sharedFrom : Int → Int → Int`
+    /// Lean: `Datacartridge.Hindcast.sharedFrom : Int → Int → Int`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:253:1
+    /// Source: formal/Datacartridge/Hindcast.lean:253:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn shared_from(first: ::lungo::Int, other: ::lungo::Int) -> ::lungo::Int {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2456,16 +2460,16 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(first);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(other);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dsharedFrom(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dsharedFrom(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Int>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.sharedFromAll : Int → List Int → Int`
+    /// Lean: `Datacartridge.Hindcast.sharedFromAll : Int → List Int → Int`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:270:1
+    /// Source: formal/Datacartridge/Hindcast.lean:270:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn shared_from_all(first: ::lungo::Int, others: ::lungo::List<::lungo::Int>) -> ::lungo::Int {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2473,15 +2477,15 @@ pub mod hindcast {
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(first);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(others);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dsharedFromAll(__p0, __p1);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dsharedFromAll(__p0, __p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Int>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.speaks : Bool → Option Nat → Nat → Bool`
+    /// Lean: `Datacartridge.Hindcast.speaks : Bool → Option Nat → Nat → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:368:1
+    /// Source: formal/Datacartridge/Hindcast.lean:368:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn speaks(often: bool, days: ::core::option::Option<::lungo::Nat>, horizon: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2490,31 +2494,31 @@ pub mod hindcast {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(often) as u8;
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(days);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(horizon);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dspeaks(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dspeaks(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
-    /// Lean: `Mos.Hindcast.total : List Mos.Hindcast.Tried → Nat`
+    /// Lean: `Datacartridge.Hindcast.total : List Datacartridge.Hindcast.Tried → Nat`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:93:1
+    /// Source: formal/Datacartridge/Hindcast.lean:93:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn total(tried: ::lungo::List<super::hindcast::Tried>) -> ::lungo::Nat {
         use ::lungo::__runtime::{self as rt, Obj};
         super::__lng::__initialize();
         unsafe {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(tried);
-            let __r: Obj = super::__lng::l_Mos_dHindcast_dtotal(__p0);
+            let __r: Obj = super::__lng::l_Datacartridge_dHindcast_dtotal(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::take::<::lungo::RustBackend, ::lungo::Nat>(__r)
         }
     }
 
-    /// Lean: `Mos.Hindcast.triable : List Int → Int → Nat → Bool`
+    /// Lean: `Datacartridge.Hindcast.triable : List Int → Int → Nat → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:68:1
+    /// Source: formal/Datacartridge/Hindcast.lean:68:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn triable(times: ::lungo::List<::lungo::Int>, horizon: ::lungo::Int, stretches: ::lungo::Nat) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2523,7 +2527,7 @@ pub mod hindcast {
             let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(times);
             let __p1: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(horizon);
             let __p2: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(stretches);
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dtriable(__p0, __p1, __p2);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dtriable(__p0, __p1, __p2);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p1);
             ::lungo::__facade::dec::<::lungo::RustBackend>(__p2);
@@ -2531,9 +2535,9 @@ pub mod hindcast {
         }
     }
 
-    /// Lean: `Mos.Hindcast.turned : Mos.Hindcast.HeldUp → Mos.Hindcast.HeldUp → Bool`
+    /// Lean: `Datacartridge.Hindcast.turned : Datacartridge.Hindcast.HeldUp → Datacartridge.Hindcast.HeldUp → Bool`
     /// 
-    /// Source: formal/Mos/Hindcast.lean:233:1
+    /// Source: formal/Datacartridge/Hindcast.lean:233:1
     #[allow(unused_imports, unused_unsafe, clippy::all)]
     pub fn turned(before: super::hindcast::HeldUp, after: super::hindcast::HeldUp) -> bool {
         use ::lungo::__runtime::{self as rt, Obj};
@@ -2541,22 +2545,22 @@ pub mod hindcast {
         unsafe {
             let __p0: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(before) as u8;
             let __p1: u8 = ::lungo::__facade::to_small::<::lungo::RustBackend, _>(after) as u8;
-            let __r: u8 = super::__lng::l_Mos_dHindcast_dturned(__p0, __p1);
+            let __r: u8 = super::__lng::l_Datacartridge_dHindcast_dturned(__p0, __p1);
             ::lungo::__facade::from_small::<::lungo::RustBackend, bool>(__r as usize)
         }
     }
 
     pub mod held_up {
-        /// Lean: `Mos.Hindcast.HeldUp.ofNat : Nat → Mos.Hindcast.HeldUp`
+        /// Lean: `Datacartridge.Hindcast.HeldUp.ofNat : Nat → Datacartridge.Hindcast.HeldUp`
         /// 
-        /// Source: formal/Mos/Hindcast.lean
+        /// Source: formal/Datacartridge/Hindcast.lean
         #[allow(unused_imports, unused_unsafe, clippy::all)]
         pub fn of_nat(x: ::lungo::Nat) -> super::super::hindcast::HeldUp {
             use ::lungo::__runtime::{self as rt, Obj};
             super::super::__lng::__initialize();
             unsafe {
                 let __p0: Obj = ::lungo::LeanType::<::lungo::RustBackend>::into_lean(x);
-                let __r: u8 = super::super::__lng::l_Mos_dHindcast_dHeldUp_dofNat(__p0);
+                let __r: u8 = super::super::__lng::l_Datacartridge_dHindcast_dHeldUp_dofNat(__p0);
                 ::lungo::__facade::dec::<::lungo::RustBackend>(__p0);
                 ::lungo::__facade::from_small::<::lungo::RustBackend, super::super::hindcast::HeldUp>(__r as usize)
             }
@@ -2580,11 +2584,11 @@ pub mod __meta {
 
     static DECLARATIONS: &[::lungo::DeclarationInfo] = &[
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Claim.opposite",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Claim.opposite",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1200, column: 1 }, end: ::lungo::SourcePosition { line: 1202, column: 90 } }),
-            lean_type: "Mos.Forecast.Claim → Mos.Forecast.Claim",
+            lean_type: "Datacartridge.Forecast.Claim → Datacartridge.Forecast.Claim",
             compiled_signature: "(obj) -> obj",
             rust_path: "forecast::claim::opposite",
             trust: ::lungo::ExportTrust {
@@ -2595,7 +2599,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.opposite_says_the_rest"],
+                claims: &["Datacartridge.Forecast.opposite_says_the_rest"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2603,11 +2607,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Clash.ofNat",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Clash.ofNat",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Forecast.Clash",
+            lean_type: "Nat → Datacartridge.Forecast.Clash",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::clash::of_nat",
             trust: ::lungo::ExportTrust {
@@ -2618,7 +2622,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.Clash.ofNat_reads_back"],
+                claims: &["Datacartridge.Forecast.Clash.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2626,11 +2630,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Group.gap",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Group.gap",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 389, column: 1 }, end: ::lungo::SourcePosition { line: 390, column: 94 } }),
-            lean_type: "Mos.Forecast.Group → Int",
+            lean_type: "Datacartridge.Forecast.Group → Int",
             compiled_signature: "(obj) -> tobj",
             rust_path: "forecast::group::gap",
             trust: ::lungo::ExportTrust {
@@ -2641,7 +2645,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_lt", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_nat_abs", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_mod", "lean_nat_pow", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.group_split"],
+                claims: &["Datacartridge.Forecast.group_split"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2649,11 +2653,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Group.squares",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Group.squares",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 384, column: 1 }, end: ::lungo::SourcePosition { line: 387, column: 64 } }),
-            lean_type: "Mos.Forecast.Group → Int",
+            lean_type: "Datacartridge.Forecast.Group → Int",
             compiled_signature: "(obj) -> tobj",
             rust_path: "forecast::group::squares",
             trust: ::lungo::ExportTrust {
@@ -2664,7 +2668,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_lt", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_nat_abs", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_mod", "lean_nat_pow", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.group_split"],
+                claims: &["Datacartridge.Forecast.group_split"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2672,11 +2676,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Hearing.ofNat",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Hearing.ofNat",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Forecast.Hearing",
+            lean_type: "Nat → Datacartridge.Forecast.Hearing",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::hearing::of_nat",
             trust: ::lungo::ExportTrust {
@@ -2687,7 +2691,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.Hearing.ofNat_reads_back"],
+                claims: &["Datacartridge.Forecast.Hearing.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2695,11 +2699,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Leave.ofNat",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Leave.ofNat",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Forecast.Leave",
+            lean_type: "Nat → Datacartridge.Forecast.Leave",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::leave::of_nat",
             trust: ::lungo::ExportTrust {
@@ -2710,7 +2714,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.Leave.ofNat_reads_back"],
+                claims: &["Datacartridge.Forecast.Leave.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2718,11 +2722,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Outcome.ofNat",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Outcome.ofNat",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Forecast.Outcome",
+            lean_type: "Nat → Datacartridge.Forecast.Outcome",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::outcome::of_nat",
             trust: ::lungo::ExportTrust {
@@ -2733,7 +2737,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.Outcome.ofNat_reads_back"],
+                claims: &["Datacartridge.Forecast.Outcome.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2741,11 +2745,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Sureness.ofNat",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Sureness.ofNat",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Forecast.Sureness",
+            lean_type: "Nat → Datacartridge.Forecast.Sureness",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::sureness::of_nat",
             trust: ::lungo::ExportTrust {
@@ -2756,7 +2760,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.Sureness.ofNat_reads_back"],
+                claims: &["Datacartridge.Forecast.Sureness.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2764,11 +2768,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Trend.ofNat",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Trend.ofNat",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Forecast.Trend",
+            lean_type: "Nat → Datacartridge.Forecast.Trend",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::trend::of_nat",
             trust: ::lungo::ExportTrust {
@@ -2779,7 +2783,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.Trend.ofNat_reads_back"],
+                claims: &["Datacartridge.Forecast.Trend.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2787,11 +2791,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.When.counts",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.When.counts",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 930, column: 1 }, end: ::lungo::SourcePosition { line: 933, column: 104 } }),
-            lean_type: "Mos.Forecast.When → Int → Bool",
+            lean_type: "Datacartridge.Forecast.When → Int → Bool",
             compiled_signature: "(@& obj, @& tobj) -> u8",
             rust_path: "forecast::when::counts",
             trust: ::lungo::ExportTrust {
@@ -2802,7 +2806,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.counts_any_time", "Mos.Forecast.counts_at_the_deadline"],
+                claims: &["Datacartridge.Forecast.counts_any_time", "Datacartridge.Forecast.counts_at_the_deadline"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2810,11 +2814,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.Window.ofNat",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.Window.ofNat",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Forecast.Window",
+            lean_type: "Nat → Datacartridge.Forecast.Window",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::window::of_nat",
             trust: ::lungo::ExportTrust {
@@ -2825,7 +2829,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.Window.ofNat_reads_back"],
+                claims: &["Datacartridge.Forecast.Window.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2833,11 +2837,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.all",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.all",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 263, column: 1 }, end: ::lungo::SourcePosition { line: 268, column: 13 } }),
-            lean_type: "List Mos.Forecast.Outcome → Mos.Forecast.Outcome",
+            lean_type: "List Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::all",
             trust: ::lungo::ExportTrust {
@@ -2848,7 +2852,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_eq"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.all_of_one", "Mos.Forecast.all_refuted", "Mos.Forecast.all_settles"],
+                claims: &["Datacartridge.Forecast.all_of_one", "Datacartridge.Forecast.all_refuted", "Datacartridge.Forecast.all_settles"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2856,11 +2860,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.any",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.any",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 270, column: 1 }, end: ::lungo::SourcePosition { line: 275, column: 15 } }),
-            lean_type: "List Mos.Forecast.Outcome → Mos.Forecast.Outcome",
+            lean_type: "List Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::any",
             trust: ::lungo::ExportTrust {
@@ -2871,7 +2875,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_eq"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.any_confirmed", "Mos.Forecast.any_of_one", "Mos.Forecast.any_settles"],
+                claims: &["Datacartridge.Forecast.any_confirmed", "Datacartridge.Forecast.any_of_one", "Datacartridge.Forecast.any_settles"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2879,9 +2883,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.apartBeyondChance",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.apartBeyondChance",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1817, column: 1 }, end: ::lungo::SourcePosition { line: 1829, column: 73 } }),
             lean_type: "Nat → Nat → Nat → Nat → Nat → Nat → Bool",
             compiled_signature: "(tobj, tobj, tobj, tobj, tobj, tobj) -> u8",
@@ -2894,7 +2898,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_lt", "lean_int_mul", "lean_int_sub", "lean_nat_dec_lt", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.apart_either_way", "Mos.Forecast.few_are_never_apart", "Mos.Forecast.the_same_are_not_apart"],
+                claims: &["Datacartridge.Forecast.apart_either_way", "Datacartridge.Forecast.few_are_never_apart", "Datacartridge.Forecast.the_same_are_not_apart"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2902,9 +2906,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.asForecast",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.asForecast",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 684, column: 1 }, end: ::lungo::SourcePosition { line: 685, column: 67 } }),
             lean_type: "Nat → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -2917,7 +2921,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.as_forecast_is_a_likelihood"],
+                claims: &["Datacartridge.Forecast.as_forecast_is_a_likelihood"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2925,9 +2929,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.askNext",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.askNext",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 719, column: 1 }, end: ::lungo::SourcePosition { line: 722, column: 73 } }),
             lean_type: "Nat → Nat → Nat → Nat",
             compiled_signature: "(@& tobj, @& tobj, @& tobj) -> tobj",
@@ -2940,7 +2944,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.ask_next_is_ahead", "Mos.Forecast.ask_next_keeps_time", "Mos.Forecast.ask_next_on_time"],
+                claims: &["Datacartridge.Forecast.ask_next_is_ahead", "Datacartridge.Forecast.ask_next_keeps_time", "Datacartridge.Forecast.ask_next_on_time"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2948,9 +2952,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.askedOf",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.askedOf",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1743, column: 1 }, end: ::lungo::SourcePosition { line: 1745, column: 68 } }),
             lean_type: "List (Int × Nat) → Nat → Option (Int × Nat)",
             compiled_signature: "(tobj, @& tobj) -> tobj",
@@ -2963,7 +2967,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_add", "lean_nat_dec_lt", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.asked_is_not_reported"],
+                claims: &["Datacartridge.Forecast.asked_is_not_reported"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2971,9 +2975,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.asks",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.asks",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 702, column: 1 }, end: ::lungo::SourcePosition { line: 705, column: 99 } }),
             lean_type: "Bool → Bool → Nat → Nat → Bool",
             compiled_signature: "(u8, u8, @& tobj, @& tobj) -> u8",
@@ -2986,7 +2990,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.asked_means_due", "Mos.Forecast.unanswered_is_not_asked"],
+                claims: &["Datacartridge.Forecast.asked_means_due", "Datacartridge.Forecast.unanswered_is_not_asked"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -2994,9 +2998,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.back",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.back",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1681, column: 1 }, end: ::lungo::SourcePosition { line: 1684, column: 64 } }),
             lean_type: "Nat → Nat → Int × Nat → Int × Nat",
             compiled_signature: "(tobj, tobj, obj) -> obj",
@@ -3009,7 +3013,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_sub", "lean_nat_dec_eq", "lean_nat_dec_lt", "lean_nat_sub", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.back_add", "Mos.Forecast.back_within_the_year", "Mos.Forecast.year_before_is_a_year_of_periods_back"],
+                claims: &["Datacartridge.Forecast.back_add", "Datacartridge.Forecast.back_within_the_year", "Datacartridge.Forecast.year_before_is_a_year_of_periods_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3017,9 +3021,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.backing",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.backing",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 757, column: 1 }, end: ::lungo::SourcePosition { line: 760, column: 117 } }),
             lean_type: "Nat → Option Nat → Nat → Int",
             compiled_signature: "(@& tobj, @& tobj, tobj) -> tobj",
@@ -3032,7 +3036,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_ediv", "lean_int_mul", "lean_int_sub", "lean_nat_dec_le", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.backing_of_anyone", "Mos.Forecast.backing_without_history", "Mos.Forecast.no_backing_without_a_difference"],
+                claims: &["Datacartridge.Forecast.backing_of_anyone", "Datacartridge.Forecast.backing_without_history", "Datacartridge.Forecast.no_backing_without_a_difference"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3040,9 +3044,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.baseRate",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.baseRate",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 663, column: 1 }, end: ::lungo::SourcePosition { line: 665, column: 74 } }),
             lean_type: "Nat → Nat → Option Nat",
             compiled_signature: "(@& tobj, @& tobj) -> tobj",
@@ -3055,7 +3059,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.base_rate_extremes", "Mos.Forecast.base_rate_is_bounded"],
+                claims: &["Datacartridge.Forecast.base_rate_extremes", "Datacartridge.Forecast.base_rate_is_bounded"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3063,11 +3067,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.bestReading",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.bestReading",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1357, column: 1 }, end: ::lungo::SourcePosition { line: 1361, column: 92 } }),
-            lean_type: "Nat → List Mos.Forecast.Tried → Option Mos.Forecast.Tried",
+            lean_type: "Nat → List Datacartridge.Forecast.Tried → Option Datacartridge.Forecast.Tried",
             compiled_signature: "(@& tobj, tobj) -> tobj",
             rust_path: "forecast::best_reading",
             trust: ::lungo::ExportTrust {
@@ -3078,7 +3082,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.chosen_scores_no_worse", "Mos.Forecast.too_few_choose_nothing"],
+                claims: &["Datacartridge.Forecast.chosen_scores_no_worse", "Datacartridge.Forecast.too_few_choose_nothing"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3086,11 +3090,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.better",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.better",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1350, column: 1 }, end: ::lungo::SourcePosition { line: 1355, column: 48 } }),
-            lean_type: "Mos.Forecast.Tried → Mos.Forecast.Tried → Mos.Forecast.Tried",
+            lean_type: "Datacartridge.Forecast.Tried → Datacartridge.Forecast.Tried → Datacartridge.Forecast.Tried",
             compiled_signature: "(@& obj, @& obj) -> obj",
             rust_path: "forecast::better",
             trust: ::lungo::ExportTrust {
@@ -3101,7 +3105,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.best_of_fold_scores_no_worse", "Mos.Forecast.better_scores_no_worse"],
+                claims: &["Datacartridge.Forecast.best_of_fold_scores_no_worse", "Datacartridge.Forecast.better_scores_no_worse"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3109,9 +3113,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.brier",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.brier",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 351, column: 1 }, end: ::lungo::SourcePosition { line: 355, column: 22 } }),
             lean_type: "Nat → Bool → Nat",
             compiled_signature: "(@& tobj, u8) -> tobj",
@@ -3124,7 +3128,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.brier_is_bounded", "Mos.Forecast.brier_of_certainty", "Mos.Forecast.brier_of_even_odds", "Mos.Forecast.brier_rewards_being_right", "Mos.Forecast.life_of_one"],
+                claims: &["Datacartridge.Forecast.brier_is_bounded", "Datacartridge.Forecast.brier_of_certainty", "Datacartridge.Forecast.brier_of_even_odds", "Datacartridge.Forecast.brier_rewards_being_right", "Datacartridge.Forecast.life_of_one"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3132,11 +3136,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.calibrated",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.calibrated",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 427, column: 1 }, end: ::lungo::SourcePosition { line: 430, column: 60 } }),
-            lean_type: "Mos.Forecast.Split → Bool",
+            lean_type: "Datacartridge.Forecast.Split → Bool",
             compiled_signature: "(@& obj) -> u8",
             rust_path: "forecast::calibrated",
             trust: ::lungo::ExportTrust {
@@ -3147,7 +3151,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.calibrated_iff"],
+                claims: &["Datacartridge.Forecast.calibrated_iff"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3155,11 +3159,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.carried",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.carried",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1038, column: 1 }, end: ::lungo::SourcePosition { line: 1047, column: 43 } }),
-            lean_type: "Mos.Forecast.Link → Mos.Forecast.Claim → Option Mos.Forecast.Claim",
+            lean_type: "Datacartridge.Forecast.Link → Datacartridge.Forecast.Claim → Option Datacartridge.Forecast.Claim",
             compiled_signature: "(tobj, obj) -> tobj",
             rust_path: "forecast::carried",
             trust: ::lungo::ExportTrust {
@@ -3170,7 +3174,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.carried_holds"],
+                claims: &["Datacartridge.Forecast.carried_holds"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3178,9 +3182,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.choosesAt",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.choosesAt",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1339, column: 1 }, end: ::lungo::SourcePosition { line: 1341, column: 36 } }),
             lean_type: "Nat",
             compiled_signature: "() -> tobj",
@@ -3193,7 +3197,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.too_few_choose_nothing"],
+                claims: &["Datacartridge.Forecast.too_few_choose_nothing"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3201,11 +3205,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.clash",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.clash",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 867, column: 1 }, end: ::lungo::SourcePosition { line: 872, column: 14 } }),
-            lean_type: "Mos.Forecast.Claim → Mos.Forecast.Claim → Mos.Forecast.Clash",
+            lean_type: "Datacartridge.Forecast.Claim → Datacartridge.Forecast.Claim → Datacartridge.Forecast.Clash",
             compiled_signature: "(@& obj, @& obj) -> u8",
             rust_path: "forecast::clash",
             trust: ::lungo::ExportTrust {
@@ -3216,7 +3220,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_add", "lean_nat_dec_le", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.agreeing_exclusive_within_certainty", "Mos.Forecast.agreeing_respects_implication", "Mos.Forecast.clashWhen_at_one_moment", "Mos.Forecast.clash_with_itself"],
+                claims: &["Datacartridge.Forecast.agreeing_exclusive_within_certainty", "Datacartridge.Forecast.agreeing_respects_implication", "Datacartridge.Forecast.clashWhen_at_one_moment", "Datacartridge.Forecast.clash_with_itself"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3224,11 +3228,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.clashHappening",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.clashHappening",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1216, column: 1 }, end: ::lungo::SourcePosition { line: 1224, column: 14 } }),
-            lean_type: "Bool → Bool → Nat → Nat → Mos.Forecast.When → Mos.Forecast.When → Mos.Forecast.Clash",
+            lean_type: "Bool → Bool → Nat → Nat → Datacartridge.Forecast.When → Datacartridge.Forecast.When → Datacartridge.Forecast.Clash",
             compiled_signature: "(u8, u8, @& tobj, @& tobj, @& obj, @& obj) -> u8",
             rust_path: "forecast::clash_happening",
             trust: ::lungo::ExportTrust {
@@ -3239,7 +3243,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_le", "lean_nat_dec_le", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.happening_apart_agrees", "Mos.Forecast.happening_as_likely_agrees", "Mos.Forecast.happening_first_too_likely", "Mos.Forecast.happening_only_implies"],
+                claims: &["Datacartridge.Forecast.happening_apart_agrees", "Datacartridge.Forecast.happening_as_likely_agrees", "Datacartridge.Forecast.happening_first_too_likely", "Datacartridge.Forecast.happening_only_implies"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3247,11 +3251,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.clashWhen",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.clashWhen",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 960, column: 1 }, end: ::lungo::SourcePosition { line: 970, column: 14 } }),
-            lean_type: "Mos.Forecast.Claim → Mos.Forecast.Claim → Mos.Forecast.When → Mos.Forecast.When → Mos.Forecast.Clash",
+            lean_type: "Datacartridge.Forecast.Claim →\n  Datacartridge.Forecast.Claim →\n    Datacartridge.Forecast.When → Datacartridge.Forecast.When → Datacartridge.Forecast.Clash",
             compiled_signature: "(@& obj, @& obj, @& obj, @& obj) -> u8",
             rust_path: "forecast::clash_when",
             trust: ::lungo::ExportTrust {
@@ -3262,7 +3266,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_le", "lean_int_dec_lt", "lean_nat_add", "lean_nat_dec_le", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.clashWhen_at_one_moment", "Mos.Forecast.only_meeting_covers", "Mos.Forecast.only_together_excludes"],
+                claims: &["Datacartridge.Forecast.clashWhen_at_one_moment", "Datacartridge.Forecast.only_meeting_covers", "Datacartridge.Forecast.only_together_excludes"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3270,11 +3274,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.conditional",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.conditional",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 277, column: 1 }, end: ::lungo::SourcePosition { line: 287, column: 19 } }),
-            lean_type: "Mos.Forecast.Outcome → Mos.Forecast.Outcome → Mos.Forecast.Outcome",
+            lean_type: "Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome → Datacartridge.Forecast.Outcome",
             compiled_signature: "(u8, u8) -> u8",
             rust_path: "forecast::conditional",
             trust: ::lungo::ExportTrust {
@@ -3285,7 +3289,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.conditional_is_not_refuted_by_its_condition"],
+                claims: &["Datacartridge.Forecast.conditional_is_not_refuted_by_its_condition"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3293,9 +3297,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.conviction",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.conviction",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1470, column: 1 }, end: ::lungo::SourcePosition { line: 1474, column: 71 } }),
             lean_type: "Int → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -3308,7 +3312,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_abs", "lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.conviction_is_symmetric_and_bounded", "Mos.Forecast.no_backing_no_conviction"],
+                claims: &["Datacartridge.Forecast.conviction_is_symmetric_and_bounded", "Datacartridge.Forecast.no_backing_no_conviction"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3316,11 +3320,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.discerning",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.discerning",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 432, column: 1 }, end: ::lungo::SourcePosition { line: 432, column: 100 } }),
-            lean_type: "Mos.Forecast.Split → Bool",
+            lean_type: "Datacartridge.Forecast.Split → Bool",
             compiled_signature: "(@& obj) -> u8",
             rust_path: "forecast::discerning",
             trust: ::lungo::ExportTrust {
@@ -3331,7 +3335,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.discerning_iff"],
+                claims: &["Datacartridge.Forecast.discerning_iff"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3339,9 +3343,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.evenWeight",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.evenWeight",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 529, column: 1 }, end: ::lungo::SourcePosition { line: 530, column: 29 } }),
             lean_type: "Nat",
             compiled_signature: "() -> tobj",
@@ -3354,7 +3358,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.backing_of_anyone", "Mos.Forecast.even_odds_counts_as_anyone", "Mos.Forecast.unproven_counts_as_anyone"],
+                claims: &["Datacartridge.Forecast.backing_of_anyone", "Datacartridge.Forecast.even_odds_counts_as_anyone", "Datacartridge.Forecast.unproven_counts_as_anyone"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3362,9 +3366,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.expected",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.expected",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1444, column: 1 }, end: ::lungo::SourcePosition { line: 1448, column: 128 } }),
             lean_type: "Nat → Int → Int → Nat → Int",
             compiled_signature: "(@& tobj, @& tobj, @& tobj, tobj) -> tobj",
@@ -3377,7 +3381,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_ediv", "lean_int_mul", "lean_int_sub", "lean_nat_dec_le", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.even_odds_expect_only_costs", "Mos.Forecast.expected_at_the_extremes"],
+                claims: &["Datacartridge.Forecast.even_odds_expect_only_costs", "Datacartridge.Forecast.expected_at_the_extremes"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3385,9 +3389,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.expectedFirst",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.expectedFirst",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1487, column: 1 }, end: ::lungo::SourcePosition { line: 1495, column: 42 } }),
             lean_type: "Option Int × Int → Option Int × Int → Bool",
             compiled_signature: "(@& obj, @& obj) -> u8",
@@ -3400,7 +3404,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_abs", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.expectedFirst_irreflexive", "Mos.Forecast.said_before_unsaid"],
+                claims: &["Datacartridge.Forecast.expectedFirst_irreflexive", "Datacartridge.Forecast.said_before_unsaid"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3408,9 +3412,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.lastWeek",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.lastWeek",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1419, column: 1 }, end: ::lungo::SourcePosition { line: 1421, column: 81 } }),
             lean_type: "Nat → Nat × Nat",
             compiled_signature: "(@& tobj) -> obj",
@@ -3423,7 +3427,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_mod", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.lastWeek_is_whole_and_over"],
+                claims: &["Datacartridge.Forecast.lastWeek_is_whole_and_over"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3431,9 +3435,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.later",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.later",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1732, column: 1 }, end: ::lungo::SourcePosition { line: 1733, column: 103 } }),
             lean_type: "Int × Nat → Int × Nat → Bool",
             compiled_signature: "(@& obj, @& obj) -> u8",
@@ -3446,7 +3450,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.asked_is_not_reported", "Mos.Forecast.next_is_later"],
+                claims: &["Datacartridge.Forecast.asked_is_not_reported", "Datacartridge.Forecast.next_is_later"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3454,9 +3458,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.laterOf",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.laterOf",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1735, column: 1 }, end: ::lungo::SourcePosition { line: 1736, column: 72 } }),
             lean_type: "Int × Nat → Int × Nat → Int × Nat",
             compiled_signature: "(@& obj, @& obj) -> obj",
@@ -3469,7 +3473,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.latest_is_latest", "Mos.Forecast.noLater_laterOf_left", "Mos.Forecast.noLater_laterOf_right"],
+                claims: &["Datacartridge.Forecast.latest_is_latest", "Datacartridge.Forecast.noLater_laterOf_left", "Datacartridge.Forecast.noLater_laterOf_right"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3477,11 +3481,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.leastFromParts",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.leastFromParts",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1195, column: 1 }, end: ::lungo::SourcePosition { line: 1198, column: 90 } }),
-            lean_type: "List Mos.Forecast.Claim → Int → Mos.Forecast.Claim → Option Int",
+            lean_type: "List Datacartridge.Forecast.Claim → Int → Datacartridge.Forecast.Claim → Option Int",
             compiled_signature: "(tobj, @& tobj, @& obj) -> tobj",
             rust_path: "forecast::least_from_parts",
             trust: ::lungo::ExportTrust {
@@ -3492,7 +3496,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_eq", "lean_int_dec_lt", "lean_int_mul", "lean_int_sub", "lean_nat_add", "lean_nat_dec_le", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.least_from_parts_only_when_carried"],
+                claims: &["Datacartridge.Forecast.least_from_parts_only_when_carried"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3500,9 +3504,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.leastWhenAll",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.leastWhenAll",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1158, column: 1 }, end: ::lungo::SourcePosition { line: 1162, column: 83 } }),
             lean_type: "List Nat → Int",
             compiled_signature: "(tobj) -> tobj",
@@ -3515,7 +3519,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_mul", "lean_int_sub", "lean_nat_add", "lean_nat_dec_le", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.least_is_under_each", "Mos.Forecast.least_of_one"],
+                claims: &["Datacartridge.Forecast.least_is_under_each", "Datacartridge.Forecast.least_of_one"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3523,11 +3527,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.leave",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.leave",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1523, column: 1 }, end: ::lungo::SourcePosition { line: 1532, column: 13 } }),
-            lean_type: "Int → Option Nat → Option Nat → Nat → Option Nat → Mos.Forecast.Leave",
+            lean_type: "Int → Option Nat → Option Nat → Nat → Option Nat → Datacartridge.Forecast.Leave",
             compiled_signature: "(@& tobj, tobj, tobj, @& tobj, @& tobj) -> u8",
             rust_path: "forecast::leave",
             trust: ::lungo::ExportTrust {
@@ -3538,7 +3542,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_le", "lean_int_neg", "lean_nat_dec_le", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.no_rule_stays", "Mos.Forecast.stop_comes_first", "Mos.Forecast.within_bounds_stays"],
+                claims: &["Datacartridge.Forecast.no_rule_stays", "Datacartridge.Forecast.stop_comes_first", "Datacartridge.Forecast.within_bounds_stays"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3546,11 +3550,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.lifeBrier",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.lifeBrier",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 477, column: 1 }, end: ::lungo::SourcePosition { line: 483, column: 103 } }),
-            lean_type: "List Mos.Forecast.Stand → Bool → Option Nat",
+            lean_type: "List Datacartridge.Forecast.Stand → Bool → Option Nat",
             compiled_signature: "(@& tobj, u8) -> tobj",
             rust_path: "forecast::life_brier",
             trust: ::lungo::ExportTrust {
@@ -3561,7 +3565,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.life_of_one"],
+                claims: &["Datacartridge.Forecast.life_of_one"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3569,9 +3573,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.likelihood",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.likelihood",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 348, column: 1 }, end: ::lungo::SourcePosition { line: 349, column: 50 } }),
             lean_type: "Nat → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -3584,7 +3588,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.agreeing_exclusive_within_certainty", "Mos.Forecast.agreeing_respects_implication", "Mos.Forecast.always_right_reads_no_lower", "Mos.Forecast.happening_first_too_likely", "Mos.Forecast.never_right_reads_no_higher", "Mos.Forecast.no_record_reads_as_said", "Mos.Forecast.pool_of_agreement", "Mos.Forecast.pool_of_one", "Mos.Forecast.too_likely_across_is_sound"],
+                claims: &["Datacartridge.Forecast.agreeing_exclusive_within_certainty", "Datacartridge.Forecast.agreeing_respects_implication", "Datacartridge.Forecast.always_right_reads_no_lower", "Datacartridge.Forecast.happening_first_too_likely", "Datacartridge.Forecast.never_right_reads_no_higher", "Datacartridge.Forecast.no_record_reads_as_said", "Datacartridge.Forecast.pool_of_agreement", "Datacartridge.Forecast.pool_of_one", "Datacartridge.Forecast.too_likely_across_is_sound"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3592,9 +3596,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.mayStateAgain",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.mayStateAgain",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1887, column: 1 }, end: ::lungo::SourcePosition { line: 1891, column: 61 } }),
             lean_type: "Nat → Nat → Bool → Bool",
             compiled_signature: "(@& tobj, @& tobj, u8) -> u8",
@@ -3607,7 +3611,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_eq"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.no_change_is_not_a_change_of_mind", "Mos.Forecast.one_way_or_the_other", "Mos.Forecast.still_standing_is_the_same"],
+                claims: &["Datacartridge.Forecast.no_change_is_not_a_change_of_mind", "Datacartridge.Forecast.one_way_or_the_other", "Datacartridge.Forecast.still_standing_is_the_same"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3615,9 +3619,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.mean",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.mean",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 498, column: 1 }, end: ::lungo::SourcePosition { line: 500, column: 81 } }),
             lean_type: "List Nat → Option Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -3630,7 +3634,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_div"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.mean_of_nothing", "Mos.Forecast.mean_of_one"],
+                claims: &["Datacartridge.Forecast.mean_of_nothing", "Datacartridge.Forecast.mean_of_one"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3638,9 +3642,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.nextPeriod",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.nextPeriod",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1649, column: 1 }, end: ::lungo::SourcePosition { line: 1650, column: 63 } }),
             lean_type: "Int → Nat → Nat → Int × Nat",
             compiled_signature: "(tobj, @& tobj, @& tobj) -> obj",
@@ -3653,7 +3657,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_nat_add", "lean_nat_dec_lt", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.next_is_later", "Mos.Forecast.next_of_previous"],
+                claims: &["Datacartridge.Forecast.next_is_later", "Datacartridge.Forecast.next_of_previous"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3661,11 +3665,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.occurs",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.occurs",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 228, column: 1 }, end: ::lungo::SourcePosition { line: 235, column: 13 } }),
-            lean_type: "Bool → Bool → Mos.Forecast.Hearing → Mos.Forecast.Outcome",
+            lean_type: "Bool → Bool → Datacartridge.Forecast.Hearing → Datacartridge.Forecast.Outcome",
             compiled_signature: "(u8, u8, u8) -> u8",
             rust_path: "forecast::occurs",
             trust: ::lungo::ExportTrust {
@@ -3676,7 +3680,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.occurs_settles_at_the_deadline", "Mos.Forecast.occurs_stays_true", "Mos.Forecast.unheard_silence_is_void", "Mos.Forecast.wrong_only_where_it_could_be_heard"],
+                claims: &["Datacartridge.Forecast.occurs_settles_at_the_deadline", "Datacartridge.Forecast.occurs_stays_true", "Datacartridge.Forecast.unheard_silence_is_void", "Datacartridge.Forecast.wrong_only_where_it_could_be_heard"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3684,9 +3688,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.pairedBeyondChance",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.pairedBeyondChance",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1856, column: 1 }, end: ::lungo::SourcePosition { line: 1864, column: 78 } }),
             lean_type: "Nat → Int → Nat → Bool",
             compiled_signature: "(tobj, @& tobj, @& tobj) -> u8",
@@ -3699,7 +3703,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_lt", "lean_int_mul", "lean_int_sub", "lean_nat_dec_lt", "lean_nat_mul", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.few_pairs_are_never_apart", "Mos.Forecast.no_difference_is_not_apart", "Mos.Forecast.paired_either_way"],
+                claims: &["Datacartridge.Forecast.few_pairs_are_never_apart", "Datacartridge.Forecast.no_difference_is_not_apart", "Datacartridge.Forecast.paired_either_way"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3707,11 +3711,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.partsCarry",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.partsCarry",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1096, column: 1 }, end: ::lungo::SourcePosition { line: 1101, column: 112 } }),
-            lean_type: "List Mos.Forecast.Claim → Int → Mos.Forecast.Claim → Bool",
+            lean_type: "List Datacartridge.Forecast.Claim → Int → Datacartridge.Forecast.Claim → Bool",
             compiled_signature: "(tobj, @& tobj, @& obj) -> u8",
             rust_path: "forecast::parts_carry",
             trust: ::lungo::ExportTrust {
@@ -3722,7 +3726,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.parts_carry_is_sound"],
+                claims: &["Datacartridge.Forecast.parts_carry_is_sound"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3730,11 +3734,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.pool",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.pool",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 601, column: 1 }, end: ::lungo::SourcePosition { line: 603, column: 76 } }),
-            lean_type: "List Mos.Forecast.View → Option Nat",
+            lean_type: "List Datacartridge.Forecast.View → Option Nat",
             compiled_signature: "(@& tobj) -> tobj",
             rust_path: "forecast::pool",
             trust: ::lungo::ExportTrust {
@@ -3745,7 +3749,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.pool_is_bounded", "Mos.Forecast.pool_of_agreement", "Mos.Forecast.pool_of_one"],
+                claims: &["Datacartridge.Forecast.pool_is_bounded", "Datacartridge.Forecast.pool_of_agreement", "Datacartridge.Forecast.pool_of_one"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3753,9 +3757,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.previousPeriod",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.previousPeriod",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1646, column: 1 }, end: ::lungo::SourcePosition { line: 1647, column: 63 } }),
             lean_type: "Int → Nat → Nat → Int × Nat",
             compiled_signature: "(tobj, @& tobj, tobj) -> obj",
@@ -3768,7 +3772,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_sub", "lean_nat_dec_lt", "lean_nat_sub", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.next_of_previous", "Mos.Forecast.previous_is_a_period"],
+                claims: &["Datacartridge.Forecast.next_of_previous", "Datacartridge.Forecast.previous_is_a_period"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3776,9 +3780,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.proven",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.proven",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 527, column: 1 }, end: ::lungo::SourcePosition { line: 527, column: 54 } }),
             lean_type: "Nat → Bool",
             compiled_signature: "(@& tobj) -> u8",
@@ -3791,7 +3795,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.proven_iff"],
+                claims: &["Datacartridge.Forecast.proven_iff"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3799,9 +3803,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.provenAt",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.provenAt",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 524, column: 1 }, end: ::lungo::SourcePosition { line: 525, column: 24 } }),
             lean_type: "Nat",
             compiled_signature: "() -> tobj",
@@ -3814,7 +3818,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.as_said_leans_neither_way", "Mos.Forecast.few_are_never_apart", "Mos.Forecast.few_calls_tell_nothing", "Mos.Forecast.few_forecasts_tell_nothing", "Mos.Forecast.few_pairs_are_never_apart", "Mos.Forecast.unproven_counts_as_anyone"],
+                claims: &["Datacartridge.Forecast.as_said_leans_neither_way", "Datacartridge.Forecast.few_are_never_apart", "Datacartridge.Forecast.few_calls_tell_nothing", "Datacartridge.Forecast.few_forecasts_tell_nothing", "Datacartridge.Forecast.few_pairs_are_never_apart", "Datacartridge.Forecast.unproven_counts_as_anyone"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3822,9 +3826,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.recalibrated",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.recalibrated",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1265, column: 1 }, end: ::lungo::SourcePosition { line: 1272, column: 89 } }),
             lean_type: "Nat → Nat → Nat → Nat → Nat",
             compiled_signature: "(@& tobj, @& tobj, @& tobj, @& tobj) -> tobj",
@@ -3837,7 +3841,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.always_right_reads_no_lower", "Mos.Forecast.counting_for_nothing_reads_the_record", "Mos.Forecast.never_right_reads_no_higher", "Mos.Forecast.no_record_reads_as_said", "Mos.Forecast.recalibrated_is_a_likelihood"],
+                claims: &["Datacartridge.Forecast.always_right_reads_no_lower", "Datacartridge.Forecast.counting_for_nothing_reads_the_record", "Datacartridge.Forecast.never_right_reads_no_higher", "Datacartridge.Forecast.no_record_reads_as_said", "Datacartridge.Forecast.recalibrated_is_a_likelihood"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3845,11 +3849,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.settle",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.settle",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 39, column: 1 }, end: ::lungo::SourcePosition { line: 58, column: 30 } }),
-            lean_type: "Mos.Forecast.Window → Bool → List Bool → Mos.Forecast.Outcome",
+            lean_type: "Datacartridge.Forecast.Window → Bool → List Bool → Datacartridge.Forecast.Outcome",
             compiled_signature: "(u8, u8, @& tobj) -> u8",
             rust_path: "forecast::settle",
             trust: ::lungo::ExportTrust {
@@ -3860,7 +3864,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.agreed_is_settled_as_usual", "Mos.Forecast.any_time_settles_early", "Mos.Forecast.any_time_stays_true", "Mos.Forecast.at_deadline_waits", "Mos.Forecast.due_is_settled", "Mos.Forecast.nothing_observed", "Mos.Forecast.settle_satisfies_settling"],
+                claims: &["Datacartridge.Forecast.agreed_is_settled_as_usual", "Datacartridge.Forecast.any_time_settles_early", "Datacartridge.Forecast.any_time_stays_true", "Datacartridge.Forecast.at_deadline_waits", "Datacartridge.Forecast.due_is_settled", "Datacartridge.Forecast.nothing_observed", "Datacartridge.Forecast.settle_satisfies_settling"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3868,11 +3872,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.settleReported",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.settleReported",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 156, column: 1 }, end: ::lungo::SourcePosition { line: 164, column: 45 } }),
-            lean_type: "Mos.Forecast.Window → Bool → List Bool → Bool → Mos.Forecast.Outcome",
+            lean_type: "Datacartridge.Forecast.Window → Bool → List Bool → Bool → Datacartridge.Forecast.Outcome",
             compiled_signature: "(u8, u8, @& tobj, u8) -> u8",
             rust_path: "forecast::settle_reported",
             trust: ::lungo::ExportTrust {
@@ -3883,7 +3887,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.agreed_is_settled_as_usual", "Mos.Forecast.any_time_is_not_undone_by_a_later_dispute", "Mos.Forecast.contested_at_the_deadline_is_void", "Mos.Forecast.settle_reported_satisfies"],
+                claims: &["Datacartridge.Forecast.agreed_is_settled_as_usual", "Datacartridge.Forecast.any_time_is_not_undone_by_a_later_dispute", "Datacartridge.Forecast.contested_at_the_deadline_is_void", "Datacartridge.Forecast.settle_reported_satisfies"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3891,11 +3895,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.settled",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.settled",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 60, column: 1 }, end: ::lungo::SourcePosition { line: 64, column: 14 } }),
-            lean_type: "Mos.Forecast.Outcome → Bool",
+            lean_type: "Datacartridge.Forecast.Outcome → Bool",
             compiled_signature: "(u8) -> u8",
             rust_path: "forecast::settled",
             trust: ::lungo::ExportTrust {
@@ -3906,7 +3910,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.all_settles", "Mos.Forecast.any_settles", "Mos.Forecast.due_is_settled", "Mos.Forecast.occurs_settles_at_the_deadline"],
+                claims: &["Datacartridge.Forecast.all_settles", "Datacartridge.Forecast.any_settles", "Datacartridge.Forecast.due_is_settled", "Datacartridge.Forecast.occurs_settles_at_the_deadline"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3914,11 +3918,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.silenceCounts",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.silenceCounts",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 222, column: 1 }, end: ::lungo::SourcePosition { line: 226, column: 14 } }),
-            lean_type: "Mos.Forecast.Hearing → Bool",
+            lean_type: "Datacartridge.Forecast.Hearing → Bool",
             compiled_signature: "(u8) -> u8",
             rust_path: "forecast::silence_counts",
             trust: ::lungo::ExportTrust {
@@ -3929,7 +3933,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.wrong_only_where_it_could_be_heard"],
+                claims: &["Datacartridge.Forecast.wrong_only_where_it_could_be_heard"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3937,9 +3941,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.skill",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.skill",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 502, column: 1 }, end: ::lungo::SourcePosition { line: 507, column: 80 } }),
             lean_type: "Nat → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -3952,7 +3956,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.skill_is_bounded"],
+                claims: &["Datacartridge.Forecast.skill_is_bounded"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3960,11 +3964,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.split",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.split",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 409, column: 1 }, end: ::lungo::SourcePosition { line: 420, column: 55 } }),
-            lean_type: "List Mos.Forecast.Group → Option Mos.Forecast.Split",
+            lean_type: "List Datacartridge.Forecast.Group → Option Datacartridge.Forecast.Split",
             compiled_signature: "(tobj) -> tobj",
             rust_path: "forecast::split",
             trust: ::lungo::ExportTrust {
@@ -3975,7 +3979,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_eq", "lean_int_dec_lt", "lean_int_ediv", "lean_int_mul", "lean_int_neg", "lean_int_sub", "lean_nat_abs", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_mod", "lean_nat_pow", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.split_of_none"],
+                claims: &["Datacartridge.Forecast.split_of_none"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -3983,11 +3987,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.sureness",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.sureness",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1597, column: 1 }, end: ::lungo::SourcePosition { line: 1599, column: 76 } }),
-            lean_type: "List Mos.Forecast.Call → Mos.Forecast.Sureness",
+            lean_type: "List Datacartridge.Forecast.Call → Datacartridge.Forecast.Sureness",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "forecast::sureness",
             trust: ::lungo::ExportTrust {
@@ -3998,7 +4002,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.sureness_too_high", "Mos.Forecast.sureness_too_low"],
+                claims: &["Datacartridge.Forecast.sureness_too_high", "Datacartridge.Forecast.sureness_too_low"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4006,11 +4010,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.surenessOf",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.surenessOf",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1583, column: 1 }, end: ::lungo::SourcePosition { line: 1589, column: 14 } }),
-            lean_type: "Nat → Nat → Nat → Nat → Mos.Forecast.Sureness",
+            lean_type: "Nat → Nat → Nat → Nat → Datacartridge.Forecast.Sureness",
             compiled_signature: "(@& tobj, @& tobj, @& tobj, @& tobj) -> u8",
             rust_path: "forecast::sureness_of",
             trust: ::lungo::ExportTrust {
@@ -4021,7 +4025,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_lt", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.as_said_leans_neither_way", "Mos.Forecast.few_calls_tell_nothing", "Mos.Forecast.too_high_is_high", "Mos.Forecast.too_low_is_low"],
+                claims: &["Datacartridge.Forecast.as_said_leans_neither_way", "Datacartridge.Forecast.few_calls_tell_nothing", "Datacartridge.Forecast.too_high_is_high", "Datacartridge.Forecast.too_low_is_low"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4029,9 +4033,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.telling",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.telling",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 661, column: 1 }, end: ::lungo::SourcePosition { line: 661, column: 58 } }),
             lean_type: "Nat → Bool",
             compiled_signature: "(@& tobj) -> u8",
@@ -4044,7 +4048,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.telling_iff"],
+                claims: &["Datacartridge.Forecast.telling_iff"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4052,9 +4056,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.tenth",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.tenth",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 491, column: 1 }, end: ::lungo::SourcePosition { line: 493, column: 73 } }),
             lean_type: "Nat → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -4067,7 +4071,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le", "lean_nat_div"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.tenth_is_bounded"],
+                claims: &["Datacartridge.Forecast.tenth_is_bounded"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4075,11 +4079,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.tooLikelyAcross",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.tooLikelyAcross",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1058, column: 1 }, end: ::lungo::SourcePosition { line: 1065, column: 18 } }),
-            lean_type: "Mos.Forecast.Link → Mos.Forecast.Claim → Mos.Forecast.Claim → Mos.Forecast.When → Mos.Forecast.When → Bool",
+            lean_type: "Datacartridge.Forecast.Link →\n  Datacartridge.Forecast.Claim →\n    Datacartridge.Forecast.Claim → Datacartridge.Forecast.When → Datacartridge.Forecast.When → Bool",
             compiled_signature: "(tobj, obj, @& obj, @& obj, @& obj) -> u8",
             rust_path: "forecast::too_likely_across",
             trust: ::lungo::ExportTrust {
@@ -4090,7 +4094,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_eq", "lean_int_dec_lt", "lean_int_sub", "lean_nat_dec_le", "lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.across_only_at_endings", "Mos.Forecast.too_likely_across_is_sound"],
+                claims: &["Datacartridge.Forecast.across_only_at_endings", "Datacartridge.Forecast.too_likely_across_is_sound"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4098,11 +4102,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.trend",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.trend",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 793, column: 1 }, end: ::lungo::SourcePosition { line: 801, column: 20 } }),
-            lean_type: "Option Nat → Option Nat → Nat → Nat → Mos.Forecast.Trend",
+            lean_type: "Option Nat → Option Nat → Nat → Nat → Datacartridge.Forecast.Trend",
             compiled_signature: "(@& tobj, @& tobj, @& tobj, @& tobj) -> u8",
             rust_path: "forecast::trend",
             trust: ::lungo::ExportTrust {
@@ -4113,7 +4117,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.better_is_lower", "Mos.Forecast.few_forecasts_tell_nothing"],
+                claims: &["Datacartridge.Forecast.better_is_lower", "Datacartridge.Forecast.few_forecasts_tell_nothing"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4121,9 +4125,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.weekStart",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.weekStart",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1416, column: 1 }, end: ::lungo::SourcePosition { line: 1417, column: 55 } }),
             lean_type: "Nat → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -4136,7 +4140,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_mod", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.weekStart_is_the_monday"],
+                claims: &["Datacartridge.Forecast.weekStart_is_the_monday"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4144,9 +4148,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.weight",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.weight",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 532, column: 1 }, end: ::lungo::SourcePosition { line: 540, column: 63 } }),
             lean_type: "Nat → Nat → Nat",
             compiled_signature: "(@& tobj, @& tobj) -> tobj",
@@ -4159,7 +4163,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_le", "lean_nat_dec_lt", "lean_nat_div", "lean_nat_mul", "lean_nat_shiftr", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.better_counts_for_no_less", "Mos.Forecast.even_odds_counts_as_anyone", "Mos.Forecast.unproven_counts_as_anyone", "Mos.Forecast.weight_is_bounded"],
+                claims: &["Datacartridge.Forecast.better_counts_for_no_less", "Datacartridge.Forecast.even_odds_counts_as_anyone", "Datacartridge.Forecast.unproven_counts_as_anyone", "Datacartridge.Forecast.weight_is_bounded"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4167,11 +4171,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.weighted",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.weighted",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 597, column: 1 }, end: ::lungo::SourcePosition { line: 599, column: 70 } }),
-            lean_type: "List Mos.Forecast.View → Nat",
+            lean_type: "List Datacartridge.Forecast.View → Nat",
             compiled_signature: "(@& tobj) -> tobj",
             rust_path: "forecast::weighted",
             trust: ::lungo::ExportTrust {
@@ -4182,7 +4186,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_le", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.weighted_is_bounded"],
+                claims: &["Datacartridge.Forecast.weighted_is_bounded"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4190,11 +4194,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.weights",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.weights",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 593, column: 1 }, end: ::lungo::SourcePosition { line: 595, column: 44 } }),
-            lean_type: "List Mos.Forecast.View → Nat",
+            lean_type: "List Datacartridge.Forecast.View → Nat",
             compiled_signature: "(@& tobj) -> tobj",
             rust_path: "forecast::weights",
             trust: ::lungo::ExportTrust {
@@ -4205,7 +4209,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.pool_of_agreement", "Mos.Forecast.weighted_is_bounded"],
+                claims: &["Datacartridge.Forecast.pool_of_agreement", "Datacartridge.Forecast.weighted_is_bounded"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4213,9 +4217,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.worse",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.worse",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 509, column: 1 }, end: ::lungo::SourcePosition { line: 510, column: 55 } }),
             lean_type: "Nat → Bool",
             compiled_signature: "(@& tobj) -> u8",
@@ -4228,7 +4232,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.worse_iff"],
+                claims: &["Datacartridge.Forecast.worse_iff"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4236,9 +4240,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Forecast.yearBefore",
-            module: "Mos.Forecast",
-            source_file: Some("formal/Mos/Forecast.lean"),
+            lean_name: "Datacartridge.Forecast.yearBefore",
+            module: "Datacartridge.Forecast",
+            source_file: Some("formal/Datacartridge/Forecast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 1679, column: 1 }, end: ::lungo::SourcePosition { line: 1679, column: 75 } }),
             lean_type: "Int → Nat → Int × Nat",
             compiled_signature: "(@& tobj, tobj) -> obj",
@@ -4251,7 +4255,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_sub", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Forecast.year_before_is_a_year_of_periods_back"],
+                claims: &["Datacartridge.Forecast.year_before_is_a_year_of_periods_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4259,11 +4263,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.HeldUp.ofNat",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.HeldUp.ofNat",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: None,
-            lean_type: "Nat → Mos.Hindcast.HeldUp",
+            lean_type: "Nat → Datacartridge.Hindcast.HeldUp",
             compiled_signature: "(@& tobj) -> u8",
             rust_path: "hindcast::held_up::of_nat",
             trust: ::lungo::ExportTrust {
@@ -4274,7 +4278,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.HeldUp.ofNat_reads_back"],
+                claims: &["Datacartridge.Hindcast.HeldUp.ofNat_reads_back"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4282,9 +4286,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.alike",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.alike",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 156, column: 1 }, end: ::lungo::SourcePosition { line: 157, column: 69 } }),
             lean_type: "Int → Int → Bool",
             compiled_signature: "(@& tobj, @& tobj) -> u8",
@@ -4297,7 +4301,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_dec_eq", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.alike_symm", "Mos.Hindcast.up_is_not_down"],
+                claims: &["Datacartridge.Hindcast.alike_symm", "Datacartridge.Hindcast.up_is_not_down"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4305,10 +4309,10 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.alikeRate",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
-            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 171, column: 1 }, end: ::lungo::SourcePosition { line: 174, column: 71 } }),
+            lean_name: "Datacartridge.Hindcast.alikeRate",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
+            range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 171, column: 1 }, end: ::lungo::SourcePosition { line: 174, column: 81 } }),
             lean_type: "Int → List (Int × Bool) → Option Nat",
             compiled_signature: "(@& tobj, tobj) -> tobj",
             rust_path: "hindcast::alike_rate",
@@ -4320,7 +4324,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_eq", "lean_int_dec_lt", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_to_int"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.alike_rate_of_none_alike"],
+                claims: &["Datacartridge.Hindcast.alike_rate_of_none_alike"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4328,9 +4332,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.atLeastPerStretch",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.atLeastPerStretch",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 55, column: 1 }, end: ::lungo::SourcePosition { line: 55, column: 33 } }),
             lean_type: "Nat",
             compiled_signature: "() -> tobj",
@@ -4343,7 +4347,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.a_stretch_holds_something"],
+                claims: &["Datacartridge.Hindcast.a_stretch_holds_something"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4351,9 +4355,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.callsBetter",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.callsBetter",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 295, column: 1 }, end: ::lungo::SourcePosition { line: 301, column: 21 } }),
             lean_type: "Option Nat → Option Nat → Bool",
             compiled_signature: "(@& tobj, @& tobj) -> u8",
@@ -4366,7 +4370,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.calls_better_is_strict", "Mos.Hindcast.calls_better_one_way", "Mos.Hindcast.scored_goes_first"],
+                claims: &["Datacartridge.Hindcast.calls_better_is_strict", "Datacartridge.Hindcast.calls_better_one_way", "Datacartridge.Hindcast.scored_goes_first"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4374,9 +4378,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.chooseAgain",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.chooseAgain",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 185, column: 1 }, end: ::lungo::SourcePosition { line: 185, column: 108 } }),
             lean_type: "Bool → Nat → Bool",
             compiled_signature: "(u8, @& tobj) -> u8",
@@ -4389,7 +4393,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.not_too_soon", "Mos.Hindcast.not_when_stopped"],
+                claims: &["Datacartridge.Hindcast.not_too_soon", "Datacartridge.Hindcast.not_when_stopped"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4397,9 +4401,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.chosen",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.chosen",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 129, column: 1 }, end: ::lungo::SourcePosition { line: 132, column: 52 } }),
             lean_type: "List Nat → Option Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -4412,7 +4416,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.chosen_did_best"],
+                claims: &["Datacartridge.Hindcast.chosen_did_best"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4420,9 +4424,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.countsBeside",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.countsBeside",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 255, column: 1 }, end: ::lungo::SourcePosition { line: 256, column: 72 } }),
             lean_type: "Int → Int → Bool",
             compiled_signature: "(@& tobj, @& tobj) -> u8",
@@ -4435,7 +4439,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.counted_when_both_were_asked"],
+                claims: &["Datacartridge.Hindcast.counted_when_both_were_asked"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4443,9 +4447,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.cut",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.cut",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 23, column: 1 }, end: ::lungo::SourcePosition { line: 24, column: 47 } }),
             lean_type: "Nat → Nat → Nat → Nat",
             compiled_signature: "(@& tobj, @& tobj, @& tobj) -> tobj",
@@ -4458,7 +4462,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_div", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.cut_in_order", "Mos.Hindcast.cuts_cover"],
+                claims: &["Datacartridge.Hindcast.cut_in_order", "Datacartridge.Hindcast.cuts_cover"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4466,9 +4470,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.enough",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.enough",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 60, column: 1 }, end: ::lungo::SourcePosition { line: 60, column: 83 } }),
             lean_type: "Nat → Nat → Bool",
             compiled_signature: "(@& tobj, @& tobj) -> u8",
@@ -4481,7 +4485,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_le", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.enough_iff"],
+                claims: &["Datacartridge.Hindcast.enough_iff"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4489,11 +4493,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.heldUp",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.heldUp",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 209, column: 1 }, end: ::lungo::SourcePosition { line: 214, column: 17 } }),
-            lean_type: "Nat → Nat → Nat → Mos.Hindcast.HeldUp",
+            lean_type: "Nat → Nat → Nat → Datacartridge.Hindcast.HeldUp",
             compiled_signature: "(@& tobj, @& tobj, @& tobj) -> u8",
             rust_path: "hindcast::held_up",
             trust: ::lungo::ExportTrust {
@@ -4504,7 +4508,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.better_means_lower", "Mos.Hindcast.too_soon_to_tell"],
+                claims: &["Datacartridge.Hindcast.better_means_lower", "Datacartridge.Hindcast.too_soon_to_tell"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4512,9 +4516,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.learnable",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.learnable",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 40, column: 1 }, end: ::lungo::SourcePosition { line: 42, column: 95 } }),
             lean_type: "Int → Int → Int → Bool",
             compiled_signature: "(@& tobj, @& tobj, @& tobj) -> u8",
@@ -4527,7 +4531,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.learned_was_settled"],
+                claims: &["Datacartridge.Hindcast.learned_was_settled"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4535,11 +4539,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.mean",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.mean",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 96, column: 1 }, end: ::lungo::SourcePosition { line: 98, column: 71 } }),
-            lean_type: "List Mos.Hindcast.Tried → Option Nat",
+            lean_type: "List Datacartridge.Hindcast.Tried → Option Nat",
             compiled_signature: "(@& tobj) -> tobj",
             rust_path: "hindcast::mean",
             trust: ::lungo::ExportTrust {
@@ -4550,7 +4554,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.mean_of_nothing"],
+                claims: &["Datacartridge.Hindcast.mean_of_nothing"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4558,9 +4562,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.moment",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.moment",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 400, column: 1 }, end: ::lungo::SourcePosition { line: 402, column: 70 } }),
             lean_type: "List (Option Nat) → Option (List Nat)",
             compiled_signature: "(tobj) -> tobj",
@@ -4573,7 +4577,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.every_way_is_heard", "Mos.Hindcast.left_out_only_when_all_silent"],
+                claims: &["Datacartridge.Hindcast.every_way_is_heard", "Datacartridge.Hindcast.left_out_only_when_all_silent"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4581,9 +4585,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.mostTriable",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.mostTriable",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 74, column: 1 }, end: ::lungo::SourcePosition { line: 76, column: 119 } }),
             lean_type: "List Int → Int → Option Nat",
             compiled_signature: "(@& tobj, @& tobj) -> tobj",
@@ -4596,7 +4600,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_le", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.most_triable_is_triable"],
+                claims: &["Datacartridge.Hindcast.most_triable_is_triable"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4604,9 +4608,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.needed",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.needed",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 57, column: 1 }, end: ::lungo::SourcePosition { line: 58, column: 74 } }),
             lean_type: "Nat → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -4619,7 +4623,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_mul"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.needed_grows_by_a_stretch"],
+                claims: &["Datacartridge.Hindcast.needed_grows_by_a_stretch"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4627,9 +4631,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.said",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.said",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 397, column: 1 }, end: ::lungo::SourcePosition { line: 398, column: 57 } }),
             lean_type: "Option Nat → Nat",
             compiled_signature: "(@& tobj) -> tobj",
@@ -4642,7 +4646,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.silent_says_even", "Mos.Hindcast.spoken_is_kept"],
+                claims: &["Datacartridge.Hindcast.silent_says_even", "Datacartridge.Hindcast.spoken_is_kept"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4650,9 +4654,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.settledToChooseAgain",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.settledToChooseAgain",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 182, column: 1 }, end: ::lungo::SourcePosition { line: 183, column: 36 } }),
             lean_type: "Nat",
             compiled_signature: "() -> tobj",
@@ -4665,7 +4669,7 @@ pub mod __meta {
                 extern_dependencies: &[],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.not_too_soon", "Mos.Hindcast.too_soon_to_tell"],
+                claims: &["Datacartridge.Hindcast.not_too_soon", "Datacartridge.Hindcast.too_soon_to_tell"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4673,9 +4677,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.sharedFrom",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.sharedFrom",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 253, column: 1 }, end: ::lungo::SourcePosition { line: 253, column: 60 } }),
             lean_type: "Int → Int → Int",
             compiled_signature: "(@& tobj, @& tobj) -> tobj",
@@ -4688,7 +4692,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.counted_when_both_were_asked", "Mos.Hindcast.shared_from_either_side"],
+                claims: &["Datacartridge.Hindcast.counted_when_both_were_asked", "Datacartridge.Hindcast.shared_from_either_side"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4696,9 +4700,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.sharedFromAll",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.sharedFromAll",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 270, column: 1 }, end: ::lungo::SourcePosition { line: 272, column: 91 } }),
             lean_type: "Int → List Int → Int",
             compiled_signature: "(tobj, @& tobj) -> tobj",
@@ -4711,7 +4715,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_dec_le"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.all_were_asked_in_the_shared_stretch", "Mos.Hindcast.shared_from_all_of_two"],
+                claims: &["Datacartridge.Hindcast.all_were_asked_in_the_shared_stretch", "Datacartridge.Hindcast.shared_from_all_of_two"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4719,9 +4723,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.speaks",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.speaks",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 368, column: 1 }, end: ::lungo::SourcePosition { line: 373, column: 37 } }),
             lean_type: "Bool → Option Nat → Nat → Bool",
             compiled_signature: "(u8, @& tobj, @& tobj) -> u8",
@@ -4734,7 +4738,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_lt"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.all_history_speaks", "Mos.Hindcast.the_series_itself_speaks", "Mos.Hindcast.too_short_a_count_is_silent"],
+                claims: &["Datacartridge.Hindcast.all_history_speaks", "Datacartridge.Hindcast.the_series_itself_speaks", "Datacartridge.Hindcast.too_short_a_count_is_silent"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4742,11 +4746,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.total",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.total",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 93, column: 1 }, end: ::lungo::SourcePosition { line: 94, column: 104 } }),
-            lean_type: "List Mos.Hindcast.Tried → Nat",
+            lean_type: "List Datacartridge.Hindcast.Tried → Nat",
             compiled_signature: "(@& tobj) -> tobj",
             rust_path: "hindcast::total",
             trust: ::lungo::ExportTrust {
@@ -4757,7 +4761,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_add", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.total_of_nothing", "Mos.Hindcast.total_of_one_more"],
+                claims: &["Datacartridge.Hindcast.total_of_nothing", "Datacartridge.Hindcast.total_of_one_more"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4765,9 +4769,9 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.triable",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.triable",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 68, column: 1 }, end: ::lungo::SourcePosition { line: 72, column: 20 } }),
             lean_type: "List Int → Int → Nat → Bool",
             compiled_signature: "(@& tobj, @& tobj, @& tobj) -> u8",
@@ -4780,7 +4784,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_int_add", "lean_int_dec_le", "lean_nat_add", "lean_nat_dec_eq", "lean_nat_dec_le", "lean_nat_div", "lean_nat_mul", "lean_nat_sub"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.most_triable_is_triable"],
+                claims: &["Datacartridge.Hindcast.most_triable_is_triable"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4788,11 +4792,11 @@ pub mod __meta {
             },
         },
         ::lungo::DeclarationInfo {
-            lean_name: "Mos.Hindcast.turned",
-            module: "Mos.Hindcast",
-            source_file: Some("formal/Mos/Hindcast.lean"),
+            lean_name: "Datacartridge.Hindcast.turned",
+            module: "Datacartridge.Hindcast",
+            source_file: Some("formal/Datacartridge/Hindcast.lean"),
             range: Some(::lungo::SourceRange { start: ::lungo::SourcePosition { line: 233, column: 1 }, end: ::lungo::SourcePosition { line: 235, column: 93 } }),
-            lean_type: "Mos.Hindcast.HeldUp → Mos.Hindcast.HeldUp → Bool",
+            lean_type: "Datacartridge.Hindcast.HeldUp → Datacartridge.Hindcast.HeldUp → Bool",
             compiled_signature: "(u8, u8) -> u8",
             rust_path: "hindcast::turned",
             trust: ::lungo::ExportTrust {
@@ -4803,7 +4807,7 @@ pub mod __meta {
                 extern_dependencies: &["lean_nat_dec_eq"],
             },
             assurance: ::lungo::ExportAssurance {
-                claims: &["Mos.Hindcast.not_turned_while_too_soon", "Mos.Hindcast.turned_iff"],
+                claims: &["Datacartridge.Hindcast.not_turned_while_too_soon", "Datacartridge.Hindcast.turned_iff"],
                 assumptions: &[],
                 facilities: &[],
                 roles: &[],
@@ -4813,14 +4817,14 @@ pub mod __meta {
     ];
 
     /// The program's assurance document, as `assurance.json` holds it.
-    pub const ASSURANCE_JSON: &str = "{\n  \"schema_version\": 1,\n  \"program\": \"datacartridgeFormal\",\n  \"provenance\": {\n    \"lean_version\": \"4.34.1\",\n    \"lean_githash\": \"5045d0056413266e57c625dcd7c365b10e377c52\",\n    \"lungo_version\": \"1.108.38\",\n    \"bir_version\": 3,\n    \"runtime_abi\": 2\n  },\n  \"library\": {\n    \"package\": \"lungo\",\n    \"schema_version\": 1\n  },\n  \"specifications\": [\n    {\n      \"name\": \"Mos.Forecast.ReportedSettling\",\n      \"kind\": \"lungo.contract\",\n      \"statement\": \"Lungo.Spec.Contract (Mos.Forecast.Window × Bool × List Bool × Bool) Mos.Forecast.Outcome\",\n      \"definition\": \"{ pre := fun x => True,\\n  post := fun input o =>\\n    match input with\\n    | (window, due, observed, contested) =>\\n      (window = Mos.Forecast.Window.atDeadline ∧ due = true ∧ contested = true → o = Mos.Forecast.Outcome.void) ∧\\n        (¬(window = Mos.Forecast.Window.atDeadline ∧ due = true ∧ contested = true) →\\n          Mos.Forecast.Settling.post (window, due, observed) o) }\",\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"01bdb88e5fad82eeca96c26954fe89346d589c0671befa999f8774a5f12b0d82\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 167,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 175,\n          \"column\": 107\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Settling\",\n      \"kind\": \"lungo.contract\",\n      \"statement\": \"Lungo.Spec.Contract (Mos.Forecast.Window × Bool × List Bool) Mos.Forecast.Outcome\",\n      \"definition\": \"{ pre := fun x => True,\\n  post := fun input o =>\\n    match input with\\n    | (window, due, observed) =>\\n      (o = Mos.Forecast.Outcome.open ↔\\n          due = false ∧ (window = Mos.Forecast.Window.atDeadline ∨ observed.any id = false)) ∧\\n        (window = Mos.Forecast.Window.anyTime → (o = Mos.Forecast.Outcome.cameTrue ↔ observed.any id = true)) ∧\\n          (window = Mos.Forecast.Window.atDeadline →\\n              due = true →\\n                (o = Mos.Forecast.Outcome.cameTrue ↔ observed.getLast? = some true) ∧\\n                  (o = Mos.Forecast.Outcome.didNot ↔ observed.getLast? = some false)) ∧\\n            (o = Mos.Forecast.Outcome.void ↔ due = true ∧ observed = []) }\",\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7a64fc97b1c9363c44d7d6bc619583e68f92e6553b19987ab02bb823aca73447\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 82,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 90,\n          \"column\": 49\n        }\n      }\n    }\n  ],\n  \"facilities\": [],\n  \"assumptions\": [],\n  \"claims\": [\n    {\n      \"name\": \"Mos.Forecast.Clash.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Forecast.Clash.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (c : Mos.Forecast.Clash), Mos.Forecast.Clash.ofNat c.ctorIdx = c\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fa188ea72216df2e893e15f87720506c64db3e348725d47fa7b7dacf8d3f491f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1913,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1914,\n          \"column\": 96\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Hearing.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Forecast.Hearing.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (h : Mos.Forecast.Hearing), Mos.Forecast.Hearing.ofNat h.ctorIdx = h\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3a5b470235e7f11a224d0fcdff5848fb756bccd25bd485fbfd029c4fe33f3dd2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1916,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1917,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Leave.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Forecast.Leave.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (l : Mos.Forecast.Leave), Mos.Forecast.Leave.ofNat l.ctorIdx = l\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"00008966a8042be9b177acf8d061e8b78f450e33c178f52490a7ffc9ed4ed6a1\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1919,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1920,\n          \"column\": 96\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Outcome.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Forecast.Outcome.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (o : Mos.Forecast.Outcome), Mos.Forecast.Outcome.ofNat o.ctorIdx = o\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"216affb158c3041ae7b9ac6dd32e1a3ec7ae83d0639e967dfdc823d0e46cdcf1\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1922,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1923,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Sureness.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Forecast.Sureness.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Mos.Forecast.Sureness), Mos.Forecast.Sureness.ofNat s.ctorIdx = s\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"1904f859a1e7e86c73e77b896ca1de5dfa886187d3c89b023e401200632a9b30\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1925,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1926,\n          \"column\": 108\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Trend.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Forecast.Trend.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (t : Mos.Forecast.Trend), Mos.Forecast.Trend.ofNat t.ctorIdx = t\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"10d83f55a9eb5361f8a8cfe51d6283e39843ea0fb062d11aedfffe8fa00deaf9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1928,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1929,\n          \"column\": 96\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Window.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Forecast.Window.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (w : Mos.Forecast.Window), Mos.Forecast.Window.ofNat w.ctorIdx = w\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"1d108937ba4680b21e2858b184930219c790cc45a1d63ded286d4b204ddc2308\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1931,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1932,\n          \"column\": 100\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.across_only_at_endings\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.tooLikelyAcross\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (link : Mos.Forecast.Link) (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When),\\n  wa.anyTime = true ∨ wb.anyTime = true → Mos.Forecast.tooLikelyAcross link a b wa wb = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"893d10cf762331db38b1783094b55c2a4b174550c778eb3a0066107aa467d4b2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1080,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1086,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.agreed_is_settled_as_usual\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.settleReported\",\n        \"Mos.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (window : Mos.Forecast.Window) (due : Bool) (observed : List Bool),\\n  Mos.Forecast.settleReported window due observed false = Mos.Forecast.settle window due observed\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0f07ee8f7c1d631116fb1200a96e74001b5c73a569f64ebfc7de55d58861b29b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 185,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 189,\n          \"column\": 41\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.agreeing_exclusive_within_certainty\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.clash\",\n        \"Mos.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Mos.Forecast.Claim),\\n  Mos.Forecast.clash a b = Mos.Forecast.Clash.agree →\\n    Mos.Forecast.Claim.excludes✝ a b = true → Mos.Forecast.likelihood a.bps + Mos.Forecast.likelihood b.bps ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"63b99e77160f3f0ebbc6c6612179fd9974ec3730115988ff54c3c30700a39c85\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 889,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 901,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.agreeing_respects_implication\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.clash\",\n        \"Mos.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Mos.Forecast.Claim),\\n  Mos.Forecast.clash a b = Mos.Forecast.Clash.agree →\\n    Mos.Forecast.Claim.implies✝ a b = true → Mos.Forecast.likelihood a.bps ≤ Mos.Forecast.likelihood b.bps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"392b3a96f58c5baa33f7577e909187872ece758d874bd922b65db743529d665b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 879,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 887,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.all_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.all\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (o : Mos.Forecast.Outcome), Mos.Forecast.all [o] = o\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3223dc3ba7cb6cc808e5aa989586d6f852bff76ba1adacedd9d72c60a1874958\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 289,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 290,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.all_refuted\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.all\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Mos.Forecast.Outcome),\\n  Mos.Forecast.Outcome.didNot ∈ parts → Mos.Forecast.all parts = Mos.Forecast.Outcome.didNot\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"318cc39c39b111ad0d6c09589bbab6efdf2594a403e9e130d7dd19f84d0b9d9c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 294,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 298,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.all_settles\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settled\",\n        \"Mos.Forecast.all\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Mos.Forecast.Outcome),\\n  (∀ (o : Mos.Forecast.Outcome), o ∈ parts → Mos.Forecast.settled o = true) →\\n    Mos.Forecast.settled (Mos.Forecast.all parts) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"56a796431560348d3df47ff69211f8e2b545ba0a3686309963ea70a8562360e6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 311,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 324,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.always_right_reads_no_lower\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.likelihood\",\n        \"Mos.Forecast.recalibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps scored countsAs : Nat),\\n  Mos.Forecast.likelihood statedBps ≤ Mos.Forecast.recalibrated statedBps scored scored countsAs\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c6f330c9d69faf1d932498d30373cfe93fcec419c56000c165828909d0b83c1e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1297,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1311,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.any_confirmed\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.any\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Mos.Forecast.Outcome),\\n  Mos.Forecast.Outcome.cameTrue ∈ parts → Mos.Forecast.any parts = Mos.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"1812596b916016ff485847a559c7c9353ed66a8b6fe52fd1ac4f007dbd8a212b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 300,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 304,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.any_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.any\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (o : Mos.Forecast.Outcome), Mos.Forecast.any [o] = o\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"2e4237f9435e23131536371befa982118a0c3b9f50f7d74333b8a5e8b9d85a55\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 291,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 292,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.any_settles\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settled\",\n        \"Mos.Forecast.any\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Mos.Forecast.Outcome),\\n  (∀ (o : Mos.Forecast.Outcome), o ∈ parts → Mos.Forecast.settled o = true) →\\n    Mos.Forecast.settled (Mos.Forecast.any parts) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"172d175aa730c6ef2b627f83d89adc82978a4819b40fe94a084f4f233b7213c8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 326,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 338,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.any_time_is_not_undone_by_a_later_dispute\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settleReported\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due contested : Bool) (observed : List Bool),\\n  observed.any id = true →\\n    Mos.Forecast.settleReported Mos.Forecast.Window.anyTime due observed contested = Mos.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4877194c08950e23b18fbf04540cdcc28d678186a14969ec32f94b60692476ba\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 196,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 201,\n          \"column\": 35\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.any_time_settles_early\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due : Bool) (observed : List Bool),\\n  observed.any id = true → Mos.Forecast.settle Mos.Forecast.Window.anyTime due observed = Mos.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"030156f308433b68a153b7b188bd49f8f459672ef6e2364b0fb443a98a13d372\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 108,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 113,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.any_time_stays_true\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due due' : Bool) (observed later : List Bool),\\n  Mos.Forecast.settle Mos.Forecast.Window.anyTime due observed = Mos.Forecast.Outcome.cameTrue →\\n    Mos.Forecast.settle Mos.Forecast.Window.anyTime due' (observed ++ later) = Mos.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"9e4f3ab3e2e6e47e85f55aebab0e97866e79a8c7391e609e065a732cb88b52b5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 138,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 146,\n          \"column\": 39\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.apart_either_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.apartBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\\n  Mos.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = Mos.Forecast.apartBeyondChance n₂ s₂ q₂ n₁ s₁ q₁\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"400fb6c87a3547b5bedc13c2201937911f416e99f9c4080ba8c4ccd6e63291c9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1837,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1849,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.as_forecast_is_a_likelihood\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.asForecast\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (rateBps : Nat), 100 ≤ Mos.Forecast.asForecast rateBps ∧ Mos.Forecast.asForecast rateBps ≤ 9900\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"18c691a46bccc9c36ae164f3e827582d759a39314a4102e9d25933cfb0b6b257\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 687,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 690,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.as_said_leans_neither_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.provenAt\",\n        \"Mos.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came spread : Nat),\\n  Mos.Forecast.provenAt ≤ forecasts →\\n    Mos.Forecast.surenessOf forecasts came (came * 10000) spread = Mos.Forecast.Sureness.about\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d2cd573c0c7e2124d69b2a99ca0c1e69a4d9447ffb5b6573fd91bc20e1df362a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1633,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1638,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.ask_next_is_ahead\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.askNext\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (now next every : Nat), 0 < every → now < Mos.Forecast.askNext now next every\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"647291aca4f5f04e1798b0ff5c07da48a577f28d0c37dc289a7dda5d415730a7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 724,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 735,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.ask_next_keeps_time\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.askNext\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (now next every : Nat), next ≤ now → (Mos.Forecast.askNext now next every - next) % every = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"cfeef1be4158fe6e31d0dc863a2376489e936625d4b4bda8a430f1083e90dcf8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 737,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 741,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.ask_next_on_time\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.askNext\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (next every : Nat), Mos.Forecast.askNext next next every = next + every\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"37a51f8d12ae76086fcb27717725afbf0c0c458d68c2494c6d7327663352e655\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 743,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 746,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.asked_is_not_reported\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.askedOf\",\n        \"Mos.Forecast.later\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (reported : List (Int × Nat)) (perYear : Nat) (next : Int × Nat),\\n  Mos.Forecast.askedOf reported perYear = some next → ∀ (q : Int × Nat), q ∈ reported → Mos.Forecast.later q next = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"caef5a003a7d680cea805e11cee25166815c90dbbfa6fa58983f0bc2e42bbeec\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1800,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1815,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.asked_means_due\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.asks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (active answered : Bool) (now next : Nat),\\n  Mos.Forecast.asks active answered now next = true → active = true ∧ answered = true ∧ next ≤ now\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"afa6de2a58969306c2c68c252c393f9c8d2d818630c1c32d254b41d08f508d46\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 712,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 717,\n          \"column\": 28\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.at_deadline_waits\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (observed : List Bool), Mos.Forecast.settle Mos.Forecast.Window.atDeadline false observed = Mos.Forecast.Outcome.open\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0614f38df812f44052b6ad9317887c5fd03baa1c5037db9f888b53ba3ea405f8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 102,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 106,\n          \"column\": 16\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.back_add\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.back\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (perYear m n : Nat) (p : Int × Nat),\\n  Mos.Forecast.back perYear (m + n) p = Mos.Forecast.back perYear n (Mos.Forecast.back perYear m p)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3cd91ca8a500c004a620eaa37a2ff6834db50cb9b519de49b2f86192591af964\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1686,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1691,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.back_within_the_year\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.back\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (perYear k : Nat) (year : Int) (index : Nat),\\n  k < index → Mos.Forecast.back perYear k (year, index) = (year, index - k)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7089a142a1b3c2909a04b64f97679637b31c5f7c2f1f0eddf934498aad61a837\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1693,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1707,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.backing_of_anyone\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.backing\",\n        \"Mos.Forecast.evenWeight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (believedBps baseBps : Nat),\\n  Mos.Forecast.backing believedBps (some baseBps) Mos.Forecast.evenWeight =\\n    ↑(Mos.Forecast.likelihood believedBps) - ↑(Mos.Forecast.likelihood baseBps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"47fcb0329e861387312c6f9492b0df1080fef5ce9186c3cd69b9d8749543cb2d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 767,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 771,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.backing_without_history\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.backing\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (believedBps weightBps : Nat),\\n  Mos.Forecast.backing believedBps none weightBps = Mos.Forecast.backing believedBps (some 5000) weightBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e09b10246dc4370c322b20f29a198e41f50b7306287932cdf912fe0881d0b45a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 773,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 777,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.base_rate_extremes\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.baseRate\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (windows : Nat),\\n  0 < windows → Mos.Forecast.baseRate windows windows = some 10000 ∧ Mos.Forecast.baseRate 0 windows = some 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"609f6418305bacb555b26fb74e36c24b98da5080122e1fcb37d3dbd1db04cee5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 677,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 682,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.base_rate_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.baseRate\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (held windows r : Nat), Mos.Forecast.baseRate held windows = some r → r ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ff7d2fb296cde248838a86de3a2573958b59795de96b983d59d1a2563aedbd51\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 667,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 675,\n          \"column\": 42\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.best_of_fold_scores_no_worse\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.better\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (rest : List Mos.Forecast.Tried) (first : Mos.Forecast.Tried),\\n  (List.foldl Mos.Forecast.better first rest).meanBrier ≤ first.meanBrier ∧\\n    ∀ (t : Mos.Forecast.Tried), t ∈ rest → (List.foldl Mos.Forecast.better first rest).meanBrier ≤ t.meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8822ba3fa71931c0bbf2ecc21f8fbc5c98929b330cbc2e006d5714eb94a00b36\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1368,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1384,\n          \"column\": 35\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.better_counts_for_no_less\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.weight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored better worse : Nat), better ≤ worse → Mos.Forecast.weight scored worse ≤ Mos.Forecast.weight scored better\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b39910b9cf3461b48bed2e352c823740fee56acadd850face9a4dd9ab41b8c31\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 565,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 580,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.better_is_lower\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.trend\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (d b scoredDuring scoredBefore : Nat),\\n  (Mos.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Mos.Forecast.Trend.better → d < b) ∧\\n    (Mos.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Mos.Forecast.Trend.worse → b < d)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5fb922b6e1ce73308fa99275cd5da59e082dc74155134a21ec3c9a01dbcbfdac\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 809,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 815,\n          \"column\": 175\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.better_scores_no_worse\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.better\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Mos.Forecast.Tried),\\n  (Mos.Forecast.better a b).meanBrier ≤ a.meanBrier ∧ (Mos.Forecast.better a b).meanBrier ≤ b.meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ef1eaa19a29dcd90dc4ead63d8985f6b10cee2390c7d5cc67f1163b86074a3d4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1363,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1366,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.brier_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps : Nat) (cameTrue : Bool), Mos.Forecast.brier statedBps cameTrue ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c1f24d7b0128e20861beae05cb08549dee79008666147535cc9225784860afaa\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 357,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 366,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.brier_of_certainty\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Forecast.brier 10000 true = 0 ∧\\n  Mos.Forecast.brier 10000 false = 10000 ∧ Mos.Forecast.brier 0 false = 0 ∧ Mos.Forecast.brier 0 true = 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"37ba997301098ac87bcc971e0eddea0b6cbd24a4e5b2ec388626246cde1676b8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 443,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 446,\n          \"column\": 9\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.brier_of_even_odds\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (cameTrue : Bool), Mos.Forecast.brier 5000 cameTrue = 2500\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3f27c25bb2e12c68d557f74c76fb76184cb8f6e05ed5393b8fc9dc31283286fd\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 448,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 451,\n          \"column\": 28\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.brier_rewards_being_right\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (p q : Nat), p ≤ q → Mos.Forecast.brier q true ≤ Mos.Forecast.brier p true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"21fc71ecf78d33072a87afac0fbd04acfec4e9d3b0702e825459be8990b8cb03\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 453,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 463,\n          \"column\": 56\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.calibrated_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Forecast.calibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Mos.Forecast.Split), Mos.Forecast.calibrated s = true ↔ s.offBy ≤ 100\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"65775da77acd00051abf66751f5fd9f3b381ca20b9471ef89ce88ad8f7b823c6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 434,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 436,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.carried_holds\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.carried\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (link : Mos.Forecast.Link) (a c : Mos.Forecast.Claim) (x y : Int),\\n  link.binds x y → Mos.Forecast.carried link a = some c → a.holdsOf x → c.holdsOf y\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"20422eb250b769166af706595dc5aac9cc70a6da478a2b454bd5124054e4103e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1049,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1056,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.chosen_scores_no_worse\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.bestReading\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts : Nat) (tried : List Mos.Forecast.Tried) (best : Mos.Forecast.Tried),\\n  Mos.Forecast.bestReading forecasts tried = some best →\\n    ∀ (t : Mos.Forecast.Tried), t ∈ tried → best.meanBrier ≤ t.meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"73ef70356ac5ad5e737e5376cc7428ab834e7639bc021e2680be4d61c48de3ab\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1391,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1409,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.clashWhen_at_one_moment\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.clashWhen\",\n        \"Mos.Forecast.clash\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Mos.Forecast.Claim) (since₁ since₂ till : Int),\\n  Mos.Forecast.clashWhen a b { anyTime := false, since := since₁, till := till }\\n      { anyTime := false, since := since₂, till := till } =\\n    Mos.Forecast.clash a b\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"cd9a8ef681ef9b1fd321da7fcbb5eb48e45515445c891a998a9fb38713034224\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 972,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 976,\n          \"column\": 65\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.clash_with_itself\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.clash\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a : Mos.Forecast.Claim), Mos.Forecast.clash a a = Mos.Forecast.Clash.agree\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d70e93f6177f114276603ccb149605e2998cfe852b7e77c3df82e37638d76f1c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 874,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 877,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.conditional_is_not_refuted_by_its_condition\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.conditional\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (consequence : Mos.Forecast.Outcome),\\n  Mos.Forecast.conditional Mos.Forecast.Outcome.didNot consequence = Mos.Forecast.Outcome.void\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8c2a9ab22c5853964e108a9ecbf0da1e870fcae0ba51afeb29ce6e0f0701f742\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 306,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 309,\n          \"column\": 51\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.contested_at_the_deadline_is_void\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settleReported\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (observed : List Bool),\\n  Mos.Forecast.settleReported Mos.Forecast.Window.atDeadline true observed true = Mos.Forecast.Outcome.void\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4e920d76fb198926dcae485bc5fbd269afaad743b0688f260e9ac48c28bba6b3\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 191,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 194,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.conviction_is_symmetric_and_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.conviction\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (backingBps : Int),\\n  Mos.Forecast.conviction (-backingBps) = Mos.Forecast.conviction backingBps ∧\\n    Mos.Forecast.conviction backingBps ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"235c0605483a8c63c2f013c9678143647eb9f105e0549dce906997e9f08e6a7a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1480,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1485,\n          \"column\": 40\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.counting_for_nothing_reads_the_record\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.recalibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps came scored : Nat),\\n  0 < scored → Mos.Forecast.recalibrated statedBps came scored 0 = min came scored * 10000 / scored\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7d35b54aba086cd763a923a081538ab4ab16da418d25e79f5c3b4ddce7ccbc82\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1325,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1331,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.counts_any_time\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Forecast.When.counts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (w : Mos.Forecast.When),\\n  w.anyTime = true → ∀ (moment : Int), w.counts moment = true ↔ w.since < moment ∧ moment ≤ w.till\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e2b46efcb89bba58fcd93ea43ee9598bea17d83c8ff86958d391b7ea19fd4493\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1945,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1948,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.counts_at_the_deadline\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Forecast.When.counts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (w : Mos.Forecast.When), w.anyTime = false → ∀ (moment : Int), w.counts moment = true ↔ moment = w.till\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ab9110773884133f1b73663f418ec783b0ff4de6987eedf8e01bfd96e92930f5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1940,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1943,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.discerning_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Forecast.discerning\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Mos.Forecast.Split), Mos.Forecast.discerning s = true ↔ 0 < s.howHard ∧ s.howHard ≤ 4 * s.toldApart\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"644aebfd8a36b60aee490aa7153f7e6a804735b68c2a9fd04ba777bd679cb5a7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 438,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 440,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.due_is_settled\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settled\",\n        \"Mos.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (window : Mos.Forecast.Window) (observed : List Bool),\\n  Mos.Forecast.settled (Mos.Forecast.settle window true observed) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"639db1e4b048c3945e94e348ca67897300d129a69e5cf3c0174be3f90dc45ae0\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 115,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 129,\n          \"column\": 43\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.even_odds_counts_as_anyone\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.weight\",\n        \"Mos.Forecast.evenWeight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored : Nat), Mos.Forecast.weight scored 2500 = Mos.Forecast.evenWeight\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"2e8e163a78ec765e8b25832cf85f26970f289acd94141d8a32cb37b075a7e351\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 559,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 563,\n          \"column\": 46\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.even_odds_expect_only_costs\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.expected\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (sizeBps costBps : Nat), Mos.Forecast.expected 5000 (↑sizeBps) (-↑sizeBps) costBps = -(2 * ↑costBps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"267d30aebb5e2e1628e00766c808f53eb8f12a2b6a00e41966fd00a4c4d4b976\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1457,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1468,\n          \"column\": 7\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.expectedFirst_irreflexive\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.expectedFirst\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a : Option Int × Int), Mos.Forecast.expectedFirst a a = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3e526ab754fbb7b3a7765b30fc3dd38a0b607a5ee90e5113354ab2d91387fea2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1502,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1506,\n          \"column\": 39\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.expected_at_the_extremes\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.expected\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (gainBps lossBps : Int) (costBps : Nat),\\n  Mos.Forecast.expected 10000 gainBps lossBps costBps = gainBps - 2 * ↑costBps ∧\\n    Mos.Forecast.expected 0 gainBps lossBps costBps = lossBps - 2 * ↑costBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5994bfbc0c703347c79557a9e2756f25044c27d97d7fa60b820ef3d8e5c4dde4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1450,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1455,\n          \"column\": 30\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.few_are_never_apart\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.apartBeyondChance\",\n        \"Mos.Forecast.provenAt\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\\n  n₁ < Mos.Forecast.provenAt ∨ n₂ < Mos.Forecast.provenAt → Mos.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"9543fd81dc736cca49b87a7516a901302b034a53f7dc7fb08fd1e82f8e24dfde\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1831,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1835,\n          \"column\": 30\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.few_calls_tell_nothing\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.provenAt\",\n        \"Mos.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came statedSum spread : Nat),\\n  forecasts < Mos.Forecast.provenAt →\\n    Mos.Forecast.surenessOf forecasts came statedSum spread = Mos.Forecast.Sureness.untold\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fcf2b804096504a5af5818880f313131a7237746ac5a736e8ef2eefc95011118\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1601,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1605,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.few_forecasts_tell_nothing\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.provenAt\",\n        \"Mos.Forecast.trend\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (during before : Option Nat) (scoredDuring scoredBefore : Nat),\\n  scoredDuring < Mos.Forecast.provenAt ∨ scoredBefore < Mos.Forecast.provenAt →\\n    Mos.Forecast.trend during before scoredDuring scoredBefore = Mos.Forecast.Trend.untold\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"86b3e6b72fa3ea6611b4ccfb141a30d562a3633514ffdbbc6f3004c17258ec01\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 803,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 807,\n          \"column\": 52\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.few_pairs_are_never_apart\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.pairedBeyondChance\",\n        \"Mos.Forecast.provenAt\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n : Nat) (d : Int) (q : Nat), n < Mos.Forecast.provenAt → Mos.Forecast.pairedBeyondChance n d q = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d4297b649ef1ae68164d38f17e39a93afe98feb6178ade31271953cf3ce95f58\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1866,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1870,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.group_split\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.Group.squares\",\n        \"Mos.Forecast.Group.gap\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (g : Mos.Forecast.Group), ↑g.calls * g.squares = g.gap + 100000000 * (↑g.came * (↑g.calls - ↑g.came))\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b79ddc91803dd1d41720d3b105b39bd2d32130e46010e836edfed0d9596432c2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 392,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 396,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.happening_apart_agrees\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.clashHappening\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (p q : Nat) (a b : Mos.Forecast.When), Mos.Forecast.clashHappening false false p q a b = Mos.Forecast.Clash.agree\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a7ac38b98434d0b0cb5347fae450188b71b96d6a864697f8548bd7aa2928c7b1\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1240,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1243,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.happening_as_likely_agrees\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.clashHappening\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (firstWithin secondWithin : Bool) (p : Nat) (a b : Mos.Forecast.When),\\n  Mos.Forecast.clashHappening firstWithin secondWithin p p a b = Mos.Forecast.Clash.agree\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"dbe5da5d59ebbc2904b96820c63d147c161edeb58e3f87bc3d5b080a00c0a44d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1234,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1238,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.happening_first_too_likely\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.clashHappening\",\n        \"Mos.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Mos.Forecast.When),\\n  Mos.Forecast.clashHappening firstWithin secondWithin p q a b = Mos.Forecast.Clash.firstTooLikely →\\n    firstWithin = true ∧ b.since ≤ a.since ∧ a.till ≤ b.till ∧ Mos.Forecast.likelihood q < Mos.Forecast.likelihood p\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"9f4b48951a6b4e2d22a8549f87f8540cc51a95d83e97aab1e246806a6cc8471f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1245,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1256,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.happening_only_implies\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.clashHappening\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Mos.Forecast.When),\\n  Mos.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Mos.Forecast.Clash.tooMuch ∧\\n    Mos.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Mos.Forecast.Clash.tooLittle\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b6ff4f8cc243ed88826a6a07f6d0e5ec940a2f430b1bc3da4c2a9df909def4b2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1226,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1232,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.lastWeek_is_whole_and_over\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.lastWeek\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (today : Nat),\\n  13 ≤ today →\\n    (Mos.Forecast.lastWeek today).snd = (Mos.Forecast.lastWeek today).fst + 7 ∧\\n      (Mos.Forecast.lastWeek today).snd ≤ today\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"079746889de316d0cbe901f4fbda459bb3978897a7ae848f1c6d7e286cba09fa\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1430,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1435,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.latest_is_latest\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.laterOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (ps : List (Int × Nat)) (p q : Int × Nat), q ∈ p :: ps → Mos.Forecast.noLater q (List.foldl Mos.Forecast.laterOf p ps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3c62f27f230b67ccd41a501cc1def7ee1ff63b7bf7c6019a2fb6dd0c87511330\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1779,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1792,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.least_from_parts_only_when_carried\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.leastFromParts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Mos.Forecast.Claim) (others : Int) (whole : Mos.Forecast.Claim),\\n  Mos.Forecast.leastFromParts parts others whole =\\n    if Mos.Forecast.partsCarry parts others whole = true then\\n      some (Mos.Forecast.leastWhenAll (List.map (fun x => x.bps) parts))\\n    else none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7201261f7df5f3e553db1a264c285b7da87ffafdc415e0190d35444805b96196\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1950,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1953,\n          \"column\": 137\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.least_is_under_each\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.leastWhenAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (bps : List Nat) (b : Nat), b ∈ bps → Mos.Forecast.leastWhenAll bps ≤ ↑(Mos.Forecast.likelihood b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"bf3ea2c45a058bbb4d80937833342e3a8a15970771a72f6f971cb6aa84e76bdd\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1169,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1193,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.least_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.leastWhenAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (b : Nat), Mos.Forecast.leastWhenAll [b] = ↑(Mos.Forecast.likelihood b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b93be90714277caf47b429ae4c9634e5469471c98587f8ce36f0c3bcb13a32a4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1164,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1167,\n          \"column\": 22\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.life_of_one\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.lifeBrier\",\n        \"Mos.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps duration : Nat) (cameTrue : Bool),\\n  0 < duration →\\n    Mos.Forecast.lifeBrier [{ statedBps := statedBps, duration := duration }] cameTrue =\\n      some (Mos.Forecast.brier statedBps cameTrue)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f1949711d159c2bd9ed8684fec658fae1ed52289334b05479389345c2d73d1b5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 485,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 489,\n          \"column\": 97\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.mean_of_nothing\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.mean\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Forecast.mean [] = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4f5c401937c1c70f7decf1e81518358eecae6981a3846d76d0865014c8318480\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1955,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1957,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.mean_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.mean\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Nat), Mos.Forecast.mean [s] = some s\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"dfab8e7d72335ac727c4c26990af75538e4d8014d47c7b99d9ba38d44f2e6b33\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1959,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1962,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.never_right_reads_no_higher\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.recalibrated\",\n        \"Mos.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps scored countsAs : Nat),\\n  Mos.Forecast.recalibrated statedBps 0 scored countsAs ≤ Mos.Forecast.likelihood statedBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"bde31c8620c5a66aff19bedcc26e0b0d36b2a1aa3396349fda10a26bd2ed9d0d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1313,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1323,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.next_is_later\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.later\",\n        \"Mos.Forecast.nextPeriod\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  Mos.Forecast.later (year, index) (Mos.Forecast.nextPeriod year index perYear) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"613883da35d576e8417781ccc6b0738a50560fdc024c46937fc3e5716b933f12\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1794,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1798,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.next_of_previous\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.nextPeriod\",\n        \"Mos.Forecast.previousPeriod\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  1 ≤ index →\\n    index ≤ perYear →\\n      Mos.Forecast.nextPeriod (Mos.Forecast.previousPeriod year index perYear).fst\\n          (Mos.Forecast.previousPeriod year index perYear).snd perYear =\\n        (year, index)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"2168eb467e43e81163b95505c0621cb25c2f60ea471824b9055c9f13b44a25d9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1652,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1665,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.noLater_laterOf_left\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.laterOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int × Nat), Mos.Forecast.noLater a (Mos.Forecast.laterOf a b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7ff0fed11b55bbf6078cfada9535e4512d5872772a32f8de124ab30419629d1a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1750,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1760,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.noLater_laterOf_right\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.laterOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int × Nat), Mos.Forecast.noLater b (Mos.Forecast.laterOf a b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ffed55a36bada9cda56acb63e92d78450de53e5758380aaa23f2af26c1b46697\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1762,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1773,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.no_backing_no_conviction\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.conviction\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Forecast.conviction 0 = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b0228583c9e724189e92f23d8129350b6ba790df9ba5c07c8501f7b5c62d5db7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1476,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1478,\n          \"column\": 65\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.no_backing_without_a_difference\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.backing\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (bps weightBps : Nat), Mos.Forecast.backing bps (some bps) weightBps = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d3598e0e389883e0ca5b8a7b5f50bc0adf4ba0eb48da5fb1cc2fc25f7c27ea13\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 762,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 765,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.no_change_is_not_a_change_of_mind\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.mayStateAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (standing : Nat), Mos.Forecast.mayStateAgain standing standing false = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"582ee54b7f5abbd7cb6a75e299b0032d49f092a56fc0f3048ad2d720df38c4b5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1893,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1896,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.no_difference_is_not_apart\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.pairedBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n q : Nat), Mos.Forecast.pairedBeyondChance n 0 q = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ad57ac5972f42caea300beecb6b2e14a7b12755f79f2ad30ee70a09aed70c2e0\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1878,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1885,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.no_record_reads_as_said\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.recalibrated\",\n        \"Mos.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps countsAs : Nat), Mos.Forecast.recalibrated statedBps 0 0 countsAs = Mos.Forecast.likelihood statedBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7090f2b42e261eb17a8415dd1844044d6213cad8b64339dabb70b37a19c3f82d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1274,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1281,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.no_rule_stays\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.leave\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (returnBps : Int) (heldDays : Nat), Mos.Forecast.leave returnBps none none heldDays none = Mos.Forecast.Leave.stay\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3c2769ac33659528dd970ccf4c70e870e50a3fbca2534e589ce205998fd2e104\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1534,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1537,\n          \"column\": 15\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.nothing_observed\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (window : Mos.Forecast.Window) (due : Bool),\\n  Mos.Forecast.settle window due [] = if due = true then Mos.Forecast.Outcome.void else Mos.Forecast.Outcome.open\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d53b86ae32ce21d501dd2ad4e7a9c2600db6badc9f8463280dcf5b69df745afd\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 131,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 136,\n          \"column\": 54\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.occurs_settles_at_the_deadline\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.settled\",\n        \"Mos.Forecast.occurs\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (seen : Bool) (hearing : Mos.Forecast.Hearing), Mos.Forecast.settled (Mos.Forecast.occurs true seen hearing) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"95e0b65b8cce71833aab2596cc5bbbe5c87bf65c0ef0c050c5e6243459dcf4cc\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 237,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 239,\n          \"column\": 42\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.occurs_stays_true\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.occurs\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due : Bool) (hearing : Mos.Forecast.Hearing), Mos.Forecast.occurs due true hearing = Mos.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"700a7e644b0c2bb494d5f5d42a78948b37e4f7fad911c32253d148eb73700496\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 241,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 244,\n          \"column\": 41\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.one_way_or_the_other\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.mayStateAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (standing said : Nat), Mos.Forecast.mayStateAgain standing said true = !Mos.Forecast.mayStateAgain standing said false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a40404b146e671c90423d1815c7fb24a50c104b104719d8ceac495a109137d36\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1903,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1907,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.only_meeting_covers\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.clashWhen\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When),\\n  Mos.Forecast.When.meet✝ wa wb = false → Mos.Forecast.clashWhen a b wa wb ≠ Mos.Forecast.Clash.tooLittle\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a3487e9bdfaebaff73c08da28397aca2fa5cdbbe20a117ad5c341bc6b679ca4a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 990,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 995,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.only_together_excludes\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.clashWhen\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When),\\n  Mos.Forecast.When.together✝ wa wb = false → Mos.Forecast.clashWhen a b wa wb ≠ Mos.Forecast.Clash.tooMuch\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8212ce069cbe48029fe9e8bbcd0c0376e67bef4e38a7d16a594769f3e0d0010e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 983,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 988,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.opposite_says_the_rest\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.Claim.opposite\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (c : Mos.Forecast.Claim),\\n  c.opposite.up = !c.up ∧ c.opposite.level = c.level ∧ c.opposite.bps = 10000 - Mos.Forecast.likelihood c.bps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ba26ce078ac7030ce4098b5d12565f0dc4e6598cd9bdb1560c7d71cb1df00f6f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1936,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1938,\n          \"column\": 159\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.paired_either_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.pairedBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n : Nat) (d : Int) (q : Nat), Mos.Forecast.pairedBeyondChance n (-d) q = Mos.Forecast.pairedBeyondChance n d q\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"38ce792bdb3ad1f7da8ca11a5aaf78e6efa99474a0427a8843db366c57550e78\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1872,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1876,\n          \"column\": 45\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.parts_carry_is_sound\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.partsCarry\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Mos.Forecast.Claim) (others : Int) (whole : Mos.Forecast.Claim) (xs : List Int) (y : Int),\\n  Mos.Forecast.partsCarry parts others whole = true →\\n    Mos.Forecast.allHold parts xs → xs.sum + others ≤ y → whole.holdsOf y\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e362768faf73a54fd1cc578e4eaf7086cdb9de568e69e3a77ed7ba4d094ed150\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1136,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1156,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.pool_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.pool\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (views : List Mos.Forecast.View) (p : Nat), Mos.Forecast.pool views = some p → p ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8430e85b56c6bc7e90675dd41e1073c7a149c533269051c63c3dc6251df3cc56\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 615,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 624,\n          \"column\": 66\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.pool_of_agreement\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.likelihood\",\n        \"Mos.Forecast.weights\",\n        \"Mos.Forecast.pool\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (views : List Mos.Forecast.View) (statedBps : Nat),\\n  (∀ (v : Mos.Forecast.View), v ∈ views → Mos.Forecast.likelihood v.statedBps = statedBps) →\\n    0 < Mos.Forecast.weights views → Mos.Forecast.pool views = some statedBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5b57c39389f8579e0015cee3f9758991a332a5b98aacd8c56dbdeb85ee32208e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 632,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 649,\n          \"column\": 74\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.pool_of_one\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.pool\",\n        \"Mos.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (weightBps statedBps : Nat),\\n  0 < weightBps →\\n    Mos.Forecast.pool [{ weightBps := weightBps, statedBps := statedBps }] = some (Mos.Forecast.likelihood statedBps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c767872c694b486adf2ef3ccfcfd1a17e582e052158b2550d14df3f29092d6d7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 626,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 630,\n          \"column\": 88\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.previous_is_a_period\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.previousPeriod\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  1 ≤ index →\\n    index ≤ perYear →\\n      1 ≤ (Mos.Forecast.previousPeriod year index perYear).snd ∧\\n        (Mos.Forecast.previousPeriod year index perYear).snd ≤ perYear\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e8b6cf34efed2a3a572cf6d94d6573b3136ef4669e31bd2ec2f1552f7dba1ce2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1667,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1672,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.proven_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Forecast.proven\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored : Nat), Mos.Forecast.proven scored = true ↔ Mos.Forecast.provenAt ≤ scored\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"10871ba156ae7b7b53f1093a557735e67b9ac2f5fea588a461171e19576a2bfd\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1964,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1966,\n          \"column\": 16\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.recalibrated_is_a_likelihood\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.recalibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps came scored countsAs : Nat), Mos.Forecast.recalibrated statedBps came scored countsAs ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"86b333b14132bf5eabb27638cb56abf974f46b9c3d43daabd12ba2b12952e20b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1283,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1295,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.said_before_unsaid\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.expectedFirst\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (x backing other : Int),\\n  Mos.Forecast.expectedFirst (some x, backing) (none, other) = true ∧\\n    Mos.Forecast.expectedFirst (none, other) (some x, backing) = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c757a1b16f8b922f7a99891715f9b326a331af657c7d489873a14dcd43a79fb7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1497,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1500,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.settle_reported_satisfies\",\n      \"relation\": \"lungo.satisfies\",\n      \"subjects\": [\n        \"Mos.Forecast.settleReported\"\n      ],\n      \"specifications\": [\n        \"Mos.Forecast.ReportedSettling\"\n      ],\n      \"statement\": \"Lungo.Spec.Satisfies\\n  (fun input => Mos.Forecast.settleReported input.fst input.snd.fst input.snd.snd.fst input.snd.snd.snd)\\n  Mos.Forecast.ReportedSettling\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7134a3db5c418afb3d275058401217adeba27741c9572b7d67407e76335b4924\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 178,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 183,\n          \"column\": 97\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.settle_satisfies_settling\",\n      \"relation\": \"lungo.satisfies\",\n      \"subjects\": [\n        \"Mos.Forecast.settle\"\n      ],\n      \"specifications\": [\n        \"Mos.Forecast.Settling\"\n      ],\n      \"statement\": \"Lungo.Spec.Satisfies (fun input => Mos.Forecast.settle input.fst input.snd.fst input.snd.snd) Mos.Forecast.Settling\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f8a427475730f544ba4d16cf90b465bed33f5736ff85022680f41272eb88c83e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 93,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 100,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.skill_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.skill\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (meanBrier : Nat), Mos.Forecast.skill meanBrier ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8c7843a307b0ec85a72a4754e72f6450a2c3fc157c446b6bbffa4ab9b5bdf1f6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 512,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 515,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.split_of_none\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.split\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (groups : List Mos.Forecast.Group), (List.map (fun x => x.calls) groups).sum = 0 → Mos.Forecast.split groups = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a123d07404077dc8c387d42ffa213e48d998670e517f283f2425430ad6e43634\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 422,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 425,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.still_standing_is_the_same\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.mayStateAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (standing : Nat), Mos.Forecast.mayStateAgain standing standing true = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0383a55224fb04e243a37fea754a218c132817dd2090fcc668582ef95e5522d8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1898,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1901,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.stop_comes_first\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.leave\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (returnBps : Int) (stop : Nat) (targetBps : Option Nat) (heldDays : Nat) (maxDays : Option Nat),\\n  returnBps ≤ -↑stop → Mos.Forecast.leave returnBps (some stop) targetBps heldDays maxDays = Mos.Forecast.Leave.stop\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d7150af4fee94adf52d9edbed60f6a2a749c52dfcb6d35245f030ca93624000a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1539,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1543,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.sureness_too_high\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.sureness\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (calls : List Mos.Forecast.Call),\\n  Mos.Forecast.sureness calls = Mos.Forecast.Sureness.tooHigh →\\n    Mos.Forecast.cameTrue✝ calls * 10000 < Mos.Forecast.statedSum✝ calls\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"96b7bc8de8a20e2f4006fe5c3c298ce664c8b467bfcde8437b0268749ddb1249\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1978,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1981,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.sureness_too_low\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.sureness\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (calls : List Mos.Forecast.Call),\\n  Mos.Forecast.sureness calls = Mos.Forecast.Sureness.tooLow →\\n    Mos.Forecast.statedSum✝ calls < Mos.Forecast.cameTrue✝ calls * 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"265f34811515f9b381f82be9441281d9535c1d79c852d9af6dce181b2a53b056\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1983,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1986,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.telling_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Forecast.telling\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (windows : Nat), Mos.Forecast.telling windows = true ↔ Mos.Forecast.tellingAt✝ ≤ windows\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"906932f233bdcdc1b1f9145764fa61c87828cef77e9612cd0f7178ff2eaf8fde\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1968,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1970,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.tenth_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.tenth\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps : Nat), Mos.Forecast.tenth statedBps ≤ 9\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4bc8de1c02b552d6c19e7530f6ae7b6ad188d4900bea6597c257f87aebf6c165\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 495,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 496,\n          \"column\": 89\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.the_same_are_not_apart\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.apartBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Forecast.apartBeyondChance 5 10000 20000000 5 10000 20000000 = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f58433bdbf8f6e539fece39889acbf9c565e287e15a1d356d26320f4b37bef9c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1851,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1854,\n          \"column\": 9\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.too_few_choose_nothing\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.choosesAt\",\n        \"Mos.Forecast.bestReading\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts : Nat) (tried : List Mos.Forecast.Tried),\\n  forecasts < Mos.Forecast.choosesAt → Mos.Forecast.bestReading forecasts tried = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ad45e0ff234923544be8d087f5a754c336af0ae56517064fb954891d2a32db6c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1386,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1389,\n          \"column\": 40\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.too_high_is_high\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came statedSum spread : Nat),\\n  Mos.Forecast.surenessOf forecasts came statedSum spread = Mos.Forecast.Sureness.tooHigh → came * 10000 < statedSum\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c99e67fdbdb36785826af29bab42fb34e9ed36b10a97394a62abfff65efb3ced\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1607,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1617,\n          \"column\": 35\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.too_likely_across_is_sound\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.tooLikelyAcross\",\n        \"Mos.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (link : Mos.Forecast.Link) (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When) (x y : Int),\\n  Mos.Forecast.tooLikelyAcross link a b wa wb = true →\\n    link.binds x y → (a.holdsOf x → b.holdsOf y) ∧ Mos.Forecast.likelihood b.bps < Mos.Forecast.likelihood a.bps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5e647c196ddd21dd30f3c4cd7a45a59b91b71e31040a2ca68e1b6d0cd682382e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1067,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1078,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.too_low_is_low\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came statedSum spread : Nat),\\n  Mos.Forecast.surenessOf forecasts came statedSum spread = Mos.Forecast.Sureness.tooLow → statedSum < came * 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d3b47a7a0cbef612f8fd4e279b114bdb3047dab5e64dbed656e25576bbbce6d9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1619,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1631,\n          \"column\": 22\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.unanswered_is_not_asked\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.asks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (active : Bool) (now next : Nat), Mos.Forecast.asks active false now next = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"618042ea6178e946efcb82d26bfd411e4dc9aeeea19c38d1a782be245f1987d4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 707,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 710,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.unheard_silence_is_void\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.occurs\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Forecast.occurs true false Mos.Forecast.Hearing.never = Mos.Forecast.Outcome.void\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e3f1331ed03c2ec08eeba90eb11acc6758335176d7f07b2ee4ee185fb13672c0\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 252,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 254,\n          \"column\": 80\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.unproven_counts_as_anyone\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.provenAt\",\n        \"Mos.Forecast.weight\",\n        \"Mos.Forecast.evenWeight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored meanBrier : Nat),\\n  scored < Mos.Forecast.provenAt → Mos.Forecast.weight scored meanBrier = Mos.Forecast.evenWeight\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"52c6cef4652361f510c08b2377c8b2882e2407260e969fb01593ed557d1c486b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 554,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 557,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.weekStart_is_the_monday\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.weekStart\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (day : Nat),\\n  6 ≤ day →\\n    (Mos.Forecast.weekStart day + 3) % 7 = 0 ∧ Mos.Forecast.weekStart day ≤ day ∧ day < Mos.Forecast.weekStart day + 7\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"70e4a6f88a70a192bab8e5b6421fc48ca03b8b3ae42e6893ff47be798c7683c7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1423,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1428,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.weight_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.weight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored meanBrier : Nat), 1000 ≤ Mos.Forecast.weight scored meanBrier ∧ Mos.Forecast.weight scored meanBrier ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"cde2e252466671653274d6bc9420fcb215a722ba33c8af33777f30f0822cffb6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 542,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 552,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.weighted_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.weighted\",\n        \"Mos.Forecast.weights\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (views : List Mos.Forecast.View), Mos.Forecast.weighted views ≤ 10000 * Mos.Forecast.weights views\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3ec32fd4ca03857bbdf29c77c85e5bfe5d6230156c0bce1a6633a64591b05aa2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 605,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 613,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.within_bounds_stays\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Forecast.leave\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (returnBps : Int) (stop target heldDays days : Nat),\\n  -↑stop < returnBps →\\n    returnBps < ↑target →\\n      heldDays < days →\\n        Mos.Forecast.leave returnBps (some stop) (some target) heldDays (some days) = Mos.Forecast.Leave.stay\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0dd013878c59b3b43100a3e68a236796ef8cff1cf99ff23c0c899d956bdc4436\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1545,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1553,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.worse_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Forecast.worse\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (meanBrier : Nat), Mos.Forecast.worse meanBrier = true ↔ Mos.Forecast.brier 5000 true < meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"950eff0073596d44d057960207b4c6a6a5f3c77604b59ebaf5c6a9a000b1520d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1972,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1976,\n          \"column\": 15\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.wrong_only_where_it_could_be_heard\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.occurs\",\n        \"Mos.Forecast.silenceCounts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due seen : Bool) (hearing : Mos.Forecast.Hearing),\\n  Mos.Forecast.occurs due seen hearing = Mos.Forecast.Outcome.didNot → Mos.Forecast.silenceCounts hearing = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c665d270828d68deec61adfa9a887d0c58b9c4aa448c7b3699144221edf474f5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 246,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 250,\n          \"column\": 82\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.year_before_is_a_year_of_periods_back\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Forecast.back\",\n        \"Mos.Forecast.yearBefore\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  1 ≤ index → index ≤ perYear → Mos.Forecast.back perYear perYear (year, index) = Mos.Forecast.yearBefore year index\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"2a3a9dad2197433597cd63159f82ba1a07d074d576e8267a683afdce1d5d652e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1709,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1725,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.HeldUp.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Mos.Hindcast.HeldUp.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (h : Mos.Hindcast.HeldUp), Mos.Hindcast.HeldUp.ofNat h.ctorIdx = h\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3f4f16bd369fb5aafe6db7267e7c90c74e3faaf8f11b4582f8b7b73d416b0dad\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 322,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 323,\n          \"column\": 100\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.a_stretch_holds_something\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.atLeastPerStretch\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"0 < Mos.Hindcast.atLeastPerStretch\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3c8f01f494ce64e9d4e8d09d929b2505578fb4fb18ab64dece54c96617f303c6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 327,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 329,\n          \"column\": 71\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.alike_rate_of_none_alike\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.alikeRate\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (now : Int) (stretches : List (Int × Bool)),\\n  (∀ (s : Int × Bool), s ∈ stretches → Mos.Hindcast.alike now s.fst = false) →\\n    Mos.Hindcast.alikeRate now stretches = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"db03174e5bd8a50c77952488e3490c6072f4a18e2158899c736db15cec77be68\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 353,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 358,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.alike_symm\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.alike\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int), Mos.Hindcast.alike a b = Mos.Hindcast.alike b a\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b3b749a8ea416051808551443db5b0188ce183e89817ddaf7b7792f5f0a72b6c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 159,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 162,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.all_history_speaks\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.speaks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (horizon : Nat), Mos.Hindcast.speaks true none horizon = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e88d19b3e11d73bc0473c4b9727552526d7bb640c4dbb15fe2c229422bfd4d51\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 375,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 377,\n          \"column\": 84\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.all_were_asked_in_the_shared_stretch\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.sharedFromAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (others : List Int) (first : Int),\\n  first ≤ Mos.Hindcast.sharedFromAll first others ∧\\n    ∀ (x : Int), x ∈ others → x ≤ Mos.Hindcast.sharedFromAll first others\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"09a13922319d97520d0fea76f644d0cd566ac73f9c537798e9044e6b56504973\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 274,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 288,\n          \"column\": 36\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.better_means_lower\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.heldUp\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (settled forward even : Nat),\\n  Mos.Hindcast.heldUp settled forward even = Mos.Hindcast.HeldUp.betterThanEven → forward < even\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"691d8ce739c082784ae07a6f0c7486cbbfa75de0bc7f8407874c93080e71e7d9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 222,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 231,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.calls_better_is_strict\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.callsBetter\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (x : Option Nat), Mos.Hindcast.callsBetter x x = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e0dc74a6538e6d2f302c8882d1642dc6e47519ef06aebf7903bc3c9be23cf9d4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 303,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 306,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.calls_better_one_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.callsBetter\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (x y : Option Nat), Mos.Hindcast.callsBetter x y = true → Mos.Hindcast.callsBetter y x = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"17fac9940c191e4d8b6a3ded17ab84ff335b3f8c6f749aa642cc0717784ab275\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 308,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 311,\n          \"column\": 59\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.chosen_did_best\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.chosen\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (totals : List Nat) (i : Nat),\\n  Mos.Hindcast.chosen totals = some i → ∃ t, totals[i]? = some t ∧ ∀ (x : Nat), x ∈ totals → t ≤ x\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"01348bb2f5e10aab3048a53df3aba31378633df2ecabdc96eddb84843c829561\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 134,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 146,\n          \"column\": 64\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.counted_when_both_were_asked\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.countsBeside\",\n        \"Mos.Hindcast.sharedFrom\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (first other madeAt : Int),\\n  Mos.Hindcast.countsBeside (Mos.Hindcast.sharedFrom first other) madeAt = true → first ≤ madeAt ∧ other ≤ madeAt\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"37302af3e4a2f26e72d74bc4d2730523afefdbd77731dd06d1a67d1b9e072584\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 258,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 263,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.cut_in_order\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.cut\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n k i j : Nat), i ≤ j → Mos.Hindcast.cut n k i ≤ Mos.Hindcast.cut n k j\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"99168c1619c23ce7fedcc836c850bdad4774be795bd57476fe67c448acd8c213\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 26,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 29,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.cuts_cover\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.cut\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n k : Nat), Mos.Hindcast.cut n k 0 = 0 ∧ Mos.Hindcast.cut n k (k + 1) = n\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f6f98625c50adc01a190110f4d79b2855047a90850529993bd3bab590bee9e99\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 31,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 38,\n          \"column\": 46\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.enough_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Hindcast.enough\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (moments stretches : Nat),\\n  Mos.Hindcast.enough moments stretches = true ↔ (stretches + 1) * Mos.Hindcast.atLeastPerStretch ≤ moments\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ca656fff841cbb260f39d56722eb18d00551defdf187459138dac536f9c442ff\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 336,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 339,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.every_way_is_heard\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.moment\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (stated : List (Option Nat)) (said : List Nat), Mos.Hindcast.moment stated = some said → said.length = stated.length\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0dc08383bf559fd425799b5ffc070fb8af3a0150578601fac3b4c5b201034da4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 421,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 430,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.learned_was_settled\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.learnable\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (madeAt horizon testStart : Int),\\n  Mos.Hindcast.learnable madeAt horizon testStart = true → madeAt + horizon ≤ testStart\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"66bffc1980537fb8fddcddd51c466a3f99733b6e10ca360676a890f54dc9a222\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 44,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 48,\n          \"column\": 28\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.left_out_only_when_all_silent\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.moment\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (stated : List (Option Nat)), Mos.Hindcast.moment stated = none ↔ stated.all Option.isNone = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"44d6238a715471f5a29700ebf124845e9b48b39c56cd8e014bde3cfa825a6384\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 412,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 419,\n          \"column\": 41\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.mean_of_nothing\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.mean\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Hindcast.mean [] = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f4b27f93656fc17fb192e47b688266bd1e25d2cb512433de5c7f166c60db6876\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 350,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 351,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.most_triable_is_triable\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.mostTriable\",\n        \"Mos.Hindcast.triable\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (times : List Int) (horizon : Int) (k : Nat),\\n  Mos.Hindcast.mostTriable times horizon = some k → Mos.Hindcast.triable times horizon k = true ∧ 1 ≤ k\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fb18c7899c12883f7367eaeb70760367b3c6ae3ea5d1ec687c4eb76f41119ac5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 78,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 85,\n          \"column\": 25\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.needed_grows_by_a_stretch\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.needed\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (stretches : Nat),\\n  Mos.Hindcast.needed (stretches + 1) = Mos.Hindcast.needed stretches + Mos.Hindcast.atLeastPerStretch\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3b16c44585c633eac8dc5afa5a2febafe2c1ddff54d7675c9830c533010a7e22\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 331,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 334,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.not_too_soon\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.settledToChooseAgain\",\n        \"Mos.Hindcast.chooseAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (active : Bool) (settled : Nat),\\n  settled < Mos.Hindcast.settledToChooseAgain → Mos.Hindcast.chooseAgain active settled = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"674df9b058afa5c8686f3edd9cc0e06295b1926661727013a202ea14da9da573\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 187,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 191,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.not_turned_while_too_soon\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.turned\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (before : Mos.Hindcast.HeldUp), Mos.Hindcast.turned before Mos.Hindcast.HeldUp.tooSoon = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5e8ce4b5e78a2182b943944413a37815b2f3c87d56286123a28154187a784933\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 241,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 244,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.not_when_stopped\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.chooseAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (settled : Nat), Mos.Hindcast.chooseAgain false settled = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f31cd387e6dd39116f06f11eb2fbe4fbb6dada074ccce3256925489268a289c2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 193,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 196,\n          \"column\": 21\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.scored_goes_first\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.callsBetter\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a : Nat), Mos.Hindcast.callsBetter (some a) none = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fa9cdbee879fe416b3fdbe4e84a02d50b40911854fe56db289f533f3171da375\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 313,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 316,\n          \"column\": 21\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.shared_from_all_of_two\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.sharedFromAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (first other : Int), Mos.Hindcast.sharedFromAll first [other] = Mos.Hindcast.sharedFrom first other\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"2800663e197b3e90e7c4a9a638871b89535271bdefe3ac7313529868067ba366\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 290,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 293,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.shared_from_either_side\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.sharedFrom\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (first other : Int), Mos.Hindcast.sharedFrom first other = Mos.Hindcast.sharedFrom other first\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d111f7d25918863b25f4c3eb4e1b1542a3c22c90865536588de6d503537feb8c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 265,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 268,\n          \"column\": 34\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.silent_says_even\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.said\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Hindcast.said none = 5000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fa35f67dd7b34233fd946517fedc839bd224a7d384b2c68f4668d6cf8993554f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 404,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 406,\n          \"column\": 52\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.spoken_is_kept\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.said\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n : Nat), Mos.Hindcast.said (some n) = n\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"29f84f5eb5b58e072b7e148cb76c73dc1aa1f445d92d4dbd18208ddaf237f21d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 408,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 410,\n          \"column\": 61\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.the_series_itself_speaks\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.speaks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (days : Option Nat) (horizon : Nat), Mos.Hindcast.speaks false days horizon = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fc1ba77583c2036d209e9ce49a76738a1142d984f19da531b8a9574987bea78f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 385,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 387,\n          \"column\": 111\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.too_short_a_count_is_silent\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.speaks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (d horizon : Nat), d ≤ horizon → Mos.Hindcast.speaks true (some d) horizon = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3f5dcd990350564ca8f04af6161e11b74a832ff25e9a94370a40738e131f75c7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 379,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 383,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.too_soon_to_tell\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Mos.Hindcast.settledToChooseAgain\",\n        \"Mos.Hindcast.heldUp\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (settled forward even : Nat),\\n  settled < Mos.Hindcast.settledToChooseAgain → Mos.Hindcast.heldUp settled forward even = Mos.Hindcast.HeldUp.tooSoon\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"6cecc4c0a53f443c59646801a0afc0a512c59b5b752768d5490514a7f6d7f1ca\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 216,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 220,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.total_of_nothing\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.total\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Mos.Hindcast.total [] = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f686976d1021b1620cdf6abd806283b34315057a51d75c68d9b4eff6b3db9ea4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 341,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 343,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.total_of_one_more\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.total\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (tried : List Mos.Hindcast.Tried) (t : Mos.Hindcast.Tried),\\n  Mos.Hindcast.total (tried ++ [t]) = Mos.Hindcast.total tried + Mos.Forecast.brier t.statedBps t.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"bb4fa636cdc2bd18f4340afa87b0d5f2928149e33f9f3c9bb6a1bfc0316589de\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 345,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 348,\n          \"column\": 34\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.turned_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Mos.Hindcast.turned\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (before after : Mos.Hindcast.HeldUp),\\n  Mos.Hindcast.turned before after = true ↔\\n    before = Mos.Hindcast.HeldUp.betterThanEven ∧ after = Mos.Hindcast.HeldUp.noBetter\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"992b5ef7cfe73518ce4f6655dbe84d3d5b5ef8e969f2fccdc4caa6d13ccf25e0\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 237,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 239,\n          \"column\": 49\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.up_is_not_down\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Mos.Hindcast.alike\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int), 0 < a → b < 0 → Mos.Hindcast.alike a b = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"2f4cd44cf9a01e6ee1798fa36615f326e8bcafbaf3cda31ed624ae61874a7a0d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 164,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 169,\n          \"column\": 23\n        }\n      }\n    }\n  ],\n  \"roles\": [],\n  \"exports\": [\n    {\n      \"name\": \"Mos.Forecast.Claim.opposite\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.opposite_says_the_rest\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1200,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1202,\n          \"column\": 90\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Clash.ofNat\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.Clash.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Group.gap\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mod\",\n          \"lean_nat_pow\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.group_split\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 389,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 390,\n          \"column\": 94\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Group.squares\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mod\",\n          \"lean_nat_pow\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.group_split\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 384,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 387,\n          \"column\": 64\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Hearing.ofNat\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.Hearing.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Leave.ofNat\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.Leave.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Outcome.ofNat\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.Outcome.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Sureness.ofNat\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.Sureness.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Trend.ofNat\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.Trend.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.When.counts\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.counts_any_time\",\n        \"Mos.Forecast.counts_at_the_deadline\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 930,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 933,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.Window.ofNat\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.Window.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.all\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.all_of_one\",\n        \"Mos.Forecast.all_refuted\",\n        \"Mos.Forecast.all_settles\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 263,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 268,\n          \"column\": 13\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.any\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.any_confirmed\",\n        \"Mos.Forecast.any_of_one\",\n        \"Mos.Forecast.any_settles\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 270,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 275,\n          \"column\": 15\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.apartBeyondChance\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.apart_either_way\",\n        \"Mos.Forecast.few_are_never_apart\",\n        \"Mos.Forecast.the_same_are_not_apart\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1817,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1829,\n          \"column\": 73\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.asForecast\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.as_forecast_is_a_likelihood\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 684,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 685,\n          \"column\": 67\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.askNext\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.ask_next_is_ahead\",\n        \"Mos.Forecast.ask_next_keeps_time\",\n        \"Mos.Forecast.ask_next_on_time\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 719,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 722,\n          \"column\": 73\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.askedOf\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.asked_is_not_reported\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1743,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1745,\n          \"column\": 68\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.asks\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.asked_means_due\",\n        \"Mos.Forecast.unanswered_is_not_asked\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 702,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 705,\n          \"column\": 99\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.back\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_sub\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.back_add\",\n        \"Mos.Forecast.back_within_the_year\",\n        \"Mos.Forecast.year_before_is_a_year_of_periods_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1681,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1684,\n          \"column\": 64\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.backing\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.backing_of_anyone\",\n        \"Mos.Forecast.backing_without_history\",\n        \"Mos.Forecast.no_backing_without_a_difference\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 757,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 760,\n          \"column\": 117\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.baseRate\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.base_rate_extremes\",\n        \"Mos.Forecast.base_rate_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 663,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 665,\n          \"column\": 74\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.bestReading\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.chosen_scores_no_worse\",\n        \"Mos.Forecast.too_few_choose_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1357,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1361,\n          \"column\": 92\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.better\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.best_of_fold_scores_no_worse\",\n        \"Mos.Forecast.better_scores_no_worse\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1350,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1355,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.brier\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.brier_is_bounded\",\n        \"Mos.Forecast.brier_of_certainty\",\n        \"Mos.Forecast.brier_of_even_odds\",\n        \"Mos.Forecast.brier_rewards_being_right\",\n        \"Mos.Forecast.life_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 351,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 355,\n          \"column\": 22\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.calibrated\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.calibrated_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 427,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 430,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.carried\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.carried_holds\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1038,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1047,\n          \"column\": 43\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.choosesAt\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.too_few_choose_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1339,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1341,\n          \"column\": 36\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.clash\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.agreeing_exclusive_within_certainty\",\n        \"Mos.Forecast.agreeing_respects_implication\",\n        \"Mos.Forecast.clashWhen_at_one_moment\",\n        \"Mos.Forecast.clash_with_itself\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 867,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 872,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.clashHappening\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.happening_apart_agrees\",\n        \"Mos.Forecast.happening_as_likely_agrees\",\n        \"Mos.Forecast.happening_first_too_likely\",\n        \"Mos.Forecast.happening_only_implies\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1216,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1224,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.clashWhen\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.clashWhen_at_one_moment\",\n        \"Mos.Forecast.only_meeting_covers\",\n        \"Mos.Forecast.only_together_excludes\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 960,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 970,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.conditional\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.conditional_is_not_refuted_by_its_condition\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 277,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 287,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.conviction\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_abs\",\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.conviction_is_symmetric_and_bounded\",\n        \"Mos.Forecast.no_backing_no_conviction\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1470,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1474,\n          \"column\": 71\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.discerning\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.discerning_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 432,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 432,\n          \"column\": 100\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.evenWeight\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.backing_of_anyone\",\n        \"Mos.Forecast.even_odds_counts_as_anyone\",\n        \"Mos.Forecast.unproven_counts_as_anyone\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 529,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 530,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.expected\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.even_odds_expect_only_costs\",\n        \"Mos.Forecast.expected_at_the_extremes\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1444,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1448,\n          \"column\": 128\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.expectedFirst\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_abs\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.expectedFirst_irreflexive\",\n        \"Mos.Forecast.said_before_unsaid\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1487,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1495,\n          \"column\": 42\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.lastWeek\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_mod\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.lastWeek_is_whole_and_over\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1419,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1421,\n          \"column\": 81\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.later\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.asked_is_not_reported\",\n        \"Mos.Forecast.next_is_later\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1732,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1733,\n          \"column\": 103\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.laterOf\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.latest_is_latest\",\n        \"Mos.Forecast.noLater_laterOf_left\",\n        \"Mos.Forecast.noLater_laterOf_right\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1735,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1736,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.leastFromParts\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.least_from_parts_only_when_carried\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1195,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1198,\n          \"column\": 90\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.leastWhenAll\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.least_is_under_each\",\n        \"Mos.Forecast.least_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1158,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1162,\n          \"column\": 83\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.leave\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\",\n          \"lean_int_neg\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.no_rule_stays\",\n        \"Mos.Forecast.stop_comes_first\",\n        \"Mos.Forecast.within_bounds_stays\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1523,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1532,\n          \"column\": 13\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.lifeBrier\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.life_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 477,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 483,\n          \"column\": 103\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.likelihood\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.agreeing_exclusive_within_certainty\",\n        \"Mos.Forecast.agreeing_respects_implication\",\n        \"Mos.Forecast.always_right_reads_no_lower\",\n        \"Mos.Forecast.happening_first_too_likely\",\n        \"Mos.Forecast.never_right_reads_no_higher\",\n        \"Mos.Forecast.no_record_reads_as_said\",\n        \"Mos.Forecast.pool_of_agreement\",\n        \"Mos.Forecast.pool_of_one\",\n        \"Mos.Forecast.too_likely_across_is_sound\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 348,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 349,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.mayStateAgain\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.no_change_is_not_a_change_of_mind\",\n        \"Mos.Forecast.one_way_or_the_other\",\n        \"Mos.Forecast.still_standing_is_the_same\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1887,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1891,\n          \"column\": 61\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.mean\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_div\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.mean_of_nothing\",\n        \"Mos.Forecast.mean_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 498,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 500,\n          \"column\": 81\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.nextPeriod\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.next_is_later\",\n        \"Mos.Forecast.next_of_previous\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1649,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1650,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.occurs\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.occurs_settles_at_the_deadline\",\n        \"Mos.Forecast.occurs_stays_true\",\n        \"Mos.Forecast.unheard_silence_is_void\",\n        \"Mos.Forecast.wrong_only_where_it_could_be_heard\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 228,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 235,\n          \"column\": 13\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.pairedBeyondChance\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.few_pairs_are_never_apart\",\n        \"Mos.Forecast.no_difference_is_not_apart\",\n        \"Mos.Forecast.paired_either_way\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1856,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1864,\n          \"column\": 78\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.partsCarry\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.parts_carry_is_sound\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1096,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1101,\n          \"column\": 112\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.pool\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.pool_is_bounded\",\n        \"Mos.Forecast.pool_of_agreement\",\n        \"Mos.Forecast.pool_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 601,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 603,\n          \"column\": 76\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.previousPeriod\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_sub\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.next_of_previous\",\n        \"Mos.Forecast.previous_is_a_period\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1646,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1647,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.proven\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.proven_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 527,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 527,\n          \"column\": 54\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.provenAt\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.as_said_leans_neither_way\",\n        \"Mos.Forecast.few_are_never_apart\",\n        \"Mos.Forecast.few_calls_tell_nothing\",\n        \"Mos.Forecast.few_forecasts_tell_nothing\",\n        \"Mos.Forecast.few_pairs_are_never_apart\",\n        \"Mos.Forecast.unproven_counts_as_anyone\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 524,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 525,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.recalibrated\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.always_right_reads_no_lower\",\n        \"Mos.Forecast.counting_for_nothing_reads_the_record\",\n        \"Mos.Forecast.never_right_reads_no_higher\",\n        \"Mos.Forecast.no_record_reads_as_said\",\n        \"Mos.Forecast.recalibrated_is_a_likelihood\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1265,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1272,\n          \"column\": 89\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.settle\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.agreed_is_settled_as_usual\",\n        \"Mos.Forecast.any_time_settles_early\",\n        \"Mos.Forecast.any_time_stays_true\",\n        \"Mos.Forecast.at_deadline_waits\",\n        \"Mos.Forecast.due_is_settled\",\n        \"Mos.Forecast.nothing_observed\",\n        \"Mos.Forecast.settle_satisfies_settling\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 39,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 58,\n          \"column\": 30\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.settleReported\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.agreed_is_settled_as_usual\",\n        \"Mos.Forecast.any_time_is_not_undone_by_a_later_dispute\",\n        \"Mos.Forecast.contested_at_the_deadline_is_void\",\n        \"Mos.Forecast.settle_reported_satisfies\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 156,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 164,\n          \"column\": 45\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.settled\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.all_settles\",\n        \"Mos.Forecast.any_settles\",\n        \"Mos.Forecast.due_is_settled\",\n        \"Mos.Forecast.occurs_settles_at_the_deadline\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 60,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 64,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.silenceCounts\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Forecast.wrong_only_where_it_could_be_heard\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 222,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 226,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.skill\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.skill_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 502,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 507,\n          \"column\": 80\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.split\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mod\",\n          \"lean_nat_pow\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.split_of_none\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 409,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 420,\n          \"column\": 55\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.sureness\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.sureness_too_high\",\n        \"Mos.Forecast.sureness_too_low\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1597,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1599,\n          \"column\": 76\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.surenessOf\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.as_said_leans_neither_way\",\n        \"Mos.Forecast.few_calls_tell_nothing\",\n        \"Mos.Forecast.too_high_is_high\",\n        \"Mos.Forecast.too_low_is_low\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1583,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1589,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.telling\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.telling_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 661,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 661,\n          \"column\": 58\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.tenth\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.tenth_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 491,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 493,\n          \"column\": 73\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.tooLikelyAcross\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.across_only_at_endings\",\n        \"Mos.Forecast.too_likely_across_is_sound\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1058,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1065,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.trend\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.better_is_lower\",\n        \"Mos.Forecast.few_forecasts_tell_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 793,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 801,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.weekStart\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_mod\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.weekStart_is_the_monday\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1416,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1417,\n          \"column\": 55\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.weight\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.better_counts_for_no_less\",\n        \"Mos.Forecast.even_odds_counts_as_anyone\",\n        \"Mos.Forecast.unproven_counts_as_anyone\",\n        \"Mos.Forecast.weight_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 532,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 540,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.weighted\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.weighted_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 597,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 599,\n          \"column\": 70\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.weights\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.pool_of_agreement\",\n        \"Mos.Forecast.weighted_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 593,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 595,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.worse\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.worse_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 509,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 510,\n          \"column\": 55\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Forecast.yearBefore\",\n      \"module\": \"Mos.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Forecast.year_before_is_a_year_of_periods_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Forecast.lean\",\n        \"start\": {\n          \"line\": 1679,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1679,\n          \"column\": 75\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.HeldUp.ofNat\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.HeldUp.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.alike\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.alike_symm\",\n        \"Mos.Hindcast.up_is_not_down\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 156,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 157,\n          \"column\": 69\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.alikeRate\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.alike_rate_of_none_alike\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 171,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 174,\n          \"column\": 71\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.atLeastPerStretch\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Hindcast.a_stretch_holds_something\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 55,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 55,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.callsBetter\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.calls_better_is_strict\",\n        \"Mos.Hindcast.calls_better_one_way\",\n        \"Mos.Hindcast.scored_goes_first\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 295,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 301,\n          \"column\": 21\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.chooseAgain\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.not_too_soon\",\n        \"Mos.Hindcast.not_when_stopped\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 185,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 185,\n          \"column\": 108\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.chosen\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.chosen_did_best\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 129,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 132,\n          \"column\": 52\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.countsBeside\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.counted_when_both_were_asked\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 255,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 256,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.cut\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.cut_in_order\",\n        \"Mos.Hindcast.cuts_cover\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 23,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 24,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.enough\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.enough_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 60,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 60,\n          \"column\": 83\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.heldUp\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.better_means_lower\",\n        \"Mos.Hindcast.too_soon_to_tell\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 209,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 214,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.learnable\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.learned_was_settled\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 40,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 42,\n          \"column\": 95\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.mean\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.mean_of_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 96,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 98,\n          \"column\": 71\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.moment\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Hindcast.every_way_is_heard\",\n        \"Mos.Hindcast.left_out_only_when_all_silent\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 400,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 402,\n          \"column\": 70\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.mostTriable\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_le\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.most_triable_is_triable\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 74,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 76,\n          \"column\": 119\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.needed\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.needed_grows_by_a_stretch\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 57,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 58,\n          \"column\": 74\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.said\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Hindcast.silent_says_even\",\n        \"Mos.Hindcast.spoken_is_kept\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 397,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 398,\n          \"column\": 57\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.settledToChooseAgain\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Mos.Hindcast.not_too_soon\",\n        \"Mos.Hindcast.too_soon_to_tell\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 182,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 183,\n          \"column\": 36\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.sharedFrom\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.counted_when_both_were_asked\",\n        \"Mos.Hindcast.shared_from_either_side\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 253,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 253,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.sharedFromAll\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.all_were_asked_in_the_shared_stretch\",\n        \"Mos.Hindcast.shared_from_all_of_two\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 270,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 272,\n          \"column\": 91\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.speaks\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.all_history_speaks\",\n        \"Mos.Hindcast.the_series_itself_speaks\",\n        \"Mos.Hindcast.too_short_a_count_is_silent\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 368,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 373,\n          \"column\": 37\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.total\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.total_of_nothing\",\n        \"Mos.Hindcast.total_of_one_more\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 93,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 94,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.triable\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_le\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.most_triable_is_triable\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 68,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 72,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Mos.Hindcast.turned\",\n      \"module\": \"Mos.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Mos.Hindcast.not_turned_while_too_soon\",\n        \"Mos.Hindcast.turned_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Mos/Hindcast.lean\",\n        \"start\": {\n          \"line\": 233,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 235,\n          \"column\": 93\n        }\n      }\n    }\n  ]\n}\n";
+    pub const ASSURANCE_JSON: &str = "{\n  \"schema_version\": 1,\n  \"program\": \"datacartridgeFormal\",\n  \"provenance\": {\n    \"lean_version\": \"4.34.1\",\n    \"lean_githash\": \"5045d0056413266e57c625dcd7c365b10e377c52\",\n    \"lungo_version\": \"1.108.38\",\n    \"bir_version\": 3,\n    \"runtime_abi\": 2\n  },\n  \"library\": {\n    \"package\": \"lungo\",\n    \"schema_version\": 1\n  },\n  \"specifications\": [\n    {\n      \"name\": \"Datacartridge.Forecast.ReportedSettling\",\n      \"kind\": \"lungo.contract\",\n      \"statement\": \"Lungo.Spec.Contract (Datacartridge.Forecast.Window × Bool × List Bool × Bool) Datacartridge.Forecast.Outcome\",\n      \"definition\": \"{ pre := fun x => True,\\n  post := fun input o =>\\n    match input with\\n    | (window, due, observed, contested) =>\\n      (window = Datacartridge.Forecast.Window.atDeadline ∧ due = true ∧ contested = true →\\n          o = Datacartridge.Forecast.Outcome.void) ∧\\n        (¬(window = Datacartridge.Forecast.Window.atDeadline ∧ due = true ∧ contested = true) →\\n          Datacartridge.Forecast.Settling.post (window, due, observed) o) }\",\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"6ca26a14ecd7f26bb4559f0d2f2b56eccb5f5ac7b9bd3cb93f4c7929743a506a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 167,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 175,\n          \"column\": 107\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Settling\",\n      \"kind\": \"lungo.contract\",\n      \"statement\": \"Lungo.Spec.Contract (Datacartridge.Forecast.Window × Bool × List Bool) Datacartridge.Forecast.Outcome\",\n      \"definition\": \"{ pre := fun x => True,\\n  post := fun input o =>\\n    match input with\\n    | (window, due, observed) =>\\n      (o = Datacartridge.Forecast.Outcome.open ↔\\n          due = false ∧ (window = Datacartridge.Forecast.Window.atDeadline ∨ observed.any id = false)) ∧\\n        (window = Datacartridge.Forecast.Window.anyTime →\\n            (o = Datacartridge.Forecast.Outcome.cameTrue ↔ observed.any id = true)) ∧\\n          (window = Datacartridge.Forecast.Window.atDeadline →\\n              due = true →\\n                (o = Datacartridge.Forecast.Outcome.cameTrue ↔ observed.getLast? = some true) ∧\\n                  (o = Datacartridge.Forecast.Outcome.didNot ↔ observed.getLast? = some false)) ∧\\n            (o = Datacartridge.Forecast.Outcome.void ↔ due = true ∧ observed = []) }\",\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ce32ae073056b418b77d71f634291c237f0f0e5af65e58096a0a3eedc3be8ce2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 82,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 90,\n          \"column\": 49\n        }\n      }\n    }\n  ],\n  \"facilities\": [],\n  \"assumptions\": [],\n  \"claims\": [\n    {\n      \"name\": \"Datacartridge.Forecast.Clash.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Clash.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (c : Datacartridge.Forecast.Clash), Datacartridge.Forecast.Clash.ofNat c.ctorIdx = c\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"47add9ec0f4cd6151af6d126e7cc7d63031411346b61efd7dd0167a634937447\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1913,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1914,\n          \"column\": 96\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Hearing.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Hearing.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (h : Datacartridge.Forecast.Hearing), Datacartridge.Forecast.Hearing.ofNat h.ctorIdx = h\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5eec81b31731b73df45daf85f614aacee31c3eb570442fd84f3e662d7555efc4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1916,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1917,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Leave.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Leave.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (l : Datacartridge.Forecast.Leave), Datacartridge.Forecast.Leave.ofNat l.ctorIdx = l\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b02842feb51e76e1d7423629998d4750e8d4d482e8eaf7e0d912efb219dece1d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1919,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1920,\n          \"column\": 96\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Outcome.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Outcome.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (o : Datacartridge.Forecast.Outcome), Datacartridge.Forecast.Outcome.ofNat o.ctorIdx = o\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"2d11d859dc72bc082f2c0025af6a477d4d84285e5258b20dc75dc2017cc1bbe8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1922,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1923,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Sureness.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Sureness.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Datacartridge.Forecast.Sureness), Datacartridge.Forecast.Sureness.ofNat s.ctorIdx = s\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"352d4173c9ad87985098d97767247a6266ac25ad023d6f55cb5b36e8c532668a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1925,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1926,\n          \"column\": 108\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Trend.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Trend.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (t : Datacartridge.Forecast.Trend), Datacartridge.Forecast.Trend.ofNat t.ctorIdx = t\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c8efb23af6f24271823bc5d69be6c9f010d5cb4407316a253430faa42cfd9de8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1928,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1929,\n          \"column\": 96\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Window.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Window.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (w : Datacartridge.Forecast.Window), Datacartridge.Forecast.Window.ofNat w.ctorIdx = w\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f0011f762ab4bed13e94298469d26acab5a246ecd138e16817d6395c4c386e04\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1931,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1932,\n          \"column\": 100\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.across_only_at_endings\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.tooLikelyAcross\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (link : Datacartridge.Forecast.Link) (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When),\\n  wa.anyTime = true ∨ wb.anyTime = true → Datacartridge.Forecast.tooLikelyAcross link a b wa wb = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c842a2e8e69b21207cac8ef473772d8d273ba4e7565ae934620ff2a49946dcf0\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1080,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1086,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.agreed_is_settled_as_usual\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settleReported\",\n        \"Datacartridge.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (window : Datacartridge.Forecast.Window) (due : Bool) (observed : List Bool),\\n  Datacartridge.Forecast.settleReported window due observed false = Datacartridge.Forecast.settle window due observed\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5749ba6844c9a0a064de86831693d3ad105aaeb5b9fe626f8792ef5878f49917\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 185,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 189,\n          \"column\": 41\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.agreeing_exclusive_within_certainty\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clash\",\n        \"Datacartridge.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Datacartridge.Forecast.Claim),\\n  Datacartridge.Forecast.clash a b = Datacartridge.Forecast.Clash.agree →\\n    Datacartridge.Forecast.Claim.excludes✝ a b = true →\\n      Datacartridge.Forecast.likelihood a.bps + Datacartridge.Forecast.likelihood b.bps ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"6292f7a5728b34081fe15f613679e0e7df04f86f87db88689b33a107055c5eec\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 889,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 901,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.agreeing_respects_implication\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clash\",\n        \"Datacartridge.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Datacartridge.Forecast.Claim),\\n  Datacartridge.Forecast.clash a b = Datacartridge.Forecast.Clash.agree →\\n    Datacartridge.Forecast.Claim.implies✝ a b = true →\\n      Datacartridge.Forecast.likelihood a.bps ≤ Datacartridge.Forecast.likelihood b.bps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ce603092abcc78f6284c83b82af0e3d774dfdbed149ce5b7e73526573499e23f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 879,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 887,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.all_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.all\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (o : Datacartridge.Forecast.Outcome), Datacartridge.Forecast.all [o] = o\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"597ed716819c89ed115370c256b0c26729a1642d138db7f507378fb7f466bc7d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 289,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 290,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.all_refuted\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.all\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Datacartridge.Forecast.Outcome),\\n  Datacartridge.Forecast.Outcome.didNot ∈ parts →\\n    Datacartridge.Forecast.all parts = Datacartridge.Forecast.Outcome.didNot\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"646f3ae6263d7694a87c9ea3431660b1a1b7c78003e1f6a40e10e157d43a5fd8\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 294,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 298,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.all_settles\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settled\",\n        \"Datacartridge.Forecast.all\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Datacartridge.Forecast.Outcome),\\n  (∀ (o : Datacartridge.Forecast.Outcome), o ∈ parts → Datacartridge.Forecast.settled o = true) →\\n    Datacartridge.Forecast.settled (Datacartridge.Forecast.all parts) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7631a94b17cb29b3cfd264d69c4aab0d8445786d275c04df510889b52d7cae1b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 311,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 324,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.always_right_reads_no_lower\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.likelihood\",\n        \"Datacartridge.Forecast.recalibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps scored countsAs : Nat),\\n  Datacartridge.Forecast.likelihood statedBps ≤ Datacartridge.Forecast.recalibrated statedBps scored scored countsAs\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"19b34a5857b2309b735ac6126c5507e334c8874baac37f774074c2ad0deb3f46\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1297,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1311,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.any_confirmed\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.any\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Datacartridge.Forecast.Outcome),\\n  Datacartridge.Forecast.Outcome.cameTrue ∈ parts →\\n    Datacartridge.Forecast.any parts = Datacartridge.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"74c7fce915dbdf91d29c94d08d21e7fee29281db2606bb717ff5807c851fcba9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 300,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 304,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.any_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.any\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (o : Datacartridge.Forecast.Outcome), Datacartridge.Forecast.any [o] = o\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"1e00dd82095a0db09bd62d11f719b139f2bffe3af5fca4f1bf833b6657880663\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 291,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 292,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.any_settles\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settled\",\n        \"Datacartridge.Forecast.any\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Datacartridge.Forecast.Outcome),\\n  (∀ (o : Datacartridge.Forecast.Outcome), o ∈ parts → Datacartridge.Forecast.settled o = true) →\\n    Datacartridge.Forecast.settled (Datacartridge.Forecast.any parts) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"1ebdcc0db48270f041f5870262f41a1b5af725e86838e52a3d6ce477ee4ed7a0\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 326,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 338,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.any_time_is_not_undone_by_a_later_dispute\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settleReported\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due contested : Bool) (observed : List Bool),\\n  observed.any id = true →\\n    Datacartridge.Forecast.settleReported Datacartridge.Forecast.Window.anyTime due observed contested =\\n      Datacartridge.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"1a0b4bdf4819892aa2fdaac7e621c7a4d068a27391239b5dee545b77f67ed9d6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 196,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 201,\n          \"column\": 35\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.any_time_settles_early\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due : Bool) (observed : List Bool),\\n  observed.any id = true →\\n    Datacartridge.Forecast.settle Datacartridge.Forecast.Window.anyTime due observed =\\n      Datacartridge.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"061c0b3d93f2f181dd4f1a9c4ca7d02e376741de825cd553058c32dc32deadd1\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 108,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 113,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.any_time_stays_true\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due due' : Bool) (observed later : List Bool),\\n  Datacartridge.Forecast.settle Datacartridge.Forecast.Window.anyTime due observed =\\n      Datacartridge.Forecast.Outcome.cameTrue →\\n    Datacartridge.Forecast.settle Datacartridge.Forecast.Window.anyTime due' (observed ++ later) =\\n      Datacartridge.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"af164446a819190de792378ea9d36de7676e34cab88deea61391a672c33ee35b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 138,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 146,\n          \"column\": 39\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.apart_either_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.apartBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\\n  Datacartridge.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ =\\n    Datacartridge.Forecast.apartBeyondChance n₂ s₂ q₂ n₁ s₁ q₁\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a6fe044c04e3d934a7f93427a3c680571be695ee5f47e567b90e6691a1be3ad9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1837,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1849,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.as_forecast_is_a_likelihood\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.asForecast\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (rateBps : Nat), 100 ≤ Datacartridge.Forecast.asForecast rateBps ∧ Datacartridge.Forecast.asForecast rateBps ≤ 9900\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"81adc4a1815755e154d854de0f830c5fa15a4025a75824489ffb14d0116cbe52\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 687,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 690,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.as_said_leans_neither_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.provenAt\",\n        \"Datacartridge.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came spread : Nat),\\n  Datacartridge.Forecast.provenAt ≤ forecasts →\\n    Datacartridge.Forecast.surenessOf forecasts came (came * 10000) spread = Datacartridge.Forecast.Sureness.about\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"12b7b8b9343ea164051d25f182d405bc0fe017bf37c0915fbb834517351d9528\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1633,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1638,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.ask_next_is_ahead\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.askNext\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (now next every : Nat), 0 < every → now < Datacartridge.Forecast.askNext now next every\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0ce5bd0f8236820e14e69ea0dd85ac03ce978823c539729b15c3674296912b19\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 724,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 735,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.ask_next_keeps_time\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.askNext\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (now next every : Nat), next ≤ now → (Datacartridge.Forecast.askNext now next every - next) % every = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"68f656217589ca934cdfe2c1a33824a3af7939224c0b29865b456e6abf65bd23\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 737,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 741,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.ask_next_on_time\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.askNext\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (next every : Nat), Datacartridge.Forecast.askNext next next every = next + every\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"440fc2e738d842902e2d408e0cfbd919c38c53a51c1179fdcf52a4f18e326353\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 743,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 746,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.asked_is_not_reported\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.askedOf\",\n        \"Datacartridge.Forecast.later\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (reported : List (Int × Nat)) (perYear : Nat) (next : Int × Nat),\\n  Datacartridge.Forecast.askedOf reported perYear = some next →\\n    ∀ (q : Int × Nat), q ∈ reported → Datacartridge.Forecast.later q next = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b6fbd8a117386525703fc72719c24da058e09cecc2fc2d32e9aca331751a57d1\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1800,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1815,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.asked_means_due\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.asks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (active answered : Bool) (now next : Nat),\\n  Datacartridge.Forecast.asks active answered now next = true → active = true ∧ answered = true ∧ next ≤ now\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"90788f44ef3a910b5141196217d3c87ed849014a8df0c76999c0ecade9f4f7a2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 712,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 717,\n          \"column\": 28\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.at_deadline_waits\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (observed : List Bool),\\n  Datacartridge.Forecast.settle Datacartridge.Forecast.Window.atDeadline false observed =\\n    Datacartridge.Forecast.Outcome.open\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f70138f466822a061434a0cb810ba75c930c79aaecc4ed7ee8ab6dc6615ac5c7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 102,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 106,\n          \"column\": 16\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.back_add\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.back\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (perYear m n : Nat) (p : Int × Nat),\\n  Datacartridge.Forecast.back perYear (m + n) p =\\n    Datacartridge.Forecast.back perYear n (Datacartridge.Forecast.back perYear m p)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5c013ab4c93771abda38dfa3aae63dff72c50609378c71f6bdbb3d6912d03a6f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1686,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1691,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.back_within_the_year\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.back\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (perYear k : Nat) (year : Int) (index : Nat),\\n  k < index → Datacartridge.Forecast.back perYear k (year, index) = (year, index - k)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"72e35b32437dffb52c2f48bf12ab8841fd94d4a3ef9d69d279c35dbab85c654a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1693,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1707,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.backing_of_anyone\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.backing\",\n        \"Datacartridge.Forecast.evenWeight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (believedBps baseBps : Nat),\\n  Datacartridge.Forecast.backing believedBps (some baseBps) Datacartridge.Forecast.evenWeight =\\n    ↑(Datacartridge.Forecast.likelihood believedBps) - ↑(Datacartridge.Forecast.likelihood baseBps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8b6c2ce1faf06a659b3da3e6be78d3af3b3957096bf74af426710a909f7cd361\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 767,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 771,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.backing_without_history\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.backing\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (believedBps weightBps : Nat),\\n  Datacartridge.Forecast.backing believedBps none weightBps =\\n    Datacartridge.Forecast.backing believedBps (some 5000) weightBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"73336916d233638d97106274d55497b83697f60f8c97c30795cf7d1045eaad82\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 773,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 777,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.base_rate_extremes\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.baseRate\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (windows : Nat),\\n  0 < windows →\\n    Datacartridge.Forecast.baseRate windows windows = some 10000 ∧ Datacartridge.Forecast.baseRate 0 windows = some 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"33f093db785389ea116cb004096fadf704df1c3f2918930d71e41f4ee52dc651\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 677,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 682,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.base_rate_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.baseRate\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (held windows r : Nat), Datacartridge.Forecast.baseRate held windows = some r → r ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"77d4c6a60e5b1a919c8e8979b9ae5f849d256cdcaed2fd6602d5ff0d4a19793e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 667,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 675,\n          \"column\": 42\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.best_of_fold_scores_no_worse\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.better\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (rest : List Datacartridge.Forecast.Tried) (first : Datacartridge.Forecast.Tried),\\n  (List.foldl Datacartridge.Forecast.better first rest).meanBrier ≤ first.meanBrier ∧\\n    ∀ (t : Datacartridge.Forecast.Tried),\\n      t ∈ rest → (List.foldl Datacartridge.Forecast.better first rest).meanBrier ≤ t.meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8981f14bbd2a5f0ee8996dc917ae77b7d2fa51f388ea682352ad1d271c33d949\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1368,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1384,\n          \"column\": 35\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.better_counts_for_no_less\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.weight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored better worse : Nat),\\n  better ≤ worse → Datacartridge.Forecast.weight scored worse ≤ Datacartridge.Forecast.weight scored better\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"afaead6cb1300db770364c5fbcaaa36a0760667f684a7eeeae68c4ca80e94491\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 565,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 580,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.better_is_lower\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.trend\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (d b scoredDuring scoredBefore : Nat),\\n  (Datacartridge.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Datacartridge.Forecast.Trend.better →\\n      d < b) ∧\\n    (Datacartridge.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Datacartridge.Forecast.Trend.worse →\\n      b < d)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3d51b005e7ee8ad29ec76710b2388b4c255d4d506181a7e73009fb3657121c3b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 809,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 815,\n          \"column\": 175\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.better_scores_no_worse\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.better\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Datacartridge.Forecast.Tried),\\n  (Datacartridge.Forecast.better a b).meanBrier ≤ a.meanBrier ∧\\n    (Datacartridge.Forecast.better a b).meanBrier ≤ b.meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"056acefc745a781d118bc1440313e023cd9b6c5aa6a783389c30c1fa2f3926ed\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1363,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1366,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.brier_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps : Nat) (cameTrue : Bool), Datacartridge.Forecast.brier statedBps cameTrue ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"56ffc557bfd41a9d8f9724c054214344427dc44d290870aec88185c768c61c22\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 357,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 366,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.brier_of_certainty\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Forecast.brier 10000 true = 0 ∧\\n  Datacartridge.Forecast.brier 10000 false = 10000 ∧\\n    Datacartridge.Forecast.brier 0 false = 0 ∧ Datacartridge.Forecast.brier 0 true = 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"738bd5cad35c46bbe0220ca476e2bc2add6147dda0bac91503722d39e7b6477a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 443,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 446,\n          \"column\": 9\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.brier_of_even_odds\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (cameTrue : Bool), Datacartridge.Forecast.brier 5000 cameTrue = 2500\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"45037b70fe1981f7c6ebe3ab222f58714802da1e4567a33259314ddaf527ffeb\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 448,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 451,\n          \"column\": 28\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.brier_rewards_being_right\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (p q : Nat), p ≤ q → Datacartridge.Forecast.brier q true ≤ Datacartridge.Forecast.brier p true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ddc48a8a8fbdbd8df0e8842480c3427ad6d73c482ca937ef8433d7d5637a945b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 453,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 463,\n          \"column\": 56\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.calibrated_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.calibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Datacartridge.Forecast.Split), Datacartridge.Forecast.calibrated s = true ↔ s.offBy ≤ 100\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0aad7d1992c5b863cec5939407b8787e5404b059a91205dae3d14bb301db1dff\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 434,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 436,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.carried_holds\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.carried\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (link : Datacartridge.Forecast.Link) (a c : Datacartridge.Forecast.Claim) (x y : Int),\\n  link.binds x y → Datacartridge.Forecast.carried link a = some c → a.holdsOf x → c.holdsOf y\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fae2f5515a72f654fd6c25ed60ca5351eda5ae506aea87a093e2c9b79151fdc6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1049,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1056,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.chosen_scores_no_worse\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.bestReading\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts : Nat) (tried : List Datacartridge.Forecast.Tried) (best : Datacartridge.Forecast.Tried),\\n  Datacartridge.Forecast.bestReading forecasts tried = some best →\\n    ∀ (t : Datacartridge.Forecast.Tried), t ∈ tried → best.meanBrier ≤ t.meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5b0eb19cf2a6a7faa45dd2e26a16e4bb81e28f744eb6b9f4d4c94cddb9eae31e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1391,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1409,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.clashWhen_at_one_moment\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clashWhen\",\n        \"Datacartridge.Forecast.clash\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Datacartridge.Forecast.Claim) (since₁ since₂ till : Int),\\n  Datacartridge.Forecast.clashWhen a b { anyTime := false, since := since₁, till := till }\\n      { anyTime := false, since := since₂, till := till } =\\n    Datacartridge.Forecast.clash a b\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"11153bedf6d03b7fbd2d333bc6bdc1ccd9c54a8940006c55cc1a898fbeb7c574\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 972,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 976,\n          \"column\": 65\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.clash_with_itself\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clash\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a : Datacartridge.Forecast.Claim), Datacartridge.Forecast.clash a a = Datacartridge.Forecast.Clash.agree\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"87cf6f868d3bbac432ab300cc7ff6ffe006175aa56cad392a2904b29d27f4c02\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 874,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 877,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.conditional_is_not_refuted_by_its_condition\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.conditional\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (consequence : Datacartridge.Forecast.Outcome),\\n  Datacartridge.Forecast.conditional Datacartridge.Forecast.Outcome.didNot consequence =\\n    Datacartridge.Forecast.Outcome.void\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"02beef7ff95a392beb29f5340d2ab0d40c50fc51e77ce844bdb5ccf9d884a45b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 306,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 309,\n          \"column\": 51\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.contested_at_the_deadline_is_void\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settleReported\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (observed : List Bool),\\n  Datacartridge.Forecast.settleReported Datacartridge.Forecast.Window.atDeadline true observed true =\\n    Datacartridge.Forecast.Outcome.void\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0aaba555a6b3145c69146399a35835a48c986842ef66392585f8720a3bcb162a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 191,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 194,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.conviction_is_symmetric_and_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.conviction\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (backingBps : Int),\\n  Datacartridge.Forecast.conviction (-backingBps) = Datacartridge.Forecast.conviction backingBps ∧\\n    Datacartridge.Forecast.conviction backingBps ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"288918e6d55b0279b3e1b200ebe88050ddd78aabba5e8c45b1b5f974f6445572\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1480,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1485,\n          \"column\": 40\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.counting_for_nothing_reads_the_record\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.recalibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps came scored : Nat),\\n  0 < scored → Datacartridge.Forecast.recalibrated statedBps came scored 0 = min came scored * 10000 / scored\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"88d2fb43dd6e69e7892387206d0622fa51a1a77ba90c16aca0774ab9b59aa495\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1325,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1331,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.counts_any_time\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.When.counts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (w : Datacartridge.Forecast.When),\\n  w.anyTime = true → ∀ (moment : Int), w.counts moment = true ↔ w.since < moment ∧ moment ≤ w.till\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e8c64f022b5445a9b03030ec71c04ac3316ff53956d23486e6de5fecec890b77\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1945,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1948,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.counts_at_the_deadline\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.When.counts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (w : Datacartridge.Forecast.When), w.anyTime = false → ∀ (moment : Int), w.counts moment = true ↔ moment = w.till\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"38460c33daa1943713bab7bd8fe703420553966b9593faa058b1393ec4469b52\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1940,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1943,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.discerning_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.discerning\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Datacartridge.Forecast.Split),\\n  Datacartridge.Forecast.discerning s = true ↔ 0 < s.howHard ∧ s.howHard ≤ 4 * s.toldApart\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"99ea83eee08878a4aecf558d053888190d4c1e29b9611e0f428dd8d6015abec3\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 438,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 440,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.due_is_settled\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settled\",\n        \"Datacartridge.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (window : Datacartridge.Forecast.Window) (observed : List Bool),\\n  Datacartridge.Forecast.settled (Datacartridge.Forecast.settle window true observed) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4b527fd373951bc5f5bb38fb40fdcf52d18a9c9e2e4daf284d97323b0fe90445\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 115,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 129,\n          \"column\": 43\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.even_odds_counts_as_anyone\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.weight\",\n        \"Datacartridge.Forecast.evenWeight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored : Nat), Datacartridge.Forecast.weight scored 2500 = Datacartridge.Forecast.evenWeight\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4dc5f852e013dfd4105bcfaa4995bccfefb5b0ae15e55183d6b948293d277aa1\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 559,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 563,\n          \"column\": 46\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.even_odds_expect_only_costs\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.expected\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (sizeBps costBps : Nat), Datacartridge.Forecast.expected 5000 (↑sizeBps) (-↑sizeBps) costBps = -(2 * ↑costBps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5fd43232a4f98a701c21e466518efab6e81fec71d37c57931948669644a00ed9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1457,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1468,\n          \"column\": 7\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.expectedFirst_irreflexive\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.expectedFirst\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a : Option Int × Int), Datacartridge.Forecast.expectedFirst a a = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"51a93355ba524b987a942122e063cb0e1f8c7dc646bfed289f2bec459ba2b5cc\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1502,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1506,\n          \"column\": 39\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.expected_at_the_extremes\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.expected\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (gainBps lossBps : Int) (costBps : Nat),\\n  Datacartridge.Forecast.expected 10000 gainBps lossBps costBps = gainBps - 2 * ↑costBps ∧\\n    Datacartridge.Forecast.expected 0 gainBps lossBps costBps = lossBps - 2 * ↑costBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"436e777d614b60eecc83cdb583d346171a7b94cc1d061d3c634f735c645772ad\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1450,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1455,\n          \"column\": 30\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.few_are_never_apart\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.apartBeyondChance\",\n        \"Datacartridge.Forecast.provenAt\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\\n  n₁ < Datacartridge.Forecast.provenAt ∨ n₂ < Datacartridge.Forecast.provenAt →\\n    Datacartridge.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"66051054f718b7fed1c1fabc445e71e3f3013ac23c1eae0504f670eea1d492d9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1831,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1835,\n          \"column\": 30\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.few_calls_tell_nothing\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.provenAt\",\n        \"Datacartridge.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came statedSum spread : Nat),\\n  forecasts < Datacartridge.Forecast.provenAt →\\n    Datacartridge.Forecast.surenessOf forecasts came statedSum spread = Datacartridge.Forecast.Sureness.untold\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"383f57682d0da910478c4884b5e55c45bcf29adf7e8dc8c30b3602fcc75aa534\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1601,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1605,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.few_forecasts_tell_nothing\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.provenAt\",\n        \"Datacartridge.Forecast.trend\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (during before : Option Nat) (scoredDuring scoredBefore : Nat),\\n  scoredDuring < Datacartridge.Forecast.provenAt ∨ scoredBefore < Datacartridge.Forecast.provenAt →\\n    Datacartridge.Forecast.trend during before scoredDuring scoredBefore = Datacartridge.Forecast.Trend.untold\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a9c317115ad1056b2a4e666f1b7aeeb3d838c9ed532553f16008cde2364d7a92\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 803,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 807,\n          \"column\": 52\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.few_pairs_are_never_apart\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.pairedBeyondChance\",\n        \"Datacartridge.Forecast.provenAt\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n : Nat) (d : Int) (q : Nat),\\n  n < Datacartridge.Forecast.provenAt → Datacartridge.Forecast.pairedBeyondChance n d q = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e0a85c5386da34512b9fb63356750c50ad186d820c63011f3848716974a321c0\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1866,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1870,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.group_split\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Group.squares\",\n        \"Datacartridge.Forecast.Group.gap\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (g : Datacartridge.Forecast.Group), ↑g.calls * g.squares = g.gap + 100000000 * (↑g.came * (↑g.calls - ↑g.came))\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"002dfb033f180ad5e958a1d458e92b2665d5a663dffd1dbca8fccf7f15735e99\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 392,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 396,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.happening_apart_agrees\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clashHappening\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (p q : Nat) (a b : Datacartridge.Forecast.When),\\n  Datacartridge.Forecast.clashHappening false false p q a b = Datacartridge.Forecast.Clash.agree\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"dfa03a22a8444e6c3bce02953e99171b7106c7f4974e53a62a157eb8aa3899b5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1240,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1243,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.happening_as_likely_agrees\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clashHappening\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (firstWithin secondWithin : Bool) (p : Nat) (a b : Datacartridge.Forecast.When),\\n  Datacartridge.Forecast.clashHappening firstWithin secondWithin p p a b = Datacartridge.Forecast.Clash.agree\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ba5da63deddd148aa9c8d012a1b90490be5de55945ba82d9d1cc83a32ddc8d8a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1234,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1238,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.happening_first_too_likely\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clashHappening\",\n        \"Datacartridge.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Datacartridge.Forecast.When),\\n  Datacartridge.Forecast.clashHappening firstWithin secondWithin p q a b = Datacartridge.Forecast.Clash.firstTooLikely →\\n    firstWithin = true ∧\\n      b.since ≤ a.since ∧ a.till ≤ b.till ∧ Datacartridge.Forecast.likelihood q < Datacartridge.Forecast.likelihood p\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"cf775a7f8ef39a9a4a81f8c6b7d688297e5421edee9f3569d50401f797381e2b\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1245,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1256,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.happening_only_implies\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clashHappening\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Datacartridge.Forecast.When),\\n  Datacartridge.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Datacartridge.Forecast.Clash.tooMuch ∧\\n    Datacartridge.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Datacartridge.Forecast.Clash.tooLittle\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5449abd0e1292bb96de128d5435892c6dbc817524542a8f7e7aa552adf5406d6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1226,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1232,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.lastWeek_is_whole_and_over\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.lastWeek\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (today : Nat),\\n  13 ≤ today →\\n    (Datacartridge.Forecast.lastWeek today).snd = (Datacartridge.Forecast.lastWeek today).fst + 7 ∧\\n      (Datacartridge.Forecast.lastWeek today).snd ≤ today\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d3f95cbd635173baa5951e070b4d5dea537a097a7a05f89bfa4cc1bef9637b9a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1430,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1435,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.latest_is_latest\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.laterOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (ps : List (Int × Nat)) (p q : Int × Nat),\\n  q ∈ p :: ps → Datacartridge.Forecast.noLater q (List.foldl Datacartridge.Forecast.laterOf p ps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0f09f8c13b02d3f97338d6745eb9d45a512aa1896cf0c058e63ad8b703da5437\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1779,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1792,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.least_from_parts_only_when_carried\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.leastFromParts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Datacartridge.Forecast.Claim) (others : Int) (whole : Datacartridge.Forecast.Claim),\\n  Datacartridge.Forecast.leastFromParts parts others whole =\\n    if Datacartridge.Forecast.partsCarry parts others whole = true then\\n      some (Datacartridge.Forecast.leastWhenAll (List.map (fun x => x.bps) parts))\\n    else none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e06bcb77b1e686d11e274c78fc9521ad147cbcd01a207e3a0c47c1b874543356\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1950,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1953,\n          \"column\": 137\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.least_is_under_each\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.leastWhenAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (bps : List Nat) (b : Nat), b ∈ bps → Datacartridge.Forecast.leastWhenAll bps ≤ ↑(Datacartridge.Forecast.likelihood b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"726f2b4a9a26594fed09851102e85e5299224b2b15b7520c366835b982674156\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1169,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1193,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.least_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.leastWhenAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (b : Nat), Datacartridge.Forecast.leastWhenAll [b] = ↑(Datacartridge.Forecast.likelihood b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4f94132c23a4727b504e61fc059454bb8f16550d8bcca6d9d4da694a2ec85c54\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1164,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1167,\n          \"column\": 22\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.life_of_one\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.lifeBrier\",\n        \"Datacartridge.Forecast.brier\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps duration : Nat) (cameTrue : Bool),\\n  0 < duration →\\n    Datacartridge.Forecast.lifeBrier [{ statedBps := statedBps, duration := duration }] cameTrue =\\n      some (Datacartridge.Forecast.brier statedBps cameTrue)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"606949d2ff11910f2f800ea48d7bb93b5bd9a0f02c95890d8808a5d6ba296db9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 485,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 489,\n          \"column\": 97\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.mean_of_nothing\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.mean\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Forecast.mean [] = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3d55a93dbec09e8caad594c097bba347e5f92b6bd186735d6f2d75b340d7889d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1955,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1957,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.mean_of_one\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.mean\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (s : Nat), Datacartridge.Forecast.mean [s] = some s\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"53f680f59793d21e785ff071b790297711c22b8130ef6bfeabcbce75be815165\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1959,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1962,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.never_right_reads_no_higher\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.recalibrated\",\n        \"Datacartridge.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps scored countsAs : Nat),\\n  Datacartridge.Forecast.recalibrated statedBps 0 scored countsAs ≤ Datacartridge.Forecast.likelihood statedBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"57318f9517a83a4ee875fa43cc690364cd691ee24b571352755dcb83508f34a3\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1313,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1323,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.next_is_later\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.later\",\n        \"Datacartridge.Forecast.nextPeriod\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  Datacartridge.Forecast.later (year, index) (Datacartridge.Forecast.nextPeriod year index perYear) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3e345d4c51f7e1624f1894f80a6583f8788455b68d8cbd56bbfc8a908416f821\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1794,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1798,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.next_of_previous\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.nextPeriod\",\n        \"Datacartridge.Forecast.previousPeriod\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  1 ≤ index →\\n    index ≤ perYear →\\n      Datacartridge.Forecast.nextPeriod (Datacartridge.Forecast.previousPeriod year index perYear).fst\\n          (Datacartridge.Forecast.previousPeriod year index perYear).snd perYear =\\n        (year, index)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3a25cd5caac3519fd12bacd84601ad8d0fa27282fe145e17e7b946f992e868b2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1652,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1665,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.noLater_laterOf_left\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.laterOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int × Nat), Datacartridge.Forecast.noLater a (Datacartridge.Forecast.laterOf a b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fe034014ed4a9097473d35ec3e370e577e4b584ac0105ee93db31d9ecbaab0c3\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1750,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1760,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.noLater_laterOf_right\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.laterOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int × Nat), Datacartridge.Forecast.noLater b (Datacartridge.Forecast.laterOf a b)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"711e0bbc01ebdc354c4dc660208fab5e4a9defadfa13cd049250e7bd59b3c3fb\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1762,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1773,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.no_backing_no_conviction\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.conviction\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Forecast.conviction 0 = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"45999a363156ba7db5fae01f8df3118816621d9f7f057ba990b9d8e60af5b5d5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1476,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1478,\n          \"column\": 65\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.no_backing_without_a_difference\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.backing\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (bps weightBps : Nat), Datacartridge.Forecast.backing bps (some bps) weightBps = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a08ec7f90ec0424e0a2d108f5a3c64fea374bf9ae01d7aa72bfb194418a0f2c9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 762,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 765,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.no_change_is_not_a_change_of_mind\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.mayStateAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (standing : Nat), Datacartridge.Forecast.mayStateAgain standing standing false = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4de7d6da44249794f8014f6133405457dbf189d0d68c983a56ddd581117c4d85\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1893,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1896,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.no_difference_is_not_apart\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.pairedBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n q : Nat), Datacartridge.Forecast.pairedBeyondChance n 0 q = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"1485080c033ac81dc425da845b8e035bdaaabf5d8c531bb171201dfa28b446ec\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1878,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1885,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.no_record_reads_as_said\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.recalibrated\",\n        \"Datacartridge.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps countsAs : Nat),\\n  Datacartridge.Forecast.recalibrated statedBps 0 0 countsAs = Datacartridge.Forecast.likelihood statedBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a1750b7abbddb0d6ce32aa48dd2db217bf0f8ef65a7fe8d808bffc1c6aebd108\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1274,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1281,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.no_rule_stays\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.leave\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (returnBps : Int) (heldDays : Nat),\\n  Datacartridge.Forecast.leave returnBps none none heldDays none = Datacartridge.Forecast.Leave.stay\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8ce2ed98726c5b7f158685b6c81c6f5d8402104b43f238fb7f333d7425eb5acb\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1534,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1537,\n          \"column\": 15\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.nothing_observed\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settle\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (window : Datacartridge.Forecast.Window) (due : Bool),\\n  Datacartridge.Forecast.settle window due [] =\\n    if due = true then Datacartridge.Forecast.Outcome.void else Datacartridge.Forecast.Outcome.open\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7211b13804fe373495fa026949686607501670977aec556ed9ecf42c51bbb4b4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 131,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 136,\n          \"column\": 54\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.occurs_settles_at_the_deadline\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settled\",\n        \"Datacartridge.Forecast.occurs\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (seen : Bool) (hearing : Datacartridge.Forecast.Hearing),\\n  Datacartridge.Forecast.settled (Datacartridge.Forecast.occurs true seen hearing) = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"106e4513eea7b9c247d0fd21c20b4b3eed8ad68ac430879c6de1f4200074370d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 237,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 239,\n          \"column\": 42\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.occurs_stays_true\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.occurs\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due : Bool) (hearing : Datacartridge.Forecast.Hearing),\\n  Datacartridge.Forecast.occurs due true hearing = Datacartridge.Forecast.Outcome.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"915598db8b7a3ac778f59e78f0e704850d1e899d856f636a8dc01d96acfeb894\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 241,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 244,\n          \"column\": 41\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.one_way_or_the_other\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.mayStateAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (standing said : Nat),\\n  Datacartridge.Forecast.mayStateAgain standing said true = !Datacartridge.Forecast.mayStateAgain standing said false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"78302ef8c1abe7ede7774b05a5ca2a89ebd9211a06e1a132914e753fcca19b13\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1903,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1907,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.only_meeting_covers\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clashWhen\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When),\\n  Datacartridge.Forecast.When.meet✝ wa wb = false →\\n    Datacartridge.Forecast.clashWhen a b wa wb ≠ Datacartridge.Forecast.Clash.tooLittle\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"daed8f6d24192a3fe3900bc866414060e6efb6f4d6318a67ceb6801dbafaedff\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 990,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 995,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.only_together_excludes\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.clashWhen\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When),\\n  Datacartridge.Forecast.When.together✝ wa wb = false →\\n    Datacartridge.Forecast.clashWhen a b wa wb ≠ Datacartridge.Forecast.Clash.tooMuch\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a7c0d95c6e9aec7f803986231a3023bc60eb47cd2d4343f2659a5d026335046a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 983,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 988,\n          \"column\": 31\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.opposite_says_the_rest\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.Claim.opposite\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (c : Datacartridge.Forecast.Claim),\\n  c.opposite.up = !c.up ∧ c.opposite.level = c.level ∧ c.opposite.bps = 10000 - Datacartridge.Forecast.likelihood c.bps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d975404713daeaa3577fa8e27e869fd4eadd5d3f6478eacdf77a3f20a30e29d4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1936,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1938,\n          \"column\": 159\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.paired_either_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.pairedBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n : Nat) (d : Int) (q : Nat),\\n  Datacartridge.Forecast.pairedBeyondChance n (-d) q = Datacartridge.Forecast.pairedBeyondChance n d q\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b4d87a0736ff3d0bcb1af7a1ed3df1584f5b39c46147d268aa1ebc63dee6c6e5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1872,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1876,\n          \"column\": 45\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.parts_carry_is_sound\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.partsCarry\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (parts : List Datacartridge.Forecast.Claim) (others : Int) (whole : Datacartridge.Forecast.Claim) (xs : List Int)\\n  (y : Int),\\n  Datacartridge.Forecast.partsCarry parts others whole = true →\\n    Datacartridge.Forecast.allHold parts xs → xs.sum + others ≤ y → whole.holdsOf y\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"970939bcaebb8edaadb142acfc181ab14e8cc039553a28022b9122f93fc46b68\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1136,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1156,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.pool_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.pool\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (views : List Datacartridge.Forecast.View) (p : Nat), Datacartridge.Forecast.pool views = some p → p ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e777718435cb4145287a14b20c730b8d43ffe9b2383cd859865392a43c0c7482\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 615,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 624,\n          \"column\": 66\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.pool_of_agreement\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.likelihood\",\n        \"Datacartridge.Forecast.weights\",\n        \"Datacartridge.Forecast.pool\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (views : List Datacartridge.Forecast.View) (statedBps : Nat),\\n  (∀ (v : Datacartridge.Forecast.View), v ∈ views → Datacartridge.Forecast.likelihood v.statedBps = statedBps) →\\n    0 < Datacartridge.Forecast.weights views → Datacartridge.Forecast.pool views = some statedBps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"409872e528838880c256d7d541371355bff6423a1da591fac9a65f07d37a2453\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 632,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 649,\n          \"column\": 74\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.pool_of_one\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.pool\",\n        \"Datacartridge.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (weightBps statedBps : Nat),\\n  0 < weightBps →\\n    Datacartridge.Forecast.pool [{ weightBps := weightBps, statedBps := statedBps }] =\\n      some (Datacartridge.Forecast.likelihood statedBps)\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d0b66053b1f5212cd0ef840e36f294254fb8d0356946318957ed09ed263cd614\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 626,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 630,\n          \"column\": 88\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.previous_is_a_period\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.previousPeriod\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  1 ≤ index →\\n    index ≤ perYear →\\n      1 ≤ (Datacartridge.Forecast.previousPeriod year index perYear).snd ∧\\n        (Datacartridge.Forecast.previousPeriod year index perYear).snd ≤ perYear\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5833bdf8e76d9a1876828f3f91cfb21be65c2a533976b9280831afab37f1016c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1667,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1672,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.proven_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.proven\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored : Nat), Datacartridge.Forecast.proven scored = true ↔ Datacartridge.Forecast.provenAt ≤ scored\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"ef176f2e18c9ec5de99c690d14036c5c78c5010aaeabdb00fcb6409846cf394d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1964,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1966,\n          \"column\": 16\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.recalibrated_is_a_likelihood\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.recalibrated\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps came scored countsAs : Nat), Datacartridge.Forecast.recalibrated statedBps came scored countsAs ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d7b4424dc532f024a32c6e94baef65aa3c51fdf87ad6458b04865ec2185b1a7d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1283,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1295,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.said_before_unsaid\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.expectedFirst\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (x backing other : Int),\\n  Datacartridge.Forecast.expectedFirst (some x, backing) (none, other) = true ∧\\n    Datacartridge.Forecast.expectedFirst (none, other) (some x, backing) = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b7484bc81d7d6eb595b0846e0c30d4dc0c920d9642519d8f5586df436a75d5ae\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1497,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1500,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.settle_reported_satisfies\",\n      \"relation\": \"lungo.satisfies\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settleReported\"\n      ],\n      \"specifications\": [\n        \"Datacartridge.Forecast.ReportedSettling\"\n      ],\n      \"statement\": \"Lungo.Spec.Satisfies\\n  (fun input => Datacartridge.Forecast.settleReported input.fst input.snd.fst input.snd.snd.fst input.snd.snd.snd)\\n  Datacartridge.Forecast.ReportedSettling\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"266e1e3261770d4e4e61f3919df85c13aba47bfa696c192a2beb48986326e938\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 178,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 183,\n          \"column\": 97\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.settle_satisfies_settling\",\n      \"relation\": \"lungo.satisfies\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.settle\"\n      ],\n      \"specifications\": [\n        \"Datacartridge.Forecast.Settling\"\n      ],\n      \"statement\": \"Lungo.Spec.Satisfies (fun input => Datacartridge.Forecast.settle input.fst input.snd.fst input.snd.snd)\\n  Datacartridge.Forecast.Settling\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"45ed2dcd734654e1f0d5c04b22a032b8a0d9e0928ffe620681c360ba8c811031\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 93,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 100,\n          \"column\": 38\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.skill_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.skill\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (meanBrier : Nat), Datacartridge.Forecast.skill meanBrier ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"adfe72d33b4f097a859a2425d4b649f20d69979a43b325f16da68fa4424e2e4a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 512,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 515,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.split_of_none\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.split\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (groups : List Datacartridge.Forecast.Group),\\n  (List.map (fun x => x.calls) groups).sum = 0 → Datacartridge.Forecast.split groups = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a9d5217f34955997de533ef7126c8275758a85f504d9e8e1ed1899ecee722dcd\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 422,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 425,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.still_standing_is_the_same\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.mayStateAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (standing : Nat), Datacartridge.Forecast.mayStateAgain standing standing true = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"52f63304311186a882814e9edfb61c47b735575aba055cb653f1a593eaffe681\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1898,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1901,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.stop_comes_first\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.leave\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (returnBps : Int) (stop : Nat) (targetBps : Option Nat) (heldDays : Nat) (maxDays : Option Nat),\\n  returnBps ≤ -↑stop →\\n    Datacartridge.Forecast.leave returnBps (some stop) targetBps heldDays maxDays = Datacartridge.Forecast.Leave.stop\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d4c8743629861309c81c893a3e7ea01ae7030e4246454bc2582a4422d24b2e05\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1539,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1543,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.sureness_too_high\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.sureness\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (calls : List Datacartridge.Forecast.Call),\\n  Datacartridge.Forecast.sureness calls = Datacartridge.Forecast.Sureness.tooHigh →\\n    Datacartridge.Forecast.cameTrue✝ calls * 10000 < Datacartridge.Forecast.statedSum✝ calls\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"bcbeb0528d101138a856025ba39e7214a2ea3e8531b2a075a9f24dac66c6742f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1978,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1981,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.sureness_too_low\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.sureness\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (calls : List Datacartridge.Forecast.Call),\\n  Datacartridge.Forecast.sureness calls = Datacartridge.Forecast.Sureness.tooLow →\\n    Datacartridge.Forecast.statedSum✝ calls < Datacartridge.Forecast.cameTrue✝ calls * 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"9e7656ed2902ba357baf6c9f0002356b0981f26786080e170615b3e61f5fd869\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1983,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1986,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.telling_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.telling\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (windows : Nat), Datacartridge.Forecast.telling windows = true ↔ Datacartridge.Forecast.tellingAt✝ ≤ windows\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"dca9f476e2d35cb6596140df49788b676e6320ea99455b469e028a27579d1347\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1968,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1970,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.tenth_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.tenth\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (statedBps : Nat), Datacartridge.Forecast.tenth statedBps ≤ 9\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e7dd4dadf62d6e773cf4141b7646dfa798b107ede8612bd1525a6f2813291648\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 495,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 496,\n          \"column\": 89\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.the_same_are_not_apart\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.apartBeyondChance\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Forecast.apartBeyondChance 5 10000 20000000 5 10000 20000000 = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"9ed7ddfdce28e6fcd27ff29dde84a63689b07fb4b99ce08e180c1586a13d8c2e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1851,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1854,\n          \"column\": 9\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.too_few_choose_nothing\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.choosesAt\",\n        \"Datacartridge.Forecast.bestReading\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts : Nat) (tried : List Datacartridge.Forecast.Tried),\\n  forecasts < Datacartridge.Forecast.choosesAt → Datacartridge.Forecast.bestReading forecasts tried = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5ff680930aeee5babc3f51689fdf137728afb4ed05bb04d5583386b2a3fbe16f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1386,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1389,\n          \"column\": 40\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.too_high_is_high\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came statedSum spread : Nat),\\n  Datacartridge.Forecast.surenessOf forecasts came statedSum spread = Datacartridge.Forecast.Sureness.tooHigh →\\n    came * 10000 < statedSum\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"da3a86abec260b282243be6cbcc2d20f1d21dd03a8cfb2a47187201f6eee7756\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1607,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1617,\n          \"column\": 35\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.too_likely_across_is_sound\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.tooLikelyAcross\",\n        \"Datacartridge.Forecast.likelihood\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (link : Datacartridge.Forecast.Link) (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When)\\n  (x y : Int),\\n  Datacartridge.Forecast.tooLikelyAcross link a b wa wb = true →\\n    link.binds x y →\\n      (a.holdsOf x → b.holdsOf y) ∧ Datacartridge.Forecast.likelihood b.bps < Datacartridge.Forecast.likelihood a.bps\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"eae6f6e810ac0955604be1ba144513c632011c912bc3b7d6490a68180a8e361f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1067,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1078,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.too_low_is_low\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.surenessOf\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (forecasts came statedSum spread : Nat),\\n  Datacartridge.Forecast.surenessOf forecasts came statedSum spread = Datacartridge.Forecast.Sureness.tooLow →\\n    statedSum < came * 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"4d0902b26bff97bd383d3c315fc528cd1d19f07e2e6256b074f5eb38e6f3a4e2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1619,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1631,\n          \"column\": 22\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.unanswered_is_not_asked\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.asks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (active : Bool) (now next : Nat), Datacartridge.Forecast.asks active false now next = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"485b6e00dfdfc52832db108b7b4870766cc7c850593fa0446377cb5777e3cc6d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 707,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 710,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.unheard_silence_is_void\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.occurs\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Forecast.occurs true false Datacartridge.Forecast.Hearing.never = Datacartridge.Forecast.Outcome.void\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7329af01716c9ff637b1af7ebcff42361f62386858182c56dcf929fe6c3e7cb6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 252,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 254,\n          \"column\": 80\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.unproven_counts_as_anyone\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.provenAt\",\n        \"Datacartridge.Forecast.weight\",\n        \"Datacartridge.Forecast.evenWeight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored meanBrier : Nat),\\n  scored < Datacartridge.Forecast.provenAt →\\n    Datacartridge.Forecast.weight scored meanBrier = Datacartridge.Forecast.evenWeight\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"7c60251cc389f1cc59a2ccdc638b1bc03ebbafcb8890384f6b60a4b489927d77\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 554,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 557,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.weekStart_is_the_monday\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.weekStart\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (day : Nat),\\n  6 ≤ day →\\n    (Datacartridge.Forecast.weekStart day + 3) % 7 = 0 ∧\\n      Datacartridge.Forecast.weekStart day ≤ day ∧ day < Datacartridge.Forecast.weekStart day + 7\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fb383d0d2ab5345070138e02a2bf3c33d487f1ea3622ac6d45b5269b7f60a44e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1423,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1428,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.weight_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.weight\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (scored meanBrier : Nat),\\n  1000 ≤ Datacartridge.Forecast.weight scored meanBrier ∧ Datacartridge.Forecast.weight scored meanBrier ≤ 10000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f34b076bf5e3a99f80145ac92749d1dcb21989d2d67e8a030b320940206d6d51\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 542,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 552,\n          \"column\": 12\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.weighted_is_bounded\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.weighted\",\n        \"Datacartridge.Forecast.weights\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (views : List Datacartridge.Forecast.View),\\n  Datacartridge.Forecast.weighted views ≤ 10000 * Datacartridge.Forecast.weights views\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"cdaccb0c70091b92dee837561a8d686cde7a2714de05cad5eef265bb3bf76b27\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 605,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 613,\n          \"column\": 10\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.within_bounds_stays\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.leave\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (returnBps : Int) (stop target heldDays days : Nat),\\n  -↑stop < returnBps →\\n    returnBps < ↑target →\\n      heldDays < days →\\n        Datacartridge.Forecast.leave returnBps (some stop) (some target) heldDays (some days) =\\n          Datacartridge.Forecast.Leave.stay\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"437ab10d9603613224948df5884568bb065c713c76a90ae4457770bb944e631e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1545,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1553,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.worse_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.worse\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (meanBrier : Nat), Datacartridge.Forecast.worse meanBrier = true ↔ Datacartridge.Forecast.brier 5000 true < meanBrier\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"f7d754033909683f791e1b67b238689e83cabc1e2e87837ae435a167786d6220\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1972,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1976,\n          \"column\": 15\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.wrong_only_where_it_could_be_heard\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.occurs\",\n        \"Datacartridge.Forecast.silenceCounts\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (due seen : Bool) (hearing : Datacartridge.Forecast.Hearing),\\n  Datacartridge.Forecast.occurs due seen hearing = Datacartridge.Forecast.Outcome.didNot →\\n    Datacartridge.Forecast.silenceCounts hearing = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"6cdefa497957f156a2500a19bd251d598bbf575274c4196cb0a71df0cc330004\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 246,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 250,\n          \"column\": 82\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.year_before_is_a_year_of_periods_back\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Forecast.back\",\n        \"Datacartridge.Forecast.yearBefore\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (year : Int) (index perYear : Nat),\\n  1 ≤ index →\\n    index ≤ perYear →\\n      Datacartridge.Forecast.back perYear perYear (year, index) = Datacartridge.Forecast.yearBefore year index\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d741d46642f2420c633f322dbc8b236db40990d734cfdb687d83340259a3ba2e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1709,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1725,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.HeldUp.ofNat_reads_back\",\n      \"relation\": \"lungo.roundtrip\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.HeldUp.ofNat\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (h : Datacartridge.Hindcast.HeldUp), Datacartridge.Hindcast.HeldUp.ofNat h.ctorIdx = h\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"dfd011197bb395266a7a0f5c6ef3bcb9f456a86cc69000e4d2e3ffab85b85f58\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 322,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 323,\n          \"column\": 100\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.a_stretch_holds_something\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.atLeastPerStretch\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"0 < Datacartridge.Hindcast.atLeastPerStretch\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"685871b2817d964643a4d40b6b816d1d41269b3834606ee5968a0543ae398074\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 327,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 329,\n          \"column\": 71\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.alike_rate_of_none_alike\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.alikeRate\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (now : Int) (stretches : List (Int × Bool)),\\n  (∀ (s : Int × Bool), s ∈ stretches → Datacartridge.Hindcast.alike now s.fst = false) →\\n    Datacartridge.Hindcast.alikeRate now stretches = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"49ea389ffbdea9356073f073f39ee3894a84036a6ba51f77cc345f55710533a7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 353,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 358,\n          \"column\": 58\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.alike_symm\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.alike\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int), Datacartridge.Hindcast.alike a b = Datacartridge.Hindcast.alike b a\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"b53908c98aeb99dbc7ce3de469d586abdb1ac17c53e3b3223f72134c2523c3a2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 159,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 162,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.all_history_speaks\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.speaks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (horizon : Nat), Datacartridge.Hindcast.speaks true none horizon = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"11396654be0688d6d10431959e6aeb950858c7e221c407e8943d8d98fe450c2f\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 375,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 377,\n          \"column\": 84\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.all_were_asked_in_the_shared_stretch\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.sharedFromAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (others : List Int) (first : Int),\\n  first ≤ Datacartridge.Hindcast.sharedFromAll first others ∧\\n    ∀ (x : Int), x ∈ others → x ≤ Datacartridge.Hindcast.sharedFromAll first others\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"0acfbac970f2eee08c8496102cf5fed4345d136b7193b7e231ca13c34d36059e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 274,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 288,\n          \"column\": 36\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.better_means_lower\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.heldUp\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (settled forward even : Nat),\\n  Datacartridge.Hindcast.heldUp settled forward even = Datacartridge.Hindcast.HeldUp.betterThanEven → forward < even\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"5f74ce1ca23902c773c739446c74865730a0ddf5c4a05c0889b9fb12e1a5de07\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 222,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 231,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.calls_better_is_strict\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.callsBetter\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (x : Option Nat), Datacartridge.Hindcast.callsBetter x x = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d9dee35296dc7f6c6b2e8d66de4cc18f6ba3e99544bd97dbb856000589a378c2\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 303,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 306,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.calls_better_one_way\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.callsBetter\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (x y : Option Nat), Datacartridge.Hindcast.callsBetter x y = true → Datacartridge.Hindcast.callsBetter y x = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d54e2d5aa0a7b65559215b52c885e618aaf44e316e3dd10e9458e6d90d5e3c45\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 308,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 311,\n          \"column\": 59\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.chosen_did_best\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.chosen\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (totals : List Nat) (i : Nat),\\n  Datacartridge.Hindcast.chosen totals = some i → ∃ t, totals[i]? = some t ∧ ∀ (x : Nat), x ∈ totals → t ≤ x\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Classical.choice\",\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"da88fc7ee52bf55735e5d31430ea9603f759010205d1c6ca408281939245edaa\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 134,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 146,\n          \"column\": 64\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.counted_when_both_were_asked\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.countsBeside\",\n        \"Datacartridge.Hindcast.sharedFrom\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (first other madeAt : Int),\\n  Datacartridge.Hindcast.countsBeside (Datacartridge.Hindcast.sharedFrom first other) madeAt = true →\\n    first ≤ madeAt ∧ other ≤ madeAt\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8c67c56f1bddb2219784b23061585a2c921898ca8cf7850cf3fa490ba4c02f31\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 258,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 263,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.cut_in_order\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.cut\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n k i j : Nat), i ≤ j → Datacartridge.Hindcast.cut n k i ≤ Datacartridge.Hindcast.cut n k j\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"fd6c4e28ad963595efe313847421f300b2ff2dc4af7f956b62cd68df3faf57bf\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 26,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 29,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.cuts_cover\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.cut\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n k : Nat), Datacartridge.Hindcast.cut n k 0 = 0 ∧ Datacartridge.Hindcast.cut n k (k + 1) = n\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"580f16fd6b7f17be1938487cad6d996cd7d9ab4843b065a2b16dc3cdfa4be109\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 31,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 38,\n          \"column\": 46\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.enough_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.enough\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (moments stretches : Nat),\\n  Datacartridge.Hindcast.enough moments stretches = true ↔\\n    (stretches + 1) * Datacartridge.Hindcast.atLeastPerStretch ≤ moments\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"59bd60fcb2fb7ee769764e6cd988298b264abeda282635ded59786d670b58260\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 336,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 339,\n          \"column\": 27\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.every_way_is_heard\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.moment\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (stated : List (Option Nat)) (said : List Nat),\\n  Datacartridge.Hindcast.moment stated = some said → said.length = stated.length\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a78ecb6ba103bf60f95ff7b11185b2ae3049ddf5786286b64483270eaa577b5c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 421,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 430,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.learned_was_settled\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.learnable\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (madeAt horizon testStart : Int),\\n  Datacartridge.Hindcast.learnable madeAt horizon testStart = true → madeAt + horizon ≤ testStart\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e9a8a5aeaa4f65a4d16e1d673c86d844b464f0031dcb5f4fb65e7a798bc2a502\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 44,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 48,\n          \"column\": 28\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.left_out_only_when_all_silent\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.moment\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (stated : List (Option Nat)), Datacartridge.Hindcast.moment stated = none ↔ stated.all Option.isNone = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"8be838458bd175d39c3b4b45e05eb1f259a4c62a8d0a21f4980e1fa7a9d07b6c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 412,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 419,\n          \"column\": 41\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.mean_of_nothing\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.mean\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Hindcast.mean [] = none\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"20122675fd3d31c8f6c8d6f5323e7b2fbe4b3b6ac2664438b10356c673bc865c\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 350,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 351,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.most_triable_is_triable\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.mostTriable\",\n        \"Datacartridge.Hindcast.triable\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (times : List Int) (horizon : Int) (k : Nat),\\n  Datacartridge.Hindcast.mostTriable times horizon = some k →\\n    Datacartridge.Hindcast.triable times horizon k = true ∧ 1 ≤ k\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"9ef7466a89a13d91ce05919ee5a0ffe6fd569e3d2cc451a80d05ce698c213225\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 78,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 85,\n          \"column\": 25\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.needed_grows_by_a_stretch\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.needed\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (stretches : Nat),\\n  Datacartridge.Hindcast.needed (stretches + 1) =\\n    Datacartridge.Hindcast.needed stretches + Datacartridge.Hindcast.atLeastPerStretch\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"76b809831cda09873df2c6195842ce8586a5de31a9129a5e6b1f74a25da62e4a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 331,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 334,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.not_too_soon\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.settledToChooseAgain\",\n        \"Datacartridge.Hindcast.chooseAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (active : Bool) (settled : Nat),\\n  settled < Datacartridge.Hindcast.settledToChooseAgain → Datacartridge.Hindcast.chooseAgain active settled = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"590dd009fced42c940c9ff76bf66f9405bea188e3eb421705c719c485d4944ef\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 187,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 191,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.not_turned_while_too_soon\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.turned\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (before : Datacartridge.Hindcast.HeldUp),\\n  Datacartridge.Hindcast.turned before Datacartridge.Hindcast.HeldUp.tooSoon = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"bfc2d18d313bfd0ca813ea7acd861d7ba34228e73765623281be0159834b9c2a\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 241,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 244,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.not_when_stopped\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.chooseAgain\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (settled : Nat), Datacartridge.Hindcast.chooseAgain false settled = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"30c2d3be374dae312eac41597fa391aff15569f58f9d1ffa8cd1de8554515611\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 193,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 196,\n          \"column\": 21\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.scored_goes_first\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.callsBetter\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a : Nat), Datacartridge.Hindcast.callsBetter (some a) none = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"036b279ddf2c1b66724df072e7c939a0303e3b2141e64509a20052684ec1c3d5\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 313,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 316,\n          \"column\": 21\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.shared_from_all_of_two\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.sharedFromAll\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (first other : Int),\\n  Datacartridge.Hindcast.sharedFromAll first [other] = Datacartridge.Hindcast.sharedFrom first other\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e533179f2663f9d8cd7f073313da3e276b3685210098442f4f90b518a8163a4d\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 290,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 293,\n          \"column\": 23\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.shared_from_either_side\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.sharedFrom\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (first other : Int), Datacartridge.Hindcast.sharedFrom first other = Datacartridge.Hindcast.sharedFrom other first\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"c44b25bb89bd9fff66acb30d5b855c8f2467cb50fdd170218c8a455a1897a775\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 265,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 268,\n          \"column\": 34\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.silent_says_even\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.said\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Hindcast.said none = 5000\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"944e137fc2f86e69deb02edde09ef3df33547ac47ec8de96c9bf295204b9f7f3\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 404,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 406,\n          \"column\": 52\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.spoken_is_kept\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.said\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (n : Nat), Datacartridge.Hindcast.said (some n) = n\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"00a1d1f5e90f822c7c4480a3edd6a7e2d463599d56fde4e343e0581fa8b653a7\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 408,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 410,\n          \"column\": 61\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.the_series_itself_speaks\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.speaks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (days : Option Nat) (horizon : Nat), Datacartridge.Hindcast.speaks false days horizon = true\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a28a373ce51d505dc85e526fecfccbd32c6b6a9fa06eb00ecb64162212d961c6\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 385,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 387,\n          \"column\": 111\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.too_short_a_count_is_silent\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.speaks\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (d horizon : Nat), d ≤ horizon → Datacartridge.Hindcast.speaks true (some d) horizon = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"e5bac4126bccdad11acf390502527b74de13f42c4899d475dbdd658e58f11cac\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 379,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 383,\n          \"column\": 8\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.too_soon_to_tell\",\n      \"relation\": \"lungo.law\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.settledToChooseAgain\",\n        \"Datacartridge.Hindcast.heldUp\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (settled forward even : Nat),\\n  settled < Datacartridge.Hindcast.settledToChooseAgain →\\n    Datacartridge.Hindcast.heldUp settled forward even = Datacartridge.Hindcast.HeldUp.tooSoon\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"d4dbc5e7af84d4c3c1dd031fffcaf7dd7a4d72f749a8bfdaaa3afb8e2799e8fe\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 216,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 220,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.total_of_nothing\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.total\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"Datacartridge.Hindcast.total [] = 0\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"dae5692de7a6563c7ff0f45a54d522c79c287a73e7adb67935277593bf69ddc4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 341,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 343,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.total_of_one_more\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.total\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (tried : List Datacartridge.Hindcast.Tried) (t : Datacartridge.Hindcast.Tried),\\n  Datacartridge.Hindcast.total (tried ++ [t]) =\\n    Datacartridge.Hindcast.total tried + Datacartridge.Forecast.brier t.statedBps t.cameTrue\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"634d52d48201f19e21f5eb4eda9065bb636b97eaa59276bb870cdb5eb30fc1f9\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 345,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 348,\n          \"column\": 34\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.turned_iff\",\n      \"relation\": \"lungo.decides\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.turned\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (before after : Datacartridge.Hindcast.HeldUp),\\n  Datacartridge.Hindcast.turned before after = true ↔\\n    before = Datacartridge.Hindcast.HeldUp.betterThanEven ∧ after = Datacartridge.Hindcast.HeldUp.noBetter\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"a913c6b88392f77a70661ca0b89343d3aa372686c3a49fc42696720da79f9d2e\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 237,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 239,\n          \"column\": 49\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.up_is_not_down\",\n      \"relation\": \"lungo.equals\",\n      \"subjects\": [\n        \"Datacartridge.Hindcast.alike\"\n      ],\n      \"specifications\": [],\n      \"statement\": \"∀ (a b : Int), 0 < a → b < 0 → Datacartridge.Hindcast.alike a b = false\",\n      \"status\": \"proved\",\n      \"evidence_trust\": {\n        \"axioms\": [\n          \"Quot.sound\",\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false\n      },\n      \"assumptions\": [],\n      \"package\": \"datacartridgeFormal\",\n      \"fingerprint\": \"3bde98e5b064325180f3a99330e3be4ef7d1e0d97611cbd00d9d7c4416800ca4\",\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 164,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 169,\n          \"column\": 23\n        }\n      }\n    }\n  ],\n  \"roles\": [],\n  \"exports\": [\n    {\n      \"name\": \"Datacartridge.Forecast.Claim.opposite\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.opposite_says_the_rest\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1200,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1202,\n          \"column\": 90\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Clash.ofNat\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.Clash.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Group.gap\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mod\",\n          \"lean_nat_pow\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.group_split\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 389,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 390,\n          \"column\": 94\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Group.squares\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mod\",\n          \"lean_nat_pow\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.group_split\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 384,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 387,\n          \"column\": 64\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Hearing.ofNat\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.Hearing.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Leave.ofNat\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.Leave.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Outcome.ofNat\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.Outcome.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Sureness.ofNat\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.Sureness.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Trend.ofNat\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.Trend.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.When.counts\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.counts_any_time\",\n        \"Datacartridge.Forecast.counts_at_the_deadline\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 930,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 933,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.Window.ofNat\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.Window.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.all\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.all_of_one\",\n        \"Datacartridge.Forecast.all_refuted\",\n        \"Datacartridge.Forecast.all_settles\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 263,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 268,\n          \"column\": 13\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.any\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.any_confirmed\",\n        \"Datacartridge.Forecast.any_of_one\",\n        \"Datacartridge.Forecast.any_settles\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 270,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 275,\n          \"column\": 15\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.apartBeyondChance\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.apart_either_way\",\n        \"Datacartridge.Forecast.few_are_never_apart\",\n        \"Datacartridge.Forecast.the_same_are_not_apart\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1817,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1829,\n          \"column\": 73\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.asForecast\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.as_forecast_is_a_likelihood\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 684,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 685,\n          \"column\": 67\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.askNext\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.ask_next_is_ahead\",\n        \"Datacartridge.Forecast.ask_next_keeps_time\",\n        \"Datacartridge.Forecast.ask_next_on_time\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 719,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 722,\n          \"column\": 73\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.askedOf\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.asked_is_not_reported\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1743,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1745,\n          \"column\": 68\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.asks\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.asked_means_due\",\n        \"Datacartridge.Forecast.unanswered_is_not_asked\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 702,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 705,\n          \"column\": 99\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.back\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_sub\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.back_add\",\n        \"Datacartridge.Forecast.back_within_the_year\",\n        \"Datacartridge.Forecast.year_before_is_a_year_of_periods_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1681,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1684,\n          \"column\": 64\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.backing\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.backing_of_anyone\",\n        \"Datacartridge.Forecast.backing_without_history\",\n        \"Datacartridge.Forecast.no_backing_without_a_difference\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 757,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 760,\n          \"column\": 117\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.baseRate\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.base_rate_extremes\",\n        \"Datacartridge.Forecast.base_rate_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 663,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 665,\n          \"column\": 74\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.bestReading\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.chosen_scores_no_worse\",\n        \"Datacartridge.Forecast.too_few_choose_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1357,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1361,\n          \"column\": 92\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.better\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.best_of_fold_scores_no_worse\",\n        \"Datacartridge.Forecast.better_scores_no_worse\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1350,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1355,\n          \"column\": 48\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.brier\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.brier_is_bounded\",\n        \"Datacartridge.Forecast.brier_of_certainty\",\n        \"Datacartridge.Forecast.brier_of_even_odds\",\n        \"Datacartridge.Forecast.brier_rewards_being_right\",\n        \"Datacartridge.Forecast.life_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 351,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 355,\n          \"column\": 22\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.calibrated\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.calibrated_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 427,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 430,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.carried\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.carried_holds\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1038,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1047,\n          \"column\": 43\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.choosesAt\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.too_few_choose_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1339,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1341,\n          \"column\": 36\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.clash\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.agreeing_exclusive_within_certainty\",\n        \"Datacartridge.Forecast.agreeing_respects_implication\",\n        \"Datacartridge.Forecast.clashWhen_at_one_moment\",\n        \"Datacartridge.Forecast.clash_with_itself\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 867,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 872,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.clashHappening\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.happening_apart_agrees\",\n        \"Datacartridge.Forecast.happening_as_likely_agrees\",\n        \"Datacartridge.Forecast.happening_first_too_likely\",\n        \"Datacartridge.Forecast.happening_only_implies\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1216,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1224,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.clashWhen\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_le\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.clashWhen_at_one_moment\",\n        \"Datacartridge.Forecast.only_meeting_covers\",\n        \"Datacartridge.Forecast.only_together_excludes\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 960,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 970,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.conditional\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.conditional_is_not_refuted_by_its_condition\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 277,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 287,\n          \"column\": 19\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.conviction\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_abs\",\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.conviction_is_symmetric_and_bounded\",\n        \"Datacartridge.Forecast.no_backing_no_conviction\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1470,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1474,\n          \"column\": 71\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.discerning\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.discerning_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 432,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 432,\n          \"column\": 100\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.evenWeight\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.backing_of_anyone\",\n        \"Datacartridge.Forecast.even_odds_counts_as_anyone\",\n        \"Datacartridge.Forecast.unproven_counts_as_anyone\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 529,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 530,\n          \"column\": 29\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.expected\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.even_odds_expect_only_costs\",\n        \"Datacartridge.Forecast.expected_at_the_extremes\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1444,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1448,\n          \"column\": 128\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.expectedFirst\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_abs\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.expectedFirst_irreflexive\",\n        \"Datacartridge.Forecast.said_before_unsaid\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1487,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1495,\n          \"column\": 42\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.lastWeek\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_mod\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.lastWeek_is_whole_and_over\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1419,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1421,\n          \"column\": 81\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.later\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.asked_is_not_reported\",\n        \"Datacartridge.Forecast.next_is_later\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1732,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1733,\n          \"column\": 103\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.laterOf\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.latest_is_latest\",\n        \"Datacartridge.Forecast.noLater_laterOf_left\",\n        \"Datacartridge.Forecast.noLater_laterOf_right\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1735,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1736,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.leastFromParts\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.least_from_parts_only_when_carried\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1195,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1198,\n          \"column\": 90\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.leastWhenAll\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.least_is_under_each\",\n        \"Datacartridge.Forecast.least_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1158,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1162,\n          \"column\": 83\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.leave\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\",\n          \"lean_int_neg\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.no_rule_stays\",\n        \"Datacartridge.Forecast.stop_comes_first\",\n        \"Datacartridge.Forecast.within_bounds_stays\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1523,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1532,\n          \"column\": 13\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.lifeBrier\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.life_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 477,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 483,\n          \"column\": 103\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.likelihood\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.agreeing_exclusive_within_certainty\",\n        \"Datacartridge.Forecast.agreeing_respects_implication\",\n        \"Datacartridge.Forecast.always_right_reads_no_lower\",\n        \"Datacartridge.Forecast.happening_first_too_likely\",\n        \"Datacartridge.Forecast.never_right_reads_no_higher\",\n        \"Datacartridge.Forecast.no_record_reads_as_said\",\n        \"Datacartridge.Forecast.pool_of_agreement\",\n        \"Datacartridge.Forecast.pool_of_one\",\n        \"Datacartridge.Forecast.too_likely_across_is_sound\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 348,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 349,\n          \"column\": 50\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.mayStateAgain\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.no_change_is_not_a_change_of_mind\",\n        \"Datacartridge.Forecast.one_way_or_the_other\",\n        \"Datacartridge.Forecast.still_standing_is_the_same\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1887,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1891,\n          \"column\": 61\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.mean\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_div\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.mean_of_nothing\",\n        \"Datacartridge.Forecast.mean_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 498,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 500,\n          \"column\": 81\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.nextPeriod\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.next_is_later\",\n        \"Datacartridge.Forecast.next_of_previous\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1649,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1650,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.occurs\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.occurs_settles_at_the_deadline\",\n        \"Datacartridge.Forecast.occurs_stays_true\",\n        \"Datacartridge.Forecast.unheard_silence_is_void\",\n        \"Datacartridge.Forecast.wrong_only_where_it_could_be_heard\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 228,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 235,\n          \"column\": 13\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.pairedBeyondChance\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_lt\",\n          \"lean_int_mul\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.few_pairs_are_never_apart\",\n        \"Datacartridge.Forecast.no_difference_is_not_apart\",\n        \"Datacartridge.Forecast.paired_either_way\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1856,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1864,\n          \"column\": 78\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.partsCarry\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.parts_carry_is_sound\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1096,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1101,\n          \"column\": 112\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.pool\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.pool_is_bounded\",\n        \"Datacartridge.Forecast.pool_of_agreement\",\n        \"Datacartridge.Forecast.pool_of_one\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 601,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 603,\n          \"column\": 76\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.previousPeriod\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_sub\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.next_of_previous\",\n        \"Datacartridge.Forecast.previous_is_a_period\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1646,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1647,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.proven\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.proven_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 527,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 527,\n          \"column\": 54\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.provenAt\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.as_said_leans_neither_way\",\n        \"Datacartridge.Forecast.few_are_never_apart\",\n        \"Datacartridge.Forecast.few_calls_tell_nothing\",\n        \"Datacartridge.Forecast.few_forecasts_tell_nothing\",\n        \"Datacartridge.Forecast.few_pairs_are_never_apart\",\n        \"Datacartridge.Forecast.unproven_counts_as_anyone\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 524,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 525,\n          \"column\": 24\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.recalibrated\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.always_right_reads_no_lower\",\n        \"Datacartridge.Forecast.counting_for_nothing_reads_the_record\",\n        \"Datacartridge.Forecast.never_right_reads_no_higher\",\n        \"Datacartridge.Forecast.no_record_reads_as_said\",\n        \"Datacartridge.Forecast.recalibrated_is_a_likelihood\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1265,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1272,\n          \"column\": 89\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.settle\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.agreed_is_settled_as_usual\",\n        \"Datacartridge.Forecast.any_time_settles_early\",\n        \"Datacartridge.Forecast.any_time_stays_true\",\n        \"Datacartridge.Forecast.at_deadline_waits\",\n        \"Datacartridge.Forecast.due_is_settled\",\n        \"Datacartridge.Forecast.nothing_observed\",\n        \"Datacartridge.Forecast.settle_satisfies_settling\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 39,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 58,\n          \"column\": 30\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.settleReported\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.agreed_is_settled_as_usual\",\n        \"Datacartridge.Forecast.any_time_is_not_undone_by_a_later_dispute\",\n        \"Datacartridge.Forecast.contested_at_the_deadline_is_void\",\n        \"Datacartridge.Forecast.settle_reported_satisfies\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 156,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 164,\n          \"column\": 45\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.settled\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.all_settles\",\n        \"Datacartridge.Forecast.any_settles\",\n        \"Datacartridge.Forecast.due_is_settled\",\n        \"Datacartridge.Forecast.occurs_settles_at_the_deadline\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 60,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 64,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.silenceCounts\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.wrong_only_where_it_could_be_heard\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 222,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 226,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.skill\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.skill_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 502,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 507,\n          \"column\": 80\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.split\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_int_ediv\",\n          \"lean_int_mul\",\n          \"lean_int_neg\",\n          \"lean_int_sub\",\n          \"lean_nat_abs\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mod\",\n          \"lean_nat_pow\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.split_of_none\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 409,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 420,\n          \"column\": 55\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.sureness\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.sureness_too_high\",\n        \"Datacartridge.Forecast.sureness_too_low\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1597,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1599,\n          \"column\": 76\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.surenessOf\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.as_said_leans_neither_way\",\n        \"Datacartridge.Forecast.few_calls_tell_nothing\",\n        \"Datacartridge.Forecast.too_high_is_high\",\n        \"Datacartridge.Forecast.too_low_is_low\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1583,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1589,\n          \"column\": 14\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.telling\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.telling_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 661,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 661,\n          \"column\": 58\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.tenth\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.tenth_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 491,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 493,\n          \"column\": 73\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.tooLikelyAcross\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_int_sub\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.across_only_at_endings\",\n        \"Datacartridge.Forecast.too_likely_across_is_sound\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1058,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1065,\n          \"column\": 18\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.trend\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.better_is_lower\",\n        \"Datacartridge.Forecast.few_forecasts_tell_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 793,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 801,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.weekStart\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_mod\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.weekStart_is_the_monday\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1416,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1417,\n          \"column\": 55\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.weight\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_dec_lt\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_shiftr\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.better_counts_for_no_less\",\n        \"Datacartridge.Forecast.even_odds_counts_as_anyone\",\n        \"Datacartridge.Forecast.unproven_counts_as_anyone\",\n        \"Datacartridge.Forecast.weight_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 532,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 540,\n          \"column\": 63\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.weighted\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.weighted_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 597,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 599,\n          \"column\": 70\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.weights\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.pool_of_agreement\",\n        \"Datacartridge.Forecast.weighted_is_bounded\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 593,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 595,\n          \"column\": 44\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.worse\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.worse_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 509,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 510,\n          \"column\": 55\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Forecast.yearBefore\",\n      \"module\": \"Datacartridge.Forecast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_sub\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Forecast.year_before_is_a_year_of_periods_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Forecast.lean\",\n        \"start\": {\n          \"line\": 1679,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 1679,\n          \"column\": 75\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.HeldUp.ofNat\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.HeldUp.ofNat_reads_back\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": null,\n        \"end\": null\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.alike\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.alike_symm\",\n        \"Datacartridge.Hindcast.up_is_not_down\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 156,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 157,\n          \"column\": 69\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.alikeRate\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_eq\",\n          \"lean_int_dec_lt\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_to_int\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.alike_rate_of_none_alike\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 171,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 174,\n          \"column\": 81\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.atLeastPerStretch\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.a_stretch_holds_something\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 55,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 55,\n          \"column\": 33\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.callsBetter\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.calls_better_is_strict\",\n        \"Datacartridge.Hindcast.calls_better_one_way\",\n        \"Datacartridge.Hindcast.scored_goes_first\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 295,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 301,\n          \"column\": 21\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.chooseAgain\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.not_too_soon\",\n        \"Datacartridge.Hindcast.not_when_stopped\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 185,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 185,\n          \"column\": 108\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.chosen\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.chosen_did_best\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 129,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 132,\n          \"column\": 52\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.countsBeside\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.counted_when_both_were_asked\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 255,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 256,\n          \"column\": 72\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.cut\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.cut_in_order\",\n        \"Datacartridge.Hindcast.cuts_cover\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 23,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 24,\n          \"column\": 47\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.enough\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.enough_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 60,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 60,\n          \"column\": 83\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.heldUp\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.better_means_lower\",\n        \"Datacartridge.Hindcast.too_soon_to_tell\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 209,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 214,\n          \"column\": 17\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.learnable\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.learned_was_settled\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 40,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 42,\n          \"column\": 95\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.mean\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.mean_of_nothing\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 96,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 98,\n          \"column\": 71\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.moment\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.every_way_is_heard\",\n        \"Datacartridge.Hindcast.left_out_only_when_all_silent\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 400,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 402,\n          \"column\": 70\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.mostTriable\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_le\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.most_triable_is_triable\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 74,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 76,\n          \"column\": 119\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.needed\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_mul\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.needed_grows_by_a_stretch\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 57,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 58,\n          \"column\": 74\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.said\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.silent_says_even\",\n        \"Datacartridge.Hindcast.spoken_is_kept\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 397,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 398,\n          \"column\": 57\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.settledToChooseAgain\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": []\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.not_too_soon\",\n        \"Datacartridge.Hindcast.too_soon_to_tell\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 182,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 183,\n          \"column\": 36\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.sharedFrom\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.counted_when_both_were_asked\",\n        \"Datacartridge.Hindcast.shared_from_either_side\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 253,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 253,\n          \"column\": 60\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.sharedFromAll\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_dec_le\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.all_were_asked_in_the_shared_stretch\",\n        \"Datacartridge.Hindcast.shared_from_all_of_two\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 270,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 272,\n          \"column\": 91\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.speaks\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_lt\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.all_history_speaks\",\n        \"Datacartridge.Hindcast.the_series_itself_speaks\",\n        \"Datacartridge.Hindcast.too_short_a_count_is_silent\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 368,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 373,\n          \"column\": 37\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.total\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_add\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.total_of_nothing\",\n        \"Datacartridge.Hindcast.total_of_one_more\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 93,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 94,\n          \"column\": 104\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.triable\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [\n          \"propext\"\n        ],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_int_add\",\n          \"lean_int_dec_le\",\n          \"lean_nat_add\",\n          \"lean_nat_dec_eq\",\n          \"lean_nat_dec_le\",\n          \"lean_nat_div\",\n          \"lean_nat_mul\",\n          \"lean_nat_sub\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.most_triable_is_triable\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 68,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 72,\n          \"column\": 20\n        }\n      }\n    },\n    {\n      \"name\": \"Datacartridge.Hindcast.turned\",\n      \"module\": \"Datacartridge.Hindcast\",\n      \"async\": false,\n      \"trust\": {\n        \"axioms\": [],\n        \"depends_on_sorry\": false,\n        \"unsafe_dependencies\": [],\n        \"partial_dependencies\": [],\n        \"extern_dependencies\": [\n          \"lean_nat_dec_eq\"\n        ]\n      },\n      \"claims\": [\n        \"Datacartridge.Hindcast.not_turned_while_too_soon\",\n        \"Datacartridge.Hindcast.turned_iff\"\n      ],\n      \"assumptions\": [],\n      \"facilities\": [],\n      \"roles\": [],\n      \"source\": {\n        \"package\": \"datacartridgeFormal\",\n        \"file\": \"Datacartridge/Hindcast.lean\",\n        \"start\": {\n          \"line\": 233,\n          \"column\": 1\n        },\n        \"end\": {\n          \"line\": 235,\n          \"column\": 93\n        }\n      }\n    }\n  ]\n}\n";
 
     static ASSURANCE: ::lungo::Assurance = ::lungo::Assurance {
         schema_version: 1,
         program: "datacartridgeFormal",
         specifications: &[
-            ::lungo::Specification { name: "Mos.Forecast.ReportedSettling", kind: "lungo.contract", statement: "Lungo.Spec.Contract (Mos.Forecast.Window × Bool × List Bool × Bool) Mos.Forecast.Outcome", definition: Some("{ pre := fun x => True,\n  post := fun input o =>\n    match input with\n    | (window, due, observed, contested) =>\n      (window = Mos.Forecast.Window.atDeadline ∧ due = true ∧ contested = true → o = Mos.Forecast.Outcome.void) ∧\n        (¬(window = Mos.Forecast.Window.atDeadline ∧ due = true ∧ contested = true) →\n          Mos.Forecast.Settling.post (window, due, observed) o) }"), package: Some("datacartridgeFormal"), fingerprint: "01bdb88e5fad82eeca96c26954fe89346d589c0671befa999f8774a5f12b0d82" },
-            ::lungo::Specification { name: "Mos.Forecast.Settling", kind: "lungo.contract", statement: "Lungo.Spec.Contract (Mos.Forecast.Window × Bool × List Bool) Mos.Forecast.Outcome", definition: Some("{ pre := fun x => True,\n  post := fun input o =>\n    match input with\n    | (window, due, observed) =>\n      (o = Mos.Forecast.Outcome.open ↔\n          due = false ∧ (window = Mos.Forecast.Window.atDeadline ∨ observed.any id = false)) ∧\n        (window = Mos.Forecast.Window.anyTime → (o = Mos.Forecast.Outcome.cameTrue ↔ observed.any id = true)) ∧\n          (window = Mos.Forecast.Window.atDeadline →\n              due = true →\n                (o = Mos.Forecast.Outcome.cameTrue ↔ observed.getLast? = some true) ∧\n                  (o = Mos.Forecast.Outcome.didNot ↔ observed.getLast? = some false)) ∧\n            (o = Mos.Forecast.Outcome.void ↔ due = true ∧ observed = []) }"), package: Some("datacartridgeFormal"), fingerprint: "7a64fc97b1c9363c44d7d6bc619583e68f92e6553b19987ab02bb823aca73447" },
+            ::lungo::Specification { name: "Datacartridge.Forecast.ReportedSettling", kind: "lungo.contract", statement: "Lungo.Spec.Contract (Datacartridge.Forecast.Window × Bool × List Bool × Bool) Datacartridge.Forecast.Outcome", definition: Some("{ pre := fun x => True,\n  post := fun input o =>\n    match input with\n    | (window, due, observed, contested) =>\n      (window = Datacartridge.Forecast.Window.atDeadline ∧ due = true ∧ contested = true →\n          o = Datacartridge.Forecast.Outcome.void) ∧\n        (¬(window = Datacartridge.Forecast.Window.atDeadline ∧ due = true ∧ contested = true) →\n          Datacartridge.Forecast.Settling.post (window, due, observed) o) }"), package: Some("datacartridgeFormal"), fingerprint: "6ca26a14ecd7f26bb4559f0d2f2b56eccb5f5ac7b9bd3cb93f4c7929743a506a" },
+            ::lungo::Specification { name: "Datacartridge.Forecast.Settling", kind: "lungo.contract", statement: "Lungo.Spec.Contract (Datacartridge.Forecast.Window × Bool × List Bool) Datacartridge.Forecast.Outcome", definition: Some("{ pre := fun x => True,\n  post := fun input o =>\n    match input with\n    | (window, due, observed) =>\n      (o = Datacartridge.Forecast.Outcome.open ↔\n          due = false ∧ (window = Datacartridge.Forecast.Window.atDeadline ∨ observed.any id = false)) ∧\n        (window = Datacartridge.Forecast.Window.anyTime →\n            (o = Datacartridge.Forecast.Outcome.cameTrue ↔ observed.any id = true)) ∧\n          (window = Datacartridge.Forecast.Window.atDeadline →\n              due = true →\n                (o = Datacartridge.Forecast.Outcome.cameTrue ↔ observed.getLast? = some true) ∧\n                  (o = Datacartridge.Forecast.Outcome.didNot ↔ observed.getLast? = some false)) ∧\n            (o = Datacartridge.Forecast.Outcome.void ↔ due = true ∧ observed = []) }"), package: Some("datacartridgeFormal"), fingerprint: "ce32ae073056b418b77d71f634291c237f0f0e5af65e58096a0a3eedc3be8ce2" },
         ],
         facilities: &[
         ],
@@ -4828,1984 +4832,1984 @@ pub mod __meta {
         ],
         claims: &[
             ::lungo::Claim {
-                name: "Mos.Forecast.Clash.ofNat_reads_back",
+                name: "Datacartridge.Forecast.Clash.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Forecast.Clash.ofNat"],
+                subjects: &["Datacartridge.Forecast.Clash.ofNat"],
                 specifications: &[],
-                statement: "∀ (c : Mos.Forecast.Clash), Mos.Forecast.Clash.ofNat c.ctorIdx = c",
+                statement: "∀ (c : Datacartridge.Forecast.Clash), Datacartridge.Forecast.Clash.ofNat c.ctorIdx = c",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "fa188ea72216df2e893e15f87720506c64db3e348725d47fa7b7dacf8d3f491f",
+                fingerprint: "47add9ec0f4cd6151af6d126e7cc7d63031411346b61efd7dd0167a634937447",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.Hearing.ofNat_reads_back",
+                name: "Datacartridge.Forecast.Hearing.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Forecast.Hearing.ofNat"],
+                subjects: &["Datacartridge.Forecast.Hearing.ofNat"],
                 specifications: &[],
-                statement: "∀ (h : Mos.Forecast.Hearing), Mos.Forecast.Hearing.ofNat h.ctorIdx = h",
+                statement: "∀ (h : Datacartridge.Forecast.Hearing), Datacartridge.Forecast.Hearing.ofNat h.ctorIdx = h",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3a5b470235e7f11a224d0fcdff5848fb756bccd25bd485fbfd029c4fe33f3dd2",
+                fingerprint: "5eec81b31731b73df45daf85f614aacee31c3eb570442fd84f3e662d7555efc4",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.Leave.ofNat_reads_back",
+                name: "Datacartridge.Forecast.Leave.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Forecast.Leave.ofNat"],
+                subjects: &["Datacartridge.Forecast.Leave.ofNat"],
                 specifications: &[],
-                statement: "∀ (l : Mos.Forecast.Leave), Mos.Forecast.Leave.ofNat l.ctorIdx = l",
+                statement: "∀ (l : Datacartridge.Forecast.Leave), Datacartridge.Forecast.Leave.ofNat l.ctorIdx = l",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "00008966a8042be9b177acf8d061e8b78f450e33c178f52490a7ffc9ed4ed6a1",
+                fingerprint: "b02842feb51e76e1d7423629998d4750e8d4d482e8eaf7e0d912efb219dece1d",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.Outcome.ofNat_reads_back",
+                name: "Datacartridge.Forecast.Outcome.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Forecast.Outcome.ofNat"],
+                subjects: &["Datacartridge.Forecast.Outcome.ofNat"],
                 specifications: &[],
-                statement: "∀ (o : Mos.Forecast.Outcome), Mos.Forecast.Outcome.ofNat o.ctorIdx = o",
+                statement: "∀ (o : Datacartridge.Forecast.Outcome), Datacartridge.Forecast.Outcome.ofNat o.ctorIdx = o",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "216affb158c3041ae7b9ac6dd32e1a3ec7ae83d0639e967dfdc823d0e46cdcf1",
+                fingerprint: "2d11d859dc72bc082f2c0025af6a477d4d84285e5258b20dc75dc2017cc1bbe8",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.Sureness.ofNat_reads_back",
+                name: "Datacartridge.Forecast.Sureness.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Forecast.Sureness.ofNat"],
+                subjects: &["Datacartridge.Forecast.Sureness.ofNat"],
                 specifications: &[],
-                statement: "∀ (s : Mos.Forecast.Sureness), Mos.Forecast.Sureness.ofNat s.ctorIdx = s",
+                statement: "∀ (s : Datacartridge.Forecast.Sureness), Datacartridge.Forecast.Sureness.ofNat s.ctorIdx = s",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "1904f859a1e7e86c73e77b896ca1de5dfa886187d3c89b023e401200632a9b30",
+                fingerprint: "352d4173c9ad87985098d97767247a6266ac25ad023d6f55cb5b36e8c532668a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.Trend.ofNat_reads_back",
+                name: "Datacartridge.Forecast.Trend.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Forecast.Trend.ofNat"],
+                subjects: &["Datacartridge.Forecast.Trend.ofNat"],
                 specifications: &[],
-                statement: "∀ (t : Mos.Forecast.Trend), Mos.Forecast.Trend.ofNat t.ctorIdx = t",
+                statement: "∀ (t : Datacartridge.Forecast.Trend), Datacartridge.Forecast.Trend.ofNat t.ctorIdx = t",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "10d83f55a9eb5361f8a8cfe51d6283e39843ea0fb062d11aedfffe8fa00deaf9",
+                fingerprint: "c8efb23af6f24271823bc5d69be6c9f010d5cb4407316a253430faa42cfd9de8",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.Window.ofNat_reads_back",
+                name: "Datacartridge.Forecast.Window.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Forecast.Window.ofNat"],
+                subjects: &["Datacartridge.Forecast.Window.ofNat"],
                 specifications: &[],
-                statement: "∀ (w : Mos.Forecast.Window), Mos.Forecast.Window.ofNat w.ctorIdx = w",
+                statement: "∀ (w : Datacartridge.Forecast.Window), Datacartridge.Forecast.Window.ofNat w.ctorIdx = w",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "1d108937ba4680b21e2858b184930219c790cc45a1d63ded286d4b204ddc2308",
+                fingerprint: "f0011f762ab4bed13e94298469d26acab5a246ecd138e16817d6395c4c386e04",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.across_only_at_endings",
+                name: "Datacartridge.Forecast.across_only_at_endings",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.tooLikelyAcross"],
+                subjects: &["Datacartridge.Forecast.tooLikelyAcross"],
                 specifications: &[],
-                statement: "∀ (link : Mos.Forecast.Link) (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When),\n  wa.anyTime = true ∨ wb.anyTime = true → Mos.Forecast.tooLikelyAcross link a b wa wb = false",
+                statement: "∀ (link : Datacartridge.Forecast.Link) (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When),\n  wa.anyTime = true ∨ wb.anyTime = true → Datacartridge.Forecast.tooLikelyAcross link a b wa wb = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "893d10cf762331db38b1783094b55c2a4b174550c778eb3a0066107aa467d4b2",
+                fingerprint: "c842a2e8e69b21207cac8ef473772d8d273ba4e7565ae934620ff2a49946dcf0",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.agreed_is_settled_as_usual",
+                name: "Datacartridge.Forecast.agreed_is_settled_as_usual",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.settleReported", "Mos.Forecast.settle"],
+                subjects: &["Datacartridge.Forecast.settleReported", "Datacartridge.Forecast.settle"],
                 specifications: &[],
-                statement: "∀ (window : Mos.Forecast.Window) (due : Bool) (observed : List Bool),\n  Mos.Forecast.settleReported window due observed false = Mos.Forecast.settle window due observed",
+                statement: "∀ (window : Datacartridge.Forecast.Window) (due : Bool) (observed : List Bool),\n  Datacartridge.Forecast.settleReported window due observed false = Datacartridge.Forecast.settle window due observed",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "0f07ee8f7c1d631116fb1200a96e74001b5c73a569f64ebfc7de55d58861b29b",
+                fingerprint: "5749ba6844c9a0a064de86831693d3ad105aaeb5b9fe626f8792ef5878f49917",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.agreeing_exclusive_within_certainty",
+                name: "Datacartridge.Forecast.agreeing_exclusive_within_certainty",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.clash", "Mos.Forecast.likelihood"],
+                subjects: &["Datacartridge.Forecast.clash", "Datacartridge.Forecast.likelihood"],
                 specifications: &[],
-                statement: "∀ (a b : Mos.Forecast.Claim),\n  Mos.Forecast.clash a b = Mos.Forecast.Clash.agree →\n    Mos.Forecast.Claim.excludes✝ a b = true → Mos.Forecast.likelihood a.bps + Mos.Forecast.likelihood b.bps ≤ 10000",
+                statement: "∀ (a b : Datacartridge.Forecast.Claim),\n  Datacartridge.Forecast.clash a b = Datacartridge.Forecast.Clash.agree →\n    Datacartridge.Forecast.Claim.excludes✝ a b = true →\n      Datacartridge.Forecast.likelihood a.bps + Datacartridge.Forecast.likelihood b.bps ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "63b99e77160f3f0ebbc6c6612179fd9974ec3730115988ff54c3c30700a39c85",
+                fingerprint: "6292f7a5728b34081fe15f613679e0e7df04f86f87db88689b33a107055c5eec",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.agreeing_respects_implication",
+                name: "Datacartridge.Forecast.agreeing_respects_implication",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.clash", "Mos.Forecast.likelihood"],
+                subjects: &["Datacartridge.Forecast.clash", "Datacartridge.Forecast.likelihood"],
                 specifications: &[],
-                statement: "∀ (a b : Mos.Forecast.Claim),\n  Mos.Forecast.clash a b = Mos.Forecast.Clash.agree →\n    Mos.Forecast.Claim.implies✝ a b = true → Mos.Forecast.likelihood a.bps ≤ Mos.Forecast.likelihood b.bps",
+                statement: "∀ (a b : Datacartridge.Forecast.Claim),\n  Datacartridge.Forecast.clash a b = Datacartridge.Forecast.Clash.agree →\n    Datacartridge.Forecast.Claim.implies✝ a b = true →\n      Datacartridge.Forecast.likelihood a.bps ≤ Datacartridge.Forecast.likelihood b.bps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "392b3a96f58c5baa33f7577e909187872ece758d874bd922b65db743529d665b",
+                fingerprint: "ce603092abcc78f6284c83b82af0e3d774dfdbed149ce5b7e73526573499e23f",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.all_of_one",
+                name: "Datacartridge.Forecast.all_of_one",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.all"],
+                subjects: &["Datacartridge.Forecast.all"],
                 specifications: &[],
-                statement: "∀ (o : Mos.Forecast.Outcome), Mos.Forecast.all [o] = o",
+                statement: "∀ (o : Datacartridge.Forecast.Outcome), Datacartridge.Forecast.all [o] = o",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3223dc3ba7cb6cc808e5aa989586d6f852bff76ba1adacedd9d72c60a1874958",
+                fingerprint: "597ed716819c89ed115370c256b0c26729a1642d138db7f507378fb7f466bc7d",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.all_refuted",
+                name: "Datacartridge.Forecast.all_refuted",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.all"],
+                subjects: &["Datacartridge.Forecast.all"],
                 specifications: &[],
-                statement: "∀ (parts : List Mos.Forecast.Outcome),\n  Mos.Forecast.Outcome.didNot ∈ parts → Mos.Forecast.all parts = Mos.Forecast.Outcome.didNot",
+                statement: "∀ (parts : List Datacartridge.Forecast.Outcome),\n  Datacartridge.Forecast.Outcome.didNot ∈ parts →\n    Datacartridge.Forecast.all parts = Datacartridge.Forecast.Outcome.didNot",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "318cc39c39b111ad0d6c09589bbab6efdf2594a403e9e130d7dd19f84d0b9d9c",
+                fingerprint: "646f3ae6263d7694a87c9ea3431660b1a1b7c78003e1f6a40e10e157d43a5fd8",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.all_settles",
+                name: "Datacartridge.Forecast.all_settles",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settled", "Mos.Forecast.all"],
+                subjects: &["Datacartridge.Forecast.settled", "Datacartridge.Forecast.all"],
                 specifications: &[],
-                statement: "∀ (parts : List Mos.Forecast.Outcome),\n  (∀ (o : Mos.Forecast.Outcome), o ∈ parts → Mos.Forecast.settled o = true) →\n    Mos.Forecast.settled (Mos.Forecast.all parts) = true",
+                statement: "∀ (parts : List Datacartridge.Forecast.Outcome),\n  (∀ (o : Datacartridge.Forecast.Outcome), o ∈ parts → Datacartridge.Forecast.settled o = true) →\n    Datacartridge.Forecast.settled (Datacartridge.Forecast.all parts) = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "56a796431560348d3df47ff69211f8e2b545ba0a3686309963ea70a8562360e6",
+                fingerprint: "7631a94b17cb29b3cfd264d69c4aab0d8445786d275c04df510889b52d7cae1b",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.always_right_reads_no_lower",
+                name: "Datacartridge.Forecast.always_right_reads_no_lower",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.likelihood", "Mos.Forecast.recalibrated"],
+                subjects: &["Datacartridge.Forecast.likelihood", "Datacartridge.Forecast.recalibrated"],
                 specifications: &[],
-                statement: "∀ (statedBps scored countsAs : Nat),\n  Mos.Forecast.likelihood statedBps ≤ Mos.Forecast.recalibrated statedBps scored scored countsAs",
+                statement: "∀ (statedBps scored countsAs : Nat),\n  Datacartridge.Forecast.likelihood statedBps ≤ Datacartridge.Forecast.recalibrated statedBps scored scored countsAs",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "c6f330c9d69faf1d932498d30373cfe93fcec419c56000c165828909d0b83c1e",
+                fingerprint: "19b34a5857b2309b735ac6126c5507e334c8874baac37f774074c2ad0deb3f46",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.any_confirmed",
+                name: "Datacartridge.Forecast.any_confirmed",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.any"],
+                subjects: &["Datacartridge.Forecast.any"],
                 specifications: &[],
-                statement: "∀ (parts : List Mos.Forecast.Outcome),\n  Mos.Forecast.Outcome.cameTrue ∈ parts → Mos.Forecast.any parts = Mos.Forecast.Outcome.cameTrue",
+                statement: "∀ (parts : List Datacartridge.Forecast.Outcome),\n  Datacartridge.Forecast.Outcome.cameTrue ∈ parts →\n    Datacartridge.Forecast.any parts = Datacartridge.Forecast.Outcome.cameTrue",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "1812596b916016ff485847a559c7c9353ed66a8b6fe52fd1ac4f007dbd8a212b",
+                fingerprint: "74c7fce915dbdf91d29c94d08d21e7fee29281db2606bb717ff5807c851fcba9",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.any_of_one",
+                name: "Datacartridge.Forecast.any_of_one",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.any"],
+                subjects: &["Datacartridge.Forecast.any"],
                 specifications: &[],
-                statement: "∀ (o : Mos.Forecast.Outcome), Mos.Forecast.any [o] = o",
+                statement: "∀ (o : Datacartridge.Forecast.Outcome), Datacartridge.Forecast.any [o] = o",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "2e4237f9435e23131536371befa982118a0c3b9f50f7d74333b8a5e8b9d85a55",
+                fingerprint: "1e00dd82095a0db09bd62d11f719b139f2bffe3af5fca4f1bf833b6657880663",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.any_settles",
+                name: "Datacartridge.Forecast.any_settles",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settled", "Mos.Forecast.any"],
+                subjects: &["Datacartridge.Forecast.settled", "Datacartridge.Forecast.any"],
                 specifications: &[],
-                statement: "∀ (parts : List Mos.Forecast.Outcome),\n  (∀ (o : Mos.Forecast.Outcome), o ∈ parts → Mos.Forecast.settled o = true) →\n    Mos.Forecast.settled (Mos.Forecast.any parts) = true",
+                statement: "∀ (parts : List Datacartridge.Forecast.Outcome),\n  (∀ (o : Datacartridge.Forecast.Outcome), o ∈ parts → Datacartridge.Forecast.settled o = true) →\n    Datacartridge.Forecast.settled (Datacartridge.Forecast.any parts) = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "172d175aa730c6ef2b627f83d89adc82978a4819b40fe94a084f4f233b7213c8",
+                fingerprint: "1ebdcc0db48270f041f5870262f41a1b5af725e86838e52a3d6ce477ee4ed7a0",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.any_time_is_not_undone_by_a_later_dispute",
+                name: "Datacartridge.Forecast.any_time_is_not_undone_by_a_later_dispute",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settleReported"],
+                subjects: &["Datacartridge.Forecast.settleReported"],
                 specifications: &[],
-                statement: "∀ (due contested : Bool) (observed : List Bool),\n  observed.any id = true →\n    Mos.Forecast.settleReported Mos.Forecast.Window.anyTime due observed contested = Mos.Forecast.Outcome.cameTrue",
+                statement: "∀ (due contested : Bool) (observed : List Bool),\n  observed.any id = true →\n    Datacartridge.Forecast.settleReported Datacartridge.Forecast.Window.anyTime due observed contested =\n      Datacartridge.Forecast.Outcome.cameTrue",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "4877194c08950e23b18fbf04540cdcc28d678186a14969ec32f94b60692476ba",
+                fingerprint: "1a0b4bdf4819892aa2fdaac7e621c7a4d068a27391239b5dee545b77f67ed9d6",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.any_time_settles_early",
+                name: "Datacartridge.Forecast.any_time_settles_early",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settle"],
+                subjects: &["Datacartridge.Forecast.settle"],
                 specifications: &[],
-                statement: "∀ (due : Bool) (observed : List Bool),\n  observed.any id = true → Mos.Forecast.settle Mos.Forecast.Window.anyTime due observed = Mos.Forecast.Outcome.cameTrue",
+                statement: "∀ (due : Bool) (observed : List Bool),\n  observed.any id = true →\n    Datacartridge.Forecast.settle Datacartridge.Forecast.Window.anyTime due observed =\n      Datacartridge.Forecast.Outcome.cameTrue",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "030156f308433b68a153b7b188bd49f8f459672ef6e2364b0fb443a98a13d372",
+                fingerprint: "061c0b3d93f2f181dd4f1a9c4ca7d02e376741de825cd553058c32dc32deadd1",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.any_time_stays_true",
+                name: "Datacartridge.Forecast.any_time_stays_true",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settle"],
+                subjects: &["Datacartridge.Forecast.settle"],
                 specifications: &[],
-                statement: "∀ (due due' : Bool) (observed later : List Bool),\n  Mos.Forecast.settle Mos.Forecast.Window.anyTime due observed = Mos.Forecast.Outcome.cameTrue →\n    Mos.Forecast.settle Mos.Forecast.Window.anyTime due' (observed ++ later) = Mos.Forecast.Outcome.cameTrue",
+                statement: "∀ (due due' : Bool) (observed later : List Bool),\n  Datacartridge.Forecast.settle Datacartridge.Forecast.Window.anyTime due observed =\n      Datacartridge.Forecast.Outcome.cameTrue →\n    Datacartridge.Forecast.settle Datacartridge.Forecast.Window.anyTime due' (observed ++ later) =\n      Datacartridge.Forecast.Outcome.cameTrue",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "9e4f3ab3e2e6e47e85f55aebab0e97866e79a8c7391e609e065a732cb88b52b5",
+                fingerprint: "af164446a819190de792378ea9d36de7676e34cab88deea61391a672c33ee35b",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.apart_either_way",
+                name: "Datacartridge.Forecast.apart_either_way",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.apartBeyondChance"],
+                subjects: &["Datacartridge.Forecast.apartBeyondChance"],
                 specifications: &[],
-                statement: "∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\n  Mos.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = Mos.Forecast.apartBeyondChance n₂ s₂ q₂ n₁ s₁ q₁",
+                statement: "∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\n  Datacartridge.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ =\n    Datacartridge.Forecast.apartBeyondChance n₂ s₂ q₂ n₁ s₁ q₁",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "400fb6c87a3547b5bedc13c2201937911f416e99f9c4080ba8c4ccd6e63291c9",
+                fingerprint: "a6fe044c04e3d934a7f93427a3c680571be695ee5f47e567b90e6691a1be3ad9",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.as_forecast_is_a_likelihood",
+                name: "Datacartridge.Forecast.as_forecast_is_a_likelihood",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.asForecast"],
+                subjects: &["Datacartridge.Forecast.asForecast"],
                 specifications: &[],
-                statement: "∀ (rateBps : Nat), 100 ≤ Mos.Forecast.asForecast rateBps ∧ Mos.Forecast.asForecast rateBps ≤ 9900",
+                statement: "∀ (rateBps : Nat), 100 ≤ Datacartridge.Forecast.asForecast rateBps ∧ Datacartridge.Forecast.asForecast rateBps ≤ 9900",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "18c691a46bccc9c36ae164f3e827582d759a39314a4102e9d25933cfb0b6b257",
+                fingerprint: "81adc4a1815755e154d854de0f830c5fa15a4025a75824489ffb14d0116cbe52",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.as_said_leans_neither_way",
+                name: "Datacartridge.Forecast.as_said_leans_neither_way",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.provenAt", "Mos.Forecast.surenessOf"],
+                subjects: &["Datacartridge.Forecast.provenAt", "Datacartridge.Forecast.surenessOf"],
                 specifications: &[],
-                statement: "∀ (forecasts came spread : Nat),\n  Mos.Forecast.provenAt ≤ forecasts →\n    Mos.Forecast.surenessOf forecasts came (came * 10000) spread = Mos.Forecast.Sureness.about",
+                statement: "∀ (forecasts came spread : Nat),\n  Datacartridge.Forecast.provenAt ≤ forecasts →\n    Datacartridge.Forecast.surenessOf forecasts came (came * 10000) spread = Datacartridge.Forecast.Sureness.about",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d2cd573c0c7e2124d69b2a99ca0c1e69a4d9447ffb5b6573fd91bc20e1df362a",
+                fingerprint: "12b7b8b9343ea164051d25f182d405bc0fe017bf37c0915fbb834517351d9528",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.ask_next_is_ahead",
+                name: "Datacartridge.Forecast.ask_next_is_ahead",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.askNext"],
+                subjects: &["Datacartridge.Forecast.askNext"],
                 specifications: &[],
-                statement: "∀ (now next every : Nat), 0 < every → now < Mos.Forecast.askNext now next every",
+                statement: "∀ (now next every : Nat), 0 < every → now < Datacartridge.Forecast.askNext now next every",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "647291aca4f5f04e1798b0ff5c07da48a577f28d0c37dc289a7dda5d415730a7",
+                fingerprint: "0ce5bd0f8236820e14e69ea0dd85ac03ce978823c539729b15c3674296912b19",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.ask_next_keeps_time",
+                name: "Datacartridge.Forecast.ask_next_keeps_time",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.askNext"],
+                subjects: &["Datacartridge.Forecast.askNext"],
                 specifications: &[],
-                statement: "∀ (now next every : Nat), next ≤ now → (Mos.Forecast.askNext now next every - next) % every = 0",
+                statement: "∀ (now next every : Nat), next ≤ now → (Datacartridge.Forecast.askNext now next every - next) % every = 0",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "cfeef1be4158fe6e31d0dc863a2376489e936625d4b4bda8a430f1083e90dcf8",
+                fingerprint: "68f656217589ca934cdfe2c1a33824a3af7939224c0b29865b456e6abf65bd23",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.ask_next_on_time",
+                name: "Datacartridge.Forecast.ask_next_on_time",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.askNext"],
+                subjects: &["Datacartridge.Forecast.askNext"],
                 specifications: &[],
-                statement: "∀ (next every : Nat), Mos.Forecast.askNext next next every = next + every",
+                statement: "∀ (next every : Nat), Datacartridge.Forecast.askNext next next every = next + every",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "37a51f8d12ae76086fcb27717725afbf0c0c458d68c2494c6d7327663352e655",
+                fingerprint: "440fc2e738d842902e2d408e0cfbd919c38c53a51c1179fdcf52a4f18e326353",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.asked_is_not_reported",
+                name: "Datacartridge.Forecast.asked_is_not_reported",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.askedOf", "Mos.Forecast.later"],
+                subjects: &["Datacartridge.Forecast.askedOf", "Datacartridge.Forecast.later"],
                 specifications: &[],
-                statement: "∀ (reported : List (Int × Nat)) (perYear : Nat) (next : Int × Nat),\n  Mos.Forecast.askedOf reported perYear = some next → ∀ (q : Int × Nat), q ∈ reported → Mos.Forecast.later q next = true",
+                statement: "∀ (reported : List (Int × Nat)) (perYear : Nat) (next : Int × Nat),\n  Datacartridge.Forecast.askedOf reported perYear = some next →\n    ∀ (q : Int × Nat), q ∈ reported → Datacartridge.Forecast.later q next = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "caef5a003a7d680cea805e11cee25166815c90dbbfa6fa58983f0bc2e42bbeec",
+                fingerprint: "b6fbd8a117386525703fc72719c24da058e09cecc2fc2d32e9aca331751a57d1",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.asked_means_due",
+                name: "Datacartridge.Forecast.asked_means_due",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.asks"],
+                subjects: &["Datacartridge.Forecast.asks"],
                 specifications: &[],
-                statement: "∀ (active answered : Bool) (now next : Nat),\n  Mos.Forecast.asks active answered now next = true → active = true ∧ answered = true ∧ next ≤ now",
+                statement: "∀ (active answered : Bool) (now next : Nat),\n  Datacartridge.Forecast.asks active answered now next = true → active = true ∧ answered = true ∧ next ≤ now",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "afa6de2a58969306c2c68c252c393f9c8d2d818630c1c32d254b41d08f508d46",
+                fingerprint: "90788f44ef3a910b5141196217d3c87ed849014a8df0c76999c0ecade9f4f7a2",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.at_deadline_waits",
+                name: "Datacartridge.Forecast.at_deadline_waits",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settle"],
+                subjects: &["Datacartridge.Forecast.settle"],
                 specifications: &[],
-                statement: "∀ (observed : List Bool), Mos.Forecast.settle Mos.Forecast.Window.atDeadline false observed = Mos.Forecast.Outcome.open",
+                statement: "∀ (observed : List Bool),\n  Datacartridge.Forecast.settle Datacartridge.Forecast.Window.atDeadline false observed =\n    Datacartridge.Forecast.Outcome.open",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "0614f38df812f44052b6ad9317887c5fd03baa1c5037db9f888b53ba3ea405f8",
+                fingerprint: "f70138f466822a061434a0cb810ba75c930c79aaecc4ed7ee8ab6dc6615ac5c7",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.back_add",
+                name: "Datacartridge.Forecast.back_add",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.back"],
+                subjects: &["Datacartridge.Forecast.back"],
                 specifications: &[],
-                statement: "∀ (perYear m n : Nat) (p : Int × Nat),\n  Mos.Forecast.back perYear (m + n) p = Mos.Forecast.back perYear n (Mos.Forecast.back perYear m p)",
+                statement: "∀ (perYear m n : Nat) (p : Int × Nat),\n  Datacartridge.Forecast.back perYear (m + n) p =\n    Datacartridge.Forecast.back perYear n (Datacartridge.Forecast.back perYear m p)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3cd91ca8a500c004a620eaa37a2ff6834db50cb9b519de49b2f86192591af964",
+                fingerprint: "5c013ab4c93771abda38dfa3aae63dff72c50609378c71f6bdbb3d6912d03a6f",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.back_within_the_year",
+                name: "Datacartridge.Forecast.back_within_the_year",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.back"],
+                subjects: &["Datacartridge.Forecast.back"],
                 specifications: &[],
-                statement: "∀ (perYear k : Nat) (year : Int) (index : Nat),\n  k < index → Mos.Forecast.back perYear k (year, index) = (year, index - k)",
+                statement: "∀ (perYear k : Nat) (year : Int) (index : Nat),\n  k < index → Datacartridge.Forecast.back perYear k (year, index) = (year, index - k)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "7089a142a1b3c2909a04b64f97679637b31c5f7c2f1f0eddf934498aad61a837",
+                fingerprint: "72e35b32437dffb52c2f48bf12ab8841fd94d4a3ef9d69d279c35dbab85c654a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.backing_of_anyone",
+                name: "Datacartridge.Forecast.backing_of_anyone",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.backing", "Mos.Forecast.evenWeight"],
+                subjects: &["Datacartridge.Forecast.backing", "Datacartridge.Forecast.evenWeight"],
                 specifications: &[],
-                statement: "∀ (believedBps baseBps : Nat),\n  Mos.Forecast.backing believedBps (some baseBps) Mos.Forecast.evenWeight =\n    ↑(Mos.Forecast.likelihood believedBps) - ↑(Mos.Forecast.likelihood baseBps)",
+                statement: "∀ (believedBps baseBps : Nat),\n  Datacartridge.Forecast.backing believedBps (some baseBps) Datacartridge.Forecast.evenWeight =\n    ↑(Datacartridge.Forecast.likelihood believedBps) - ↑(Datacartridge.Forecast.likelihood baseBps)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "47fcb0329e861387312c6f9492b0df1080fef5ce9186c3cd69b9d8749543cb2d",
+                fingerprint: "8b6c2ce1faf06a659b3da3e6be78d3af3b3957096bf74af426710a909f7cd361",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.backing_without_history",
+                name: "Datacartridge.Forecast.backing_without_history",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.backing"],
+                subjects: &["Datacartridge.Forecast.backing"],
                 specifications: &[],
-                statement: "∀ (believedBps weightBps : Nat),\n  Mos.Forecast.backing believedBps none weightBps = Mos.Forecast.backing believedBps (some 5000) weightBps",
+                statement: "∀ (believedBps weightBps : Nat),\n  Datacartridge.Forecast.backing believedBps none weightBps =\n    Datacartridge.Forecast.backing believedBps (some 5000) weightBps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "e09b10246dc4370c322b20f29a198e41f50b7306287932cdf912fe0881d0b45a",
+                fingerprint: "73336916d233638d97106274d55497b83697f60f8c97c30795cf7d1045eaad82",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.base_rate_extremes",
+                name: "Datacartridge.Forecast.base_rate_extremes",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.baseRate"],
+                subjects: &["Datacartridge.Forecast.baseRate"],
                 specifications: &[],
-                statement: "∀ (windows : Nat),\n  0 < windows → Mos.Forecast.baseRate windows windows = some 10000 ∧ Mos.Forecast.baseRate 0 windows = some 0",
+                statement: "∀ (windows : Nat),\n  0 < windows →\n    Datacartridge.Forecast.baseRate windows windows = some 10000 ∧ Datacartridge.Forecast.baseRate 0 windows = some 0",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "609f6418305bacb555b26fb74e36c24b98da5080122e1fcb37d3dbd1db04cee5",
+                fingerprint: "33f093db785389ea116cb004096fadf704df1c3f2918930d71e41f4ee52dc651",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.base_rate_is_bounded",
+                name: "Datacartridge.Forecast.base_rate_is_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.baseRate"],
+                subjects: &["Datacartridge.Forecast.baseRate"],
                 specifications: &[],
-                statement: "∀ (held windows r : Nat), Mos.Forecast.baseRate held windows = some r → r ≤ 10000",
+                statement: "∀ (held windows r : Nat), Datacartridge.Forecast.baseRate held windows = some r → r ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ff7d2fb296cde248838a86de3a2573958b59795de96b983d59d1a2563aedbd51",
+                fingerprint: "77d4c6a60e5b1a919c8e8979b9ae5f849d256cdcaed2fd6602d5ff0d4a19793e",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.best_of_fold_scores_no_worse",
+                name: "Datacartridge.Forecast.best_of_fold_scores_no_worse",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.better"],
+                subjects: &["Datacartridge.Forecast.better"],
                 specifications: &[],
-                statement: "∀ (rest : List Mos.Forecast.Tried) (first : Mos.Forecast.Tried),\n  (List.foldl Mos.Forecast.better first rest).meanBrier ≤ first.meanBrier ∧\n    ∀ (t : Mos.Forecast.Tried), t ∈ rest → (List.foldl Mos.Forecast.better first rest).meanBrier ≤ t.meanBrier",
+                statement: "∀ (rest : List Datacartridge.Forecast.Tried) (first : Datacartridge.Forecast.Tried),\n  (List.foldl Datacartridge.Forecast.better first rest).meanBrier ≤ first.meanBrier ∧\n    ∀ (t : Datacartridge.Forecast.Tried),\n      t ∈ rest → (List.foldl Datacartridge.Forecast.better first rest).meanBrier ≤ t.meanBrier",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "8822ba3fa71931c0bbf2ecc21f8fbc5c98929b330cbc2e006d5714eb94a00b36",
+                fingerprint: "8981f14bbd2a5f0ee8996dc917ae77b7d2fa51f388ea682352ad1d271c33d949",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.better_counts_for_no_less",
+                name: "Datacartridge.Forecast.better_counts_for_no_less",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.weight"],
+                subjects: &["Datacartridge.Forecast.weight"],
                 specifications: &[],
-                statement: "∀ (scored better worse : Nat), better ≤ worse → Mos.Forecast.weight scored worse ≤ Mos.Forecast.weight scored better",
+                statement: "∀ (scored better worse : Nat),\n  better ≤ worse → Datacartridge.Forecast.weight scored worse ≤ Datacartridge.Forecast.weight scored better",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "b39910b9cf3461b48bed2e352c823740fee56acadd850face9a4dd9ab41b8c31",
+                fingerprint: "afaead6cb1300db770364c5fbcaaa36a0760667f684a7eeeae68c4ca80e94491",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.better_is_lower",
+                name: "Datacartridge.Forecast.better_is_lower",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.trend"],
+                subjects: &["Datacartridge.Forecast.trend"],
                 specifications: &[],
-                statement: "∀ (d b scoredDuring scoredBefore : Nat),\n  (Mos.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Mos.Forecast.Trend.better → d < b) ∧\n    (Mos.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Mos.Forecast.Trend.worse → b < d)",
+                statement: "∀ (d b scoredDuring scoredBefore : Nat),\n  (Datacartridge.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Datacartridge.Forecast.Trend.better →\n      d < b) ∧\n    (Datacartridge.Forecast.trend (some d) (some b) scoredDuring scoredBefore = Datacartridge.Forecast.Trend.worse →\n      b < d)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "5fb922b6e1ce73308fa99275cd5da59e082dc74155134a21ec3c9a01dbcbfdac",
+                fingerprint: "3d51b005e7ee8ad29ec76710b2388b4c255d4d506181a7e73009fb3657121c3b",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.better_scores_no_worse",
+                name: "Datacartridge.Forecast.better_scores_no_worse",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.better"],
+                subjects: &["Datacartridge.Forecast.better"],
                 specifications: &[],
-                statement: "∀ (a b : Mos.Forecast.Tried),\n  (Mos.Forecast.better a b).meanBrier ≤ a.meanBrier ∧ (Mos.Forecast.better a b).meanBrier ≤ b.meanBrier",
+                statement: "∀ (a b : Datacartridge.Forecast.Tried),\n  (Datacartridge.Forecast.better a b).meanBrier ≤ a.meanBrier ∧\n    (Datacartridge.Forecast.better a b).meanBrier ≤ b.meanBrier",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ef1eaa19a29dcd90dc4ead63d8985f6b10cee2390c7d5cc67f1163b86074a3d4",
+                fingerprint: "056acefc745a781d118bc1440313e023cd9b6c5aa6a783389c30c1fa2f3926ed",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.brier_is_bounded",
+                name: "Datacartridge.Forecast.brier_is_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.brier"],
+                subjects: &["Datacartridge.Forecast.brier"],
                 specifications: &[],
-                statement: "∀ (statedBps : Nat) (cameTrue : Bool), Mos.Forecast.brier statedBps cameTrue ≤ 10000",
+                statement: "∀ (statedBps : Nat) (cameTrue : Bool), Datacartridge.Forecast.brier statedBps cameTrue ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "c1f24d7b0128e20861beae05cb08549dee79008666147535cc9225784860afaa",
+                fingerprint: "56ffc557bfd41a9d8f9724c054214344427dc44d290870aec88185c768c61c22",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.brier_of_certainty",
+                name: "Datacartridge.Forecast.brier_of_certainty",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.brier"],
+                subjects: &["Datacartridge.Forecast.brier"],
                 specifications: &[],
-                statement: "Mos.Forecast.brier 10000 true = 0 ∧\n  Mos.Forecast.brier 10000 false = 10000 ∧ Mos.Forecast.brier 0 false = 0 ∧ Mos.Forecast.brier 0 true = 10000",
+                statement: "Datacartridge.Forecast.brier 10000 true = 0 ∧\n  Datacartridge.Forecast.brier 10000 false = 10000 ∧\n    Datacartridge.Forecast.brier 0 false = 0 ∧ Datacartridge.Forecast.brier 0 true = 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "37ba997301098ac87bcc971e0eddea0b6cbd24a4e5b2ec388626246cde1676b8",
+                fingerprint: "738bd5cad35c46bbe0220ca476e2bc2add6147dda0bac91503722d39e7b6477a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.brier_of_even_odds",
+                name: "Datacartridge.Forecast.brier_of_even_odds",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.brier"],
+                subjects: &["Datacartridge.Forecast.brier"],
                 specifications: &[],
-                statement: "∀ (cameTrue : Bool), Mos.Forecast.brier 5000 cameTrue = 2500",
+                statement: "∀ (cameTrue : Bool), Datacartridge.Forecast.brier 5000 cameTrue = 2500",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3f27c25bb2e12c68d557f74c76fb76184cb8f6e05ed5393b8fc9dc31283286fd",
+                fingerprint: "45037b70fe1981f7c6ebe3ab222f58714802da1e4567a33259314ddaf527ffeb",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.brier_rewards_being_right",
+                name: "Datacartridge.Forecast.brier_rewards_being_right",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.brier"],
+                subjects: &["Datacartridge.Forecast.brier"],
                 specifications: &[],
-                statement: "∀ (p q : Nat), p ≤ q → Mos.Forecast.brier q true ≤ Mos.Forecast.brier p true",
+                statement: "∀ (p q : Nat), p ≤ q → Datacartridge.Forecast.brier q true ≤ Datacartridge.Forecast.brier p true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "21fc71ecf78d33072a87afac0fbd04acfec4e9d3b0702e825459be8990b8cb03",
+                fingerprint: "ddc48a8a8fbdbd8df0e8842480c3427ad6d73c482ca937ef8433d7d5637a945b",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.calibrated_iff",
+                name: "Datacartridge.Forecast.calibrated_iff",
                 relation: "lungo.decides",
-                subjects: &["Mos.Forecast.calibrated"],
+                subjects: &["Datacartridge.Forecast.calibrated"],
                 specifications: &[],
-                statement: "∀ (s : Mos.Forecast.Split), Mos.Forecast.calibrated s = true ↔ s.offBy ≤ 100",
+                statement: "∀ (s : Datacartridge.Forecast.Split), Datacartridge.Forecast.calibrated s = true ↔ s.offBy ≤ 100",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "65775da77acd00051abf66751f5fd9f3b381ca20b9471ef89ce88ad8f7b823c6",
+                fingerprint: "0aad7d1992c5b863cec5939407b8787e5404b059a91205dae3d14bb301db1dff",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.carried_holds",
+                name: "Datacartridge.Forecast.carried_holds",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.carried"],
+                subjects: &["Datacartridge.Forecast.carried"],
                 specifications: &[],
-                statement: "∀ (link : Mos.Forecast.Link) (a c : Mos.Forecast.Claim) (x y : Int),\n  link.binds x y → Mos.Forecast.carried link a = some c → a.holdsOf x → c.holdsOf y",
+                statement: "∀ (link : Datacartridge.Forecast.Link) (a c : Datacartridge.Forecast.Claim) (x y : Int),\n  link.binds x y → Datacartridge.Forecast.carried link a = some c → a.holdsOf x → c.holdsOf y",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "20422eb250b769166af706595dc5aac9cc70a6da478a2b454bd5124054e4103e",
+                fingerprint: "fae2f5515a72f654fd6c25ed60ca5351eda5ae506aea87a093e2c9b79151fdc6",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.chosen_scores_no_worse",
+                name: "Datacartridge.Forecast.chosen_scores_no_worse",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.bestReading"],
+                subjects: &["Datacartridge.Forecast.bestReading"],
                 specifications: &[],
-                statement: "∀ (forecasts : Nat) (tried : List Mos.Forecast.Tried) (best : Mos.Forecast.Tried),\n  Mos.Forecast.bestReading forecasts tried = some best →\n    ∀ (t : Mos.Forecast.Tried), t ∈ tried → best.meanBrier ≤ t.meanBrier",
+                statement: "∀ (forecasts : Nat) (tried : List Datacartridge.Forecast.Tried) (best : Datacartridge.Forecast.Tried),\n  Datacartridge.Forecast.bestReading forecasts tried = some best →\n    ∀ (t : Datacartridge.Forecast.Tried), t ∈ tried → best.meanBrier ≤ t.meanBrier",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "73ef70356ac5ad5e737e5376cc7428ab834e7639bc021e2680be4d61c48de3ab",
+                fingerprint: "5b0eb19cf2a6a7faa45dd2e26a16e4bb81e28f744eb6b9f4d4c94cddb9eae31e",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.clashWhen_at_one_moment",
+                name: "Datacartridge.Forecast.clashWhen_at_one_moment",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.clashWhen", "Mos.Forecast.clash"],
+                subjects: &["Datacartridge.Forecast.clashWhen", "Datacartridge.Forecast.clash"],
                 specifications: &[],
-                statement: "∀ (a b : Mos.Forecast.Claim) (since₁ since₂ till : Int),\n  Mos.Forecast.clashWhen a b { anyTime := false, since := since₁, till := till }\n      { anyTime := false, since := since₂, till := till } =\n    Mos.Forecast.clash a b",
+                statement: "∀ (a b : Datacartridge.Forecast.Claim) (since₁ since₂ till : Int),\n  Datacartridge.Forecast.clashWhen a b { anyTime := false, since := since₁, till := till }\n      { anyTime := false, since := since₂, till := till } =\n    Datacartridge.Forecast.clash a b",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "cd9a8ef681ef9b1fd321da7fcbb5eb48e45515445c891a998a9fb38713034224",
+                fingerprint: "11153bedf6d03b7fbd2d333bc6bdc1ccd9c54a8940006c55cc1a898fbeb7c574",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.clash_with_itself",
+                name: "Datacartridge.Forecast.clash_with_itself",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.clash"],
+                subjects: &["Datacartridge.Forecast.clash"],
                 specifications: &[],
-                statement: "∀ (a : Mos.Forecast.Claim), Mos.Forecast.clash a a = Mos.Forecast.Clash.agree",
+                statement: "∀ (a : Datacartridge.Forecast.Claim), Datacartridge.Forecast.clash a a = Datacartridge.Forecast.Clash.agree",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d70e93f6177f114276603ccb149605e2998cfe852b7e77c3df82e37638d76f1c",
+                fingerprint: "87cf6f868d3bbac432ab300cc7ff6ffe006175aa56cad392a2904b29d27f4c02",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.conditional_is_not_refuted_by_its_condition",
+                name: "Datacartridge.Forecast.conditional_is_not_refuted_by_its_condition",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.conditional"],
+                subjects: &["Datacartridge.Forecast.conditional"],
                 specifications: &[],
-                statement: "∀ (consequence : Mos.Forecast.Outcome),\n  Mos.Forecast.conditional Mos.Forecast.Outcome.didNot consequence = Mos.Forecast.Outcome.void",
+                statement: "∀ (consequence : Datacartridge.Forecast.Outcome),\n  Datacartridge.Forecast.conditional Datacartridge.Forecast.Outcome.didNot consequence =\n    Datacartridge.Forecast.Outcome.void",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "8c2a9ab22c5853964e108a9ecbf0da1e870fcae0ba51afeb29ce6e0f0701f742",
+                fingerprint: "02beef7ff95a392beb29f5340d2ab0d40c50fc51e77ce844bdb5ccf9d884a45b",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.contested_at_the_deadline_is_void",
+                name: "Datacartridge.Forecast.contested_at_the_deadline_is_void",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settleReported"],
+                subjects: &["Datacartridge.Forecast.settleReported"],
                 specifications: &[],
-                statement: "∀ (observed : List Bool),\n  Mos.Forecast.settleReported Mos.Forecast.Window.atDeadline true observed true = Mos.Forecast.Outcome.void",
+                statement: "∀ (observed : List Bool),\n  Datacartridge.Forecast.settleReported Datacartridge.Forecast.Window.atDeadline true observed true =\n    Datacartridge.Forecast.Outcome.void",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "4e920d76fb198926dcae485bc5fbd269afaad743b0688f260e9ac48c28bba6b3",
+                fingerprint: "0aaba555a6b3145c69146399a35835a48c986842ef66392585f8720a3bcb162a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.conviction_is_symmetric_and_bounded",
+                name: "Datacartridge.Forecast.conviction_is_symmetric_and_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.conviction"],
+                subjects: &["Datacartridge.Forecast.conviction"],
                 specifications: &[],
-                statement: "∀ (backingBps : Int),\n  Mos.Forecast.conviction (-backingBps) = Mos.Forecast.conviction backingBps ∧\n    Mos.Forecast.conviction backingBps ≤ 10000",
+                statement: "∀ (backingBps : Int),\n  Datacartridge.Forecast.conviction (-backingBps) = Datacartridge.Forecast.conviction backingBps ∧\n    Datacartridge.Forecast.conviction backingBps ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "235c0605483a8c63c2f013c9678143647eb9f105e0549dce906997e9f08e6a7a",
+                fingerprint: "288918e6d55b0279b3e1b200ebe88050ddd78aabba5e8c45b1b5f974f6445572",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.counting_for_nothing_reads_the_record",
+                name: "Datacartridge.Forecast.counting_for_nothing_reads_the_record",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.recalibrated"],
+                subjects: &["Datacartridge.Forecast.recalibrated"],
                 specifications: &[],
-                statement: "∀ (statedBps came scored : Nat),\n  0 < scored → Mos.Forecast.recalibrated statedBps came scored 0 = min came scored * 10000 / scored",
+                statement: "∀ (statedBps came scored : Nat),\n  0 < scored → Datacartridge.Forecast.recalibrated statedBps came scored 0 = min came scored * 10000 / scored",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "7d35b54aba086cd763a923a081538ab4ab16da418d25e79f5c3b4ddce7ccbc82",
+                fingerprint: "88d2fb43dd6e69e7892387206d0622fa51a1a77ba90c16aca0774ab9b59aa495",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.counts_any_time",
+                name: "Datacartridge.Forecast.counts_any_time",
                 relation: "lungo.decides",
-                subjects: &["Mos.Forecast.When.counts"],
+                subjects: &["Datacartridge.Forecast.When.counts"],
                 specifications: &[],
-                statement: "∀ (w : Mos.Forecast.When),\n  w.anyTime = true → ∀ (moment : Int), w.counts moment = true ↔ w.since < moment ∧ moment ≤ w.till",
+                statement: "∀ (w : Datacartridge.Forecast.When),\n  w.anyTime = true → ∀ (moment : Int), w.counts moment = true ↔ w.since < moment ∧ moment ≤ w.till",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "e2b46efcb89bba58fcd93ea43ee9598bea17d83c8ff86958d391b7ea19fd4493",
+                fingerprint: "e8c64f022b5445a9b03030ec71c04ac3316ff53956d23486e6de5fecec890b77",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.counts_at_the_deadline",
+                name: "Datacartridge.Forecast.counts_at_the_deadline",
                 relation: "lungo.decides",
-                subjects: &["Mos.Forecast.When.counts"],
+                subjects: &["Datacartridge.Forecast.When.counts"],
                 specifications: &[],
-                statement: "∀ (w : Mos.Forecast.When), w.anyTime = false → ∀ (moment : Int), w.counts moment = true ↔ moment = w.till",
+                statement: "∀ (w : Datacartridge.Forecast.When), w.anyTime = false → ∀ (moment : Int), w.counts moment = true ↔ moment = w.till",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ab9110773884133f1b73663f418ec783b0ff4de6987eedf8e01bfd96e92930f5",
+                fingerprint: "38460c33daa1943713bab7bd8fe703420553966b9593faa058b1393ec4469b52",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.discerning_iff",
+                name: "Datacartridge.Forecast.discerning_iff",
                 relation: "lungo.decides",
-                subjects: &["Mos.Forecast.discerning"],
+                subjects: &["Datacartridge.Forecast.discerning"],
                 specifications: &[],
-                statement: "∀ (s : Mos.Forecast.Split), Mos.Forecast.discerning s = true ↔ 0 < s.howHard ∧ s.howHard ≤ 4 * s.toldApart",
+                statement: "∀ (s : Datacartridge.Forecast.Split),\n  Datacartridge.Forecast.discerning s = true ↔ 0 < s.howHard ∧ s.howHard ≤ 4 * s.toldApart",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "644aebfd8a36b60aee490aa7153f7e6a804735b68c2a9fd04ba777bd679cb5a7",
+                fingerprint: "99ea83eee08878a4aecf558d053888190d4c1e29b9611e0f428dd8d6015abec3",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.due_is_settled",
+                name: "Datacartridge.Forecast.due_is_settled",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settled", "Mos.Forecast.settle"],
+                subjects: &["Datacartridge.Forecast.settled", "Datacartridge.Forecast.settle"],
                 specifications: &[],
-                statement: "∀ (window : Mos.Forecast.Window) (observed : List Bool),\n  Mos.Forecast.settled (Mos.Forecast.settle window true observed) = true",
+                statement: "∀ (window : Datacartridge.Forecast.Window) (observed : List Bool),\n  Datacartridge.Forecast.settled (Datacartridge.Forecast.settle window true observed) = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "639db1e4b048c3945e94e348ca67897300d129a69e5cf3c0174be3f90dc45ae0",
+                fingerprint: "4b527fd373951bc5f5bb38fb40fdcf52d18a9c9e2e4daf284d97323b0fe90445",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.even_odds_counts_as_anyone",
+                name: "Datacartridge.Forecast.even_odds_counts_as_anyone",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.weight", "Mos.Forecast.evenWeight"],
+                subjects: &["Datacartridge.Forecast.weight", "Datacartridge.Forecast.evenWeight"],
                 specifications: &[],
-                statement: "∀ (scored : Nat), Mos.Forecast.weight scored 2500 = Mos.Forecast.evenWeight",
+                statement: "∀ (scored : Nat), Datacartridge.Forecast.weight scored 2500 = Datacartridge.Forecast.evenWeight",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "2e8e163a78ec765e8b25832cf85f26970f289acd94141d8a32cb37b075a7e351",
+                fingerprint: "4dc5f852e013dfd4105bcfaa4995bccfefb5b0ae15e55183d6b948293d277aa1",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.even_odds_expect_only_costs",
+                name: "Datacartridge.Forecast.even_odds_expect_only_costs",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.expected"],
+                subjects: &["Datacartridge.Forecast.expected"],
                 specifications: &[],
-                statement: "∀ (sizeBps costBps : Nat), Mos.Forecast.expected 5000 (↑sizeBps) (-↑sizeBps) costBps = -(2 * ↑costBps)",
+                statement: "∀ (sizeBps costBps : Nat), Datacartridge.Forecast.expected 5000 (↑sizeBps) (-↑sizeBps) costBps = -(2 * ↑costBps)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "267d30aebb5e2e1628e00766c808f53eb8f12a2b6a00e41966fd00a4c4d4b976",
+                fingerprint: "5fd43232a4f98a701c21e466518efab6e81fec71d37c57931948669644a00ed9",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.expectedFirst_irreflexive",
+                name: "Datacartridge.Forecast.expectedFirst_irreflexive",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.expectedFirst"],
+                subjects: &["Datacartridge.Forecast.expectedFirst"],
                 specifications: &[],
-                statement: "∀ (a : Option Int × Int), Mos.Forecast.expectedFirst a a = false",
+                statement: "∀ (a : Option Int × Int), Datacartridge.Forecast.expectedFirst a a = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3e526ab754fbb7b3a7765b30fc3dd38a0b607a5ee90e5113354ab2d91387fea2",
+                fingerprint: "51a93355ba524b987a942122e063cb0e1f8c7dc646bfed289f2bec459ba2b5cc",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.expected_at_the_extremes",
+                name: "Datacartridge.Forecast.expected_at_the_extremes",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.expected"],
+                subjects: &["Datacartridge.Forecast.expected"],
                 specifications: &[],
-                statement: "∀ (gainBps lossBps : Int) (costBps : Nat),\n  Mos.Forecast.expected 10000 gainBps lossBps costBps = gainBps - 2 * ↑costBps ∧\n    Mos.Forecast.expected 0 gainBps lossBps costBps = lossBps - 2 * ↑costBps",
+                statement: "∀ (gainBps lossBps : Int) (costBps : Nat),\n  Datacartridge.Forecast.expected 10000 gainBps lossBps costBps = gainBps - 2 * ↑costBps ∧\n    Datacartridge.Forecast.expected 0 gainBps lossBps costBps = lossBps - 2 * ↑costBps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "5994bfbc0c703347c79557a9e2756f25044c27d97d7fa60b820ef3d8e5c4dde4",
+                fingerprint: "436e777d614b60eecc83cdb583d346171a7b94cc1d061d3c634f735c645772ad",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.few_are_never_apart",
+                name: "Datacartridge.Forecast.few_are_never_apart",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.apartBeyondChance", "Mos.Forecast.provenAt"],
+                subjects: &["Datacartridge.Forecast.apartBeyondChance", "Datacartridge.Forecast.provenAt"],
                 specifications: &[],
-                statement: "∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\n  n₁ < Mos.Forecast.provenAt ∨ n₂ < Mos.Forecast.provenAt → Mos.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = false",
+                statement: "∀ (n₁ s₁ q₁ n₂ s₂ q₂ : Nat),\n  n₁ < Datacartridge.Forecast.provenAt ∨ n₂ < Datacartridge.Forecast.provenAt →\n    Datacartridge.Forecast.apartBeyondChance n₁ s₁ q₁ n₂ s₂ q₂ = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "9543fd81dc736cca49b87a7516a901302b034a53f7dc7fb08fd1e82f8e24dfde",
+                fingerprint: "66051054f718b7fed1c1fabc445e71e3f3013ac23c1eae0504f670eea1d492d9",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.few_calls_tell_nothing",
+                name: "Datacartridge.Forecast.few_calls_tell_nothing",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.provenAt", "Mos.Forecast.surenessOf"],
+                subjects: &["Datacartridge.Forecast.provenAt", "Datacartridge.Forecast.surenessOf"],
                 specifications: &[],
-                statement: "∀ (forecasts came statedSum spread : Nat),\n  forecasts < Mos.Forecast.provenAt →\n    Mos.Forecast.surenessOf forecasts came statedSum spread = Mos.Forecast.Sureness.untold",
+                statement: "∀ (forecasts came statedSum spread : Nat),\n  forecasts < Datacartridge.Forecast.provenAt →\n    Datacartridge.Forecast.surenessOf forecasts came statedSum spread = Datacartridge.Forecast.Sureness.untold",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "fcf2b804096504a5af5818880f313131a7237746ac5a736e8ef2eefc95011118",
+                fingerprint: "383f57682d0da910478c4884b5e55c45bcf29adf7e8dc8c30b3602fcc75aa534",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.few_forecasts_tell_nothing",
+                name: "Datacartridge.Forecast.few_forecasts_tell_nothing",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.provenAt", "Mos.Forecast.trend"],
+                subjects: &["Datacartridge.Forecast.provenAt", "Datacartridge.Forecast.trend"],
                 specifications: &[],
-                statement: "∀ (during before : Option Nat) (scoredDuring scoredBefore : Nat),\n  scoredDuring < Mos.Forecast.provenAt ∨ scoredBefore < Mos.Forecast.provenAt →\n    Mos.Forecast.trend during before scoredDuring scoredBefore = Mos.Forecast.Trend.untold",
+                statement: "∀ (during before : Option Nat) (scoredDuring scoredBefore : Nat),\n  scoredDuring < Datacartridge.Forecast.provenAt ∨ scoredBefore < Datacartridge.Forecast.provenAt →\n    Datacartridge.Forecast.trend during before scoredDuring scoredBefore = Datacartridge.Forecast.Trend.untold",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "86b3e6b72fa3ea6611b4ccfb141a30d562a3633514ffdbbc6f3004c17258ec01",
+                fingerprint: "a9c317115ad1056b2a4e666f1b7aeeb3d838c9ed532553f16008cde2364d7a92",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.few_pairs_are_never_apart",
+                name: "Datacartridge.Forecast.few_pairs_are_never_apart",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.pairedBeyondChance", "Mos.Forecast.provenAt"],
+                subjects: &["Datacartridge.Forecast.pairedBeyondChance", "Datacartridge.Forecast.provenAt"],
                 specifications: &[],
-                statement: "∀ (n : Nat) (d : Int) (q : Nat), n < Mos.Forecast.provenAt → Mos.Forecast.pairedBeyondChance n d q = false",
+                statement: "∀ (n : Nat) (d : Int) (q : Nat),\n  n < Datacartridge.Forecast.provenAt → Datacartridge.Forecast.pairedBeyondChance n d q = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d4297b649ef1ae68164d38f17e39a93afe98feb6178ade31271953cf3ce95f58",
+                fingerprint: "e0a85c5386da34512b9fb63356750c50ad186d820c63011f3848716974a321c0",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.group_split",
+                name: "Datacartridge.Forecast.group_split",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.Group.squares", "Mos.Forecast.Group.gap"],
+                subjects: &["Datacartridge.Forecast.Group.squares", "Datacartridge.Forecast.Group.gap"],
                 specifications: &[],
-                statement: "∀ (g : Mos.Forecast.Group), ↑g.calls * g.squares = g.gap + 100000000 * (↑g.came * (↑g.calls - ↑g.came))",
+                statement: "∀ (g : Datacartridge.Forecast.Group), ↑g.calls * g.squares = g.gap + 100000000 * (↑g.came * (↑g.calls - ↑g.came))",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "b79ddc91803dd1d41720d3b105b39bd2d32130e46010e836edfed0d9596432c2",
+                fingerprint: "002dfb033f180ad5e958a1d458e92b2665d5a663dffd1dbca8fccf7f15735e99",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.happening_apart_agrees",
+                name: "Datacartridge.Forecast.happening_apart_agrees",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.clashHappening"],
+                subjects: &["Datacartridge.Forecast.clashHappening"],
                 specifications: &[],
-                statement: "∀ (p q : Nat) (a b : Mos.Forecast.When), Mos.Forecast.clashHappening false false p q a b = Mos.Forecast.Clash.agree",
+                statement: "∀ (p q : Nat) (a b : Datacartridge.Forecast.When),\n  Datacartridge.Forecast.clashHappening false false p q a b = Datacartridge.Forecast.Clash.agree",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "a7ac38b98434d0b0cb5347fae450188b71b96d6a864697f8548bd7aa2928c7b1",
+                fingerprint: "dfa03a22a8444e6c3bce02953e99171b7106c7f4974e53a62a157eb8aa3899b5",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.happening_as_likely_agrees",
+                name: "Datacartridge.Forecast.happening_as_likely_agrees",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.clashHappening"],
+                subjects: &["Datacartridge.Forecast.clashHappening"],
                 specifications: &[],
-                statement: "∀ (firstWithin secondWithin : Bool) (p : Nat) (a b : Mos.Forecast.When),\n  Mos.Forecast.clashHappening firstWithin secondWithin p p a b = Mos.Forecast.Clash.agree",
+                statement: "∀ (firstWithin secondWithin : Bool) (p : Nat) (a b : Datacartridge.Forecast.When),\n  Datacartridge.Forecast.clashHappening firstWithin secondWithin p p a b = Datacartridge.Forecast.Clash.agree",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "dbe5da5d59ebbc2904b96820c63d147c161edeb58e3f87bc3d5b080a00c0a44d",
+                fingerprint: "ba5da63deddd148aa9c8d012a1b90490be5de55945ba82d9d1cc83a32ddc8d8a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.happening_first_too_likely",
+                name: "Datacartridge.Forecast.happening_first_too_likely",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.clashHappening", "Mos.Forecast.likelihood"],
+                subjects: &["Datacartridge.Forecast.clashHappening", "Datacartridge.Forecast.likelihood"],
                 specifications: &[],
-                statement: "∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Mos.Forecast.When),\n  Mos.Forecast.clashHappening firstWithin secondWithin p q a b = Mos.Forecast.Clash.firstTooLikely →\n    firstWithin = true ∧ b.since ≤ a.since ∧ a.till ≤ b.till ∧ Mos.Forecast.likelihood q < Mos.Forecast.likelihood p",
+                statement: "∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Datacartridge.Forecast.When),\n  Datacartridge.Forecast.clashHappening firstWithin secondWithin p q a b = Datacartridge.Forecast.Clash.firstTooLikely →\n    firstWithin = true ∧\n      b.since ≤ a.since ∧ a.till ≤ b.till ∧ Datacartridge.Forecast.likelihood q < Datacartridge.Forecast.likelihood p",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "9f4b48951a6b4e2d22a8549f87f8540cc51a95d83e97aab1e246806a6cc8471f",
+                fingerprint: "cf775a7f8ef39a9a4a81f8c6b7d688297e5421edee9f3569d50401f797381e2b",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.happening_only_implies",
+                name: "Datacartridge.Forecast.happening_only_implies",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.clashHappening"],
+                subjects: &["Datacartridge.Forecast.clashHappening"],
                 specifications: &[],
-                statement: "∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Mos.Forecast.When),\n  Mos.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Mos.Forecast.Clash.tooMuch ∧\n    Mos.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Mos.Forecast.Clash.tooLittle",
+                statement: "∀ (firstWithin secondWithin : Bool) (p q : Nat) (a b : Datacartridge.Forecast.When),\n  Datacartridge.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Datacartridge.Forecast.Clash.tooMuch ∧\n    Datacartridge.Forecast.clashHappening firstWithin secondWithin p q a b ≠ Datacartridge.Forecast.Clash.tooLittle",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "b6ff4f8cc243ed88826a6a07f6d0e5ec940a2f430b1bc3da4c2a9df909def4b2",
+                fingerprint: "5449abd0e1292bb96de128d5435892c6dbc817524542a8f7e7aa552adf5406d6",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.lastWeek_is_whole_and_over",
+                name: "Datacartridge.Forecast.lastWeek_is_whole_and_over",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.lastWeek"],
+                subjects: &["Datacartridge.Forecast.lastWeek"],
                 specifications: &[],
-                statement: "∀ (today : Nat),\n  13 ≤ today →\n    (Mos.Forecast.lastWeek today).snd = (Mos.Forecast.lastWeek today).fst + 7 ∧\n      (Mos.Forecast.lastWeek today).snd ≤ today",
+                statement: "∀ (today : Nat),\n  13 ≤ today →\n    (Datacartridge.Forecast.lastWeek today).snd = (Datacartridge.Forecast.lastWeek today).fst + 7 ∧\n      (Datacartridge.Forecast.lastWeek today).snd ≤ today",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "079746889de316d0cbe901f4fbda459bb3978897a7ae848f1c6d7e286cba09fa",
+                fingerprint: "d3f95cbd635173baa5951e070b4d5dea537a097a7a05f89bfa4cc1bef9637b9a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.latest_is_latest",
+                name: "Datacartridge.Forecast.latest_is_latest",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.laterOf"],
+                subjects: &["Datacartridge.Forecast.laterOf"],
                 specifications: &[],
-                statement: "∀ (ps : List (Int × Nat)) (p q : Int × Nat), q ∈ p :: ps → Mos.Forecast.noLater q (List.foldl Mos.Forecast.laterOf p ps)",
+                statement: "∀ (ps : List (Int × Nat)) (p q : Int × Nat),\n  q ∈ p :: ps → Datacartridge.Forecast.noLater q (List.foldl Datacartridge.Forecast.laterOf p ps)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3c62f27f230b67ccd41a501cc1def7ee1ff63b7bf7c6019a2fb6dd0c87511330",
+                fingerprint: "0f09f8c13b02d3f97338d6745eb9d45a512aa1896cf0c058e63ad8b703da5437",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.least_from_parts_only_when_carried",
+                name: "Datacartridge.Forecast.least_from_parts_only_when_carried",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.leastFromParts"],
+                subjects: &["Datacartridge.Forecast.leastFromParts"],
                 specifications: &[],
-                statement: "∀ (parts : List Mos.Forecast.Claim) (others : Int) (whole : Mos.Forecast.Claim),\n  Mos.Forecast.leastFromParts parts others whole =\n    if Mos.Forecast.partsCarry parts others whole = true then\n      some (Mos.Forecast.leastWhenAll (List.map (fun x => x.bps) parts))\n    else none",
+                statement: "∀ (parts : List Datacartridge.Forecast.Claim) (others : Int) (whole : Datacartridge.Forecast.Claim),\n  Datacartridge.Forecast.leastFromParts parts others whole =\n    if Datacartridge.Forecast.partsCarry parts others whole = true then\n      some (Datacartridge.Forecast.leastWhenAll (List.map (fun x => x.bps) parts))\n    else none",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "7201261f7df5f3e553db1a264c285b7da87ffafdc415e0190d35444805b96196",
+                fingerprint: "e06bcb77b1e686d11e274c78fc9521ad147cbcd01a207e3a0c47c1b874543356",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.least_is_under_each",
+                name: "Datacartridge.Forecast.least_is_under_each",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.leastWhenAll"],
+                subjects: &["Datacartridge.Forecast.leastWhenAll"],
                 specifications: &[],
-                statement: "∀ (bps : List Nat) (b : Nat), b ∈ bps → Mos.Forecast.leastWhenAll bps ≤ ↑(Mos.Forecast.likelihood b)",
+                statement: "∀ (bps : List Nat) (b : Nat), b ∈ bps → Datacartridge.Forecast.leastWhenAll bps ≤ ↑(Datacartridge.Forecast.likelihood b)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "bf3ea2c45a058bbb4d80937833342e3a8a15970771a72f6f971cb6aa84e76bdd",
+                fingerprint: "726f2b4a9a26594fed09851102e85e5299224b2b15b7520c366835b982674156",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.least_of_one",
+                name: "Datacartridge.Forecast.least_of_one",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.leastWhenAll"],
+                subjects: &["Datacartridge.Forecast.leastWhenAll"],
                 specifications: &[],
-                statement: "∀ (b : Nat), Mos.Forecast.leastWhenAll [b] = ↑(Mos.Forecast.likelihood b)",
+                statement: "∀ (b : Nat), Datacartridge.Forecast.leastWhenAll [b] = ↑(Datacartridge.Forecast.likelihood b)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "b93be90714277caf47b429ae4c9634e5469471c98587f8ce36f0c3bcb13a32a4",
+                fingerprint: "4f94132c23a4727b504e61fc059454bb8f16550d8bcca6d9d4da694a2ec85c54",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.life_of_one",
+                name: "Datacartridge.Forecast.life_of_one",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.lifeBrier", "Mos.Forecast.brier"],
+                subjects: &["Datacartridge.Forecast.lifeBrier", "Datacartridge.Forecast.brier"],
                 specifications: &[],
-                statement: "∀ (statedBps duration : Nat) (cameTrue : Bool),\n  0 < duration →\n    Mos.Forecast.lifeBrier [{ statedBps := statedBps, duration := duration }] cameTrue =\n      some (Mos.Forecast.brier statedBps cameTrue)",
+                statement: "∀ (statedBps duration : Nat) (cameTrue : Bool),\n  0 < duration →\n    Datacartridge.Forecast.lifeBrier [{ statedBps := statedBps, duration := duration }] cameTrue =\n      some (Datacartridge.Forecast.brier statedBps cameTrue)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "f1949711d159c2bd9ed8684fec658fae1ed52289334b05479389345c2d73d1b5",
+                fingerprint: "606949d2ff11910f2f800ea48d7bb93b5bd9a0f02c95890d8808a5d6ba296db9",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.mean_of_nothing",
+                name: "Datacartridge.Forecast.mean_of_nothing",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.mean"],
+                subjects: &["Datacartridge.Forecast.mean"],
                 specifications: &[],
-                statement: "Mos.Forecast.mean [] = none",
+                statement: "Datacartridge.Forecast.mean [] = none",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "4f5c401937c1c70f7decf1e81518358eecae6981a3846d76d0865014c8318480",
+                fingerprint: "3d55a93dbec09e8caad594c097bba347e5f92b6bd186735d6f2d75b340d7889d",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.mean_of_one",
+                name: "Datacartridge.Forecast.mean_of_one",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.mean"],
+                subjects: &["Datacartridge.Forecast.mean"],
                 specifications: &[],
-                statement: "∀ (s : Nat), Mos.Forecast.mean [s] = some s",
+                statement: "∀ (s : Nat), Datacartridge.Forecast.mean [s] = some s",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "dfab8e7d72335ac727c4c26990af75538e4d8014d47c7b99d9ba38d44f2e6b33",
+                fingerprint: "53f680f59793d21e785ff071b790297711c22b8130ef6bfeabcbce75be815165",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.never_right_reads_no_higher",
+                name: "Datacartridge.Forecast.never_right_reads_no_higher",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.recalibrated", "Mos.Forecast.likelihood"],
+                subjects: &["Datacartridge.Forecast.recalibrated", "Datacartridge.Forecast.likelihood"],
                 specifications: &[],
-                statement: "∀ (statedBps scored countsAs : Nat),\n  Mos.Forecast.recalibrated statedBps 0 scored countsAs ≤ Mos.Forecast.likelihood statedBps",
+                statement: "∀ (statedBps scored countsAs : Nat),\n  Datacartridge.Forecast.recalibrated statedBps 0 scored countsAs ≤ Datacartridge.Forecast.likelihood statedBps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "bde31c8620c5a66aff19bedcc26e0b0d36b2a1aa3396349fda10a26bd2ed9d0d",
+                fingerprint: "57318f9517a83a4ee875fa43cc690364cd691ee24b571352755dcb83508f34a3",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.next_is_later",
+                name: "Datacartridge.Forecast.next_is_later",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.later", "Mos.Forecast.nextPeriod"],
+                subjects: &["Datacartridge.Forecast.later", "Datacartridge.Forecast.nextPeriod"],
                 specifications: &[],
-                statement: "∀ (year : Int) (index perYear : Nat),\n  Mos.Forecast.later (year, index) (Mos.Forecast.nextPeriod year index perYear) = true",
+                statement: "∀ (year : Int) (index perYear : Nat),\n  Datacartridge.Forecast.later (year, index) (Datacartridge.Forecast.nextPeriod year index perYear) = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "613883da35d576e8417781ccc6b0738a50560fdc024c46937fc3e5716b933f12",
+                fingerprint: "3e345d4c51f7e1624f1894f80a6583f8788455b68d8cbd56bbfc8a908416f821",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.next_of_previous",
+                name: "Datacartridge.Forecast.next_of_previous",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.nextPeriod", "Mos.Forecast.previousPeriod"],
+                subjects: &["Datacartridge.Forecast.nextPeriod", "Datacartridge.Forecast.previousPeriod"],
                 specifications: &[],
-                statement: "∀ (year : Int) (index perYear : Nat),\n  1 ≤ index →\n    index ≤ perYear →\n      Mos.Forecast.nextPeriod (Mos.Forecast.previousPeriod year index perYear).fst\n          (Mos.Forecast.previousPeriod year index perYear).snd perYear =\n        (year, index)",
+                statement: "∀ (year : Int) (index perYear : Nat),\n  1 ≤ index →\n    index ≤ perYear →\n      Datacartridge.Forecast.nextPeriod (Datacartridge.Forecast.previousPeriod year index perYear).fst\n          (Datacartridge.Forecast.previousPeriod year index perYear).snd perYear =\n        (year, index)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "2168eb467e43e81163b95505c0621cb25c2f60ea471824b9055c9f13b44a25d9",
+                fingerprint: "3a25cd5caac3519fd12bacd84601ad8d0fa27282fe145e17e7b946f992e868b2",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.noLater_laterOf_left",
+                name: "Datacartridge.Forecast.noLater_laterOf_left",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.laterOf"],
+                subjects: &["Datacartridge.Forecast.laterOf"],
                 specifications: &[],
-                statement: "∀ (a b : Int × Nat), Mos.Forecast.noLater a (Mos.Forecast.laterOf a b)",
+                statement: "∀ (a b : Int × Nat), Datacartridge.Forecast.noLater a (Datacartridge.Forecast.laterOf a b)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "7ff0fed11b55bbf6078cfada9535e4512d5872772a32f8de124ab30419629d1a",
+                fingerprint: "fe034014ed4a9097473d35ec3e370e577e4b584ac0105ee93db31d9ecbaab0c3",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.noLater_laterOf_right",
+                name: "Datacartridge.Forecast.noLater_laterOf_right",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.laterOf"],
+                subjects: &["Datacartridge.Forecast.laterOf"],
                 specifications: &[],
-                statement: "∀ (a b : Int × Nat), Mos.Forecast.noLater b (Mos.Forecast.laterOf a b)",
+                statement: "∀ (a b : Int × Nat), Datacartridge.Forecast.noLater b (Datacartridge.Forecast.laterOf a b)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ffed55a36bada9cda56acb63e92d78450de53e5758380aaa23f2af26c1b46697",
+                fingerprint: "711e0bbc01ebdc354c4dc660208fab5e4a9defadfa13cd049250e7bd59b3c3fb",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.no_backing_no_conviction",
+                name: "Datacartridge.Forecast.no_backing_no_conviction",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.conviction"],
+                subjects: &["Datacartridge.Forecast.conviction"],
                 specifications: &[],
-                statement: "Mos.Forecast.conviction 0 = 0",
+                statement: "Datacartridge.Forecast.conviction 0 = 0",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "b0228583c9e724189e92f23d8129350b6ba790df9ba5c07c8501f7b5c62d5db7",
+                fingerprint: "45999a363156ba7db5fae01f8df3118816621d9f7f057ba990b9d8e60af5b5d5",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.no_backing_without_a_difference",
+                name: "Datacartridge.Forecast.no_backing_without_a_difference",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.backing"],
+                subjects: &["Datacartridge.Forecast.backing"],
                 specifications: &[],
-                statement: "∀ (bps weightBps : Nat), Mos.Forecast.backing bps (some bps) weightBps = 0",
+                statement: "∀ (bps weightBps : Nat), Datacartridge.Forecast.backing bps (some bps) weightBps = 0",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d3598e0e389883e0ca5b8a7b5f50bc0adf4ba0eb48da5fb1cc2fc25f7c27ea13",
+                fingerprint: "a08ec7f90ec0424e0a2d108f5a3c64fea374bf9ae01d7aa72bfb194418a0f2c9",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.no_change_is_not_a_change_of_mind",
+                name: "Datacartridge.Forecast.no_change_is_not_a_change_of_mind",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.mayStateAgain"],
+                subjects: &["Datacartridge.Forecast.mayStateAgain"],
                 specifications: &[],
-                statement: "∀ (standing : Nat), Mos.Forecast.mayStateAgain standing standing false = false",
+                statement: "∀ (standing : Nat), Datacartridge.Forecast.mayStateAgain standing standing false = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "582ee54b7f5abbd7cb6a75e299b0032d49f092a56fc0f3048ad2d720df38c4b5",
+                fingerprint: "4de7d6da44249794f8014f6133405457dbf189d0d68c983a56ddd581117c4d85",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.no_difference_is_not_apart",
+                name: "Datacartridge.Forecast.no_difference_is_not_apart",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.pairedBeyondChance"],
+                subjects: &["Datacartridge.Forecast.pairedBeyondChance"],
                 specifications: &[],
-                statement: "∀ (n q : Nat), Mos.Forecast.pairedBeyondChance n 0 q = false",
+                statement: "∀ (n q : Nat), Datacartridge.Forecast.pairedBeyondChance n 0 q = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ad57ac5972f42caea300beecb6b2e14a7b12755f79f2ad30ee70a09aed70c2e0",
+                fingerprint: "1485080c033ac81dc425da845b8e035bdaaabf5d8c531bb171201dfa28b446ec",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.no_record_reads_as_said",
+                name: "Datacartridge.Forecast.no_record_reads_as_said",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.recalibrated", "Mos.Forecast.likelihood"],
+                subjects: &["Datacartridge.Forecast.recalibrated", "Datacartridge.Forecast.likelihood"],
                 specifications: &[],
-                statement: "∀ (statedBps countsAs : Nat), Mos.Forecast.recalibrated statedBps 0 0 countsAs = Mos.Forecast.likelihood statedBps",
+                statement: "∀ (statedBps countsAs : Nat),\n  Datacartridge.Forecast.recalibrated statedBps 0 0 countsAs = Datacartridge.Forecast.likelihood statedBps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "7090f2b42e261eb17a8415dd1844044d6213cad8b64339dabb70b37a19c3f82d",
+                fingerprint: "a1750b7abbddb0d6ce32aa48dd2db217bf0f8ef65a7fe8d808bffc1c6aebd108",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.no_rule_stays",
+                name: "Datacartridge.Forecast.no_rule_stays",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.leave"],
+                subjects: &["Datacartridge.Forecast.leave"],
                 specifications: &[],
-                statement: "∀ (returnBps : Int) (heldDays : Nat), Mos.Forecast.leave returnBps none none heldDays none = Mos.Forecast.Leave.stay",
+                statement: "∀ (returnBps : Int) (heldDays : Nat),\n  Datacartridge.Forecast.leave returnBps none none heldDays none = Datacartridge.Forecast.Leave.stay",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3c2769ac33659528dd970ccf4c70e870e50a3fbca2534e589ce205998fd2e104",
+                fingerprint: "8ce2ed98726c5b7f158685b6c81c6f5d8402104b43f238fb7f333d7425eb5acb",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.nothing_observed",
+                name: "Datacartridge.Forecast.nothing_observed",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settle"],
+                subjects: &["Datacartridge.Forecast.settle"],
                 specifications: &[],
-                statement: "∀ (window : Mos.Forecast.Window) (due : Bool),\n  Mos.Forecast.settle window due [] = if due = true then Mos.Forecast.Outcome.void else Mos.Forecast.Outcome.open",
+                statement: "∀ (window : Datacartridge.Forecast.Window) (due : Bool),\n  Datacartridge.Forecast.settle window due [] =\n    if due = true then Datacartridge.Forecast.Outcome.void else Datacartridge.Forecast.Outcome.open",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d53b86ae32ce21d501dd2ad4e7a9c2600db6badc9f8463280dcf5b69df745afd",
+                fingerprint: "7211b13804fe373495fa026949686607501670977aec556ed9ecf42c51bbb4b4",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.occurs_settles_at_the_deadline",
+                name: "Datacartridge.Forecast.occurs_settles_at_the_deadline",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.settled", "Mos.Forecast.occurs"],
+                subjects: &["Datacartridge.Forecast.settled", "Datacartridge.Forecast.occurs"],
                 specifications: &[],
-                statement: "∀ (seen : Bool) (hearing : Mos.Forecast.Hearing), Mos.Forecast.settled (Mos.Forecast.occurs true seen hearing) = true",
+                statement: "∀ (seen : Bool) (hearing : Datacartridge.Forecast.Hearing),\n  Datacartridge.Forecast.settled (Datacartridge.Forecast.occurs true seen hearing) = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "95e0b65b8cce71833aab2596cc5bbbe5c87bf65c0ef0c050c5e6243459dcf4cc",
+                fingerprint: "106e4513eea7b9c247d0fd21c20b4b3eed8ad68ac430879c6de1f4200074370d",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.occurs_stays_true",
+                name: "Datacartridge.Forecast.occurs_stays_true",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.occurs"],
+                subjects: &["Datacartridge.Forecast.occurs"],
                 specifications: &[],
-                statement: "∀ (due : Bool) (hearing : Mos.Forecast.Hearing), Mos.Forecast.occurs due true hearing = Mos.Forecast.Outcome.cameTrue",
+                statement: "∀ (due : Bool) (hearing : Datacartridge.Forecast.Hearing),\n  Datacartridge.Forecast.occurs due true hearing = Datacartridge.Forecast.Outcome.cameTrue",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "700a7e644b0c2bb494d5f5d42a78948b37e4f7fad911c32253d148eb73700496",
+                fingerprint: "915598db8b7a3ac778f59e78f0e704850d1e899d856f636a8dc01d96acfeb894",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.one_way_or_the_other",
+                name: "Datacartridge.Forecast.one_way_or_the_other",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.mayStateAgain"],
+                subjects: &["Datacartridge.Forecast.mayStateAgain"],
                 specifications: &[],
-                statement: "∀ (standing said : Nat), Mos.Forecast.mayStateAgain standing said true = !Mos.Forecast.mayStateAgain standing said false",
+                statement: "∀ (standing said : Nat),\n  Datacartridge.Forecast.mayStateAgain standing said true = !Datacartridge.Forecast.mayStateAgain standing said false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "a40404b146e671c90423d1815c7fb24a50c104b104719d8ceac495a109137d36",
+                fingerprint: "78302ef8c1abe7ede7774b05a5ca2a89ebd9211a06e1a132914e753fcca19b13",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.only_meeting_covers",
+                name: "Datacartridge.Forecast.only_meeting_covers",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.clashWhen"],
+                subjects: &["Datacartridge.Forecast.clashWhen"],
                 specifications: &[],
-                statement: "∀ (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When),\n  Mos.Forecast.When.meet✝ wa wb = false → Mos.Forecast.clashWhen a b wa wb ≠ Mos.Forecast.Clash.tooLittle",
+                statement: "∀ (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When),\n  Datacartridge.Forecast.When.meet✝ wa wb = false →\n    Datacartridge.Forecast.clashWhen a b wa wb ≠ Datacartridge.Forecast.Clash.tooLittle",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "a3487e9bdfaebaff73c08da28397aca2fa5cdbbe20a117ad5c341bc6b679ca4a",
+                fingerprint: "daed8f6d24192a3fe3900bc866414060e6efb6f4d6318a67ceb6801dbafaedff",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.only_together_excludes",
+                name: "Datacartridge.Forecast.only_together_excludes",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.clashWhen"],
+                subjects: &["Datacartridge.Forecast.clashWhen"],
                 specifications: &[],
-                statement: "∀ (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When),\n  Mos.Forecast.When.together✝ wa wb = false → Mos.Forecast.clashWhen a b wa wb ≠ Mos.Forecast.Clash.tooMuch",
+                statement: "∀ (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When),\n  Datacartridge.Forecast.When.together✝ wa wb = false →\n    Datacartridge.Forecast.clashWhen a b wa wb ≠ Datacartridge.Forecast.Clash.tooMuch",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "8212ce069cbe48029fe9e8bbcd0c0376e67bef4e38a7d16a594769f3e0d0010e",
+                fingerprint: "a7c0d95c6e9aec7f803986231a3023bc60eb47cd2d4343f2659a5d026335046a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.opposite_says_the_rest",
+                name: "Datacartridge.Forecast.opposite_says_the_rest",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.Claim.opposite"],
+                subjects: &["Datacartridge.Forecast.Claim.opposite"],
                 specifications: &[],
-                statement: "∀ (c : Mos.Forecast.Claim),\n  c.opposite.up = !c.up ∧ c.opposite.level = c.level ∧ c.opposite.bps = 10000 - Mos.Forecast.likelihood c.bps",
+                statement: "∀ (c : Datacartridge.Forecast.Claim),\n  c.opposite.up = !c.up ∧ c.opposite.level = c.level ∧ c.opposite.bps = 10000 - Datacartridge.Forecast.likelihood c.bps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ba26ce078ac7030ce4098b5d12565f0dc4e6598cd9bdb1560c7d71cb1df00f6f",
+                fingerprint: "d975404713daeaa3577fa8e27e869fd4eadd5d3f6478eacdf77a3f20a30e29d4",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.paired_either_way",
+                name: "Datacartridge.Forecast.paired_either_way",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.pairedBeyondChance"],
+                subjects: &["Datacartridge.Forecast.pairedBeyondChance"],
                 specifications: &[],
-                statement: "∀ (n : Nat) (d : Int) (q : Nat), Mos.Forecast.pairedBeyondChance n (-d) q = Mos.Forecast.pairedBeyondChance n d q",
+                statement: "∀ (n : Nat) (d : Int) (q : Nat),\n  Datacartridge.Forecast.pairedBeyondChance n (-d) q = Datacartridge.Forecast.pairedBeyondChance n d q",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "38ce792bdb3ad1f7da8ca11a5aaf78e6efa99474a0427a8843db366c57550e78",
+                fingerprint: "b4d87a0736ff3d0bcb1af7a1ed3df1584f5b39c46147d268aa1ebc63dee6c6e5",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.parts_carry_is_sound",
+                name: "Datacartridge.Forecast.parts_carry_is_sound",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.partsCarry"],
+                subjects: &["Datacartridge.Forecast.partsCarry"],
                 specifications: &[],
-                statement: "∀ (parts : List Mos.Forecast.Claim) (others : Int) (whole : Mos.Forecast.Claim) (xs : List Int) (y : Int),\n  Mos.Forecast.partsCarry parts others whole = true →\n    Mos.Forecast.allHold parts xs → xs.sum + others ≤ y → whole.holdsOf y",
+                statement: "∀ (parts : List Datacartridge.Forecast.Claim) (others : Int) (whole : Datacartridge.Forecast.Claim) (xs : List Int)\n  (y : Int),\n  Datacartridge.Forecast.partsCarry parts others whole = true →\n    Datacartridge.Forecast.allHold parts xs → xs.sum + others ≤ y → whole.holdsOf y",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "e362768faf73a54fd1cc578e4eaf7086cdb9de568e69e3a77ed7ba4d094ed150",
+                fingerprint: "970939bcaebb8edaadb142acfc181ab14e8cc039553a28022b9122f93fc46b68",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.pool_is_bounded",
+                name: "Datacartridge.Forecast.pool_is_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.pool"],
+                subjects: &["Datacartridge.Forecast.pool"],
                 specifications: &[],
-                statement: "∀ (views : List Mos.Forecast.View) (p : Nat), Mos.Forecast.pool views = some p → p ≤ 10000",
+                statement: "∀ (views : List Datacartridge.Forecast.View) (p : Nat), Datacartridge.Forecast.pool views = some p → p ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "8430e85b56c6bc7e90675dd41e1073c7a149c533269051c63c3dc6251df3cc56",
+                fingerprint: "e777718435cb4145287a14b20c730b8d43ffe9b2383cd859865392a43c0c7482",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.pool_of_agreement",
+                name: "Datacartridge.Forecast.pool_of_agreement",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.likelihood", "Mos.Forecast.weights", "Mos.Forecast.pool"],
+                subjects: &["Datacartridge.Forecast.likelihood", "Datacartridge.Forecast.weights", "Datacartridge.Forecast.pool"],
                 specifications: &[],
-                statement: "∀ (views : List Mos.Forecast.View) (statedBps : Nat),\n  (∀ (v : Mos.Forecast.View), v ∈ views → Mos.Forecast.likelihood v.statedBps = statedBps) →\n    0 < Mos.Forecast.weights views → Mos.Forecast.pool views = some statedBps",
+                statement: "∀ (views : List Datacartridge.Forecast.View) (statedBps : Nat),\n  (∀ (v : Datacartridge.Forecast.View), v ∈ views → Datacartridge.Forecast.likelihood v.statedBps = statedBps) →\n    0 < Datacartridge.Forecast.weights views → Datacartridge.Forecast.pool views = some statedBps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "5b57c39389f8579e0015cee3f9758991a332a5b98aacd8c56dbdeb85ee32208e",
+                fingerprint: "409872e528838880c256d7d541371355bff6423a1da591fac9a65f07d37a2453",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.pool_of_one",
+                name: "Datacartridge.Forecast.pool_of_one",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.pool", "Mos.Forecast.likelihood"],
+                subjects: &["Datacartridge.Forecast.pool", "Datacartridge.Forecast.likelihood"],
                 specifications: &[],
-                statement: "∀ (weightBps statedBps : Nat),\n  0 < weightBps →\n    Mos.Forecast.pool [{ weightBps := weightBps, statedBps := statedBps }] = some (Mos.Forecast.likelihood statedBps)",
+                statement: "∀ (weightBps statedBps : Nat),\n  0 < weightBps →\n    Datacartridge.Forecast.pool [{ weightBps := weightBps, statedBps := statedBps }] =\n      some (Datacartridge.Forecast.likelihood statedBps)",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "c767872c694b486adf2ef3ccfcfd1a17e582e052158b2550d14df3f29092d6d7",
+                fingerprint: "d0b66053b1f5212cd0ef840e36f294254fb8d0356946318957ed09ed263cd614",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.previous_is_a_period",
+                name: "Datacartridge.Forecast.previous_is_a_period",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.previousPeriod"],
+                subjects: &["Datacartridge.Forecast.previousPeriod"],
                 specifications: &[],
-                statement: "∀ (year : Int) (index perYear : Nat),\n  1 ≤ index →\n    index ≤ perYear →\n      1 ≤ (Mos.Forecast.previousPeriod year index perYear).snd ∧\n        (Mos.Forecast.previousPeriod year index perYear).snd ≤ perYear",
+                statement: "∀ (year : Int) (index perYear : Nat),\n  1 ≤ index →\n    index ≤ perYear →\n      1 ≤ (Datacartridge.Forecast.previousPeriod year index perYear).snd ∧\n        (Datacartridge.Forecast.previousPeriod year index perYear).snd ≤ perYear",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "e8b6cf34efed2a3a572cf6d94d6573b3136ef4669e31bd2ec2f1552f7dba1ce2",
+                fingerprint: "5833bdf8e76d9a1876828f3f91cfb21be65c2a533976b9280831afab37f1016c",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.proven_iff",
+                name: "Datacartridge.Forecast.proven_iff",
                 relation: "lungo.decides",
-                subjects: &["Mos.Forecast.proven"],
+                subjects: &["Datacartridge.Forecast.proven"],
                 specifications: &[],
-                statement: "∀ (scored : Nat), Mos.Forecast.proven scored = true ↔ Mos.Forecast.provenAt ≤ scored",
+                statement: "∀ (scored : Nat), Datacartridge.Forecast.proven scored = true ↔ Datacartridge.Forecast.provenAt ≤ scored",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "10871ba156ae7b7b53f1093a557735e67b9ac2f5fea588a461171e19576a2bfd",
+                fingerprint: "ef176f2e18c9ec5de99c690d14036c5c78c5010aaeabdb00fcb6409846cf394d",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.recalibrated_is_a_likelihood",
+                name: "Datacartridge.Forecast.recalibrated_is_a_likelihood",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.recalibrated"],
+                subjects: &["Datacartridge.Forecast.recalibrated"],
                 specifications: &[],
-                statement: "∀ (statedBps came scored countsAs : Nat), Mos.Forecast.recalibrated statedBps came scored countsAs ≤ 10000",
+                statement: "∀ (statedBps came scored countsAs : Nat), Datacartridge.Forecast.recalibrated statedBps came scored countsAs ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "86b333b14132bf5eabb27638cb56abf974f46b9c3d43daabd12ba2b12952e20b",
+                fingerprint: "d7b4424dc532f024a32c6e94baef65aa3c51fdf87ad6458b04865ec2185b1a7d",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.said_before_unsaid",
+                name: "Datacartridge.Forecast.said_before_unsaid",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.expectedFirst"],
+                subjects: &["Datacartridge.Forecast.expectedFirst"],
                 specifications: &[],
-                statement: "∀ (x backing other : Int),\n  Mos.Forecast.expectedFirst (some x, backing) (none, other) = true ∧\n    Mos.Forecast.expectedFirst (none, other) (some x, backing) = false",
+                statement: "∀ (x backing other : Int),\n  Datacartridge.Forecast.expectedFirst (some x, backing) (none, other) = true ∧\n    Datacartridge.Forecast.expectedFirst (none, other) (some x, backing) = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "c757a1b16f8b922f7a99891715f9b326a331af657c7d489873a14dcd43a79fb7",
+                fingerprint: "b7484bc81d7d6eb595b0846e0c30d4dc0c920d9642519d8f5586df436a75d5ae",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.settle_reported_satisfies",
+                name: "Datacartridge.Forecast.settle_reported_satisfies",
                 relation: "lungo.satisfies",
-                subjects: &["Mos.Forecast.settleReported"],
-                specifications: &["Mos.Forecast.ReportedSettling"],
-                statement: "Lungo.Spec.Satisfies\n  (fun input => Mos.Forecast.settleReported input.fst input.snd.fst input.snd.snd.fst input.snd.snd.snd)\n  Mos.Forecast.ReportedSettling",
+                subjects: &["Datacartridge.Forecast.settleReported"],
+                specifications: &["Datacartridge.Forecast.ReportedSettling"],
+                statement: "Lungo.Spec.Satisfies\n  (fun input => Datacartridge.Forecast.settleReported input.fst input.snd.fst input.snd.snd.fst input.snd.snd.snd)\n  Datacartridge.Forecast.ReportedSettling",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "7134a3db5c418afb3d275058401217adeba27741c9572b7d67407e76335b4924",
+                fingerprint: "266e1e3261770d4e4e61f3919df85c13aba47bfa696c192a2beb48986326e938",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.settle_satisfies_settling",
+                name: "Datacartridge.Forecast.settle_satisfies_settling",
                 relation: "lungo.satisfies",
-                subjects: &["Mos.Forecast.settle"],
-                specifications: &["Mos.Forecast.Settling"],
-                statement: "Lungo.Spec.Satisfies (fun input => Mos.Forecast.settle input.fst input.snd.fst input.snd.snd) Mos.Forecast.Settling",
+                subjects: &["Datacartridge.Forecast.settle"],
+                specifications: &["Datacartridge.Forecast.Settling"],
+                statement: "Lungo.Spec.Satisfies (fun input => Datacartridge.Forecast.settle input.fst input.snd.fst input.snd.snd)\n  Datacartridge.Forecast.Settling",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "f8a427475730f544ba4d16cf90b465bed33f5736ff85022680f41272eb88c83e",
+                fingerprint: "45ed2dcd734654e1f0d5c04b22a032b8a0d9e0928ffe620681c360ba8c811031",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.skill_is_bounded",
+                name: "Datacartridge.Forecast.skill_is_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.skill"],
+                subjects: &["Datacartridge.Forecast.skill"],
                 specifications: &[],
-                statement: "∀ (meanBrier : Nat), Mos.Forecast.skill meanBrier ≤ 10000",
+                statement: "∀ (meanBrier : Nat), Datacartridge.Forecast.skill meanBrier ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "8c7843a307b0ec85a72a4754e72f6450a2c3fc157c446b6bbffa4ab9b5bdf1f6",
+                fingerprint: "adfe72d33b4f097a859a2425d4b649f20d69979a43b325f16da68fa4424e2e4a",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.split_of_none",
+                name: "Datacartridge.Forecast.split_of_none",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.split"],
+                subjects: &["Datacartridge.Forecast.split"],
                 specifications: &[],
-                statement: "∀ (groups : List Mos.Forecast.Group), (List.map (fun x => x.calls) groups).sum = 0 → Mos.Forecast.split groups = none",
+                statement: "∀ (groups : List Datacartridge.Forecast.Group),\n  (List.map (fun x => x.calls) groups).sum = 0 → Datacartridge.Forecast.split groups = none",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "a123d07404077dc8c387d42ffa213e48d998670e517f283f2425430ad6e43634",
+                fingerprint: "a9d5217f34955997de533ef7126c8275758a85f504d9e8e1ed1899ecee722dcd",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.still_standing_is_the_same",
+                name: "Datacartridge.Forecast.still_standing_is_the_same",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.mayStateAgain"],
+                subjects: &["Datacartridge.Forecast.mayStateAgain"],
                 specifications: &[],
-                statement: "∀ (standing : Nat), Mos.Forecast.mayStateAgain standing standing true = true",
+                statement: "∀ (standing : Nat), Datacartridge.Forecast.mayStateAgain standing standing true = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "0383a55224fb04e243a37fea754a218c132817dd2090fcc668582ef95e5522d8",
+                fingerprint: "52f63304311186a882814e9edfb61c47b735575aba055cb653f1a593eaffe681",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.stop_comes_first",
+                name: "Datacartridge.Forecast.stop_comes_first",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.leave"],
+                subjects: &["Datacartridge.Forecast.leave"],
                 specifications: &[],
-                statement: "∀ (returnBps : Int) (stop : Nat) (targetBps : Option Nat) (heldDays : Nat) (maxDays : Option Nat),\n  returnBps ≤ -↑stop → Mos.Forecast.leave returnBps (some stop) targetBps heldDays maxDays = Mos.Forecast.Leave.stop",
+                statement: "∀ (returnBps : Int) (stop : Nat) (targetBps : Option Nat) (heldDays : Nat) (maxDays : Option Nat),\n  returnBps ≤ -↑stop →\n    Datacartridge.Forecast.leave returnBps (some stop) targetBps heldDays maxDays = Datacartridge.Forecast.Leave.stop",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d7150af4fee94adf52d9edbed60f6a2a749c52dfcb6d35245f030ca93624000a",
+                fingerprint: "d4c8743629861309c81c893a3e7ea01ae7030e4246454bc2582a4422d24b2e05",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.sureness_too_high",
+                name: "Datacartridge.Forecast.sureness_too_high",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.sureness"],
+                subjects: &["Datacartridge.Forecast.sureness"],
                 specifications: &[],
-                statement: "∀ (calls : List Mos.Forecast.Call),\n  Mos.Forecast.sureness calls = Mos.Forecast.Sureness.tooHigh →\n    Mos.Forecast.cameTrue✝ calls * 10000 < Mos.Forecast.statedSum✝ calls",
+                statement: "∀ (calls : List Datacartridge.Forecast.Call),\n  Datacartridge.Forecast.sureness calls = Datacartridge.Forecast.Sureness.tooHigh →\n    Datacartridge.Forecast.cameTrue✝ calls * 10000 < Datacartridge.Forecast.statedSum✝ calls",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "96b7bc8de8a20e2f4006fe5c3c298ce664c8b467bfcde8437b0268749ddb1249",
+                fingerprint: "bcbeb0528d101138a856025ba39e7214a2ea3e8531b2a075a9f24dac66c6742f",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.sureness_too_low",
+                name: "Datacartridge.Forecast.sureness_too_low",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.sureness"],
+                subjects: &["Datacartridge.Forecast.sureness"],
                 specifications: &[],
-                statement: "∀ (calls : List Mos.Forecast.Call),\n  Mos.Forecast.sureness calls = Mos.Forecast.Sureness.tooLow →\n    Mos.Forecast.statedSum✝ calls < Mos.Forecast.cameTrue✝ calls * 10000",
+                statement: "∀ (calls : List Datacartridge.Forecast.Call),\n  Datacartridge.Forecast.sureness calls = Datacartridge.Forecast.Sureness.tooLow →\n    Datacartridge.Forecast.statedSum✝ calls < Datacartridge.Forecast.cameTrue✝ calls * 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "265f34811515f9b381f82be9441281d9535c1d79c852d9af6dce181b2a53b056",
+                fingerprint: "9e7656ed2902ba357baf6c9f0002356b0981f26786080e170615b3e61f5fd869",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.telling_iff",
+                name: "Datacartridge.Forecast.telling_iff",
                 relation: "lungo.decides",
-                subjects: &["Mos.Forecast.telling"],
+                subjects: &["Datacartridge.Forecast.telling"],
                 specifications: &[],
-                statement: "∀ (windows : Nat), Mos.Forecast.telling windows = true ↔ Mos.Forecast.tellingAt✝ ≤ windows",
+                statement: "∀ (windows : Nat), Datacartridge.Forecast.telling windows = true ↔ Datacartridge.Forecast.tellingAt✝ ≤ windows",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "906932f233bdcdc1b1f9145764fa61c87828cef77e9612cd0f7178ff2eaf8fde",
+                fingerprint: "dca9f476e2d35cb6596140df49788b676e6320ea99455b469e028a27579d1347",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.tenth_is_bounded",
+                name: "Datacartridge.Forecast.tenth_is_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.tenth"],
+                subjects: &["Datacartridge.Forecast.tenth"],
                 specifications: &[],
-                statement: "∀ (statedBps : Nat), Mos.Forecast.tenth statedBps ≤ 9",
+                statement: "∀ (statedBps : Nat), Datacartridge.Forecast.tenth statedBps ≤ 9",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "4bc8de1c02b552d6c19e7530f6ae7b6ad188d4900bea6597c257f87aebf6c165",
+                fingerprint: "e7dd4dadf62d6e773cf4141b7646dfa798b107ede8612bd1525a6f2813291648",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.the_same_are_not_apart",
+                name: "Datacartridge.Forecast.the_same_are_not_apart",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.apartBeyondChance"],
+                subjects: &["Datacartridge.Forecast.apartBeyondChance"],
                 specifications: &[],
-                statement: "Mos.Forecast.apartBeyondChance 5 10000 20000000 5 10000 20000000 = false",
+                statement: "Datacartridge.Forecast.apartBeyondChance 5 10000 20000000 5 10000 20000000 = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "f58433bdbf8f6e539fece39889acbf9c565e287e15a1d356d26320f4b37bef9c",
+                fingerprint: "9ed7ddfdce28e6fcd27ff29dde84a63689b07fb4b99ce08e180c1586a13d8c2e",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.too_few_choose_nothing",
+                name: "Datacartridge.Forecast.too_few_choose_nothing",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.choosesAt", "Mos.Forecast.bestReading"],
+                subjects: &["Datacartridge.Forecast.choosesAt", "Datacartridge.Forecast.bestReading"],
                 specifications: &[],
-                statement: "∀ (forecasts : Nat) (tried : List Mos.Forecast.Tried),\n  forecasts < Mos.Forecast.choosesAt → Mos.Forecast.bestReading forecasts tried = none",
+                statement: "∀ (forecasts : Nat) (tried : List Datacartridge.Forecast.Tried),\n  forecasts < Datacartridge.Forecast.choosesAt → Datacartridge.Forecast.bestReading forecasts tried = none",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ad45e0ff234923544be8d087f5a754c336af0ae56517064fb954891d2a32db6c",
+                fingerprint: "5ff680930aeee5babc3f51689fdf137728afb4ed05bb04d5583386b2a3fbe16f",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.too_high_is_high",
+                name: "Datacartridge.Forecast.too_high_is_high",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.surenessOf"],
+                subjects: &["Datacartridge.Forecast.surenessOf"],
                 specifications: &[],
-                statement: "∀ (forecasts came statedSum spread : Nat),\n  Mos.Forecast.surenessOf forecasts came statedSum spread = Mos.Forecast.Sureness.tooHigh → came * 10000 < statedSum",
+                statement: "∀ (forecasts came statedSum spread : Nat),\n  Datacartridge.Forecast.surenessOf forecasts came statedSum spread = Datacartridge.Forecast.Sureness.tooHigh →\n    came * 10000 < statedSum",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "c99e67fdbdb36785826af29bab42fb34e9ed36b10a97394a62abfff65efb3ced",
+                fingerprint: "da3a86abec260b282243be6cbcc2d20f1d21dd03a8cfb2a47187201f6eee7756",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.too_likely_across_is_sound",
+                name: "Datacartridge.Forecast.too_likely_across_is_sound",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.tooLikelyAcross", "Mos.Forecast.likelihood"],
+                subjects: &["Datacartridge.Forecast.tooLikelyAcross", "Datacartridge.Forecast.likelihood"],
                 specifications: &[],
-                statement: "∀ (link : Mos.Forecast.Link) (a b : Mos.Forecast.Claim) (wa wb : Mos.Forecast.When) (x y : Int),\n  Mos.Forecast.tooLikelyAcross link a b wa wb = true →\n    link.binds x y → (a.holdsOf x → b.holdsOf y) ∧ Mos.Forecast.likelihood b.bps < Mos.Forecast.likelihood a.bps",
+                statement: "∀ (link : Datacartridge.Forecast.Link) (a b : Datacartridge.Forecast.Claim) (wa wb : Datacartridge.Forecast.When)\n  (x y : Int),\n  Datacartridge.Forecast.tooLikelyAcross link a b wa wb = true →\n    link.binds x y →\n      (a.holdsOf x → b.holdsOf y) ∧ Datacartridge.Forecast.likelihood b.bps < Datacartridge.Forecast.likelihood a.bps",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "5e647c196ddd21dd30f3c4cd7a45a59b91b71e31040a2ca68e1b6d0cd682382e",
+                fingerprint: "eae6f6e810ac0955604be1ba144513c632011c912bc3b7d6490a68180a8e361f",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.too_low_is_low",
+                name: "Datacartridge.Forecast.too_low_is_low",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.surenessOf"],
+                subjects: &["Datacartridge.Forecast.surenessOf"],
                 specifications: &[],
-                statement: "∀ (forecasts came statedSum spread : Nat),\n  Mos.Forecast.surenessOf forecasts came statedSum spread = Mos.Forecast.Sureness.tooLow → statedSum < came * 10000",
+                statement: "∀ (forecasts came statedSum spread : Nat),\n  Datacartridge.Forecast.surenessOf forecasts came statedSum spread = Datacartridge.Forecast.Sureness.tooLow →\n    statedSum < came * 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d3b47a7a0cbef612f8fd4e279b114bdb3047dab5e64dbed656e25576bbbce6d9",
+                fingerprint: "4d0902b26bff97bd383d3c315fc528cd1d19f07e2e6256b074f5eb38e6f3a4e2",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.unanswered_is_not_asked",
+                name: "Datacartridge.Forecast.unanswered_is_not_asked",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.asks"],
+                subjects: &["Datacartridge.Forecast.asks"],
                 specifications: &[],
-                statement: "∀ (active : Bool) (now next : Nat), Mos.Forecast.asks active false now next = false",
+                statement: "∀ (active : Bool) (now next : Nat), Datacartridge.Forecast.asks active false now next = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "618042ea6178e946efcb82d26bfd411e4dc9aeeea19c38d1a782be245f1987d4",
+                fingerprint: "485b6e00dfdfc52832db108b7b4870766cc7c850593fa0446377cb5777e3cc6d",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.unheard_silence_is_void",
+                name: "Datacartridge.Forecast.unheard_silence_is_void",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.occurs"],
+                subjects: &["Datacartridge.Forecast.occurs"],
                 specifications: &[],
-                statement: "Mos.Forecast.occurs true false Mos.Forecast.Hearing.never = Mos.Forecast.Outcome.void",
+                statement: "Datacartridge.Forecast.occurs true false Datacartridge.Forecast.Hearing.never = Datacartridge.Forecast.Outcome.void",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "e3f1331ed03c2ec08eeba90eb11acc6758335176d7f07b2ee4ee185fb13672c0",
+                fingerprint: "7329af01716c9ff637b1af7ebcff42361f62386858182c56dcf929fe6c3e7cb6",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.unproven_counts_as_anyone",
+                name: "Datacartridge.Forecast.unproven_counts_as_anyone",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.provenAt", "Mos.Forecast.weight", "Mos.Forecast.evenWeight"],
+                subjects: &["Datacartridge.Forecast.provenAt", "Datacartridge.Forecast.weight", "Datacartridge.Forecast.evenWeight"],
                 specifications: &[],
-                statement: "∀ (scored meanBrier : Nat),\n  scored < Mos.Forecast.provenAt → Mos.Forecast.weight scored meanBrier = Mos.Forecast.evenWeight",
+                statement: "∀ (scored meanBrier : Nat),\n  scored < Datacartridge.Forecast.provenAt →\n    Datacartridge.Forecast.weight scored meanBrier = Datacartridge.Forecast.evenWeight",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "52c6cef4652361f510c08b2377c8b2882e2407260e969fb01593ed557d1c486b",
+                fingerprint: "7c60251cc389f1cc59a2ccdc638b1bc03ebbafcb8890384f6b60a4b489927d77",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.weekStart_is_the_monday",
+                name: "Datacartridge.Forecast.weekStart_is_the_monday",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.weekStart"],
+                subjects: &["Datacartridge.Forecast.weekStart"],
                 specifications: &[],
-                statement: "∀ (day : Nat),\n  6 ≤ day →\n    (Mos.Forecast.weekStart day + 3) % 7 = 0 ∧ Mos.Forecast.weekStart day ≤ day ∧ day < Mos.Forecast.weekStart day + 7",
+                statement: "∀ (day : Nat),\n  6 ≤ day →\n    (Datacartridge.Forecast.weekStart day + 3) % 7 = 0 ∧\n      Datacartridge.Forecast.weekStart day ≤ day ∧ day < Datacartridge.Forecast.weekStart day + 7",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "70e4a6f88a70a192bab8e5b6421fc48ca03b8b3ae42e6893ff47be798c7683c7",
+                fingerprint: "fb383d0d2ab5345070138e02a2bf3c33d487f1ea3622ac6d45b5269b7f60a44e",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.weight_is_bounded",
+                name: "Datacartridge.Forecast.weight_is_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.weight"],
+                subjects: &["Datacartridge.Forecast.weight"],
                 specifications: &[],
-                statement: "∀ (scored meanBrier : Nat), 1000 ≤ Mos.Forecast.weight scored meanBrier ∧ Mos.Forecast.weight scored meanBrier ≤ 10000",
+                statement: "∀ (scored meanBrier : Nat),\n  1000 ≤ Datacartridge.Forecast.weight scored meanBrier ∧ Datacartridge.Forecast.weight scored meanBrier ≤ 10000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "cde2e252466671653274d6bc9420fcb215a722ba33c8af33777f30f0822cffb6",
+                fingerprint: "f34b076bf5e3a99f80145ac92749d1dcb21989d2d67e8a030b320940206d6d51",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.weighted_is_bounded",
+                name: "Datacartridge.Forecast.weighted_is_bounded",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.weighted", "Mos.Forecast.weights"],
+                subjects: &["Datacartridge.Forecast.weighted", "Datacartridge.Forecast.weights"],
                 specifications: &[],
-                statement: "∀ (views : List Mos.Forecast.View), Mos.Forecast.weighted views ≤ 10000 * Mos.Forecast.weights views",
+                statement: "∀ (views : List Datacartridge.Forecast.View),\n  Datacartridge.Forecast.weighted views ≤ 10000 * Datacartridge.Forecast.weights views",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3ec32fd4ca03857bbdf29c77c85e5bfe5d6230156c0bce1a6633a64591b05aa2",
+                fingerprint: "cdaccb0c70091b92dee837561a8d686cde7a2714de05cad5eef265bb3bf76b27",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.within_bounds_stays",
+                name: "Datacartridge.Forecast.within_bounds_stays",
                 relation: "lungo.equals",
-                subjects: &["Mos.Forecast.leave"],
+                subjects: &["Datacartridge.Forecast.leave"],
                 specifications: &[],
-                statement: "∀ (returnBps : Int) (stop target heldDays days : Nat),\n  -↑stop < returnBps →\n    returnBps < ↑target →\n      heldDays < days →\n        Mos.Forecast.leave returnBps (some stop) (some target) heldDays (some days) = Mos.Forecast.Leave.stay",
+                statement: "∀ (returnBps : Int) (stop target heldDays days : Nat),\n  -↑stop < returnBps →\n    returnBps < ↑target →\n      heldDays < days →\n        Datacartridge.Forecast.leave returnBps (some stop) (some target) heldDays (some days) =\n          Datacartridge.Forecast.Leave.stay",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "0dd013878c59b3b43100a3e68a236796ef8cff1cf99ff23c0c899d956bdc4436",
+                fingerprint: "437ab10d9603613224948df5884568bb065c713c76a90ae4457770bb944e631e",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.worse_iff",
+                name: "Datacartridge.Forecast.worse_iff",
                 relation: "lungo.decides",
-                subjects: &["Mos.Forecast.worse"],
+                subjects: &["Datacartridge.Forecast.worse"],
                 specifications: &[],
-                statement: "∀ (meanBrier : Nat), Mos.Forecast.worse meanBrier = true ↔ Mos.Forecast.brier 5000 true < meanBrier",
+                statement: "∀ (meanBrier : Nat), Datacartridge.Forecast.worse meanBrier = true ↔ Datacartridge.Forecast.brier 5000 true < meanBrier",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "950eff0073596d44d057960207b4c6a6a5f3c77604b59ebaf5c6a9a000b1520d",
+                fingerprint: "f7d754033909683f791e1b67b238689e83cabc1e2e87837ae435a167786d6220",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.wrong_only_where_it_could_be_heard",
+                name: "Datacartridge.Forecast.wrong_only_where_it_could_be_heard",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.occurs", "Mos.Forecast.silenceCounts"],
+                subjects: &["Datacartridge.Forecast.occurs", "Datacartridge.Forecast.silenceCounts"],
                 specifications: &[],
-                statement: "∀ (due seen : Bool) (hearing : Mos.Forecast.Hearing),\n  Mos.Forecast.occurs due seen hearing = Mos.Forecast.Outcome.didNot → Mos.Forecast.silenceCounts hearing = true",
+                statement: "∀ (due seen : Bool) (hearing : Datacartridge.Forecast.Hearing),\n  Datacartridge.Forecast.occurs due seen hearing = Datacartridge.Forecast.Outcome.didNot →\n    Datacartridge.Forecast.silenceCounts hearing = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "c665d270828d68deec61adfa9a887d0c58b9c4aa448c7b3699144221edf474f5",
+                fingerprint: "6cdefa497957f156a2500a19bd251d598bbf575274c4196cb0a71df0cc330004",
             },
             ::lungo::Claim {
-                name: "Mos.Forecast.year_before_is_a_year_of_periods_back",
+                name: "Datacartridge.Forecast.year_before_is_a_year_of_periods_back",
                 relation: "lungo.law",
-                subjects: &["Mos.Forecast.back", "Mos.Forecast.yearBefore"],
+                subjects: &["Datacartridge.Forecast.back", "Datacartridge.Forecast.yearBefore"],
                 specifications: &[],
-                statement: "∀ (year : Int) (index perYear : Nat),\n  1 ≤ index → index ≤ perYear → Mos.Forecast.back perYear perYear (year, index) = Mos.Forecast.yearBefore year index",
+                statement: "∀ (year : Int) (index perYear : Nat),\n  1 ≤ index →\n    index ≤ perYear →\n      Datacartridge.Forecast.back perYear perYear (year, index) = Datacartridge.Forecast.yearBefore year index",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "2a3a9dad2197433597cd63159f82ba1a07d074d576e8267a683afdce1d5d652e",
+                fingerprint: "d741d46642f2420c633f322dbc8b236db40990d734cfdb687d83340259a3ba2e",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.HeldUp.ofNat_reads_back",
+                name: "Datacartridge.Hindcast.HeldUp.ofNat_reads_back",
                 relation: "lungo.roundtrip",
-                subjects: &["Mos.Hindcast.HeldUp.ofNat"],
+                subjects: &["Datacartridge.Hindcast.HeldUp.ofNat"],
                 specifications: &[],
-                statement: "∀ (h : Mos.Hindcast.HeldUp), Mos.Hindcast.HeldUp.ofNat h.ctorIdx = h",
+                statement: "∀ (h : Datacartridge.Hindcast.HeldUp), Datacartridge.Hindcast.HeldUp.ofNat h.ctorIdx = h",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3f4f16bd369fb5aafe6db7267e7c90c74e3faaf8f11b4582f8b7b73d416b0dad",
+                fingerprint: "dfd011197bb395266a7a0f5c6ef3bcb9f456a86cc69000e4d2e3ffab85b85f58",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.a_stretch_holds_something",
+                name: "Datacartridge.Hindcast.a_stretch_holds_something",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.atLeastPerStretch"],
+                subjects: &["Datacartridge.Hindcast.atLeastPerStretch"],
                 specifications: &[],
-                statement: "0 < Mos.Hindcast.atLeastPerStretch",
+                statement: "0 < Datacartridge.Hindcast.atLeastPerStretch",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3c8f01f494ce64e9d4e8d09d929b2505578fb4fb18ab64dece54c96617f303c6",
+                fingerprint: "685871b2817d964643a4d40b6b816d1d41269b3834606ee5968a0543ae398074",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.alike_rate_of_none_alike",
+                name: "Datacartridge.Hindcast.alike_rate_of_none_alike",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.alikeRate"],
+                subjects: &["Datacartridge.Hindcast.alikeRate"],
                 specifications: &[],
-                statement: "∀ (now : Int) (stretches : List (Int × Bool)),\n  (∀ (s : Int × Bool), s ∈ stretches → Mos.Hindcast.alike now s.fst = false) →\n    Mos.Hindcast.alikeRate now stretches = none",
+                statement: "∀ (now : Int) (stretches : List (Int × Bool)),\n  (∀ (s : Int × Bool), s ∈ stretches → Datacartridge.Hindcast.alike now s.fst = false) →\n    Datacartridge.Hindcast.alikeRate now stretches = none",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "db03174e5bd8a50c77952488e3490c6072f4a18e2158899c736db15cec77be68",
+                fingerprint: "49ea389ffbdea9356073f073f39ee3894a84036a6ba51f77cc345f55710533a7",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.alike_symm",
+                name: "Datacartridge.Hindcast.alike_symm",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.alike"],
+                subjects: &["Datacartridge.Hindcast.alike"],
                 specifications: &[],
-                statement: "∀ (a b : Int), Mos.Hindcast.alike a b = Mos.Hindcast.alike b a",
+                statement: "∀ (a b : Int), Datacartridge.Hindcast.alike a b = Datacartridge.Hindcast.alike b a",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "b3b749a8ea416051808551443db5b0188ce183e89817ddaf7b7792f5f0a72b6c",
+                fingerprint: "b53908c98aeb99dbc7ce3de469d586abdb1ac17c53e3b3223f72134c2523c3a2",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.all_history_speaks",
+                name: "Datacartridge.Hindcast.all_history_speaks",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.speaks"],
+                subjects: &["Datacartridge.Hindcast.speaks"],
                 specifications: &[],
-                statement: "∀ (horizon : Nat), Mos.Hindcast.speaks true none horizon = true",
+                statement: "∀ (horizon : Nat), Datacartridge.Hindcast.speaks true none horizon = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "e88d19b3e11d73bc0473c4b9727552526d7bb640c4dbb15fe2c229422bfd4d51",
+                fingerprint: "11396654be0688d6d10431959e6aeb950858c7e221c407e8943d8d98fe450c2f",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.all_were_asked_in_the_shared_stretch",
+                name: "Datacartridge.Hindcast.all_were_asked_in_the_shared_stretch",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.sharedFromAll"],
+                subjects: &["Datacartridge.Hindcast.sharedFromAll"],
                 specifications: &[],
-                statement: "∀ (others : List Int) (first : Int),\n  first ≤ Mos.Hindcast.sharedFromAll first others ∧\n    ∀ (x : Int), x ∈ others → x ≤ Mos.Hindcast.sharedFromAll first others",
+                statement: "∀ (others : List Int) (first : Int),\n  first ≤ Datacartridge.Hindcast.sharedFromAll first others ∧\n    ∀ (x : Int), x ∈ others → x ≤ Datacartridge.Hindcast.sharedFromAll first others",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "09a13922319d97520d0fea76f644d0cd566ac73f9c537798e9044e6b56504973",
+                fingerprint: "0acfbac970f2eee08c8496102cf5fed4345d136b7193b7e231ca13c34d36059e",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.better_means_lower",
+                name: "Datacartridge.Hindcast.better_means_lower",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.heldUp"],
+                subjects: &["Datacartridge.Hindcast.heldUp"],
                 specifications: &[],
-                statement: "∀ (settled forward even : Nat),\n  Mos.Hindcast.heldUp settled forward even = Mos.Hindcast.HeldUp.betterThanEven → forward < even",
+                statement: "∀ (settled forward even : Nat),\n  Datacartridge.Hindcast.heldUp settled forward even = Datacartridge.Hindcast.HeldUp.betterThanEven → forward < even",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "691d8ce739c082784ae07a6f0c7486cbbfa75de0bc7f8407874c93080e71e7d9",
+                fingerprint: "5f74ce1ca23902c773c739446c74865730a0ddf5c4a05c0889b9fb12e1a5de07",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.calls_better_is_strict",
+                name: "Datacartridge.Hindcast.calls_better_is_strict",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.callsBetter"],
+                subjects: &["Datacartridge.Hindcast.callsBetter"],
                 specifications: &[],
-                statement: "∀ (x : Option Nat), Mos.Hindcast.callsBetter x x = false",
+                statement: "∀ (x : Option Nat), Datacartridge.Hindcast.callsBetter x x = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "e0dc74a6538e6d2f302c8882d1642dc6e47519ef06aebf7903bc3c9be23cf9d4",
+                fingerprint: "d9dee35296dc7f6c6b2e8d66de4cc18f6ba3e99544bd97dbb856000589a378c2",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.calls_better_one_way",
+                name: "Datacartridge.Hindcast.calls_better_one_way",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.callsBetter"],
+                subjects: &["Datacartridge.Hindcast.callsBetter"],
                 specifications: &[],
-                statement: "∀ (x y : Option Nat), Mos.Hindcast.callsBetter x y = true → Mos.Hindcast.callsBetter y x = false",
+                statement: "∀ (x y : Option Nat), Datacartridge.Hindcast.callsBetter x y = true → Datacartridge.Hindcast.callsBetter y x = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "17fac9940c191e4d8b6a3ded17ab84ff335b3f8c6f749aa642cc0717784ab275",
+                fingerprint: "d54e2d5aa0a7b65559215b52c885e618aaf44e316e3dd10e9458e6d90d5e3c45",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.chosen_did_best",
+                name: "Datacartridge.Hindcast.chosen_did_best",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.chosen"],
+                subjects: &["Datacartridge.Hindcast.chosen"],
                 specifications: &[],
-                statement: "∀ (totals : List Nat) (i : Nat),\n  Mos.Hindcast.chosen totals = some i → ∃ t, totals[i]? = some t ∧ ∀ (x : Nat), x ∈ totals → t ≤ x",
+                statement: "∀ (totals : List Nat) (i : Nat),\n  Datacartridge.Hindcast.chosen totals = some i → ∃ t, totals[i]? = some t ∧ ∀ (x : Nat), x ∈ totals → t ≤ x",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Classical.choice", "Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "01348bb2f5e10aab3048a53df3aba31378633df2ecabdc96eddb84843c829561",
+                fingerprint: "da88fc7ee52bf55735e5d31430ea9603f759010205d1c6ca408281939245edaa",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.counted_when_both_were_asked",
+                name: "Datacartridge.Hindcast.counted_when_both_were_asked",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.countsBeside", "Mos.Hindcast.sharedFrom"],
+                subjects: &["Datacartridge.Hindcast.countsBeside", "Datacartridge.Hindcast.sharedFrom"],
                 specifications: &[],
-                statement: "∀ (first other madeAt : Int),\n  Mos.Hindcast.countsBeside (Mos.Hindcast.sharedFrom first other) madeAt = true → first ≤ madeAt ∧ other ≤ madeAt",
+                statement: "∀ (first other madeAt : Int),\n  Datacartridge.Hindcast.countsBeside (Datacartridge.Hindcast.sharedFrom first other) madeAt = true →\n    first ≤ madeAt ∧ other ≤ madeAt",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "37302af3e4a2f26e72d74bc4d2730523afefdbd77731dd06d1a67d1b9e072584",
+                fingerprint: "8c67c56f1bddb2219784b23061585a2c921898ca8cf7850cf3fa490ba4c02f31",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.cut_in_order",
+                name: "Datacartridge.Hindcast.cut_in_order",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.cut"],
+                subjects: &["Datacartridge.Hindcast.cut"],
                 specifications: &[],
-                statement: "∀ (n k i j : Nat), i ≤ j → Mos.Hindcast.cut n k i ≤ Mos.Hindcast.cut n k j",
+                statement: "∀ (n k i j : Nat), i ≤ j → Datacartridge.Hindcast.cut n k i ≤ Datacartridge.Hindcast.cut n k j",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "99168c1619c23ce7fedcc836c850bdad4774be795bd57476fe67c448acd8c213",
+                fingerprint: "fd6c4e28ad963595efe313847421f300b2ff2dc4af7f956b62cd68df3faf57bf",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.cuts_cover",
+                name: "Datacartridge.Hindcast.cuts_cover",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.cut"],
+                subjects: &["Datacartridge.Hindcast.cut"],
                 specifications: &[],
-                statement: "∀ (n k : Nat), Mos.Hindcast.cut n k 0 = 0 ∧ Mos.Hindcast.cut n k (k + 1) = n",
+                statement: "∀ (n k : Nat), Datacartridge.Hindcast.cut n k 0 = 0 ∧ Datacartridge.Hindcast.cut n k (k + 1) = n",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "f6f98625c50adc01a190110f4d79b2855047a90850529993bd3bab590bee9e99",
+                fingerprint: "580f16fd6b7f17be1938487cad6d996cd7d9ab4843b065a2b16dc3cdfa4be109",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.enough_iff",
+                name: "Datacartridge.Hindcast.enough_iff",
                 relation: "lungo.decides",
-                subjects: &["Mos.Hindcast.enough"],
+                subjects: &["Datacartridge.Hindcast.enough"],
                 specifications: &[],
-                statement: "∀ (moments stretches : Nat),\n  Mos.Hindcast.enough moments stretches = true ↔ (stretches + 1) * Mos.Hindcast.atLeastPerStretch ≤ moments",
+                statement: "∀ (moments stretches : Nat),\n  Datacartridge.Hindcast.enough moments stretches = true ↔\n    (stretches + 1) * Datacartridge.Hindcast.atLeastPerStretch ≤ moments",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "ca656fff841cbb260f39d56722eb18d00551defdf187459138dac536f9c442ff",
+                fingerprint: "59bd60fcb2fb7ee769764e6cd988298b264abeda282635ded59786d670b58260",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.every_way_is_heard",
+                name: "Datacartridge.Hindcast.every_way_is_heard",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.moment"],
+                subjects: &["Datacartridge.Hindcast.moment"],
                 specifications: &[],
-                statement: "∀ (stated : List (Option Nat)) (said : List Nat), Mos.Hindcast.moment stated = some said → said.length = stated.length",
+                statement: "∀ (stated : List (Option Nat)) (said : List Nat),\n  Datacartridge.Hindcast.moment stated = some said → said.length = stated.length",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "0dc08383bf559fd425799b5ffc070fb8af3a0150578601fac3b4c5b201034da4",
+                fingerprint: "a78ecb6ba103bf60f95ff7b11185b2ae3049ddf5786286b64483270eaa577b5c",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.learned_was_settled",
+                name: "Datacartridge.Hindcast.learned_was_settled",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.learnable"],
+                subjects: &["Datacartridge.Hindcast.learnable"],
                 specifications: &[],
-                statement: "∀ (madeAt horizon testStart : Int),\n  Mos.Hindcast.learnable madeAt horizon testStart = true → madeAt + horizon ≤ testStart",
+                statement: "∀ (madeAt horizon testStart : Int),\n  Datacartridge.Hindcast.learnable madeAt horizon testStart = true → madeAt + horizon ≤ testStart",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "66bffc1980537fb8fddcddd51c466a3f99733b6e10ca360676a890f54dc9a222",
+                fingerprint: "e9a8a5aeaa4f65a4d16e1d673c86d844b464f0031dcb5f4fb65e7a798bc2a502",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.left_out_only_when_all_silent",
+                name: "Datacartridge.Hindcast.left_out_only_when_all_silent",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.moment"],
+                subjects: &["Datacartridge.Hindcast.moment"],
                 specifications: &[],
-                statement: "∀ (stated : List (Option Nat)), Mos.Hindcast.moment stated = none ↔ stated.all Option.isNone = true",
+                statement: "∀ (stated : List (Option Nat)), Datacartridge.Hindcast.moment stated = none ↔ stated.all Option.isNone = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "44d6238a715471f5a29700ebf124845e9b48b39c56cd8e014bde3cfa825a6384",
+                fingerprint: "8be838458bd175d39c3b4b45e05eb1f259a4c62a8d0a21f4980e1fa7a9d07b6c",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.mean_of_nothing",
+                name: "Datacartridge.Hindcast.mean_of_nothing",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.mean"],
+                subjects: &["Datacartridge.Hindcast.mean"],
                 specifications: &[],
-                statement: "Mos.Hindcast.mean [] = none",
+                statement: "Datacartridge.Hindcast.mean [] = none",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "f4b27f93656fc17fb192e47b688266bd1e25d2cb512433de5c7f166c60db6876",
+                fingerprint: "20122675fd3d31c8f6c8d6f5323e7b2fbe4b3b6ac2664438b10356c673bc865c",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.most_triable_is_triable",
+                name: "Datacartridge.Hindcast.most_triable_is_triable",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.mostTriable", "Mos.Hindcast.triable"],
+                subjects: &["Datacartridge.Hindcast.mostTriable", "Datacartridge.Hindcast.triable"],
                 specifications: &[],
-                statement: "∀ (times : List Int) (horizon : Int) (k : Nat),\n  Mos.Hindcast.mostTriable times horizon = some k → Mos.Hindcast.triable times horizon k = true ∧ 1 ≤ k",
+                statement: "∀ (times : List Int) (horizon : Int) (k : Nat),\n  Datacartridge.Hindcast.mostTriable times horizon = some k →\n    Datacartridge.Hindcast.triable times horizon k = true ∧ 1 ≤ k",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "fb18c7899c12883f7367eaeb70760367b3c6ae3ea5d1ec687c4eb76f41119ac5",
+                fingerprint: "9ef7466a89a13d91ce05919ee5a0ffe6fd569e3d2cc451a80d05ce698c213225",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.needed_grows_by_a_stretch",
+                name: "Datacartridge.Hindcast.needed_grows_by_a_stretch",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.needed"],
+                subjects: &["Datacartridge.Hindcast.needed"],
                 specifications: &[],
-                statement: "∀ (stretches : Nat),\n  Mos.Hindcast.needed (stretches + 1) = Mos.Hindcast.needed stretches + Mos.Hindcast.atLeastPerStretch",
+                statement: "∀ (stretches : Nat),\n  Datacartridge.Hindcast.needed (stretches + 1) =\n    Datacartridge.Hindcast.needed stretches + Datacartridge.Hindcast.atLeastPerStretch",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3b16c44585c633eac8dc5afa5a2febafe2c1ddff54d7675c9830c533010a7e22",
+                fingerprint: "76b809831cda09873df2c6195842ce8586a5de31a9129a5e6b1f74a25da62e4a",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.not_too_soon",
+                name: "Datacartridge.Hindcast.not_too_soon",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.settledToChooseAgain", "Mos.Hindcast.chooseAgain"],
+                subjects: &["Datacartridge.Hindcast.settledToChooseAgain", "Datacartridge.Hindcast.chooseAgain"],
                 specifications: &[],
-                statement: "∀ (active : Bool) (settled : Nat),\n  settled < Mos.Hindcast.settledToChooseAgain → Mos.Hindcast.chooseAgain active settled = false",
+                statement: "∀ (active : Bool) (settled : Nat),\n  settled < Datacartridge.Hindcast.settledToChooseAgain → Datacartridge.Hindcast.chooseAgain active settled = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "674df9b058afa5c8686f3edd9cc0e06295b1926661727013a202ea14da9da573",
+                fingerprint: "590dd009fced42c940c9ff76bf66f9405bea188e3eb421705c719c485d4944ef",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.not_turned_while_too_soon",
+                name: "Datacartridge.Hindcast.not_turned_while_too_soon",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.turned"],
+                subjects: &["Datacartridge.Hindcast.turned"],
                 specifications: &[],
-                statement: "∀ (before : Mos.Hindcast.HeldUp), Mos.Hindcast.turned before Mos.Hindcast.HeldUp.tooSoon = false",
+                statement: "∀ (before : Datacartridge.Hindcast.HeldUp),\n  Datacartridge.Hindcast.turned before Datacartridge.Hindcast.HeldUp.tooSoon = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "5e8ce4b5e78a2182b943944413a37815b2f3c87d56286123a28154187a784933",
+                fingerprint: "bfc2d18d313bfd0ca813ea7acd861d7ba34228e73765623281be0159834b9c2a",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.not_when_stopped",
+                name: "Datacartridge.Hindcast.not_when_stopped",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.chooseAgain"],
+                subjects: &["Datacartridge.Hindcast.chooseAgain"],
                 specifications: &[],
-                statement: "∀ (settled : Nat), Mos.Hindcast.chooseAgain false settled = false",
+                statement: "∀ (settled : Nat), Datacartridge.Hindcast.chooseAgain false settled = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "f31cd387e6dd39116f06f11eb2fbe4fbb6dada074ccce3256925489268a289c2",
+                fingerprint: "30c2d3be374dae312eac41597fa391aff15569f58f9d1ffa8cd1de8554515611",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.scored_goes_first",
+                name: "Datacartridge.Hindcast.scored_goes_first",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.callsBetter"],
+                subjects: &["Datacartridge.Hindcast.callsBetter"],
                 specifications: &[],
-                statement: "∀ (a : Nat), Mos.Hindcast.callsBetter (some a) none = true",
+                statement: "∀ (a : Nat), Datacartridge.Hindcast.callsBetter (some a) none = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "fa9cdbee879fe416b3fdbe4e84a02d50b40911854fe56db289f533f3171da375",
+                fingerprint: "036b279ddf2c1b66724df072e7c939a0303e3b2141e64509a20052684ec1c3d5",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.shared_from_all_of_two",
+                name: "Datacartridge.Hindcast.shared_from_all_of_two",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.sharedFromAll"],
+                subjects: &["Datacartridge.Hindcast.sharedFromAll"],
                 specifications: &[],
-                statement: "∀ (first other : Int), Mos.Hindcast.sharedFromAll first [other] = Mos.Hindcast.sharedFrom first other",
+                statement: "∀ (first other : Int),\n  Datacartridge.Hindcast.sharedFromAll first [other] = Datacartridge.Hindcast.sharedFrom first other",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "2800663e197b3e90e7c4a9a638871b89535271bdefe3ac7313529868067ba366",
+                fingerprint: "e533179f2663f9d8cd7f073313da3e276b3685210098442f4f90b518a8163a4d",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.shared_from_either_side",
+                name: "Datacartridge.Hindcast.shared_from_either_side",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.sharedFrom"],
+                subjects: &["Datacartridge.Hindcast.sharedFrom"],
                 specifications: &[],
-                statement: "∀ (first other : Int), Mos.Hindcast.sharedFrom first other = Mos.Hindcast.sharedFrom other first",
+                statement: "∀ (first other : Int), Datacartridge.Hindcast.sharedFrom first other = Datacartridge.Hindcast.sharedFrom other first",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "d111f7d25918863b25f4c3eb4e1b1542a3c22c90865536588de6d503537feb8c",
+                fingerprint: "c44b25bb89bd9fff66acb30d5b855c8f2467cb50fdd170218c8a455a1897a775",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.silent_says_even",
+                name: "Datacartridge.Hindcast.silent_says_even",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.said"],
+                subjects: &["Datacartridge.Hindcast.said"],
                 specifications: &[],
-                statement: "Mos.Hindcast.said none = 5000",
+                statement: "Datacartridge.Hindcast.said none = 5000",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "fa35f67dd7b34233fd946517fedc839bd224a7d384b2c68f4668d6cf8993554f",
+                fingerprint: "944e137fc2f86e69deb02edde09ef3df33547ac47ec8de96c9bf295204b9f7f3",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.spoken_is_kept",
+                name: "Datacartridge.Hindcast.spoken_is_kept",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.said"],
+                subjects: &["Datacartridge.Hindcast.said"],
                 specifications: &[],
-                statement: "∀ (n : Nat), Mos.Hindcast.said (some n) = n",
+                statement: "∀ (n : Nat), Datacartridge.Hindcast.said (some n) = n",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "29f84f5eb5b58e072b7e148cb76c73dc1aa1f445d92d4dbd18208ddaf237f21d",
+                fingerprint: "00a1d1f5e90f822c7c4480a3edd6a7e2d463599d56fde4e343e0581fa8b653a7",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.the_series_itself_speaks",
+                name: "Datacartridge.Hindcast.the_series_itself_speaks",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.speaks"],
+                subjects: &["Datacartridge.Hindcast.speaks"],
                 specifications: &[],
-                statement: "∀ (days : Option Nat) (horizon : Nat), Mos.Hindcast.speaks false days horizon = true",
+                statement: "∀ (days : Option Nat) (horizon : Nat), Datacartridge.Hindcast.speaks false days horizon = true",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "fc1ba77583c2036d209e9ce49a76738a1142d984f19da531b8a9574987bea78f",
+                fingerprint: "a28a373ce51d505dc85e526fecfccbd32c6b6a9fa06eb00ecb64162212d961c6",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.too_short_a_count_is_silent",
+                name: "Datacartridge.Hindcast.too_short_a_count_is_silent",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.speaks"],
+                subjects: &["Datacartridge.Hindcast.speaks"],
                 specifications: &[],
-                statement: "∀ (d horizon : Nat), d ≤ horizon → Mos.Hindcast.speaks true (some d) horizon = false",
+                statement: "∀ (d horizon : Nat), d ≤ horizon → Datacartridge.Hindcast.speaks true (some d) horizon = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "3f5dcd990350564ca8f04af6161e11b74a832ff25e9a94370a40738e131f75c7",
+                fingerprint: "e5bac4126bccdad11acf390502527b74de13f42c4899d475dbdd658e58f11cac",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.too_soon_to_tell",
+                name: "Datacartridge.Hindcast.too_soon_to_tell",
                 relation: "lungo.law",
-                subjects: &["Mos.Hindcast.settledToChooseAgain", "Mos.Hindcast.heldUp"],
+                subjects: &["Datacartridge.Hindcast.settledToChooseAgain", "Datacartridge.Hindcast.heldUp"],
                 specifications: &[],
-                statement: "∀ (settled forward even : Nat),\n  settled < Mos.Hindcast.settledToChooseAgain → Mos.Hindcast.heldUp settled forward even = Mos.Hindcast.HeldUp.tooSoon",
+                statement: "∀ (settled forward even : Nat),\n  settled < Datacartridge.Hindcast.settledToChooseAgain →\n    Datacartridge.Hindcast.heldUp settled forward even = Datacartridge.Hindcast.HeldUp.tooSoon",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "6cecc4c0a53f443c59646801a0afc0a512c59b5b752768d5490514a7f6d7f1ca",
+                fingerprint: "d4dbc5e7af84d4c3c1dd031fffcaf7dd7a4d72f749a8bfdaaa3afb8e2799e8fe",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.total_of_nothing",
+                name: "Datacartridge.Hindcast.total_of_nothing",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.total"],
+                subjects: &["Datacartridge.Hindcast.total"],
                 specifications: &[],
-                statement: "Mos.Hindcast.total [] = 0",
+                statement: "Datacartridge.Hindcast.total [] = 0",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &[],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "f686976d1021b1620cdf6abd806283b34315057a51d75c68d9b4eff6b3db9ea4",
+                fingerprint: "dae5692de7a6563c7ff0f45a54d522c79c287a73e7adb67935277593bf69ddc4",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.total_of_one_more",
+                name: "Datacartridge.Hindcast.total_of_one_more",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.total"],
+                subjects: &["Datacartridge.Hindcast.total"],
                 specifications: &[],
-                statement: "∀ (tried : List Mos.Hindcast.Tried) (t : Mos.Hindcast.Tried),\n  Mos.Hindcast.total (tried ++ [t]) = Mos.Hindcast.total tried + Mos.Forecast.brier t.statedBps t.cameTrue",
+                statement: "∀ (tried : List Datacartridge.Hindcast.Tried) (t : Datacartridge.Hindcast.Tried),\n  Datacartridge.Hindcast.total (tried ++ [t]) =\n    Datacartridge.Hindcast.total tried + Datacartridge.Forecast.brier t.statedBps t.cameTrue",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "bb4fa636cdc2bd18f4340afa87b0d5f2928149e33f9f3c9bb6a1bfc0316589de",
+                fingerprint: "634d52d48201f19e21f5eb4eda9065bb636b97eaa59276bb870cdb5eb30fc1f9",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.turned_iff",
+                name: "Datacartridge.Hindcast.turned_iff",
                 relation: "lungo.decides",
-                subjects: &["Mos.Hindcast.turned"],
+                subjects: &["Datacartridge.Hindcast.turned"],
                 specifications: &[],
-                statement: "∀ (before after : Mos.Hindcast.HeldUp),\n  Mos.Hindcast.turned before after = true ↔\n    before = Mos.Hindcast.HeldUp.betterThanEven ∧ after = Mos.Hindcast.HeldUp.noBetter",
+                statement: "∀ (before after : Datacartridge.Hindcast.HeldUp),\n  Datacartridge.Hindcast.turned before after = true ↔\n    before = Datacartridge.Hindcast.HeldUp.betterThanEven ∧ after = Datacartridge.Hindcast.HeldUp.noBetter",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "992b5ef7cfe73518ce4f6655dbe84d3d5b5ef8e969f2fccdc4caa6d13ccf25e0",
+                fingerprint: "a913c6b88392f77a70661ca0b89343d3aa372686c3a49fc42696720da79f9d2e",
             },
             ::lungo::Claim {
-                name: "Mos.Hindcast.up_is_not_down",
+                name: "Datacartridge.Hindcast.up_is_not_down",
                 relation: "lungo.equals",
-                subjects: &["Mos.Hindcast.alike"],
+                subjects: &["Datacartridge.Hindcast.alike"],
                 specifications: &[],
-                statement: "∀ (a b : Int), 0 < a → b < 0 → Mos.Hindcast.alike a b = false",
+                statement: "∀ (a b : Int), 0 < a → b < 0 → Datacartridge.Hindcast.alike a b = false",
                 status: ::lungo::ClaimStatus::Proved,
                 evidence_axioms: &["Quot.sound", "propext"],
                 assumptions: &[],
                 package: Some("datacartridgeFormal"),
-                fingerprint: "2f4cd44cf9a01e6ee1798fa36615f326e8bcafbaf3cda31ed624ae61874a7a0d",
+                fingerprint: "3bde98e5b064325180f3a99330e3be4ef7d1e0d97611cbd00d9d7c4416800ca4",
             },
         ],
         roles: &[

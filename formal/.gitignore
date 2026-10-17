@@ -1,0 +1,4 @@
+.lake/
+# Lake's record of what it resolved: a path in local mode, the release's commit otherwise.
+# Written by Lake wherever the package builds, from the rendered lakefile.
+lake-manifest.json

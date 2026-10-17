@@ -1,5 +1,5 @@
 import Lungo
-import Mos.Forecast
+import Datacartridge.Forecast
 
 /-!
 # Trying a way of forecasting on history (specification §18, hypothesis engine)
@@ -13,24 +13,24 @@ not tuned on.
 The moments, in time order, are cut into stretches of nearly equal length. Each but the
 first is a test stretch: the ways of forecasting are tried on the forecasts made before
 it that had settled by the time it began, the one that did best there is chosen, and it
-is scored on the test stretch. Scores are Brier scores in basis points (`Mos.Forecast.brier`),
+is scored on the test stretch. Scores are Brier scores in basis points (`Datacartridge.Forecast.brier`),
 lower being better. Times are integers in whatever unit the caller counts them.
 -/
-namespace Mos.Hindcast
+namespace Datacartridge.Hindcast
 
-open Mos.Forecast (brier)
+open Datacartridge.Forecast (brier)
 
 /-- Where stretch `i` begins among `n` moments cut into `k + 1` stretches. -/
 def cut (n k i : Nat) : Nat := i * n / (k + 1)
 
 /-- Stretches follow one another: a later one never begins before an earlier one. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.cut]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.cut]
 theorem cut_in_order (n k i j : Nat) (h : i ≤ j) : cut n k i ≤ cut n k j :=
   Nat.div_le_div_right (Nat.mul_le_mul_right n h)
 
 /-- The first stretch begins at the first moment and the last ends at the last: every
 moment is in one. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.cut]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.cut]
 theorem cuts_cover (n k : Nat) : cut n k 0 = 0 ∧ cut n k (k + 1) = n := by
   refine ⟨by simp [cut], ?_⟩
   simp only [cut]
@@ -42,7 +42,7 @@ test stretch beginning at `testStart` only if it had settled by then. -/
 def learnable (madeAt horizon testStart : Int) : Bool := decide (madeAt + horizon ≤ testStart)
 
 /-- Nothing learned from had an outcome that was not yet known when the test began. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.learnable]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.learnable]
 theorem learned_was_settled (madeAt horizon testStart : Int) (h : learnable madeAt horizon testStart = true) :
     madeAt + horizon ≤ testStart := by
   simpa [learnable] using h
@@ -76,7 +76,7 @@ def mostTriable (times : List Int) (horizon : Int) : Option Nat :=
   ((List.range (times.length / atLeastPerStretch)).reverse).find? (fun k => decide (1 ≤ k) && triable times horizon k)
 
 /-- It can be tried on the most stretches it is said to allow. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.mostTriable Mos.Hindcast.triable]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.mostTriable Datacartridge.Hindcast.triable]
 theorem most_triable_is_triable (times : List Int) (horizon : Int) (k : Nat) (h : mostTriable times horizon = some k) :
     triable times horizon k = true ∧ 1 ≤ k := by
   unfold mostTriable at h
@@ -132,7 +132,7 @@ def chosen (totals : List Nat) : Option Nat :=
   (lowest totals).map (fun low => totals.idxOf low)
 
 /-- The way chosen did at least as well in training as every other. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.chosen]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.chosen]
 theorem chosen_did_best (totals : List Nat) (i : Nat) (h : chosen totals = some i) :
     ∃ t, totals[i]? = some t ∧ ∀ x ∈ totals, t ≤ x := by
   cases totals with
@@ -156,13 +156,13 @@ their signs are the same, nothing being a sign of its own. -/
 /-- Whether a stretch began as things stand now. -/
 def alike (now past : Int) : Bool := compare now 0 == compare past 0
 
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.alike]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.alike]
 theorem alike_symm (a b : Int) : alike a b = alike b a := by
   simp only [alike]
   cases compare a 0 <;> cases compare b 0 <;> rfl
 
 /-- Up is never alike down. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.alike]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.alike]
 theorem up_is_not_down (a b : Int) (ha : 0 < a) (hb : b < 0) : alike a b = false := by
   have h1 : compare a 0 = .gt := Int.compare_eq_gt.mpr ha
   have h2 : compare b 0 = .lt := Int.compare_eq_lt.mpr hb
@@ -171,7 +171,7 @@ theorem up_is_not_down (a b : Int) (ha : 0 < a) (hb : b < 0) : alike a b = false
 /-- The likelihood such a way gives: the base rate over the stretches that began alike. -/
 def alikeRate (now : Int) (stretches : List (Int × Bool)) : Option Nat :=
   let matching := stretches.filter (fun s => alike now s.1)
-  Mos.Forecast.baseRate (matching.filter (·.2)).length matching.length
+  Datacartridge.Forecast.baseRate (matching.filter (·.2)).length matching.length
 
 /-! ## Choosing a kept way again
 
@@ -185,13 +185,13 @@ def settledToChooseAgain : Nat := 5
 def chooseAgain (active : Bool) (settled : Nat) : Bool := active && decide (settledToChooseAgain ≤ settled)
 
 /-- Not offered before its record going forward says anything. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.settledToChooseAgain Mos.Hindcast.chooseAgain]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.settledToChooseAgain Datacartridge.Hindcast.chooseAgain]
 theorem not_too_soon (active : Bool) (settled : Nat) (h : settled < settledToChooseAgain) : chooseAgain active settled = false := by
   simp [chooseAgain]
   omega
 
 /-- Not offered for a question no longer asked. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.chooseAgain]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.chooseAgain]
 theorem not_when_stopped (settled : Nat) : chooseAgain false settled = false := by
   simp [chooseAgain]
 
@@ -214,13 +214,13 @@ def heldUp (settled forward even : Nat) : HeldUp :=
   else .noBetter
 
 /-- Nothing is said of a record too short to say anything. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.settledToChooseAgain Mos.Hindcast.heldUp]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.settledToChooseAgain Datacartridge.Hindcast.heldUp]
 theorem too_soon_to_tell (settled forward even : Nat) (h : settled < settledToChooseAgain) :
     heldUp settled forward even = .tooSoon := by
   simp [heldUp, h]
 
 /-- A way said to do better than 50% scored better than it. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.heldUp]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.heldUp]
 theorem better_means_lower (settled forward even : Nat) (h : heldUp settled forward even = .betterThanEven) :
     forward < even := by
   unfold heldUp at h
@@ -234,12 +234,12 @@ theorem better_means_lower (settled forward even : Nat) (h : heldUp settled forw
 settled and no better after. Its keeper is told then, and only then. -/
 def turned (before after : HeldUp) : Bool := before == .betterThanEven && after == .noBetter
 
-@[lungo_claim "lungo.decides" subject Mos.Hindcast.turned]
+@[lungo_claim "lungo.decides" subject Datacartridge.Hindcast.turned]
 theorem turned_iff (before after : HeldUp) : turned before after = true ↔ before = .betterThanEven ∧ after = .noBetter := by
   cases before <;> cases after <;> simp [turned]
 
 /-- Nothing is told of a way while its record is too short to say anything. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.turned]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.turned]
 theorem not_turned_while_too_soon (before : HeldUp) : turned before .tooSoon = false := by
   cases before <;> rfl
 
@@ -256,14 +256,14 @@ def sharedFrom (first other : Int) : Int := max first other
 def countsBeside (from_ madeAt : Int) : Bool := decide (from_ ≤ madeAt)
 
 /-- An asking counted beside the other was made when both were being asked. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.countsBeside Mos.Hindcast.sharedFrom]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.countsBeside Datacartridge.Hindcast.sharedFrom]
 theorem counted_when_both_were_asked (first other madeAt : Int) (h : countsBeside (sharedFrom first other) madeAt = true) :
     first ≤ madeAt ∧ other ≤ madeAt := by
   simp only [countsBeside, sharedFrom] at h
   exact Int.max_le.mp (of_decide_eq_true h)
 
 /-- The stretch is the same seen from either side. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.sharedFrom]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.sharedFrom]
 theorem shared_from_either_side (first other : Int) : sharedFrom first other = sharedFrom other first := by
   simp [sharedFrom, Int.max_comm]
 
@@ -272,7 +272,7 @@ their first askings. -/
 def sharedFromAll (first : Int) (others : List Int) : Int := others.foldl sharedFrom first
 
 /-- Every one of them was being asked from the start of the shared stretch on. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.sharedFromAll]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.sharedFromAll]
 theorem all_were_asked_in_the_shared_stretch : ∀ (others : List Int) (first : Int),
     first ≤ sharedFromAll first others ∧ ∀ x ∈ others, x ≤ sharedFromAll first others
   | [], first => by simp [sharedFromAll]
@@ -288,7 +288,7 @@ theorem all_were_asked_in_the_shared_stretch : ∀ (others : List Int) (first : 
       | tail _ hx => exact h2 x hx⟩
 
 /-- For two, it is the stretch both were asked. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.sharedFromAll]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.sharedFromAll]
 theorem shared_from_all_of_two (first other : Int) : sharedFromAll first [other] = sharedFrom first other := by
   simp [sharedFromAll]
 
@@ -301,17 +301,17 @@ def callsBetter (mine theirs : Option Nat) : Bool :=
   | none, _ => false
 
 /-- No record goes before itself. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.callsBetter]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.callsBetter]
 theorem calls_better_is_strict (x : Option Nat) : callsBetter x x = false := by
   cases x <;> simp [callsBetter]
 
 /-- Of two, at most one goes first. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.callsBetter]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.callsBetter]
 theorem calls_better_one_way (x y : Option Nat) (h : callsBetter x y = true) : callsBetter y x = false := by
   cases x <;> cases y <;> simp_all [callsBetter] <;> omega
 
 /-- A record with a score goes before one with none yet. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.callsBetter]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.callsBetter]
 theorem scored_goes_first (a : Nat) : callsBetter (some a) none = true := by
   simp [callsBetter]
 
@@ -319,43 +319,43 @@ theorem scored_goes_first (a : Nat) : callsBetter (some a) none = true := by
 
 The generated code passes a kind by its number; read back, it is the kind it was. -/
 
-@[lungo_claim "lungo.roundtrip" subject Mos.Hindcast.HeldUp.ofNat]
+@[lungo_claim "lungo.roundtrip" subject Datacartridge.Hindcast.HeldUp.ofNat]
 theorem HeldUp.ofNat_reads_back (h : HeldUp) : HeldUp.ofNat h.ctorIdx = h := HeldUp.ofNat_ctorIdx h
 
 /-! ## Scores and how much history a trial needs -/
 
 /-- A stretch holds at least one moment. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.atLeastPerStretch]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.atLeastPerStretch]
 theorem a_stretch_holds_something : 0 < atLeastPerStretch := by decide
 
 /-- Each stretch more needs as many moments more. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.needed]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.needed]
 theorem needed_grows_by_a_stretch (stretches : Nat) : needed (stretches + 1) = needed stretches + atLeastPerStretch := by
   simp [needed, Nat.add_mul]
 
-@[lungo_claim "lungo.decides" subject Mos.Hindcast.enough]
+@[lungo_claim "lungo.decides" subject Datacartridge.Hindcast.enough]
 theorem enough_iff (moments stretches : Nat) : enough moments stretches = true ↔ (stretches + 1) * atLeastPerStretch ≤ moments := by
   simp only [enough, needed]
   exact decide_eq_true_iff
 
 /-- No forecasts add up to nothing and have no mean. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.total]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.total]
 theorem total_of_nothing : total [] = 0 := rfl
 
 /-- One forecast more adds its score. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.total]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.total]
 theorem total_of_one_more (tried : List Tried) (t : Tried) : total (tried ++ [t]) = total tried + brier t.statedBps t.cameTrue := by
   simp [total, List.foldl_append]
 
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.mean]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.mean]
 theorem mean_of_nothing : mean [] = none := rfl
 
 /-- A stretch counted alike is one that began as things stand: with none such, nothing is said. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.alikeRate]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.alikeRate]
 theorem alike_rate_of_none_alike (now : Int) (stretches : List (Int × Bool)) (h : ∀ s ∈ stretches, alike now s.1 = false) :
     alikeRate now stretches = none := by
   have : stretches.filter (fun s => alike now s.1) = [] := List.filter_eq_nil_iff.mpr (by simpa using h)
-  simp [alikeRate, this, Mos.Forecast.baseRate]
+  simp [alikeRate, this, Datacartridge.Forecast.baseRate]
 
 /-! ## Which ways can speak for a horizon
 
@@ -373,17 +373,17 @@ def speaks (often : Bool) (days : Option Nat) (horizon : Nat) : Bool :=
     | some d => decide (horizon < d)
 
 /-- Counting over all history known always speaks. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.speaks]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.speaks]
 theorem all_history_speaks (horizon : Nat) : speaks true none horizon = true := rfl
 
 /-- Counting over no more days than it looks ahead never speaks. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.speaks]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.speaks]
 theorem too_short_a_count_is_silent (d horizon : Nat) (h : d ≤ horizon) : speaks true (some d) horizon = false := by
   simp [speaks]
   omega
 
 /-- A way looking at the series itself speaks for any horizon. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.speaks]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.speaks]
 theorem the_series_itself_speaks (days : Option Nat) (horizon : Nat) : speaks false days horizon = true := rfl
 
 /-! ## A way that cannot say anything at a moment
@@ -402,15 +402,15 @@ def moment (stated : List (Option Nat)) : Option (List Nat) :=
   if stated.any Option.isSome then .some (stated.map said) else .none
 
 /-- A way that could say nothing says 50%. -/
-@[lungo_claim "lungo.equals" subject Mos.Hindcast.said]
+@[lungo_claim "lungo.equals" subject Datacartridge.Hindcast.said]
 theorem silent_says_even : said .none = 5000 := rfl
 
 /-- A way that said something is taken at its word. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.said]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.said]
 theorem spoken_is_kept (n : Nat) : said (.some n) = n := rfl
 
 /-- A moment is left out exactly when no way could say anything. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.moment]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.moment]
 theorem left_out_only_when_all_silent (stated : List (Option Nat)) :
     moment stated = .none ↔ stated.all Option.isNone := by
   unfold moment
@@ -419,7 +419,7 @@ theorem left_out_only_when_all_silent (stated : List (Option Nat)) :
   | cons s ss ih => cases s <;> simp_all
 
 /-- Every way has its say at a moment kept: as many likelihoods as ways. -/
-@[lungo_claim "lungo.law" subject Mos.Hindcast.moment]
+@[lungo_claim "lungo.law" subject Datacartridge.Hindcast.moment]
 theorem every_way_is_heard (stated : List (Option Nat)) (said : List Nat) (h : moment stated = .some said) :
     said.length = stated.length := by
   unfold moment at h
@@ -429,4 +429,4 @@ theorem every_way_is_heard (stated : List (Option Nat)) (said : List Nat) (h : m
     simp
   · simp at h
 
-end Mos.Hindcast
+end Datacartridge.Hindcast

@@ -6,8 +6,8 @@
 project = "formal"
 
 [lean]
-root-modules = ["Mos"]
-export-modules = ["Mos.Forecast", "Mos.Hindcast"]
+root-modules = ["Datacartridge"]
+export-modules = ["Datacartridge.Forecast", "Datacartridge.Hindcast"]
 deny-sorry = true
 deny-axioms = true
 deny-unsafe = true
@@ -24,12 +24,12 @@ type-attributes = [
 ]
 enum-attributes = [
   { path = ".", attribute = "#[serde(rename_all = \"snake_case\")]" },
-  { path = "Mos.Forecast.Window", attribute = "#[derive(Copy)]" },
-  { path = "Mos.Forecast.Outcome", attribute = "#[derive(Copy)]" },
-  { path = "Mos.Forecast.Leave", attribute = "#[derive(Copy)]" },
-  { path = "Mos.Forecast.Hearing", attribute = "#[derive(Copy)]" },
-  { path = "Mos.Forecast.Trend", attribute = "#[derive(Copy)]" },
-  { path = "Mos.Forecast.Clash", attribute = "#[derive(Copy)]" },
-  { path = "Mos.Forecast.Sureness", attribute = "#[derive(Copy)]" },
-  { path = "Mos.Hindcast.HeldUp", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Forecast.Window", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Forecast.Outcome", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Forecast.Leave", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Forecast.Hearing", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Forecast.Trend", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Forecast.Clash", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Forecast.Sureness", attribute = "#[derive(Copy)]" },
+  { path = "Datacartridge.Hindcast.HeldUp", attribute = "#[derive(Copy)]" },
 ]

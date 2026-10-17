@@ -1,5 +1,5 @@
 //! Forecasts scored, and ways of forecasting tried on a series' history: MarketOS's scoring
-//! and hindcast, decided by its proved model (`Mos.Forecast`, `Mos.Hindcast`, generated into
+//! and hindcast, decided by its proved model (`Datacartridge.Forecast`, `Datacartridge.Hindcast`, generated into
 //! crates/datacartridge-formal).
 
 use std::collections::BTreeMap;
@@ -40,9 +40,9 @@ fn bps(probability: f64, i: usize) -> Result<u64, OpError> {
 }
 
 /// Settled forecasts scored as MarketOS scores a forecaster: the mean Brier score
-/// (`Mos.Forecast.brier`, `mean`), against the 0.25 that saying 50% every time earns, whether
-/// it beats that (`Mos.Forecast.skill` above nothing), and how the forecasts in each tenth of
-/// the scale (`Mos.Forecast.tenth`) came out. An empty record is refused: there is nothing
+/// (`Datacartridge.Forecast.brier`, `mean`), against the 0.25 that saying 50% every time earns, whether
+/// it beats that (`Datacartridge.Forecast.skill` above nothing), and how the forecasts in each tenth of
+/// the scale (`Datacartridge.Forecast.tenth`) came out. An empty record is refused: there is nothing
 /// to score.
 pub fn score(outcomes: &[u8]) -> Result<Value, OpError> {
     let items: Vec<Value> = serde_json::from_slice(outcomes).map_err(|e| input_arg_error("NOT_OUTCOMES", format!("the outcomes are not a JSON array: {e}"), OUTCOMES))?;
@@ -234,7 +234,7 @@ fn past(series: &[Point], asked: &Asked, made_at: Timestamp, deadline: Timestamp
 
 /// How the statement made at `made_at` came out by `deadline` (MarketOS's
 /// `forecast::judged_then`): each value after it measured as a change from the value it
-/// stood at then, judged by `Mos.Forecast.settle`.
+/// stood at then, judged by `Datacartridge.Forecast.settle`.
 fn judged(series: &[Point], asked: &Asked, made_at: Timestamp, deadline: Timestamp) -> spec::Outcome {
     let from = series.iter().rev().find(|(t, _)| *t <= made_at).map(|(_, v)| *v).filter(|v| *v != 0.0);
     let satisfied: List<bool> = match from {
@@ -352,9 +352,9 @@ fn calibration(chosen: &[(u32, bool)]) -> Result<Vec<Value>, OpError> {
 
 /// Ways of forecasting the statement tried on the series' history (MarketOS's hindcast):
 /// at moments `every_days` apart, each way says a likelihood from what was known then (and
-/// again read through its own record, `Mos.Forecast.recalibrated`); the moments are cut into
-/// stretches (`Mos.Hindcast.cut`), the way that did best on what had settled before each
-/// stretch is chosen (`Mos.Hindcast.chosen`) and scored on it. Scores are mean Brier scores
+/// again read through its own record, `Datacartridge.Forecast.recalibrated`); the moments are cut into
+/// stretches (`Datacartridge.Hindcast.cut`), the way that did best on what had settled before each
+/// stretch is chosen (`Datacartridge.Hindcast.chosen`) and scored on it. Scores are mean Brier scores
 /// in basis points; saying 50% every time scores 2500.
 pub fn trial(series: &[Point], asked: &Asked) -> Result<Value, OpError> {
     let input = |code: &str, message: String, arg: &str| input_arg_error(code, message, arg);
@@ -393,7 +393,7 @@ pub fn trial(series: &[Point], asked: &Asked) -> Result<Value, OpError> {
     }
     // Each way again, read through its own record: what it says taken together with how
     // what it said in the same tenth came out, of its forecasts settled by then, counted as
-    // MarketOS counts a forecaster's by default (`Mos.Forecast.provenAt`).
+    // MarketOS counts a forecaster's by default (`Datacartridge.Forecast.provenAt`).
     let counts_as = spec::proven_at();
     let ahead_int = Int::from(ahead.as_nanos());
     let tenth = |bps: u32| spec::tenth(nat(u64::from(bps)));
@@ -591,7 +591,7 @@ mod tests {
         let ways = tried["ways"].as_array().unwrap();
         assert_eq!(ways.len() % 2, 0);
         assert!(ways.iter().any(|w| w["read"] == json!(true)));
-        assert!(ways.iter().all(|w| w["kind"] != json!("often") || w["days"].as_u64().is_none_or(|d| d > 7)), "a count shorter than the look ahead does not speak (Mos.Hindcast.speaks)");
+        assert!(ways.iter().all(|w| w["kind"] != json!("often") || w["days"].as_u64().is_none_or(|d| d > 7)), "a count shorter than the look ahead does not speak (Datacartridge.Hindcast.speaks)");
     }
 
     // TEST315: a history too short for the stretches asked is refused, saying how many it
@@ -609,7 +609,7 @@ mod tests {
         }
     }
 
-    // TEST316: a moment's statement comes out as MarketOS judges it (`Mos.Forecast.settle`):
+    // TEST316: a moment's statement comes out as MarketOS judges it (`Datacartridge.Forecast.settle`):
     // at the deadline on the last value by then, at any time on the first that holds.
     #[test]
     fn test0316_a_statement_is_judged_as_marketos_judges_it() {

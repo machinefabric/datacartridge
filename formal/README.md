@@ -7,6 +7,8 @@ How forecasts are scored and how ways of forecasting are tried on a series' hist
 - where a trial's stretches are cut;
 - which way is chosen on what came before.
 
-The modules are datacartridge's: `Mos.Forecast` and `Mos.Hindcast`, still named as in MarketOS, which is to take them from here rather than keep its own.
+The modules are `Datacartridge.Forecast` and `Datacartridge.Hindcast`, named for this cartridge so a package that requires it beside other packages has no module of its name but these.
+
+`lakefile.lean` is rendered from `lakefile.lean.wstemplate`: in local mode lungo's Lean library is the workspace's working copy, otherwise lungo's release by URL, so the package builds wherever it is required from. `lake-manifest.json` is Lake's record of what it resolved and is not kept.
 
 Regenerate after changing the model: run `lungo generate` at the repository root. `lungo generate --verify` fails when the checked-in `crates/datacartridge-formal/src/generated` is not what the model generates.

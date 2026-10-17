@@ -1,1098 +1,1098 @@
 [
   {
-    "lean_name": "Mos.Forecast.Call",
+    "lean_name": "Datacartridge.Forecast.Call",
     "kind": "type",
     "rust_path": "forecast::Call",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Claim",
+    "lean_name": "Datacartridge.Forecast.Claim",
     "kind": "type",
     "rust_path": "forecast::Claim",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Clash",
+    "lean_name": "Datacartridge.Forecast.Clash",
     "kind": "type",
     "rust_path": "forecast::Clash",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Group",
+    "lean_name": "Datacartridge.Forecast.Group",
     "kind": "type",
     "rust_path": "forecast::Group",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Hearing",
+    "lean_name": "Datacartridge.Forecast.Hearing",
     "kind": "type",
     "rust_path": "forecast::Hearing",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Leave",
+    "lean_name": "Datacartridge.Forecast.Leave",
     "kind": "type",
     "rust_path": "forecast::Leave",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Link",
+    "lean_name": "Datacartridge.Forecast.Link",
     "kind": "type",
     "rust_path": "forecast::Link",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Outcome",
+    "lean_name": "Datacartridge.Forecast.Outcome",
     "kind": "type",
     "rust_path": "forecast::Outcome",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Split",
+    "lean_name": "Datacartridge.Forecast.Split",
     "kind": "type",
     "rust_path": "forecast::Split",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Stand",
+    "lean_name": "Datacartridge.Forecast.Stand",
     "kind": "type",
     "rust_path": "forecast::Stand",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Sureness",
+    "lean_name": "Datacartridge.Forecast.Sureness",
     "kind": "type",
     "rust_path": "forecast::Sureness",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Trend",
+    "lean_name": "Datacartridge.Forecast.Trend",
     "kind": "type",
     "rust_path": "forecast::Trend",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Tried",
+    "lean_name": "Datacartridge.Forecast.Tried",
     "kind": "type",
     "rust_path": "forecast::Tried",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.View",
+    "lean_name": "Datacartridge.Forecast.View",
     "kind": "type",
     "rust_path": "forecast::View",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.When",
+    "lean_name": "Datacartridge.Forecast.When",
     "kind": "type",
     "rust_path": "forecast::When",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Window",
+    "lean_name": "Datacartridge.Forecast.Window",
     "kind": "type",
     "rust_path": "forecast::Window",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.HeldUp",
+    "lean_name": "Datacartridge.Hindcast.HeldUp",
     "kind": "type",
     "rust_path": "hindcast::HeldUp",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.Tried",
+    "lean_name": "Datacartridge.Hindcast.Tried",
     "kind": "type",
     "rust_path": "hindcast::Tried",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Claim.opposite",
+    "lean_name": "Datacartridge.Forecast.Claim.opposite",
     "kind": "function",
     "rust_path": "forecast::claim::opposite",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Clash.ofNat",
+    "lean_name": "Datacartridge.Forecast.Clash.ofNat",
     "kind": "function",
     "rust_path": "forecast::clash::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Group.gap",
+    "lean_name": "Datacartridge.Forecast.Group.gap",
     "kind": "function",
     "rust_path": "forecast::group::gap",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Group.squares",
+    "lean_name": "Datacartridge.Forecast.Group.squares",
     "kind": "function",
     "rust_path": "forecast::group::squares",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Hearing.ofNat",
+    "lean_name": "Datacartridge.Forecast.Hearing.ofNat",
     "kind": "function",
     "rust_path": "forecast::hearing::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Leave.ofNat",
+    "lean_name": "Datacartridge.Forecast.Leave.ofNat",
     "kind": "function",
     "rust_path": "forecast::leave::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Outcome.ofNat",
+    "lean_name": "Datacartridge.Forecast.Outcome.ofNat",
     "kind": "function",
     "rust_path": "forecast::outcome::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Sureness.ofNat",
+    "lean_name": "Datacartridge.Forecast.Sureness.ofNat",
     "kind": "function",
     "rust_path": "forecast::sureness::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Trend.ofNat",
+    "lean_name": "Datacartridge.Forecast.Trend.ofNat",
     "kind": "function",
     "rust_path": "forecast::trend::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.When.counts",
+    "lean_name": "Datacartridge.Forecast.When.counts",
     "kind": "function",
     "rust_path": "forecast::when::counts",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Window.ofNat",
+    "lean_name": "Datacartridge.Forecast.Window.ofNat",
     "kind": "function",
     "rust_path": "forecast::window::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.all",
+    "lean_name": "Datacartridge.Forecast.all",
     "kind": "function",
     "rust_path": "forecast::all",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.any",
+    "lean_name": "Datacartridge.Forecast.any",
     "kind": "function",
     "rust_path": "forecast::any",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.apartBeyondChance",
+    "lean_name": "Datacartridge.Forecast.apartBeyondChance",
     "kind": "function",
     "rust_path": "forecast::apart_beyond_chance",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.asForecast",
+    "lean_name": "Datacartridge.Forecast.asForecast",
     "kind": "function",
     "rust_path": "forecast::as_forecast",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.askNext",
+    "lean_name": "Datacartridge.Forecast.askNext",
     "kind": "function",
     "rust_path": "forecast::ask_next",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.askedOf",
+    "lean_name": "Datacartridge.Forecast.askedOf",
     "kind": "function",
     "rust_path": "forecast::asked_of",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.asks",
+    "lean_name": "Datacartridge.Forecast.asks",
     "kind": "function",
     "rust_path": "forecast::asks",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.back",
+    "lean_name": "Datacartridge.Forecast.back",
     "kind": "function",
     "rust_path": "forecast::back",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.backing",
+    "lean_name": "Datacartridge.Forecast.backing",
     "kind": "function",
     "rust_path": "forecast::backing",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.baseRate",
+    "lean_name": "Datacartridge.Forecast.baseRate",
     "kind": "function",
     "rust_path": "forecast::base_rate",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.bestReading",
+    "lean_name": "Datacartridge.Forecast.bestReading",
     "kind": "function",
     "rust_path": "forecast::best_reading",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.better",
+    "lean_name": "Datacartridge.Forecast.better",
     "kind": "function",
     "rust_path": "forecast::better",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.brier",
+    "lean_name": "Datacartridge.Forecast.brier",
     "kind": "function",
     "rust_path": "forecast::brier",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.calibrated",
+    "lean_name": "Datacartridge.Forecast.calibrated",
     "kind": "function",
     "rust_path": "forecast::calibrated",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.carried",
+    "lean_name": "Datacartridge.Forecast.carried",
     "kind": "function",
     "rust_path": "forecast::carried",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.choosesAt",
+    "lean_name": "Datacartridge.Forecast.choosesAt",
     "kind": "function",
     "rust_path": "forecast::chooses_at",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.clash",
+    "lean_name": "Datacartridge.Forecast.clash",
     "kind": "function",
     "rust_path": "forecast::clash",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.clashHappening",
+    "lean_name": "Datacartridge.Forecast.clashHappening",
     "kind": "function",
     "rust_path": "forecast::clash_happening",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.clashWhen",
+    "lean_name": "Datacartridge.Forecast.clashWhen",
     "kind": "function",
     "rust_path": "forecast::clash_when",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.conditional",
+    "lean_name": "Datacartridge.Forecast.conditional",
     "kind": "function",
     "rust_path": "forecast::conditional",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.conviction",
+    "lean_name": "Datacartridge.Forecast.conviction",
     "kind": "function",
     "rust_path": "forecast::conviction",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.discerning",
+    "lean_name": "Datacartridge.Forecast.discerning",
     "kind": "function",
     "rust_path": "forecast::discerning",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.evenWeight",
+    "lean_name": "Datacartridge.Forecast.evenWeight",
     "kind": "function",
     "rust_path": "forecast::even_weight",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.expected",
+    "lean_name": "Datacartridge.Forecast.expected",
     "kind": "function",
     "rust_path": "forecast::expected",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.expectedFirst",
+    "lean_name": "Datacartridge.Forecast.expectedFirst",
     "kind": "function",
     "rust_path": "forecast::expected_first",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.lastWeek",
+    "lean_name": "Datacartridge.Forecast.lastWeek",
     "kind": "function",
     "rust_path": "forecast::last_week",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.later",
+    "lean_name": "Datacartridge.Forecast.later",
     "kind": "function",
     "rust_path": "forecast::later",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.laterOf",
+    "lean_name": "Datacartridge.Forecast.laterOf",
     "kind": "function",
     "rust_path": "forecast::later_of",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.leastFromParts",
+    "lean_name": "Datacartridge.Forecast.leastFromParts",
     "kind": "function",
     "rust_path": "forecast::least_from_parts",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.leastWhenAll",
+    "lean_name": "Datacartridge.Forecast.leastWhenAll",
     "kind": "function",
     "rust_path": "forecast::least_when_all",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.leave",
+    "lean_name": "Datacartridge.Forecast.leave",
     "kind": "function",
     "rust_path": "forecast::leave",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.lifeBrier",
+    "lean_name": "Datacartridge.Forecast.lifeBrier",
     "kind": "function",
     "rust_path": "forecast::life_brier",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.likelihood",
+    "lean_name": "Datacartridge.Forecast.likelihood",
     "kind": "function",
     "rust_path": "forecast::likelihood",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.mayStateAgain",
+    "lean_name": "Datacartridge.Forecast.mayStateAgain",
     "kind": "function",
     "rust_path": "forecast::may_state_again",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.mean",
+    "lean_name": "Datacartridge.Forecast.mean",
     "kind": "function",
     "rust_path": "forecast::mean",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.nextPeriod",
+    "lean_name": "Datacartridge.Forecast.nextPeriod",
     "kind": "function",
     "rust_path": "forecast::next_period",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.occurs",
+    "lean_name": "Datacartridge.Forecast.occurs",
     "kind": "function",
     "rust_path": "forecast::occurs",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.pairedBeyondChance",
+    "lean_name": "Datacartridge.Forecast.pairedBeyondChance",
     "kind": "function",
     "rust_path": "forecast::paired_beyond_chance",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.partsCarry",
+    "lean_name": "Datacartridge.Forecast.partsCarry",
     "kind": "function",
     "rust_path": "forecast::parts_carry",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.pool",
+    "lean_name": "Datacartridge.Forecast.pool",
     "kind": "function",
     "rust_path": "forecast::pool",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.previousPeriod",
+    "lean_name": "Datacartridge.Forecast.previousPeriod",
     "kind": "function",
     "rust_path": "forecast::previous_period",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.proven",
+    "lean_name": "Datacartridge.Forecast.proven",
     "kind": "function",
     "rust_path": "forecast::proven",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.provenAt",
+    "lean_name": "Datacartridge.Forecast.provenAt",
     "kind": "function",
     "rust_path": "forecast::proven_at",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.recalibrated",
+    "lean_name": "Datacartridge.Forecast.recalibrated",
     "kind": "function",
     "rust_path": "forecast::recalibrated",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.settle",
+    "lean_name": "Datacartridge.Forecast.settle",
     "kind": "function",
     "rust_path": "forecast::settle",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.settleReported",
+    "lean_name": "Datacartridge.Forecast.settleReported",
     "kind": "function",
     "rust_path": "forecast::settle_reported",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.settled",
+    "lean_name": "Datacartridge.Forecast.settled",
     "kind": "function",
     "rust_path": "forecast::settled",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.silenceCounts",
+    "lean_name": "Datacartridge.Forecast.silenceCounts",
     "kind": "function",
     "rust_path": "forecast::silence_counts",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.skill",
+    "lean_name": "Datacartridge.Forecast.skill",
     "kind": "function",
     "rust_path": "forecast::skill",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.split",
+    "lean_name": "Datacartridge.Forecast.split",
     "kind": "function",
     "rust_path": "forecast::split",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.sureness",
+    "lean_name": "Datacartridge.Forecast.sureness",
     "kind": "function",
     "rust_path": "forecast::sureness",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.surenessOf",
+    "lean_name": "Datacartridge.Forecast.surenessOf",
     "kind": "function",
     "rust_path": "forecast::sureness_of",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.telling",
+    "lean_name": "Datacartridge.Forecast.telling",
     "kind": "function",
     "rust_path": "forecast::telling",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.tenth",
+    "lean_name": "Datacartridge.Forecast.tenth",
     "kind": "function",
     "rust_path": "forecast::tenth",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.tooLikelyAcross",
+    "lean_name": "Datacartridge.Forecast.tooLikelyAcross",
     "kind": "function",
     "rust_path": "forecast::too_likely_across",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.trend",
+    "lean_name": "Datacartridge.Forecast.trend",
     "kind": "function",
     "rust_path": "forecast::trend",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.weekStart",
+    "lean_name": "Datacartridge.Forecast.weekStart",
     "kind": "function",
     "rust_path": "forecast::week_start",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.weight",
+    "lean_name": "Datacartridge.Forecast.weight",
     "kind": "function",
     "rust_path": "forecast::weight",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.weighted",
+    "lean_name": "Datacartridge.Forecast.weighted",
     "kind": "function",
     "rust_path": "forecast::weighted",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.weights",
+    "lean_name": "Datacartridge.Forecast.weights",
     "kind": "function",
     "rust_path": "forecast::weights",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.worse",
+    "lean_name": "Datacartridge.Forecast.worse",
     "kind": "function",
     "rust_path": "forecast::worse",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.yearBefore",
+    "lean_name": "Datacartridge.Forecast.yearBefore",
     "kind": "function",
     "rust_path": "forecast::year_before",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.HeldUp.ofNat",
+    "lean_name": "Datacartridge.Hindcast.HeldUp.ofNat",
     "kind": "function",
     "rust_path": "hindcast::held_up::of_nat",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.alike",
+    "lean_name": "Datacartridge.Hindcast.alike",
     "kind": "function",
     "rust_path": "hindcast::alike",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.alikeRate",
+    "lean_name": "Datacartridge.Hindcast.alikeRate",
     "kind": "function",
     "rust_path": "hindcast::alike_rate",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.atLeastPerStretch",
+    "lean_name": "Datacartridge.Hindcast.atLeastPerStretch",
     "kind": "function",
     "rust_path": "hindcast::at_least_per_stretch",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.callsBetter",
+    "lean_name": "Datacartridge.Hindcast.callsBetter",
     "kind": "function",
     "rust_path": "hindcast::calls_better",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.chooseAgain",
+    "lean_name": "Datacartridge.Hindcast.chooseAgain",
     "kind": "function",
     "rust_path": "hindcast::choose_again",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.chosen",
+    "lean_name": "Datacartridge.Hindcast.chosen",
     "kind": "function",
     "rust_path": "hindcast::chosen",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.countsBeside",
+    "lean_name": "Datacartridge.Hindcast.countsBeside",
     "kind": "function",
     "rust_path": "hindcast::counts_beside",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.cut",
+    "lean_name": "Datacartridge.Hindcast.cut",
     "kind": "function",
     "rust_path": "hindcast::cut",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.enough",
+    "lean_name": "Datacartridge.Hindcast.enough",
     "kind": "function",
     "rust_path": "hindcast::enough",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.heldUp",
+    "lean_name": "Datacartridge.Hindcast.heldUp",
     "kind": "function",
     "rust_path": "hindcast::held_up",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.learnable",
+    "lean_name": "Datacartridge.Hindcast.learnable",
     "kind": "function",
     "rust_path": "hindcast::learnable",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.mean",
+    "lean_name": "Datacartridge.Hindcast.mean",
     "kind": "function",
     "rust_path": "hindcast::mean",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.moment",
+    "lean_name": "Datacartridge.Hindcast.moment",
     "kind": "function",
     "rust_path": "hindcast::moment",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.mostTriable",
+    "lean_name": "Datacartridge.Hindcast.mostTriable",
     "kind": "function",
     "rust_path": "hindcast::most_triable",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.needed",
+    "lean_name": "Datacartridge.Hindcast.needed",
     "kind": "function",
     "rust_path": "hindcast::needed",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.said",
+    "lean_name": "Datacartridge.Hindcast.said",
     "kind": "function",
     "rust_path": "hindcast::said",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.settledToChooseAgain",
+    "lean_name": "Datacartridge.Hindcast.settledToChooseAgain",
     "kind": "function",
     "rust_path": "hindcast::settled_to_choose_again",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.sharedFrom",
+    "lean_name": "Datacartridge.Hindcast.sharedFrom",
     "kind": "function",
     "rust_path": "hindcast::shared_from",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.sharedFromAll",
+    "lean_name": "Datacartridge.Hindcast.sharedFromAll",
     "kind": "function",
     "rust_path": "hindcast::shared_from_all",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.speaks",
+    "lean_name": "Datacartridge.Hindcast.speaks",
     "kind": "function",
     "rust_path": "hindcast::speaks",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.total",
+    "lean_name": "Datacartridge.Hindcast.total",
     "kind": "function",
     "rust_path": "hindcast::total",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.triable",
+    "lean_name": "Datacartridge.Hindcast.triable",
     "kind": "function",
     "rust_path": "hindcast::triable",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Hindcast.turned",
+    "lean_name": "Datacartridge.Hindcast.turned",
     "kind": "function",
     "rust_path": "hindcast::turned",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Call.mk",
+    "lean_name": "Datacartridge.Forecast.Call.mk",
     "kind": "constructor",
     "rust_path": "forecast::Call",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Call.statedBps",
+    "lean_name": "Datacartridge.Forecast.Call.statedBps",
     "kind": "field",
     "rust_path": "forecast::Call.stated_bps",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Call.cameTrue",
+    "lean_name": "Datacartridge.Forecast.Call.cameTrue",
     "kind": "field",
     "rust_path": "forecast::Call.came_true",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Claim.mk",
+    "lean_name": "Datacartridge.Forecast.Claim.mk",
     "kind": "constructor",
     "rust_path": "forecast::Claim",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Claim.up",
+    "lean_name": "Datacartridge.Forecast.Claim.up",
     "kind": "field",
     "rust_path": "forecast::Claim.up",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Claim.strict",
+    "lean_name": "Datacartridge.Forecast.Claim.strict",
     "kind": "field",
     "rust_path": "forecast::Claim.strict",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Claim.level",
+    "lean_name": "Datacartridge.Forecast.Claim.level",
     "kind": "field",
     "rust_path": "forecast::Claim.level",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Claim.bps",
+    "lean_name": "Datacartridge.Forecast.Claim.bps",
     "kind": "field",
     "rust_path": "forecast::Claim.bps",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Clash.agree",
+    "lean_name": "Datacartridge.Forecast.Clash.agree",
     "kind": "constructor",
     "rust_path": "forecast::Clash::Agree",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Clash.firstTooLikely",
+    "lean_name": "Datacartridge.Forecast.Clash.firstTooLikely",
     "kind": "constructor",
     "rust_path": "forecast::Clash::FirstTooLikely",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Clash.secondTooLikely",
+    "lean_name": "Datacartridge.Forecast.Clash.secondTooLikely",
     "kind": "constructor",
     "rust_path": "forecast::Clash::SecondTooLikely",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Clash.tooMuch",
+    "lean_name": "Datacartridge.Forecast.Clash.tooMuch",
     "kind": "constructor",
     "rust_path": "forecast::Clash::TooMuch",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Clash.tooLittle",
+    "lean_name": "Datacartridge.Forecast.Clash.tooLittle",
     "kind": "constructor",
     "rust_path": "forecast::Clash::TooLittle",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Group.mk",
+    "lean_name": "Datacartridge.Forecast.Group.mk",
     "kind": "constructor",
     "rust_path": "forecast::Group",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Group.said",
+    "lean_name": "Datacartridge.Forecast.Group.said",
     "kind": "field",
     "rust_path": "forecast::Group.said",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Group.calls",
+    "lean_name": "Datacartridge.Forecast.Group.calls",
     "kind": "field",
     "rust_path": "forecast::Group.calls",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Group.came",
+    "lean_name": "Datacartridge.Forecast.Group.came",
     "kind": "field",
     "rust_path": "forecast::Group.came",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Hearing.ofThis",
+    "lean_name": "Datacartridge.Forecast.Hearing.ofThis",
     "kind": "constructor",
     "rust_path": "forecast::Hearing::OfThis",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Hearing.ofOthers",
+    "lean_name": "Datacartridge.Forecast.Hearing.ofOthers",
     "kind": "constructor",
     "rust_path": "forecast::Hearing::OfOthers",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Hearing.never",
+    "lean_name": "Datacartridge.Forecast.Hearing.never",
     "kind": "constructor",
     "rust_path": "forecast::Hearing::Never",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Leave.stay",
+    "lean_name": "Datacartridge.Forecast.Leave.stay",
     "kind": "constructor",
     "rust_path": "forecast::Leave::Stay",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Leave.stop",
+    "lean_name": "Datacartridge.Forecast.Leave.stop",
     "kind": "constructor",
     "rust_path": "forecast::Leave::Stop",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Leave.target",
+    "lean_name": "Datacartridge.Forecast.Leave.target",
     "kind": "constructor",
     "rust_path": "forecast::Leave::Target",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Leave.time",
+    "lean_name": "Datacartridge.Forecast.Leave.time",
     "kind": "constructor",
     "rust_path": "forecast::Leave::Time",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Link.part",
+    "lean_name": "Datacartridge.Forecast.Link.part",
     "kind": "constructor",
     "rust_path": "forecast::Link::Part",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Link.part.others",
+    "lean_name": "Datacartridge.Forecast.Link.part.others",
     "kind": "field",
     "rust_path": "forecast::Link::Part.others",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Link.whole",
+    "lean_name": "Datacartridge.Forecast.Link.whole",
     "kind": "constructor",
     "rust_path": "forecast::Link::Whole",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Link.whole.others",
+    "lean_name": "Datacartridge.Forecast.Link.whole.others",
     "kind": "field",
     "rust_path": "forecast::Link::Whole.others",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Link.under",
+    "lean_name": "Datacartridge.Forecast.Link.under",
     "kind": "constructor",
     "rust_path": "forecast::Link::Under",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Link.over",
+    "lean_name": "Datacartridge.Forecast.Link.over",
     "kind": "constructor",
     "rust_path": "forecast::Link::Over",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Outcome.open",
+    "lean_name": "Datacartridge.Forecast.Outcome.open",
     "kind": "constructor",
     "rust_path": "forecast::Outcome::Open",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Outcome.cameTrue",
+    "lean_name": "Datacartridge.Forecast.Outcome.cameTrue",
     "kind": "constructor",
     "rust_path": "forecast::Outcome::CameTrue",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Outcome.didNot",
+    "lean_name": "Datacartridge.Forecast.Outcome.didNot",
     "kind": "constructor",
     "rust_path": "forecast::Outcome::DidNot",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Outcome.void",
+    "lean_name": "Datacartridge.Forecast.Outcome.void",
     "kind": "constructor",
     "rust_path": "forecast::Outcome::Void",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Split.mk",
+    "lean_name": "Datacartridge.Forecast.Split.mk",
     "kind": "constructor",
     "rust_path": "forecast::Split",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Split.total",
+    "lean_name": "Datacartridge.Forecast.Split.total",
     "kind": "field",
     "rust_path": "forecast::Split.total",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Split.offBy",
+    "lean_name": "Datacartridge.Forecast.Split.offBy",
     "kind": "field",
     "rust_path": "forecast::Split.off_by",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Split.toldApart",
+    "lean_name": "Datacartridge.Forecast.Split.toldApart",
     "kind": "field",
     "rust_path": "forecast::Split.told_apart",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Split.howHard",
+    "lean_name": "Datacartridge.Forecast.Split.howHard",
     "kind": "field",
     "rust_path": "forecast::Split.how_hard",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Stand.mk",
+    "lean_name": "Datacartridge.Forecast.Stand.mk",
     "kind": "constructor",
     "rust_path": "forecast::Stand",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Stand.statedBps",
+    "lean_name": "Datacartridge.Forecast.Stand.statedBps",
     "kind": "field",
     "rust_path": "forecast::Stand.stated_bps",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Stand.duration",
+    "lean_name": "Datacartridge.Forecast.Stand.duration",
     "kind": "field",
     "rust_path": "forecast::Stand.duration",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Sureness.untold",
+    "lean_name": "Datacartridge.Forecast.Sureness.untold",
     "kind": "constructor",
     "rust_path": "forecast::Sureness::Untold",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Sureness.about",
+    "lean_name": "Datacartridge.Forecast.Sureness.about",
     "kind": "constructor",
     "rust_path": "forecast::Sureness::About",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Sureness.tooHigh",
+    "lean_name": "Datacartridge.Forecast.Sureness.tooHigh",
     "kind": "constructor",
     "rust_path": "forecast::Sureness::TooHigh",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Sureness.tooLow",
+    "lean_name": "Datacartridge.Forecast.Sureness.tooLow",
     "kind": "constructor",
     "rust_path": "forecast::Sureness::TooLow",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Trend.better",
+    "lean_name": "Datacartridge.Forecast.Trend.better",
     "kind": "constructor",
     "rust_path": "forecast::Trend::Better",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Trend.worse",
+    "lean_name": "Datacartridge.Forecast.Trend.worse",
     "kind": "constructor",
     "rust_path": "forecast::Trend::Worse",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Trend.same",
+    "lean_name": "Datacartridge.Forecast.Trend.same",
     "kind": "constructor",
     "rust_path": "forecast::Trend::Same",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Trend.untold",
+    "lean_name": "Datacartridge.Forecast.Trend.untold",
     "kind": "constructor",
     "rust_path": "forecast::Trend::Untold",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Tried.mk",
+    "lean_name": "Datacartridge.Forecast.Tried.mk",
     "kind": "constructor",
     "rust_path": "forecast::Tried",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Tried.countsAs",
+    "lean_name": "Datacartridge.Forecast.Tried.countsAs",
     "kind": "field",
     "rust_path": "forecast::Tried.counts_as",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Tried.meanBrier",
+    "lean_name": "Datacartridge.Forecast.Tried.meanBrier",
     "kind": "field",
     "rust_path": "forecast::Tried.mean_brier",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.View.mk",
+    "lean_name": "Datacartridge.Forecast.View.mk",
     "kind": "constructor",
     "rust_path": "forecast::View",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.View.weightBps",
+    "lean_name": "Datacartridge.Forecast.View.weightBps",
     "kind": "field",
     "rust_path": "forecast::View.weight_bps",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.View.statedBps",
+    "lean_name": "Datacartridge.Forecast.View.statedBps",
     "kind": "field",
     "rust_path": "forecast::View.stated_bps",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.When.mk",
+    "lean_name": "Datacartridge.Forecast.When.mk",
     "kind": "constructor",
     "rust_path": "forecast::When",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.When.anyTime",
+    "lean_name": "Datacartridge.Forecast.When.anyTime",
     "kind": "field",
     "rust_path": "forecast::When.any_time",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.When.since",
+    "lean_name": "Datacartridge.Forecast.When.since",
     "kind": "field",
     "rust_path": "forecast::When.since",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.When.till",
+    "lean_name": "Datacartridge.Forecast.When.till",
     "kind": "field",
     "rust_path": "forecast::When.till",
     "renamed": false
   },
   {
-    "lean_name": "Mos.Forecast.Window.atDeadline",
+    "lean_name": "Datacartridge.Forecast.Window.atDeadline",
     "kind": "constructor",
     "rust_path": "forecast::Window::AtDeadline",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Forecast.Window.anyTime",
+    "lean_name": "Datacartridge.Forecast.Window.anyTime",
     "kind": "constructor",
     "rust_path": "forecast::Window::AnyTime",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.HeldUp.tooSoon",
+    "lean_name": "Datacartridge.Hindcast.HeldUp.tooSoon",
     "kind": "constructor",
     "rust_path": "hindcast::HeldUp::TooSoon",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.HeldUp.betterThanEven",
+    "lean_name": "Datacartridge.Hindcast.HeldUp.betterThanEven",
     "kind": "constructor",
     "rust_path": "hindcast::HeldUp::BetterThanEven",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.HeldUp.noBetter",
+    "lean_name": "Datacartridge.Hindcast.HeldUp.noBetter",
     "kind": "constructor",
     "rust_path": "hindcast::HeldUp::NoBetter",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.Tried.mk",
+    "lean_name": "Datacartridge.Hindcast.Tried.mk",
     "kind": "constructor",
     "rust_path": "hindcast::Tried",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.Tried.statedBps",
+    "lean_name": "Datacartridge.Hindcast.Tried.statedBps",
     "kind": "field",
     "rust_path": "hindcast::Tried.stated_bps",
     "renamed": true
   },
   {
-    "lean_name": "Mos.Hindcast.Tried.cameTrue",
+    "lean_name": "Datacartridge.Hindcast.Tried.cameTrue",
     "kind": "field",
     "rust_path": "hindcast::Tried.came_true",
     "renamed": true
