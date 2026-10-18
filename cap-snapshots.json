@@ -4980,13 +4980,13 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\";rolling-statistic",
-    "version": 1,
+    "version": 2,
     "title": "Rolling Statistic",
     "aliases": [
       "rolling-statistic"
     ],
-    "cap_description": "Take a statistic of a series over a moving window: its mean, standard deviation or z-score",
-    "documentation": "## Purpose\n\nTurns a series into a rolling statistic: at each instant, the mean, standard deviation or z-score of the `window` observations ending there.\n\n## Inputs\n\n- A time series.\n- `window`: how many observations.\n- `statistic`: mean, sd or zscore.\n\n## Outputs\n\nThe rolling statistic, starting where the first full window ends.\n\n## Notes\n\nA z-score over a window that does not move is left out for that instant and counted.",
+    "cap_description": "Take a statistic of a series over a moving window: its mean, standard deviation, z-score, or volatility scaled to a year",
+    "documentation": "## Purpose\n\nTurns a series into a rolling statistic: at each instant, the mean, standard deviation, z-score or volatility of the `window` observations ending there.\n\n## Inputs\n\n- A time series.\n- `window`: how many observations.\n- `statistic`: mean, sd, zscore or vol.\n- `periods-per-year`: how many observations a year holds. Given with `vol`, and only with it.\n\n## Outputs\n\nThe rolling statistic, starting where the first full window ends.\n\n## Notes\n\n`vol` is the window's sample standard deviation times the square root of `periods-per-year`, of the series as given and in its units: for a series of changes (daily returns, say) it is their realised volatility for a year. It is not worked out from prices; for a price path, take its changes first. `vol` without `periods-per-year` is refused, naming it, and `periods-per-year` with another statistic is refused.\n\nA z-score over a window that does not move is left out for that instant and counted.",
     "args": [
       {
         "media_urn": "media:fmt=json;list;record;time-series",
@@ -5025,7 +5025,20 @@
             "cli_flag": "--statistic"
           }
         ],
-        "arg_description": "Which statistic: mean, sd or zscore"
+        "arg_description": "Which statistic: mean, sd, zscore or vol"
+      },
+      {
+        "media_urn": "media:numeric;periods-per-year",
+        "name": "periods-per-year",
+        "required": false,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "cli_flag": "--periods-per-year"
+          }
+        ],
+        "arg_description": "How many observations a year holds; given with vol, which it scales to a year"
       }
     ],
     "outputs": [
