@@ -26,6 +26,7 @@ const CHANGE_OVER: &str = "media:change-over;numeric";
 const LAG_BY: &str = "media:lag-by;numeric";
 const WINDOW: &str = "media:numeric;rolling-window";
 const STATISTIC: &str = "media:enc=utf-8;rolling-statistic-kind";
+const PERIODS_PER_YEAR: &str = "media:numeric;periods-per-year";
 const OPERATION: &str = "media:combine-operation;enc=utf-8";
 const COMPARISON: &str = "media:comparison;enc=utf-8";
 const THRESHOLD: &str = "media:numeric;threshold";
@@ -92,14 +93,29 @@ pub fn lag(points: &[Point], by: f64) -> Result<Vec<Point>, OpError> {
     Ok(steps::lag(points, count(by, LAG_BY)?))
 }
 
-/// A statistic over a moving window (MarketOS's `steps::rolling`): mean, sd or zscore.
-pub fn rolling(points: &[Point], window: f64, statistic: &str) -> Result<Vec<Point>, OpError> {
+/// A statistic over a moving window (MarketOS's `steps::rolling`): mean, sd, zscore, or vol —
+/// the window's standard deviation scaled to a year by `periods_per_year`, so of the series
+/// as given and in its units (for a series of changes, its realised volatility).
+///
+/// `periods_per_year` belongs to vol and to nothing else: vol without it is refused, naming
+/// it, and it given to another statistic is refused rather than ignored.
+pub fn rolling(points: &[Point], window: f64, statistic: &str, periods_per_year: Option<f64>) -> Result<Vec<Point>, OpError> {
     let statistic: Statistic = choice(statistic, STATISTIC)?;
-    if statistic == Statistic::Vol {
-        return Err(input_arg_error("NOT_A_CHOICE", "a volatility for a year is marketcartridge's rolling-volatility; this takes mean, sd or zscore".to_string(), STATISTIC));
-    }
+    let scale = match (statistic, periods_per_year) {
+        (Statistic::Vol, None) => {
+            return Err(input_arg_error("INPUT_REQUIRED", "vol is the window's standard deviation scaled to a year, and needs periods-per-year: how many observations a year holds".to_string(), PERIODS_PER_YEAR));
+        }
+        (Statistic::Vol, Some(periods)) if periods > 0.0 => periods,
+        (Statistic::Vol, Some(periods)) => {
+            return Err(input_arg_error("NOT_DEFINED", format!("{periods} is not a number of observations in a year"), PERIODS_PER_YEAR));
+        }
+        (_, Some(_)) => {
+            return Err(input_arg_error("NOT_DEFINED", "periods-per-year scales vol to a year, and mean, sd and zscore are not scaled".to_string(), PERIODS_PER_YEAR));
+        }
+        (_, None) => 1.0,
+    };
     let window = count(window, WINDOW)?;
-    steps::rolling(points, window, statistic, 1.0).map(|(points, _)| points).map_err(|e| refused(e, TIME_SERIES))
+    steps::rolling(points, window, statistic, scale).map(|(points, _)| points).map_err(|e| refused(e, TIME_SERIES))
 }
 
 /// The instants every series has, and each series' value then, in the order given.
@@ -224,6 +240,11 @@ impl Args {
         }
     }
 
+    /// A number given, or `None` when the argument was not given at all.
+    fn optional_number(&self, urn: &str) -> Result<Option<f64>, OpError> {
+        self.text(urn)?.map(|text| text.parse::<f64>().ok().filter(|n| n.is_finite()).ok_or_else(|| input_arg_error("NOT_A_NUMBER", format!("'{text}' is not a number"), urn))).transpose()
+    }
+
     fn series(&self, urn: &str, what: &str) -> Result<Vec<Point>, OpError> {
         parse(self.one(urn).ok_or_else(|| input_arg_error("INPUT_REQUIRED", format!("{what} is required"), urn))?, urn)
     }
@@ -263,7 +284,7 @@ macro_rules! series_op {
 series_op!(ResampleOp, "Resample a series to a calendar period", [], |a| resample(&a.series(TIME_SERIES, "a series")?, &a.required_text(EVERY, "every")?, &a.text(AGGREGATE)?.unwrap_or_else(|| "last".to_string())).map(|p| to_json(&p)));
 series_op!(ChangeOp, "Measure how a series changes", [], |a| change(&a.series(TIME_SERIES, "a series")?, &a.text(CHANGE_HOW)?.unwrap_or_else(|| "percent".to_string()), a.number(CHANGE_OVER, "over", Some(1.0))?).map(|p| to_json(&p)));
 series_op!(LagOp, "Move a series later", [], |a| lag(&a.series(TIME_SERIES, "a series")?, a.number(LAG_BY, "by", None)?).map(|p| to_json(&p)));
-series_op!(RollingOp, "Take a statistic over a moving window", [], |a| rolling(&a.series(TIME_SERIES, "a series")?, a.number(WINDOW, "window", None)?, &a.required_text(STATISTIC, "statistic")?).map(|p| to_json(&p)));
+series_op!(RollingOp, "Take a statistic over a moving window", [], |a| rolling(&a.series(TIME_SERIES, "a series")?, a.number(WINDOW, "window", None)?, &a.required_text(STATISTIC, "statistic")?, a.optional_number(PERIODS_PER_YEAR)?).map(|p| to_json(&p)));
 series_op!(AlignOp, "Line several series up", [TIME_SERIES], |a| a.all(TIME_SERIES).iter().map(|b| parse(b, TIME_SERIES)).collect::<Result<Vec<_>, _>>().and_then(|s| align(&s)));
 series_op!(CombineOp, "Combine two series", [], |a| combine(&a.series(TIME_SERIES, "the left series")?, &a.series(RIGHT_SERIES, "the right series")?, &a.required_text(OPERATION, "operation")?).map(|p| to_json(&p)));
 series_op!(SummarizeOp, "Sum a series up as one number", [], |a| summarize(&a.series(TIME_SERIES, "a series")?, &a.required_text(SUMMARY_KIND, "summary")?));
@@ -349,8 +370,13 @@ mod tests {
     }
 
     fn code(error: OpError) -> String {
+        refusal(error).0
+    }
+
+    /// A refusal's code and what it says.
+    fn refusal(error: OpError) -> (String, String) {
         match error {
-            OpError::Classified { code, .. } => code,
+            OpError::Classified { code, message, .. } => (code, message),
             other => panic!("{other:?}"),
         }
     }
@@ -370,7 +396,8 @@ mod tests {
 
     // TEST306: resample, change, lag and rolling are MarketOS's steps: a month's last value,
     // a percent change, values moved one later, a rolling mean; a choice the option does not
-    // allow is refused, and a rolling volatility for a year is left to marketcartridge.
+    // allow is refused, and vol without the periods-per-year it is scaled by is refused,
+    // naming it.
     #[test]
     fn test0306_one_series_steps() {
         let daily: Vec<Point> = (0..62).map(|i| (day(i), i as f64)).collect();
@@ -379,10 +406,38 @@ mod tests {
         let changed = change(&series(&[100.0, 110.0, 99.0]), "percent", 1.0).unwrap();
         assert!((changed[0].1 - 10.0).abs() < 1e-9 && (changed[1].1 + 10.0).abs() < 1e-9);
         assert_eq!(lag(&series(&[1.0, 2.0, 3.0]), 1.0).unwrap(), vec![(day(1), 1.0), (day(2), 2.0)]);
-        assert_eq!(rolling(&series(&[1.0, 2.0, 3.0, 4.0]), 2.0, "mean").unwrap().iter().map(|(_, v)| *v).collect::<Vec<_>>(), vec![1.5, 2.5, 3.5]);
+        assert_eq!(rolling(&series(&[1.0, 2.0, 3.0, 4.0]), 2.0, "mean", None).unwrap().iter().map(|(_, v)| *v).collect::<Vec<_>>(), vec![1.5, 2.5, 3.5]);
         assert_eq!(code(resample(&daily, "hourly", "last").unwrap_err()), "NOT_A_CHOICE");
-        assert_eq!(code(rolling(&daily, 3.0, "vol").unwrap_err()), "NOT_A_CHOICE");
+        let (code_of, said) = refusal(rolling(&daily, 3.0, "vol", None).unwrap_err());
+        assert!(code_of == "INPUT_REQUIRED" && said.contains("periods-per-year"), "vol without periods-per-year names it: {code_of} {said}");
         assert_eq!(code(lag(&daily, 0.5).unwrap_err()), "NOT_A_COUNT");
+    }
+
+    // TEST1860: vol is the window's sample standard deviation times the square root of the
+    // periods in a year, of the series as given — a series of daily changes gives its realised
+    // volatility. Worked here from the definition, not from the step. periods-per-year is
+    // vol's alone: given to another statistic, or as no number of observations, it is refused.
+    #[test]
+    fn test1860_vol_is_the_windows_deviation_scaled_to_a_year() {
+        let moves = series(&[0.01, -0.02, 0.015, 0.0, -0.005]);
+        let got = rolling(&moves, 3.0, "vol", Some(365.0)).unwrap();
+        let expected: Vec<f64> = moves
+            .windows(3)
+            .map(|window| {
+                let mean = window.iter().map(|p| p.1).sum::<f64>() / 3.0;
+                let variance = window.iter().map(|p| (p.1 - mean).powi(2)).sum::<f64>() / 2.0;
+                variance.sqrt() * 365f64.sqrt()
+            })
+            .collect();
+        assert_eq!(got.len(), 3, "one value per full window");
+        for ((time, value), (want_time, want)) in got.iter().zip(moves[2..].iter().map(|p| p.0).zip(expected)) {
+            assert_eq!(*time, want_time, "each value stands at its window's last instant");
+            assert!((value - want).abs() < 1e-12, "{value} is not {want}");
+        }
+        let (code_of, said) = refusal(rolling(&moves, 3.0, "sd", Some(365.0)).unwrap_err());
+        assert!(code_of == "NOT_DEFINED" && said.contains("not scaled"), "{code_of} {said}");
+        let (code_of, said) = refusal(rolling(&moves, 3.0, "vol", Some(0.0)).unwrap_err());
+        assert!(code_of == "NOT_DEFINED" && said.contains("not a number of observations in a year"), "{code_of} {said}");
     }
 
     // TEST307: series side by side, combined, correlated and regressed at the instants they
