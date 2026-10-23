@@ -12,7 +12,7 @@ needless_range_loop = "allow"
 
 [package]
 name = "datacartridge"
-version = "1.229.856"
+version = "1.230.858"
 edition = "2021"
 license = "AGPL-3.0-or-later"
 description = "JSON/YAML/CSV format conversion cartridge for CapDAG"

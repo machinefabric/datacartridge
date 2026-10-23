@@ -1,13 +1,23 @@
 [
   {
     "urn": "cap:ask;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 3,
+    "version": 4,
     "title": "Ask (Grounded Question Answering) (Constrained, English)",
     "aliases": [
       "ask-en"
     ],
     "cap_description": "Answer a question over content with verbatim supporting quotes — fabricated evidence is a hard error",
-    "documentation": "## Purpose\n\n`cat report.txt | ask --question \"what caused the outage?\"`: answers strictly from the content, with 1-5 VERBATIM quotes as evidence. The engine VERIFIES every quote actually occurs in the content (whitespace-normalized) — an answer resting on invented evidence is a hard error, never forwarded. When the content does not answer the question, the answer says so with empty quotes and confidence 0.0 — honest absence.\n\n`searchx` finds WHERE; `ask` answers WHAT. Part of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The content to answer from (stdin or first positional argument).\n- `--question`: the question (required).\n\n## Outputs\n\nA semantic-judgment record: `{\"answer\": <string>, \"quotes\": [<verbatim excerpts>], \"confidence\": <0.0-1.0>, \"reason\": \"<how the quotes support the answer>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\n`cat report.txt | ask --question \"what caused the outage?\"`: answers strictly from the content, with 1-5 VERBATIM quotes as evidence. The engine VERIFIES every quote actually occurs in the content (whitespace-normalized) — an answer resting on invented evidence is a hard error, never forwarded. When the content does not answer the question, the answer says so with empty quotes and confidence 0.0 — honest absence.\n\n`searchx` finds WHERE; `ask` answers WHAT. Part of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The content to answer from (stdin or first positional argument).\n- `--question`: the question (required).\n\n## Outputs\n\nA semantic-judgment record: `{\"answer\": <string>, \"quotes\": [<verbatim excerpts>], \"confidence\": <0.0-1.0>, \"reason\": \"<how the quotes support the answer>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -192,13 +202,23 @@
   },
   {
     "urn": "cap:classify;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 3,
+    "version": 4,
     "title": "Classify (Closed-Set Labeling) (Constrained, English)",
     "aliases": [
       "classify-en"
     ],
     "cap_description": "Classify an item into exactly one of N allowed labels, with confidence and rationale",
-    "documentation": "## Purpose\n\nThe semantic router's workhorse: puts an item into exactly one of the labels you allow. `cat emails.ndjson | classify --labels urgent,billing,spam,personal` per item. The label is token-level constrained to the allowed set — a hallucinated label is impossible by construction.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The item to classify (stdin or first positional argument).\n- `--labels`: 2-64 allowed labels, comma- or newline-separated, no duplicates (violations are hard errors naming the rule).\n- An optional `--context` framing what the labels mean here.\n\n## Outputs\n\nA semantic-judgment record: `{\"label\": <one of the allowed labels>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4): same item, labels, and model produce the same label.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nThe semantic router's workhorse: puts an item into exactly one of the labels you allow. `cat emails.ndjson | classify --labels urgent,billing,spam,personal` per item. The label is token-level constrained to the allowed set — a hallucinated label is impossible by construction.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The item to classify (stdin or first positional argument).\n- `--labels`: 2-64 allowed labels, comma- or newline-separated, no duplicates (violations are hard errors naming the rule).\n- An optional `--context` framing what the labels mean here.\n\n## Outputs\n\nA semantic-judgment record: `{\"label\": <one of the allowed labels>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4): same item, labels, and model produce the same label.",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -396,7 +416,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8;list\";out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Boolean Array to String",
     "aliases": [
       "coerce-boolean-array-to-string",
@@ -435,7 +455,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:integer;numeric\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Boolean to Integer",
     "aliases": [
       "coerce-boolean-to-integer",
@@ -474,7 +494,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=media:numeric",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Boolean to Number",
     "aliases": [
       "coerce-boolean-to-number",
@@ -513,7 +533,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=media:record",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Boolean to Object",
     "aliases": [
       "coerce-boolean-to-object",
@@ -552,7 +572,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Boolean to String",
     "aliases": [
       "coerce-boolean-to-string",
@@ -591,7 +611,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;list;numeric\";out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Integer Array to String",
     "aliases": [
       "coerce-integer-array-to-string",
@@ -630,7 +650,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:bool;enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Integer to Boolean",
     "aliases": [
       "coerce-integer-to-boolean"
@@ -668,7 +688,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:numeric",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Integer to Number",
     "aliases": [
       "coerce-integer-to-number",
@@ -707,7 +727,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:record",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Integer to Object",
     "aliases": [
       "coerce-integer-to-object",
@@ -746,7 +766,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Integer to String",
     "aliases": [
       "coerce-integer-to-string",
@@ -785,7 +805,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:list;numeric\";out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Number Array to String",
     "aliases": [
       "coerce-number-array-to-string",
@@ -824,7 +844,7 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:bool;enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Number to Boolean",
     "aliases": [
       "coerce-number-to-boolean"
@@ -862,7 +882,7 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:integer;numeric\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Number to Integer",
     "aliases": [
       "coerce-number-to-integer",
@@ -901,7 +921,7 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=media:record",
-    "version": 2,
+    "version": 3,
     "title": "Coerce Number to Object",
     "aliases": [
       "coerce-number-to-object",
@@ -940,7 +960,7 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Number to String",
     "aliases": [
       "coerce-number-to-string",
@@ -979,7 +999,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:list;record\";out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Object Array to String",
     "aliases": [
       "coerce-object-array-to-string",
@@ -1018,7 +1038,7 @@
   },
   {
     "urn": "cap:coerce;in=media:record;out=\"media:enc=utf-8\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Object to String",
     "aliases": [
       "coerce-object-to-string",
@@ -1057,7 +1077,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8;list\";out=\"media:enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce String Array to String",
     "aliases": [
       "coerce-string-array-to-string",
@@ -1096,7 +1116,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=\"media:bool;enc=utf-8\"",
-    "version": 2,
+    "version": 3,
     "title": "Coerce String to Boolean",
     "aliases": [
       "coerce-string-to-boolean"
@@ -1134,7 +1154,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce String to Integer",
     "aliases": [
       "coerce-string-to-integer",
@@ -1173,7 +1193,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=media:numeric",
-    "version": 3,
+    "version": 4,
     "title": "Coerce String to Number",
     "aliases": [
       "coerce-string-to-number",
@@ -1212,7 +1232,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf-8\";out=media:record",
-    "version": 3,
+    "version": 4,
     "title": "Coerce String to Object",
     "aliases": [
       "coerce-string-to-object",
@@ -1251,7 +1271,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=csv;list;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Merge CSV Files",
     "aliases": [
       "collect-csv-records-to-csv",
@@ -1290,7 +1310,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=csv;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Merge CSV Files into JSON Array",
     "aliases": [
       "collect-csv-records-to-json-array"
@@ -1328,7 +1348,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=csv;list;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Merge CSV Files into YAML List",
     "aliases": [
       "collect-csv-records-to-yaml-list"
@@ -1366,7 +1386,7 @@
   },
   {
     "urn": "cap:collect-json-objects;in=\"media:fmt=json;record\";out=\"media:fmt=json;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Collect JSON Objects into Array",
     "aliases": [
       "collect-json-objects-to-array",
@@ -1405,7 +1425,7 @@
   },
   {
     "urn": "cap:collect-json-objects;in=\"media:fmt=json;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Collect JSON Objects into CSV",
     "aliases": [
       "collect-json-objects-to-csv",
@@ -1444,7 +1464,7 @@
   },
   {
     "urn": "cap:collect-json-objects;in=\"media:fmt=json;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Collect JSON Objects into YAML List",
     "aliases": [
       "collect-json-objects-to-yaml-list",
@@ -1483,7 +1503,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=yaml;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Merge YAML Mappings into CSV",
     "aliases": [
       "collect-yaml-mappings-to-csv",
@@ -1522,7 +1542,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=yaml;record\";out=\"media:fmt=json;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Merge YAML Mappings into JSON Array",
     "aliases": [
       "collect-yaml-mappings-to-json-array",
@@ -1561,7 +1581,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:fmt=yaml;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Merge YAML Mappings",
     "aliases": [
       "collect-yaml-mappings-to-yaml-list",
@@ -1600,7 +1620,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=csv;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert CSV to JSON Array of Objects",
     "aliases": [
       "convert-csv-to-json-list-records",
@@ -1639,7 +1659,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=csv;list;record\";out=\"media:enc=utf-8;list\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert CSV to Text List",
     "aliases": [
       "convert-csv-to-text-list",
@@ -1678,7 +1698,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=csv;list;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert CSV to YAML List of Mappings",
     "aliases": [
       "convert-csv-to-yaml-list-records"
@@ -1716,7 +1736,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert JSON Array of Objects to CSV",
     "aliases": [
       "convert-json-list-records-to-csv",
@@ -1755,7 +1775,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list;record\";out=\"media:fmt=yaml;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert JSON Array of Objects to YAML List of Mappings",
     "aliases": [
       "convert-json-list-records-to-yaml-list-records",
@@ -1794,7 +1814,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list\";out=\"media:enc=utf-8;list\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert JSON Array to Text List",
     "aliases": [
       "convert-json-list-to-text-list",
@@ -1833,7 +1853,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;list\";out=\"media:fmt=yaml;list\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert JSON Array to YAML List",
     "aliases": [
       "convert-json-list-to-yaml-list",
@@ -1872,7 +1892,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json;record\";out=\"media:fmt=yaml;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert JSON Object to YAML Mapping",
     "aliases": [
       "convert-json-record-to-yaml-record",
@@ -1911,7 +1931,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=json\";out=\"media:fmt=yaml\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert JSON Value to YAML",
     "aliases": [
       "convert-json-value-to-yaml-value",
@@ -1950,7 +1970,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf-8;list\";out=\"media:fmt=csv;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert Text List to CSV",
     "aliases": [
       "convert-text-list-to-csv",
@@ -1989,7 +2009,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf-8;list\";out=\"media:fmt=json;list\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert Text List to JSON Array",
     "aliases": [
       "convert-text-list-to-json-list",
@@ -2028,7 +2048,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf-8;list\";out=\"media:fmt=yaml;list\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert Text List to YAML Sequence",
     "aliases": [
       "convert-text-list-to-yaml-list",
@@ -2067,7 +2087,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list;record\";out=\"media:fmt=csv;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert YAML List of Mappings to CSV",
     "aliases": [
       "convert-yaml-list-records-to-csv",
@@ -2106,7 +2126,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert YAML List of Mappings to JSON Array of Objects",
     "aliases": [
       "convert-yaml-list-records-to-json-list-records",
@@ -2145,7 +2165,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list\";out=\"media:fmt=json;list\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert YAML List to JSON Array",
     "aliases": [
       "convert-yaml-list-to-json-list",
@@ -2184,7 +2204,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;list\";out=\"media:enc=utf-8;list\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert YAML Sequence to Text List",
     "aliases": [
       "convert-yaml-list-to-text-list",
@@ -2223,7 +2243,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml;record\";out=\"media:fmt=json;record\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert YAML Mapping to JSON Object",
     "aliases": [
       "convert-yaml-record-to-json-record",
@@ -2262,7 +2282,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:fmt=yaml\";out=\"media:fmt=json\"",
-    "version": 2,
+    "version": 3,
     "title": "Convert YAML Value to JSON",
     "aliases": [
       "convert-yaml-value-to-json-value",
@@ -2301,7 +2321,7 @@
   },
   {
     "urn": "cap:decimate-sequence;effect=none",
-    "version": 2,
+    "version": 3,
     "title": "Decimate Sequence",
     "aliases": [
       "decimate-sequence"
@@ -2349,7 +2369,7 @@
   },
   {
     "urn": "cap:edit;in=\"media:fmt=json;list;record\";out=\"media:fmt=json;list;record\"",
-    "version": 3,
+    "version": 4,
     "title": "Edit (Instruction-Driven Transform)",
     "aliases": [
       "edit-records"
@@ -2414,13 +2434,23 @@
   },
   {
     "urn": "cap:constrained;explain;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 3,
+    "version": 4,
     "title": "Explain (Root-Cause Hypothesis) (Constrained, English)",
     "aliases": [
       "explain-en"
     ],
     "cap_description": "Explain opaque data (logs, errors, configs) against a goal, with verified verbatim evidence and next checks",
-    "documentation": "## Purpose\n\n`cat crash.log | explain --goal \"find likely root cause\"`: forms the most likely hypothesis serving the goal, cites 1-5 VERBATIM excerpts from the data as evidence, and proposes up to 3 concrete next checks. The engine VERIFIES every evidence excerpt actually occurs in the data — an explanation that cannot point at real evidence is a guess, and a fabricated citation is a hard error.\n\nBuilt for logs; works on configs, stack traces, and other opaque artifacts. Part of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The data to explain (stdin or first positional argument).\n- `--goal`: what the explanation is for (required).\n\n## Outputs\n\nA semantic-judgment record: `{\"hypothesis\": <string>, \"evidence\": [<verified verbatim excerpts>], \"next_checks\": [<concrete checks>], \"confidence\": <0.0-1.0>, \"reason\": \"<why this hypothesis beats the alternatives>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\n`cat crash.log | explain --goal \"find likely root cause\"`: forms the most likely hypothesis serving the goal, cites 1-5 VERBATIM excerpts from the data as evidence, and proposes up to 3 concrete next checks. The engine VERIFIES every evidence excerpt actually occurs in the data — an explanation that cannot point at real evidence is a guess, and a fabricated citation is a hard error.\n\nBuilt for logs; works on configs, stack traces, and other opaque artifacts. Part of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The data to explain (stdin or first positional argument).\n- `--goal`: what the explanation is for (required).\n\n## Outputs\n\nA semantic-judgment record: `{\"hypothesis\": <string>, \"evidence\": [<verified verbatim excerpts>], \"next_checks\": [<concrete checks>], \"confidence\": <0.0-1.0>, \"reason\": \"<why this hypothesis beats the alternatives>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -2605,13 +2635,23 @@
   },
   {
     "urn": "cap:constrained;extract;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 3,
+    "version": 4,
     "title": "Extract (Schema-Guided Extraction) (Constrained, English)",
     "aliases": [
       "extract-en"
     ],
     "cap_description": "Extract structured fields from messy content into a caller-supplied JSON schema, wrapped in the judgment envelope",
-    "documentation": "## Purpose\n\n`cat invoice.txt | extract --schema invoice.schema.json`: pulls the fields your schema describes out of messy content. The judgment-envelope generalization of [Generate JSON](https://capdag.com/browse/cap:generate-json;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record\"): the extracted instance lands in the envelope's `result` field, so extraction confidence and ambiguity notes are first-class — and the WHOLE response (instance and envelope) is token-level constrained.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The content to extract from (stdin or first positional argument).\n- `--schema`: the JSON Schema the `result` field must validate against.\n\n## Outputs\n\nA semantic-judgment record: `{\"result\": <instance matching your schema>, \"confidence\": <0.0-1.0>, \"reason\": \"<anything ambiguous or missing>\"}`.\n\n## Notes\n\n- Extraction is faithful by contract: only what the content states is extracted — absent values are omitted or null where the schema permits, never invented.\n- Judgments are deterministic (law P4).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\n`cat invoice.txt | extract --schema invoice.schema.json`: pulls the fields your schema describes out of messy content. The judgment-envelope generalization of [Generate JSON](https://capdag.com/browse/cap:generate-json;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record\"): the extracted instance lands in the envelope's `result` field, so extraction confidence and ambiguity notes are first-class — and the WHOLE response (instance and envelope) is token-level constrained.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The content to extract from (stdin or first positional argument).\n- `--schema`: the JSON Schema the `result` field must validate against.\n\n## Outputs\n\nA semantic-judgment record: `{\"result\": <instance matching your schema>, \"confidence\": <0.0-1.0>, \"reason\": \"<anything ambiguous or missing>\"}`.\n\n## Notes\n\n- Extraction is faithful by contract: only what the content states is extracted — absent values are omitted or null where the schema permits, never invented.\n- Judgments are deterministic (law P4).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -2796,14 +2836,24 @@
   },
   {
     "urn": "cap:constrained;generate-json;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record\"",
-    "version": 3,
+    "version": 4,
     "title": "Generate JSON (Constrained, English)",
     "aliases": [
       "generate-json-en",
       "generate-json"
     ],
     "cap_description": "Generate JSON from text content, constrained to validate against a caller-supplied JSON schema.",
-    "documentation": "## Purpose\n\nRuns constrained LLM generation over the supplied content to produce a JSON\nobject that validates against the supplied JSON schema. Token-level schema\nenforcement (via LLGuidance on the GGUF backend) guarantees the output parses\nand satisfies the schema — downstream code can `serde_json::from_str::<T>` or\nits equivalent without defensive error handling.\n\n## Inputs\n\n- Content to analyze — plain text (the cap's stdin-flowing input).\n- `--schema`: a JSON Schema object describing the required output shape.\n- Language code (default: `en`).\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA JSON object conforming to the supplied schema.\n\n## Notes\n\n- The output schema is supplied per-call, not looked up from any registry.\n  Callers who want a fixed-shape \"named query\" endpoint should define their\n  own cap that wraps this one with a baked-in schema.\n- Constraint enforcement is at the token-sampling level — the model cannot\n  emit tokens that would violate the schema.\n- See also: [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  and [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  for fixed-shape boolean classification caps.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nRuns constrained LLM generation over the supplied content to produce a JSON\nobject that validates against the supplied JSON schema. Token-level schema\nenforcement (via LLGuidance on the GGUF backend) guarantees the output parses\nand satisfies the schema — downstream code can `serde_json::from_str::<T>` or\nits equivalent without defensive error handling.\n\n## Inputs\n\n- Content to analyze — plain text (the cap's stdin-flowing input).\n- `--schema`: a JSON Schema object describing the required output shape.\n- Language code (default: `en`).\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA JSON object conforming to the supplied schema.\n\n## Notes\n\n- The output schema is supplied per-call, not looked up from any registry.\n  Callers who want a fixed-shape \"named query\" endpoint should define their\n  own cap that wraps this one with a baked-in schema.\n- Constraint enforcement is at the token-sampling level — the model cannot\n  emit tokens that would violate the schema.\n- See also: [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  and [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")\n  for fixed-shape boolean classification caps.",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -3030,13 +3080,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-decision;out=\"media:decision;fmt=json;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Make a Decision (Constrained, English)",
     "aliases": [
       "make-decision-en"
     ],
     "cap_description": "Make a single binary (yes/no, true/false) decision based on content and a question",
-    "documentation": "## Purpose\n\nClassifies content against a single yes/no question using constrained LLM generation, guaranteeing a structured JSON boolean output. Use this for routing, filtering, and classification steps in pipelines where downstream code expects a machine-readable true/false value.\n\n## Inputs\n\n- Content to analyze (text).\n- A binary question about that content (e.g. \"Does this document contain personally identifiable information?\").\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content; the backend auto-sizes its context window to the prompt, so nothing needs to \"fit\").\n- Confidence threshold (default 0.7) — decisions below this threshold may be flagged.\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA JSON record with a `value` boolean field and a confidence score.\n\n## Notes\n\n- Output is guaranteed to be valid JSON (via LLGuidance constraint) — no parsing of free-form text required.\n- For multiple simultaneous questions against the same content, use [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") to avoid redundant model loads.\n- For decisions with natural-language explanations, run an LLM-inference cap directly (the `inference-*-en` orchestrator caps were removed; use `cap:llm-text-generation-*` plus your own prompt).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nClassifies content against a single yes/no question using constrained LLM generation, guaranteeing a structured JSON boolean output. Use this for routing, filtering, and classification steps in pipelines where downstream code expects a machine-readable true/false value.\n\n## Inputs\n\n- Content to analyze (text).\n- A binary question about that content (e.g. \"Does this document contain personally identifiable information?\").\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content; the backend auto-sizes its context window to the prompt, so nothing needs to \"fit\").\n- Confidence threshold (default 0.7) — decisions below this threshold may be flagged.\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA JSON record with a `value` boolean field and a confidence score.\n\n## Notes\n\n- Output is guaranteed to be valid JSON (via LLGuidance constraint) — no parsing of free-form text required.\n- For multiple simultaneous questions against the same content, use [Make Multiple Decisions](https://capdag.com/browse/cap:make-multiple-decisions;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") to avoid redundant model loads.\n- For decisions with natural-language explanations, run an LLM-inference cap directly (the `inference-*-en` orchestrator caps were removed; use `cap:llm-text-generation-*` plus your own prompt).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -3262,13 +3322,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-multiple-decisions;out=\"media:decision;fmt=json;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Make Multiple Decisions (Constrained, English)",
     "aliases": [
       "make-multiple-decisions-en"
     ],
     "cap_description": "Make multiple binary (yes/no, true/false) decisions based on content and multiple questions",
-    "documentation": "## Purpose\n\nClassifies content against multiple yes/no questions in a single model call using constrained LLM generation. More efficient than calling [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") repeatedly when you have several questions about the same document.\n\n## Inputs\n\n- Content to analyze (text).\n- A sequence of binary questions (one per line, passed as a multi-value argument). All questions are evaluated against the same content in one inference pass.\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content).\n- Confidence threshold (default 0.7).\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA sequence of JSON records, one per question, each containing a question identifier and a boolean `value`.\n\n## Notes\n\n- Output order matches the input question order.\n- All questions share the same content context in a single inference call, which is significantly more efficient than one call per question.\n- Output is guaranteed structured JSON via LLGuidance constraint.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nClassifies content against multiple yes/no questions in a single model call using constrained LLM generation. More efficient than calling [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\") repeatedly when you have several questions about the same document.\n\n## Inputs\n\n- Content to analyze (text).\n- A sequence of binary questions (one per line, passed as a multi-value argument). All questions are evaluated against the same content in one inference pass.\n- Language code (default: `en`).\n- An optional content-length bound (default 0 = whole content).\n- Confidence threshold (default 0.7).\n- A model spec (defaults to `unsloth/Qwen3-4B-Instruct-2507-GGUF` Q4_K_M, the smallest model that answered every judgment test correctly).\n\n## Outputs\n\nA sequence of JSON records, one per question, each containing a question identifier and a boolean `value`.\n\n## Notes\n\n- Output order matches the input question order.\n- All questions share the same content context in a single inference call, which is significantly more efficient than one call per question.\n- Output is guaranteed structured JSON via LLGuidance constraint.",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -3494,13 +3564,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;normalize;out=\"media:fmt=json;record;semantic-judgment\"",
-    "version": 3,
+    "version": 4,
     "title": "Normalize (Entity Canonicalization) (Constrained, English)",
     "aliases": [
       "normalize-en"
     ],
     "cap_description": "Canonicalize a messy real-world entity value, with confidence and rationale",
-    "documentation": "## Purpose\n\nCanonicalizes messy real-world values: dates to RFC 3339, phone numbers to E.164, companies to registered names, people to \"Given Family\", addresses to one comma-separated line, units to SI. Canonicalization reformats — it never drops identifying information. A value that cannot be read as the requested type at all comes back with an empty canonical form and confidence 0.0, with the reason naming what is wrong — visible failure, never a guess.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The value to normalize (stdin or first positional argument).\n- `--type`: the entity kind (company, person, date, address, unit, phone, ...).\n- An optional `--locale` (BCP 47, e.g. `it-IT`) for locale-dependent values like numeric dates.\n\n## Outputs\n\nA semantic-judgment record: `{\"canonical\": <the canonical form>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nCanonicalizes messy real-world values: dates to RFC 3339, phone numbers to E.164, companies to registered names, people to \"Given Family\", addresses to one comma-separated line, units to SI. Canonicalization reformats — it never drops identifying information. A value that cannot be read as the requested type at all comes back with an empty canonical form and confidence 0.0, with the reason naming what is wrong — visible failure, never a guess.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The value to normalize (stdin or first positional argument).\n- `--type`: the entity kind (company, person, date, address, unit, phone, ...).\n- An optional `--locale` (BCP 47, e.g. `it-IT`) for locale-dependent values like numeric dates.\n\n## Outputs\n\nA semantic-judgment record: `{\"canonical\": <the canonical form>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -3698,7 +3778,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf-8\";out=\"media:fmt=csv;list;record\";repair",
-    "version": 2,
+    "version": 3,
     "title": "Repair CSV",
     "aliases": [
       "repair-csv"
@@ -3736,7 +3816,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf-8\";out=\"media:fmt=json\";repair",
-    "version": 2,
+    "version": 3,
     "title": "Repair JSON",
     "aliases": [
       "repair-json"
@@ -3774,13 +3854,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";route",
-    "version": 3,
+    "version": 4,
     "title": "Route (Dispatch Judgment) (Constrained, English)",
     "aliases": [
       "route-en"
     ],
     "cap_description": "Pick which target's contract covers an item, with confidence and rationale",
-    "documentation": "## Purpose\n\n`classify` specialized for dispatch: each target's description is its CONTRACT, and the judgment picks the single target whose contract covers the item. This is the primitive a machine uses to send items down different DAG branches. The target is token-level constrained to the given set.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The item to route (stdin or first positional argument).\n- `--targets`: a JSON object of `{\"target-name\": \"what it handles\"}` — 2-64 entries; empty names or descriptions are hard errors.\n\n## Outputs\n\nA semantic-judgment record: `{\"target\": <one of the target names>, \"confidence\": <0.0-1.0>, \"reason\": \"<why the item falls under that contract>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\n`classify` specialized for dispatch: each target's description is its CONTRACT, and the judgment picks the single target whose contract covers the item. This is the primitive a machine uses to send items down different DAG branches. The target is token-level constrained to the given set.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The item to route (stdin or first positional argument).\n- `--targets`: a JSON object of `{\"target-name\": \"what it handles\"}` — 2-64 entries; empty names or descriptions are hard errors.\n\n## Outputs\n\nA semantic-judgment record: `{\"target\": <one of the target names>, \"confidence\": <0.0-1.0>, \"reason\": \"<why the item falls under that contract>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -3965,13 +4055,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";same",
-    "version": 3,
+    "version": 4,
     "title": "Same (Semantic Equivalence) (Constrained, English)",
     "aliases": [
       "same-en"
     ],
     "cap_description": "Judge whether two items refer to the same thing, with confidence and rationale",
-    "documentation": "## Purpose\n\nThe semantic `cmp`: decides whether two items refer to the same real-world thing — not whether they are textually equal. `same --context \"company names in invoices\" \"OpenAI LLC\" \"Open AI\"` returns `{\"same\": true, \"confidence\": 0.94, \"reason\": \"spacing/legal suffix variation\"}`. Use it in loops and joins wherever fuzzy identity matters: entity deduplication, record matching, reconciliation.\n\nThe first of the semantic-primitive cap family (see docs/semantic-primitives.md): Unix-style stdin→transform→stdout tools whose transform is a machine judgment with a guaranteed structured shape.\n\n## Inputs\n\n- The first item (stdin or first positional argument).\n- The second item (second positional argument).\n- An optional `--context` framing what \"the same\" means here (e.g. \"company names on invoices\"). One sentence; it configures the judgment, it is not a conversation.\n- A model spec (defaults to the offline-travel-kit GGUF LLM).\n\n## Outputs\n\nA semantic-judgment record: `{\"same\": <bool>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`. The shape is guaranteed by token-level constrained generation (LLGuidance) — downstream code parses it without error handling for malformed text.\n\n## Notes\n\n- Judgment caps are deterministic by default (temperature 0 semantics at the backend; law P4 in the design doc): the same items, context, and model produce the same judgment.\n- Spelling variants, abbreviations, legal suffixes, and formatting differences do not make two references to one thing different; two genuinely different things are not the same however similar they look. The `reason` field names the decisive evidence.\n- Served by the engine's generative-text cartridge over constrained GGUF inference (like [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nThe semantic `cmp`: decides whether two items refer to the same real-world thing — not whether they are textually equal. `same --context \"company names in invoices\" \"OpenAI LLC\" \"Open AI\"` returns `{\"same\": true, \"confidence\": 0.94, \"reason\": \"spacing/legal suffix variation\"}`. Use it in loops and joins wherever fuzzy identity matters: entity deduplication, record matching, reconciliation.\n\nThe first of the semantic-primitive cap family (see docs/semantic-primitives.md): Unix-style stdin→transform→stdout tools whose transform is a machine judgment with a guaranteed structured shape.\n\n## Inputs\n\n- The first item (stdin or first positional argument).\n- The second item (second positional argument).\n- An optional `--context` framing what \"the same\" means here (e.g. \"company names on invoices\"). One sentence; it configures the judgment, it is not a conversation.\n- A model spec (defaults to the offline-travel-kit GGUF LLM).\n\n## Outputs\n\nA semantic-judgment record: `{\"same\": <bool>, \"confidence\": <0.0-1.0>, \"reason\": \"<one sentence>\"}`. The shape is guaranteed by token-level constrained generation (LLGuidance) — downstream code parses it without error handling for malformed text.\n\n## Notes\n\n- Judgment caps are deterministic by default (temperature 0 semantics at the backend; law P4 in the design doc): the same items, context, and model produce the same judgment.\n- Spelling variants, abbreviations, legal suffixes, and formatting differences do not make two references to one thing different; two genuinely different things are not the same however similar they look. The `reason` field names the decisive evidence.\n- Served by the engine's generative-text cartridge over constrained GGUF inference (like [Make a Decision](https://capdag.com/browse/cap:make-decision;constrained;in=\"media:enc=utf-8\";language=en;out=\"media:decision;fmt=json;record\")).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -4169,7 +4269,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf-8;ext=txt;plain-text\";out=\"media:enc=utf-8;ext=txt;plain-text\";save-as-txt",
-    "version": 3,
+    "version": 4,
     "title": "Save as Plain Text",
     "aliases": [
       "save-as-txt"
@@ -4207,13 +4307,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";score",
-    "version": 3,
+    "version": 4,
     "title": "Score (Rubric Scoring) (Constrained, English)",
     "aliases": [
       "score-en"
     ],
     "cap_description": "Score an item against a rubric on an integer scale, with confidence and rationale",
-    "documentation": "## Purpose\n\nCriterion-referenced scoring: judges an item strictly against YOUR rubric, not against general quality, and emits an integer on your scale. The score is token-level constrained to the scale — it cannot leave the range.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The item to score (stdin or first positional argument).\n- `--rubric`: the criteria text the score is judged against (required — a score without a rubric is a vibe, not a judgment).\n- `--scale`: integer range `min..max` (default `0..10`).\n\n## Outputs\n\nA semantic-judgment record: `{\"score\": <integer on the scale>, \"confidence\": <0.0-1.0>, \"reason\": \"<the rubric criteria that decided it>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\nCriterion-referenced scoring: judges an item strictly against YOUR rubric, not against general quality, and emits an integer on your scale. The score is token-level constrained to the scale — it cannot leave the range.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The item to score (stdin or first positional argument).\n- `--rubric`: the criteria text the score is judged against (required — a score without a rubric is a vibe, not a judgment).\n- `--scale`: integer range `min..max` (default `0..10`).\n\n## Outputs\n\nA semantic-judgment record: `{\"score\": <integer on the scale>, \"confidence\": <0.0-1.0>, \"reason\": \"<the rubric criteria that decided it>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -4412,13 +4522,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:enc=utf-8;ext=txt;plain-text\";summarize",
-    "version": 3,
+    "version": 4,
     "title": "Summarize (Purpose-Driven Compression) (Constrained, English)",
     "aliases": [
       "summarize-en"
     ],
     "cap_description": "Compress content while preserving exactly the detail that serves a stated purpose",
-    "documentation": "## Purpose\n\n`cat thread.txt | summarize --for \"decide next action\"`: compression judged by whether the reader can act on it, not by coverage. The purpose is REQUIRED — a summary without a purpose is lossy in unknown ways; making the purpose mandatory is what turns this from a chatbot verb into a tool.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md). Unlike the judgment caps, the output is the summary text itself (finalised plain text); the model's confidence and its note on what was deliberately dropped are logged.\n\n## Inputs\n\n- The content to summarize (stdin or first positional argument).\n- `--for`: the purpose the summary serves (required).\n- An optional `--budget`: maximum length in words.\n\n## Outputs\n\nThe summary as plain text.\n\n## Notes\n\n- An empty summary is a hard error carrying the model's reason — never an empty artifact.\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\n`cat thread.txt | summarize --for \"decide next action\"`: compression judged by whether the reader can act on it, not by coverage. The purpose is REQUIRED — a summary without a purpose is lossy in unknown ways; making the purpose mandatory is what turns this from a chatbot verb into a tool.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md). Unlike the judgment caps, the output is the summary text itself (finalised plain text); the model's confidence and its note on what was deliberately dropped are logged.\n\n## Inputs\n\n- The content to summarize (stdin or first positional argument).\n- `--for`: the purpose the summary serves (required).\n- An optional `--budget`: maximum length in words.\n\n## Outputs\n\nThe summary as plain text.\n\n## Notes\n\n- An empty summary is a hard error carrying the model's reason — never an empty artifact.",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -4616,13 +4736,23 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:fmt=json;record;semantic-judgment\";verify",
-    "version": 3,
+    "version": 4,
     "title": "Verify (Requirements Check) (Constrained, English)",
     "aliases": [
       "verify-en"
     ],
     "cap_description": "Check an artifact against requirements and report each violation with evidence and severity",
-    "documentation": "## Purpose\n\n`verify report.txt --against rubric.md`: checks an artifact against every requirement and reports each violation with quoted requirement, decisive evidence, and severity (low/medium/high). `pass` is true only with zero violations — and the cap hard-errors on internally inconsistent judgments (pass with violations, or fail without any), exposing constraint regressions instead of forwarding them.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The artifact to check (stdin or first positional argument).\n- `--against`: the requirements/rubric text.\n\n## Outputs\n\nA semantic-judgment record: `{\"pass\": <bool>, \"violations\": [{\"requirement\", \"evidence\", \"severity\"}], \"confidence\": <0.0-1.0>, \"reason\": \"<one-sentence verdict>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).\n\n## Constrained\nMarker indicating constrained generation: output is forced to satisfy a schema\nor grammar. The model is guided so only valid tokens are sampled at each step;\noutput is structurally guaranteed.\n\nThe cap performs constrained generation.\n\n## Language\nThe natural language of textual content. The `language` key carries an ISO-639\nlanguage code: `en` for English, `es` for Spanish, `fr` for French, and so on.\nCaps that produce or consume language-specific content (summarisation, decision-\nmaking, code generation) tag with the language they target.\n\nEnglish. ISO 639-1 code `en`.",
+    "documentation": "## Purpose\n\n`verify report.txt --against rubric.md`: checks an artifact against every requirement and reports each violation with quoted requirement, decisive evidence, and severity (low/medium/high). `pass` is true only with zero violations — and the cap hard-errors on internally inconsistent judgments (pass with violations, or fail without any), exposing constraint regressions instead of forwarding them.\n\nPart of the semantic-primitive cap family (docs/semantic-primitives.md).\n\n## Inputs\n\n- The artifact to check (stdin or first positional argument).\n- `--against`: the requirements/rubric text.\n\n## Outputs\n\nA semantic-judgment record: `{\"pass\": <bool>, \"violations\": [{\"requirement\", \"evidence\", \"severity\"}], \"confidence\": <0.0-1.0>, \"reason\": \"<one-sentence verdict>\"}`.\n\n## Notes\n\n- Judgments are deterministic (law P4).",
+    "dims": [
+      {
+        "dim": "constrained",
+        "value": "constrained"
+      },
+      {
+        "dim": "language",
+        "value": "en"
+      }
+    ],
     "args": [
       {
         "media_urn": "media:enc=utf-8",
@@ -4807,7 +4937,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\";resample-series",
-    "version": 1,
+    "version": 2,
     "title": "Resample Series",
     "aliases": [
       "resample-series"
@@ -4869,7 +4999,7 @@
   },
   {
     "urn": "cap:change-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\"",
-    "version": 1,
+    "version": 2,
     "title": "Change Series",
     "aliases": [
       "change-series"
@@ -4932,7 +5062,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";lag-series;out=\"media:fmt=json;list;record;time-series\"",
-    "version": 1,
+    "version": 2,
     "title": "Lag Series",
     "aliases": [
       "lag-series"
@@ -4980,7 +5110,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\";rolling-statistic",
-    "version": 2,
+    "version": 3,
     "title": "Rolling Statistic",
     "aliases": [
       "rolling-statistic"
@@ -5054,7 +5184,7 @@
   },
   {
     "urn": "cap:align-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:aligned-series;fmt=json;list;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Align Series",
     "aliases": [
       "align-series"
@@ -5089,7 +5219,7 @@
   },
   {
     "urn": "cap:combine-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\"",
-    "version": 1,
+    "version": 2,
     "title": "Combine Series",
     "aliases": [
       "combine-series"
@@ -5151,7 +5281,7 @@
   },
   {
     "urn": "cap:filter-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\"",
-    "version": 1,
+    "version": 2,
     "title": "Filter Series",
     "aliases": [
       "filter-series"
@@ -5221,7 +5351,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;record;series-summary\";summarize-series",
-    "version": 1,
+    "version": 2,
     "title": "Summarize Series",
     "aliases": [
       "summarize-series"
@@ -5269,7 +5399,7 @@
   },
   {
     "urn": "cap:describe-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;record;series-description\"",
-    "version": 1,
+    "version": 2,
     "title": "Describe Series",
     "aliases": [
       "describe-series"
@@ -5304,7 +5434,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;record;regression\";regress-series",
-    "version": 1,
+    "version": 2,
     "title": "Regress Series",
     "aliases": [
       "regress-series"
@@ -5361,7 +5491,7 @@
   },
   {
     "urn": "cap:correlate-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:correlation;fmt=json;record\"",
-    "version": 1,
+    "version": 2,
     "title": "Correlate Series",
     "aliases": [
       "correlate-series"
@@ -5410,7 +5540,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record\";out=\"media:fmt=json;list;record\";transform-records",
-    "version": 1,
+    "version": 2,
     "title": "Transform Records",
     "aliases": [
       "transform-records"
@@ -5458,7 +5588,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;forecast-outcomes;list;record\";out=\"media:fmt=json;forecast-score;record\";score-forecasts",
-    "version": 1,
+    "version": 2,
     "title": "Score Forecasts",
     "aliases": [
       "score-forecasts"
@@ -5493,7 +5623,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;forecast-trial;record\";try-forecasting-ways",
-    "version": 1,
+    "version": 2,
     "title": "Try Forecasting Ways",
     "aliases": [
       "try-forecasting-ways"
