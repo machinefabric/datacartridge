@@ -14,4 +14,4 @@ serde = { version = "1.0", features = ["derive"] }
 # version, so the runtime is pinned exactly.
 [dependencies.lungo]
 features = ["serde"]
-version = "=1.115.34"
+version = "=1.116.0"
