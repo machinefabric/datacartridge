@@ -443,7 +443,7 @@ impl Op<()> for DecimateSequenceOp {
         // them separately. The keep-every stream is a small scalar;
         // the sequence stream's items are buffered into a Vec
         // because we don't start emitting until we know N.
-        let keep_every_urn = "media:keep-every;numeric";
+        let keep_every_urn = "media:integer;keep-every;numeric";
 
         let mut keep_every_raw: Option<String> = None;
         let mut sequence_items: Vec<(Vec<u8>, Option<capdag::StreamMeta>)> = Vec::new();
