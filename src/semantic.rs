@@ -993,7 +993,7 @@ impl Op<()> for MakeDecisionOp {
 
         let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
         let question = require_conforming(&streams, "media:enc=utf-8;question", "question")?;
-        let max_content_length = optional_num(&streams, "media:max-content-length;numeric", "max_content_length")?;
+        let max_content_length = optional_num(&streams, "media:integer;max-content-length;numeric", "max_content_length")?;
         // The threshold arg is REAL: below-threshold judgments are flagged on
         // the record (and warned), exactly as the cap doc promises.
         let confidence_threshold: f32 = optional_num(&streams, "media:confidence-threshold;numeric", "confidence_threshold")?
@@ -1055,7 +1055,7 @@ impl Op<()> for MakeMultipleDecisionsOp {
             .filter(|line| !line.is_empty())
             .map(|line| line.to_string())
             .collect();
-        let max_content_length = optional_num(&streams, "media:max-content-length;numeric", "max_content_length")?;
+        let max_content_length = optional_num(&streams, "media:integer;max-content-length;numeric", "max_content_length")?;
         let confidence_threshold: f32 = optional_num(&streams, "media:confidence-threshold;numeric", "confidence_threshold")?
             .unwrap_or(0.7);
         let model_spec = resolve_model_spec(&streams)?;
@@ -1540,21 +1540,21 @@ impl Op<()> for SummarizeOp {
 
         let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
         let purpose = require_conforming(&streams, "media:criterion;enc=utf-8", "purpose")?;
-        let budget_words = match optional_conforming(&streams, "media:numeric;word-budget")? {
+        let budget_words = match optional_conforming(&streams, "media:integer;numeric;word-budget")? {
             None => None,
             Some(raw) => {
                 let n: u64 = raw.trim().parse().map_err(|_| {
                     input_arg_error(
                         "INVALID_INPUT",
                         format!("--budget must be a positive word count, got '{}'", raw),
-                        "media:numeric;word-budget",
+                        "media:integer;numeric;word-budget",
                     )
                 })?;
                 if n == 0 {
                     return Err(input_arg_error(
                         "INVALID_INPUT",
                         "--budget must be a positive word count, got 0",
-                        "media:numeric;word-budget",
+                        "media:integer;numeric;word-budget",
                     ));
                 }
                 Some(n)
@@ -1822,7 +1822,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to analyze for the binary decision"));
         cap.add_arg(flag_arg("media:enc=utf-8;question", "--question", "The binary question to answer about the content"));
         cap.add_arg(language_arg());
-        cap.add_arg(opt_flag_arg("media:max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
+        cap.add_arg(opt_flag_arg("media:integer;max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
         cap.add_arg(opt_flag_arg("media:confidence-threshold;numeric", "--confidence-threshold", "Minimum confidence threshold for decisions", Some(serde_json::json!(0.7))));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new("media:decision;fmt=json;record", "output", "Binary decision result (true/false)"));
@@ -1839,7 +1839,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         cap.add_arg(content_arg("Content to analyze for the binary decisions"));
         cap.add_arg(flag_arg("media:enc=utf-8;question", "--questions", "The binary questions (one per line) to answer about the content"));
         cap.add_arg(language_arg());
-        cap.add_arg(opt_flag_arg("media:max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
+        cap.add_arg(opt_flag_arg("media:integer;max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
         cap.add_arg(opt_flag_arg("media:confidence-threshold;numeric", "--confidence-threshold", "Minimum confidence threshold for decisions", Some(serde_json::json!(0.7))));
         add_llm_args(&mut cap);
         // is_sequence=true: this is the one semantic cap that emits a *sequence*
@@ -1989,7 +1989,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             "Summarize content for a stated purpose, as plain text.".to_string());
         cap.add_arg(content_arg("Content to summarize"));
         cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--for", "The purpose the summary should serve"));
-        cap.add_arg(opt_flag_arg("media:numeric;word-budget", "--budget", "Optional positive word budget for the summary", None));
+        cap.add_arg(opt_flag_arg("media:integer;numeric;word-budget", "--budget", "Optional positive word budget for the summary", None));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new("media:enc=utf-8;ext=txt;plain-text", "output", "The purpose-driven summary as plain text"));
         caps.push(cap);

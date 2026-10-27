@@ -19,9 +19,9 @@ pub const OUTCOMES: &str = "media:fmt=json;forecast-outcomes;list;record";
 const COMPARISON: &str = "media:comparison;enc=utf-8";
 const CHANGE_PCT: &str = "media:change-pct;numeric";
 const WINDOW: &str = "media:enc=utf-8;statement-window";
-const DAYS: &str = "media:horizon-days;numeric";
-const EVERY_DAYS: &str = "media:every-days;numeric";
-const STRETCHES: &str = "media:numeric;stretches";
+const DAYS: &str = "media:horizon-days;integer;numeric";
+const EVERY_DAYS: &str = "media:every-days;integer;numeric";
+const STRETCHES: &str = "media:integer;numeric;stretches";
 
 fn nat(n: u64) -> Nat {
     Nat::from(n)
