@@ -415,25 +415,25 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:bool;enc=utf-8;list\";out=\"media:enc=utf-8\"",
-    "version": 4,
+    "urn": "cap:coerce;in=\"media:bool;list\";out=\"media:enc=utf-8\"",
+    "version": 5,
     "title": "Coerce Boolean Array to String",
     "aliases": [
       "coerce-boolean-array-to-string",
       "bool-list2str"
     ],
     "cap_description": "Convert an array of booleans to its string representation",
-    "documentation": "## Purpose\n\nConverts a list of boolean values to a single string representation (e.g. `[true, false, true]`). Use this when a downstream cap expects a text value but the upstream produces a boolean array.\n\n## Inputs\n\nA list of boolean values (media type `media:bool;enc=utf-8;list`).\n\n## Outputs\n\nA string representation of the boolean array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual booleans, use [Coerce Boolean to String](https://capdag.com/browse/cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:enc=utf-8\").",
+    "documentation": "## Purpose\n\nConverts a list of boolean values to a single string representation (e.g. `[true, false, true]`). Use this when a downstream cap expects a text value but the upstream produces a boolean array.\n\n## Inputs\n\nA list of boolean values (media type `media:bool;list`).\n\n## Outputs\n\nA string representation of the boolean array.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For converting individual booleans, use [Coerce Boolean to String](https://capdag.com/browse/cap:coerce;in=\"media:bool\";out=\"media:enc=utf-8\").",
     "args": [
       {
-        "media_urn": "media:bool;enc=utf-8;list",
+        "media_urn": "media:bool;list",
         "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:bool;enc=utf-8;list"
+            "stdin": "media:bool;list"
           },
           {
             "position": 0
@@ -454,25 +454,25 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:integer;numeric\"",
-    "version": 3,
+    "urn": "cap:coerce;in=media:bool;out=\"media:integer;numeric\"",
+    "version": 4,
     "title": "Coerce Boolean to Integer",
     "aliases": [
       "coerce-boolean-to-integer",
       "bool2int"
     ],
     "cap_description": "Convert a boolean to an integer (true=1, false=0)",
-    "documentation": "## Purpose\n\nConverts a boolean value to an integer: `true` becomes `1`, `false` becomes `0`. Use this when a downstream cap expects an integer flag or count but the upstream produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool;enc=utf-8`).\n\n## Outputs\n\nThe integer `1` (true) or `0` (false).\n\n## Notes\n\n- Standard boolean-to-int mapping used across most programming contexts.\n- To widen further to a float, chain with [Coerce Integer to Number](https://capdag.com/browse/cap:coerce;in=\"media:integer;numeric\";out=\"media:numeric\").",
+    "documentation": "## Purpose\n\nConverts a boolean value to an integer: `true` becomes `1`, `false` becomes `0`. Use this when a downstream cap expects an integer flag or count but the upstream produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool`).\n\n## Outputs\n\nThe integer `1` (true) or `0` (false).\n\n## Notes\n\n- Standard boolean-to-int mapping used across most programming contexts.\n- To widen further to a float, chain with [Coerce Integer to Number](https://capdag.com/browse/cap:coerce;in=\"media:integer;numeric\";out=\"media:numeric\").",
     "args": [
       {
-        "media_urn": "media:bool;enc=utf-8",
+        "media_urn": "media:bool",
         "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:bool;enc=utf-8"
+            "stdin": "media:bool"
           },
           {
             "position": 0
@@ -493,25 +493,25 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=media:numeric",
-    "version": 3,
+    "urn": "cap:coerce;in=media:bool;out=media:numeric",
+    "version": 4,
     "title": "Coerce Boolean to Number",
     "aliases": [
       "coerce-boolean-to-number",
       "bool2num"
     ],
     "cap_description": "Convert a boolean to a number (true=1.0, false=0.0)",
-    "documentation": "## Purpose\n\nConverts a boolean value to a floating-point number: `true` becomes `1.0`, `false` becomes `0.0`. Use this when a downstream cap expects a numeric type but the upstream produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool;enc=utf-8`).\n\n## Outputs\n\nThe float `1.0` (true) or `0.0` (false).\n\n## Notes\n\n- Use when connecting boolean outputs to numeric inputs (e.g. weight or scaling factors).\n- For integer output instead, use [Coerce Boolean to Integer](https://capdag.com/browse/cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:integer;numeric\").",
+    "documentation": "## Purpose\n\nConverts a boolean value to a floating-point number: `true` becomes `1.0`, `false` becomes `0.0`. Use this when a downstream cap expects a numeric type but the upstream produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool`).\n\n## Outputs\n\nThe float `1.0` (true) or `0.0` (false).\n\n## Notes\n\n- Use when connecting boolean outputs to numeric inputs (e.g. weight or scaling factors).\n- For integer output instead, use [Coerce Boolean to Integer](https://capdag.com/browse/cap:coerce;in=\"media:bool\";out=\"media:integer;numeric\").",
     "args": [
       {
-        "media_urn": "media:bool;enc=utf-8",
+        "media_urn": "media:bool",
         "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:bool;enc=utf-8"
+            "stdin": "media:bool"
           },
           {
             "position": 0
@@ -532,25 +532,25 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=media:record",
-    "version": 3,
+    "urn": "cap:coerce;in=media:bool;out=media:record",
+    "version": 4,
     "title": "Coerce Boolean to Object",
     "aliases": [
       "coerce-boolean-to-object",
       "bool2obj"
     ],
     "cap_description": "Wrap a boolean value in a record",
-    "documentation": "## Purpose\n\nWraps a boolean value in a record (object) so it can be passed to caps that expect a structured record input. The boolean is stored under a standard key in the output record.\n\n## Inputs\n\nA boolean value (media type `media:bool;enc=utf-8`).\n\n## Outputs\n\nA record containing the boolean value.\n\n## Notes\n\n- Use when a downstream cap requires a record type but the upstream produces a scalar boolean.\n- This is primarily a type adapter for the capfab planner.",
+    "documentation": "## Purpose\n\nWraps a boolean value in a record (object) so it can be passed to caps that expect a structured record input. The boolean is stored under a standard key in the output record.\n\n## Inputs\n\nA boolean value (media type `media:bool`).\n\n## Outputs\n\nA record containing the boolean value.\n\n## Notes\n\n- Use when a downstream cap requires a record type but the upstream produces a scalar boolean.\n- This is primarily a type adapter for the capfab planner.",
     "args": [
       {
-        "media_urn": "media:bool;enc=utf-8",
+        "media_urn": "media:bool",
         "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:bool;enc=utf-8"
+            "stdin": "media:bool"
           },
           {
             "position": 0
@@ -571,25 +571,25 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:bool;enc=utf-8\";out=\"media:enc=utf-8\"",
-    "version": 4,
+    "urn": "cap:coerce;in=media:bool;out=\"media:enc=utf-8\"",
+    "version": 5,
     "title": "Coerce Boolean to String",
     "aliases": [
       "coerce-boolean-to-string",
       "bool2str"
     ],
     "cap_description": "Convert a boolean value to its string representation",
-    "documentation": "## Purpose\n\nConverts a boolean media value to its text string form (`\"true\"` or `\"false\"`). Use this when a downstream cap requires a string type but the upstream cap produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool;enc=utf-8`).\n\n## Outputs\n\nThe string `\"true\"` or `\"false\"`.\n\n## Notes\n\n- This is a type-level adapter for the capfab planner. The planner inserts coerce caps automatically when a boolean output needs to connect to a string input.\n- For the reverse, see [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\") or parse the string downstream.",
+    "documentation": "## Purpose\n\nConverts a boolean media value to its text string form (`\"true\"` or `\"false\"`). Use this when a downstream cap requires a string type but the upstream cap produces a boolean.\n\n## Inputs\n\nA boolean value (media type `media:bool`).\n\n## Outputs\n\nThe string `\"true\"` or `\"false\"`.\n\n## Notes\n\n- This is a type-level adapter for the capfab planner. The planner inserts coerce caps automatically when a boolean output needs to connect to a string input.\n- For the reverse, see [Coerce String to Integer](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf-8\";out=\"media:integer;numeric\") or parse the string downstream.",
     "args": [
       {
-        "media_urn": "media:bool;enc=utf-8",
+        "media_urn": "media:bool",
         "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:bool;enc=utf-8"
+            "stdin": "media:bool"
           },
           {
             "position": 0
@@ -649,8 +649,8 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:bool;enc=utf-8\"",
-    "version": 3,
+    "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:bool",
+    "version": 4,
     "title": "Coerce Integer to Boolean",
     "aliases": [
       "coerce-integer-to-boolean"
@@ -677,7 +677,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:bool;enc=utf-8",
+        "media_urn": "media:bool",
         "name": "output",
         "output_description": "Coerced boolean value",
         "optional": false,
@@ -843,8 +843,8 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=media:numeric;out=\"media:bool;enc=utf-8\"",
-    "version": 3,
+    "urn": "cap:coerce;in=media:numeric;out=media:bool",
+    "version": 4,
     "title": "Coerce Number to Boolean",
     "aliases": [
       "coerce-number-to-boolean"
@@ -871,7 +871,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:bool;enc=utf-8",
+        "media_urn": "media:bool",
         "name": "output",
         "output_description": "Coerced boolean value",
         "optional": false,
@@ -1115,8 +1115,8 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:enc=utf-8\";out=\"media:bool;enc=utf-8\"",
-    "version": 3,
+    "urn": "cap:coerce;in=\"media:enc=utf-8\";out=media:bool",
+    "version": 4,
     "title": "Coerce String to Boolean",
     "aliases": [
       "coerce-string-to-boolean"
@@ -1143,7 +1143,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:bool;enc=utf-8",
+        "media_urn": "media:bool",
         "name": "output",
         "output_description": "Coerced boolean value",
         "optional": false,
@@ -2321,7 +2321,7 @@
   },
   {
     "urn": "cap:decimate-sequence;effect=none",
-    "version": 3,
+    "version": 4,
     "title": "Decimate Sequence",
     "aliases": [
       "decimate-sequence"
@@ -2343,7 +2343,7 @@
         "arg_description": "Sequence of items to decimate"
       },
       {
-        "media_urn": "media:keep-every;numeric",
+        "media_urn": "media:integer;keep-every;numeric",
         "name": "keep-every",
         "required": false,
         "is_sequence": false,
@@ -3080,7 +3080,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-decision;out=\"media:decision;fmt=json;record\"",
-    "version": 5,
+    "version": 6,
     "title": "Make a Decision (Constrained, English)",
     "aliases": [
       "make-decision-en"
@@ -3142,7 +3142,7 @@
         "default_value": "en"
       },
       {
-        "media_urn": "media:max-content-length;numeric",
+        "media_urn": "media:integer;max-content-length;numeric",
         "name": "max-content-length",
         "required": false,
         "is_sequence": false,
@@ -3322,7 +3322,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;make-multiple-decisions;out=\"media:decision;fmt=json;record\"",
-    "version": 5,
+    "version": 6,
     "title": "Make Multiple Decisions (Constrained, English)",
     "aliases": [
       "make-multiple-decisions-en"
@@ -3384,7 +3384,7 @@
         "default_value": "en"
       },
       {
-        "media_urn": "media:max-content-length;numeric",
+        "media_urn": "media:integer;max-content-length;numeric",
         "name": "max-content-length",
         "required": false,
         "is_sequence": false,
@@ -4522,7 +4522,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf-8\";language=en;out=\"media:enc=utf-8;ext=txt;plain-text\";summarize",
-    "version": 4,
+    "version": 5,
     "title": "Summarize (Purpose-Driven Compression) (Constrained, English)",
     "aliases": [
       "summarize-en"
@@ -4570,7 +4570,7 @@
         "arg_description": "The purpose the summary serves (what the reader will do with it)"
       },
       {
-        "media_urn": "media:numeric;word-budget",
+        "media_urn": "media:integer;numeric;word-budget",
         "name": "budget",
         "required": false,
         "is_sequence": false,
@@ -4999,7 +4999,7 @@
   },
   {
     "urn": "cap:change-series;in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\"",
-    "version": 2,
+    "version": 3,
     "title": "Change Series",
     "aliases": [
       "change-series"
@@ -5035,7 +5035,7 @@
         "default_value": "percent"
       },
       {
-        "media_urn": "media:change-over;numeric",
+        "media_urn": "media:change-over;integer;numeric",
         "name": "over",
         "required": false,
         "is_sequence": false,
@@ -5062,7 +5062,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";lag-series;out=\"media:fmt=json;list;record;time-series\"",
-    "version": 2,
+    "version": 3,
     "title": "Lag Series",
     "aliases": [
       "lag-series"
@@ -5084,7 +5084,7 @@
         "arg_description": "The series"
       },
       {
-        "media_urn": "media:lag-by;numeric",
+        "media_urn": "media:integer;lag-by;numeric",
         "name": "by",
         "required": true,
         "is_sequence": false,
@@ -5110,7 +5110,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;list;record;time-series\";rolling-statistic",
-    "version": 3,
+    "version": 4,
     "title": "Rolling Statistic",
     "aliases": [
       "rolling-statistic"
@@ -5132,7 +5132,7 @@
         "arg_description": "The series"
       },
       {
-        "media_urn": "media:numeric;rolling-window",
+        "media_urn": "media:integer;numeric;rolling-window",
         "name": "window",
         "required": true,
         "is_sequence": false,
@@ -5623,7 +5623,7 @@
   },
   {
     "urn": "cap:in=\"media:fmt=json;list;record;time-series\";out=\"media:fmt=json;forecast-trial;record\";try-forecasting-ways",
-    "version": 2,
+    "version": 3,
     "title": "Try Forecasting Ways",
     "aliases": [
       "try-forecasting-ways"
@@ -5685,7 +5685,7 @@
         "default_value": "at_deadline"
       },
       {
-        "media_urn": "media:horizon-days;numeric",
+        "media_urn": "media:horizon-days;integer;numeric",
         "name": "days",
         "required": true,
         "is_sequence": false,
@@ -5698,7 +5698,7 @@
         "arg_description": "How far ahead each forecast looks, in days"
       },
       {
-        "media_urn": "media:every-days;numeric",
+        "media_urn": "media:every-days;integer;numeric",
         "name": "every-days",
         "required": true,
         "is_sequence": false,
@@ -5711,7 +5711,7 @@
         "arg_description": "Days between moments"
       },
       {
-        "media_urn": "media:numeric;stretches",
+        "media_urn": "media:integer;numeric;stretches",
         "name": "stretches",
         "required": false,
         "is_sequence": false,
