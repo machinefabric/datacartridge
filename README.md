@@ -6,14 +6,11 @@ This page is for cartridge maintainers. The embedded `cap-snapshots.json`, check
 
 ## Build and test
 
-Run the workspace tool from the superproject root:
+Build and test it through the MachineFabric workspace, from the superproject
+root: its cartridge build regenerates the embedded cap snapshots and exports
+the registry versions, channel and environment values the build requires.
 
-```bash
-sdx cartridge datacartridge
-sdx test --edition website cartridges
-```
-
-Do not build the crate directly: the build requires registry versions, channel, and environment values exported by `sdx`.
+Do not build the crate directly: a bare `cargo build` has none of those values.
 
 ## Implementation map
 
