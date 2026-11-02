@@ -10,8 +10,8 @@ use serde_json::Value;
 
 use crate::input_arg_error;
 
-pub const RECORDS: &str = "media:fmt=json;list;record";
-pub const PROGRAM: &str = "media:fmt=json;record;record-program";
+pub const RECORDS: &str = "media:enc=utf8;fmt=json;list;record";
+pub const PROGRAM: &str = "media:enc=utf8;fmt=json;record;record-program";
 
 /// The records transformed by the program. A program that does not parse, names an
 /// operation the language does not have, or does not apply to the records is refused as

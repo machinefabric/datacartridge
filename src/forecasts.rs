@@ -15,10 +15,10 @@ use serde_json::{json, Value};
 
 use crate::input_arg_error;
 
-pub const OUTCOMES: &str = "media:fmt=json;forecast-outcomes;list;record";
-const COMPARISON: &str = "media:comparison;enc=utf-8";
+pub const OUTCOMES: &str = "media:enc=utf8;fmt=json;forecast-outcomes;list;record";
+const COMPARISON: &str = "media:comparison;enc=utf8";
 const CHANGE_PCT: &str = "media:change-pct;numeric";
-const WINDOW: &str = "media:enc=utf-8;statement-window";
+const WINDOW: &str = "media:enc=utf8;statement-window";
 const DAYS: &str = "media:horizon-days;integer;numeric";
 const EVERY_DAYS: &str = "media:every-days;integer;numeric";
 const STRETCHES: &str = "media:integer;numeric;stretches";

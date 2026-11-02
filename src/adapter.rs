@@ -36,35 +36,35 @@ pub fn detect_data_media_urns(content: &[u8], extension: &str) -> Vec<String> {
 fn detect_json(text: &str) -> Vec<String> {
     let trimmed = text.trim_start();
     if trimmed.is_empty() {
-        return vec!["media:ext=json;fmt=json".to_string()];
+        return vec!["media:enc=utf8;ext=json;fmt=json".to_string()];
     }
 
     match trimmed.chars().next() {
         Some('{') => vec![
-            "media:ext=json;fmt=json;record".to_string(),
-            "media:ext=json;fmt=json".to_string(),
+            "media:enc=utf8;ext=json;fmt=json;record".to_string(),
+            "media:enc=utf8;ext=json;fmt=json".to_string(),
         ],
         Some('[') => {
             let after_bracket = trimmed[1..].trim_start();
             if after_bracket.is_empty() || after_bracket.starts_with(']') {
                 vec![
-                    "media:ext=json;fmt=json;list".to_string(),
-                    "media:ext=json;fmt=json".to_string(),
+                    "media:enc=utf8;ext=json;fmt=json;list".to_string(),
+                    "media:enc=utf8;ext=json;fmt=json".to_string(),
                 ]
             } else if after_bracket.starts_with('{') {
                 vec![
-                    "media:ext=json;fmt=json;list;record".to_string(),
-                    "media:ext=json;fmt=json;list".to_string(),
-                    "media:ext=json;fmt=json".to_string(),
+                    "media:enc=utf8;ext=json;fmt=json;list;record".to_string(),
+                    "media:enc=utf8;ext=json;fmt=json;list".to_string(),
+                    "media:enc=utf8;ext=json;fmt=json".to_string(),
                 ]
             } else {
                 vec![
-                    "media:ext=json;fmt=json;list".to_string(),
-                    "media:ext=json;fmt=json".to_string(),
+                    "media:enc=utf8;ext=json;fmt=json;list".to_string(),
+                    "media:enc=utf8;ext=json;fmt=json".to_string(),
                 ]
             }
         }
-        _ => vec!["media:ext=json;fmt=json".to_string()],
+        _ => vec!["media:enc=utf8;ext=json;fmt=json".to_string()],
     }
 }
 
@@ -76,14 +76,14 @@ fn detect_ndjson(text: &str) -> Vec<String> {
 
     if has_object {
         vec![
-            "media:ext=ndjson;fmt=ndjson;list;record".to_string(),
-            "media:ext=ndjson;fmt=ndjson;list".to_string(),
-            "media:ext=ndjson;fmt=ndjson".to_string(),
+            "media:enc=utf8;ext=ndjson;fmt=ndjson;list;record".to_string(),
+            "media:enc=utf8;ext=ndjson;fmt=ndjson;list".to_string(),
+            "media:enc=utf8;ext=ndjson;fmt=ndjson".to_string(),
         ]
     } else {
         vec![
-            "media:ext=ndjson;fmt=ndjson;list".to_string(),
-            "media:ext=ndjson;fmt=ndjson".to_string(),
+            "media:enc=utf8;ext=ndjson;fmt=ndjson;list".to_string(),
+            "media:enc=utf8;ext=ndjson;fmt=ndjson".to_string(),
         ]
     }
 }
@@ -92,17 +92,17 @@ fn detect_csv(_text: &str) -> Vec<String> {
     // CSV is always list-of-records by the catalog's `_csv-file.toml` anchor —
     // list-marker and record-marker are both required. A `.csv` file read from
     // disk carries both the `ext=csv` file-type and the `fmt=csv` content tag.
-    vec!["media:ext=csv;fmt=csv;list;record".to_string()]
+    vec!["media:enc=utf8;ext=csv;fmt=csv;list;record".to_string()]
 }
 
 fn detect_tsv(_text: &str) -> Vec<String> {
     // TSV mirrors CSV: list of records. See `fabric/media/_tsv-file.toml`.
-    vec!["media:ext=tsv;fmt=tsv;list;record".to_string()]
+    vec!["media:enc=utf8;ext=tsv;fmt=tsv;list;record".to_string()]
 }
 
 fn detect_psv(_text: &str) -> Vec<String> {
     // PSV mirrors CSV: pipe-separated. See `fabric/media/_psv-file.toml`.
-    vec!["media:ext=psv;fmt=psv;list;record".to_string()]
+    vec!["media:enc=utf8;ext=psv;fmt=psv;list;record".to_string()]
 }
 
 fn detect_yaml(text: &str) -> Vec<String> {
@@ -119,14 +119,14 @@ fn detect_yaml(text: &str) -> Vec<String> {
             .trim_start();
         if looks_like_yaml_mapping(first_doc) {
             return vec![
-                "media:ext=yaml;fmt=yaml;list;record".to_string(),
-                "media:ext=yaml;fmt=yaml;list".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list;record".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ];
         } else {
             return vec![
-                "media:ext=yaml;fmt=yaml;list".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ];
         }
     }
@@ -134,7 +134,7 @@ fn detect_yaml(text: &str) -> Vec<String> {
     let doc = trimmed.strip_prefix("---").unwrap_or(trimmed).trim_start();
 
     if doc.is_empty() {
-        return vec!["media:ext=yaml;fmt=yaml".to_string()];
+        return vec!["media:enc=utf8;ext=yaml;fmt=yaml".to_string()];
     }
 
     if doc.starts_with('-') {
@@ -147,41 +147,41 @@ fn detect_yaml(text: &str) -> Vec<String> {
         let is_record = looks_like_yaml_mapping(first_item) || first_item.contains(':');
         if is_record {
             vec![
-                "media:ext=yaml;fmt=yaml;list;record".to_string(),
-                "media:ext=yaml;fmt=yaml;list".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list;record".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ]
         } else {
             vec![
-                "media:ext=yaml;fmt=yaml;list".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ]
         }
     } else if doc.starts_with('{') {
         vec![
-            "media:ext=yaml;fmt=yaml;record".to_string(),
-            "media:ext=yaml;fmt=yaml".to_string(),
+            "media:enc=utf8;ext=yaml;fmt=yaml;record".to_string(),
+            "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
         ]
     } else if doc.starts_with('[') {
         if doc.contains('{') {
             vec![
-                "media:ext=yaml;fmt=yaml;list;record".to_string(),
-                "media:ext=yaml;fmt=yaml;list".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list;record".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ]
         } else {
             vec![
-                "media:ext=yaml;fmt=yaml;list".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ]
         }
     } else if doc.contains(':') {
         vec![
-            "media:ext=yaml;fmt=yaml;record".to_string(),
-            "media:ext=yaml;fmt=yaml".to_string(),
+            "media:enc=utf8;ext=yaml;fmt=yaml;record".to_string(),
+            "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
         ]
     } else {
-        vec!["media:ext=yaml;fmt=yaml".to_string()]
+        vec!["media:enc=utf8;ext=yaml;fmt=yaml".to_string()]
     }
 }
 
@@ -218,8 +218,8 @@ fn detect_xml(text: &str) -> Vec<String> {
 
             if child_count > 2 {
                 return vec![
-                    "media:ext=xml;fmt=xml;list;record".to_string(),
-                    "media:ext=xml;fmt=xml".to_string(),
+                    "media:enc=utf8;ext=xml;fmt=xml;list;record".to_string(),
+                    "media:enc=utf8;ext=xml;fmt=xml".to_string(),
                 ];
             }
         }
@@ -227,28 +227,28 @@ fn detect_xml(text: &str) -> Vec<String> {
 
     if trimmed.contains('=') || (trimmed.matches('<').count() > 2) {
         vec![
-            "media:ext=xml;fmt=xml;record".to_string(),
-            "media:ext=xml;fmt=xml".to_string(),
+            "media:enc=utf8;ext=xml;fmt=xml;record".to_string(),
+            "media:enc=utf8;ext=xml;fmt=xml".to_string(),
         ]
     } else {
-        vec!["media:ext=xml;fmt=xml".to_string()]
+        vec!["media:enc=utf8;ext=xml;fmt=xml".to_string()]
     }
 }
 
 fn detect_toml(_text: &str) -> Vec<String> {
     // TOML has no `fmt=` serialization value of its own; a `.toml` file is a
-    // UTF-8 text file, so the catalog publishes `media:ext=toml;enc=utf-8`
+    // UTF-8 text file, so the catalog publishes `media:ext=toml;enc=utf8`
     // (the file-type dim narrows `toml` to a UTF-8 text file). Emit that single
     // file shape.
-    vec!["media:enc=utf-8;ext=toml".to_string()]
+    vec!["media:enc=utf8;ext=toml".to_string()]
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    /// JSON object → most-specific is `media:ext=json;fmt=json;record`,
-    /// followed by the bare `media:ext=json;fmt=json`. Both URNs must
+    /// JSON object → most-specific is `media:enc=utf8;ext=json;fmt=json;record`,
+    /// followed by the bare `media:enc=utf8;ext=json;fmt=json`. Both URNs must
     /// be present in the catalog for the input-resolver's
     /// conformance walk to succeed.
     #[test]
@@ -257,8 +257,8 @@ mod tests {
         assert_eq!(
             urns,
             vec![
-                "media:ext=json;fmt=json;record".to_string(),
-                "media:ext=json;fmt=json".to_string(),
+                "media:enc=utf8;ext=json;fmt=json;record".to_string(),
+                "media:enc=utf8;ext=json;fmt=json".to_string(),
             ]
         );
     }
@@ -272,9 +272,9 @@ mod tests {
         assert_eq!(
             urns,
             vec![
-                "media:ext=json;fmt=json;list;record".to_string(),
-                "media:ext=json;fmt=json;list".to_string(),
-                "media:ext=json;fmt=json".to_string(),
+                "media:enc=utf8;ext=json;fmt=json;list;record".to_string(),
+                "media:enc=utf8;ext=json;fmt=json;list".to_string(),
+                "media:enc=utf8;ext=json;fmt=json".to_string(),
             ]
         );
     }
@@ -287,8 +287,8 @@ mod tests {
         assert_eq!(
             urns,
             vec![
-                "media:ext=json;fmt=json;list".to_string(),
-                "media:ext=json;fmt=json".to_string(),
+                "media:enc=utf8;ext=json;fmt=json;list".to_string(),
+                "media:enc=utf8;ext=json;fmt=json".to_string(),
             ]
         );
         assert!(
@@ -305,7 +305,7 @@ mod tests {
     #[test]
     fn test0004_csv_is_single_canonical_urn() {
         let urns = detect_data_media_urns(b"a,b,c\n1,2,3", "csv");
-        assert_eq!(urns, vec!["media:ext=csv;fmt=csv;list;record".to_string()]);
+        assert_eq!(urns, vec!["media:enc=utf8;ext=csv;fmt=csv;list;record".to_string()]);
         assert_eq!(urns.len(), 1, "CSV emits a single URN, not duplicates");
     }
 
@@ -319,24 +319,24 @@ mod tests {
         let single = detect_data_media_urns(b"a\n1\n2", "csv");
         let multi = detect_data_media_urns(b"a,b\n1,2\n3,4", "csv");
         assert_eq!(single, multi);
-        assert_eq!(single, vec!["media:ext=csv;fmt=csv;list;record".to_string()]);
+        assert_eq!(single, vec!["media:enc=utf8;ext=csv;fmt=csv;list;record".to_string()]);
     }
 
     /// TSV emits the canonical catalog URN. The previous adapter
-    /// returned `media:enc=utf-8;list;tsv` for single-column TSV —
+    /// returned `media:enc=utf8;list;tsv` for single-column TSV —
     /// a URN that did not exist in the published catalog because
     /// no `_tsv-data.toml` anchor was declared.
     #[test]
     fn test0006_tsv_emits_canonical_catalog_urn() {
         let urns = detect_data_media_urns(b"a\tb\n1\t2", "tsv");
-        assert_eq!(urns, vec!["media:ext=tsv;fmt=tsv;list;record".to_string()]);
+        assert_eq!(urns, vec!["media:enc=utf8;ext=tsv;fmt=tsv;list;record".to_string()]);
     }
 
     /// PSV emits the canonical catalog URN.
     #[test]
     fn test0007_psv_emits_canonical_catalog_urn() {
         let urns = detect_data_media_urns(b"a|b\n1|2", "psv");
-        assert_eq!(urns, vec!["media:ext=psv;fmt=psv;list;record".to_string()]);
+        assert_eq!(urns, vec!["media:enc=utf8;ext=psv;fmt=psv;list;record".to_string()]);
     }
 
     /// YAML mapping → record narrowing without list, then bare.
@@ -348,8 +348,8 @@ mod tests {
         assert_eq!(
             urns,
             vec![
-                "media:ext=yaml;fmt=yaml;record".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;record".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ]
         );
     }
@@ -361,21 +361,21 @@ mod tests {
         assert_eq!(
             urns,
             vec![
-                "media:ext=yaml;fmt=yaml;list;record".to_string(),
-                "media:ext=yaml;fmt=yaml;list".to_string(),
-                "media:ext=yaml;fmt=yaml".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list;record".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
+                "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
             ]
         );
     }
 
     /// A `.toml` file is a UTF-8 text file (no `fmt=` of its own), so the
-    /// catalog publishes `media:enc=utf-8;ext=toml`. A single emission,
+    /// catalog publishes `media:enc=utf8;ext=toml`. A single emission,
     /// not the duplicated form the previous adapter returned (also
     /// a copy-paste bug).
     #[test]
     fn test0010_toml_is_single_canonical_urn() {
         let urns = detect_data_media_urns(b"key = \"value\"", "toml");
-        assert_eq!(urns, vec!["media:enc=utf-8;ext=toml".to_string()]);
+        assert_eq!(urns, vec!["media:enc=utf8;ext=toml".to_string()]);
         assert_eq!(urns.len(), 1, "TOML emits a single URN, not duplicates");
     }
 
@@ -391,7 +391,7 @@ mod tests {
     /// An extension this adapter doesn't own returns the empty
     /// vec — datacartridge handles only the structured-data
     /// formats (JSON, CSV, etc.); a `.txt` file is not its
-    /// concern. Emitting `media:enc=utf-8` here would step on
+    /// concern. Emitting `media:enc=utf8` here would step on
     /// txtcartridge's adapter and would also be wrong (no JSON
     /// detection has happened).
     #[test]
@@ -403,8 +403,8 @@ mod tests {
     /// **Catalog-presence regression guard.** Every URN this
     /// adapter emits for any of its supported extensions must be
     /// a URN the published catalog actually contains. The earlier
-    /// adapter emitted `media:enc=utf-8;list;tsv`,
-    /// `media:enc=utf-8;list;psv`, and other URN forms that did
+    /// adapter emitted `media:enc=utf8;list;tsv`,
+    /// `media:enc=utf8;list;psv`, and other URN forms that did
     /// not exist in the catalog because no anchor declared them.
     /// This test exhaustively enumerates the URN forms the adapter
     /// is allowed to return; cross-validation at `sdx publish fabric`
@@ -443,29 +443,29 @@ mod tests {
 
         let allowed: std::collections::BTreeSet<String> = [
             // JSON variants
-            "media:ext=json;fmt=json",
-            "media:ext=json;fmt=json;list",
-            "media:ext=json;fmt=json;record",
-            "media:ext=json;fmt=json;list;record",
+            "media:enc=utf8;ext=json;fmt=json",
+            "media:enc=utf8;ext=json;fmt=json;list",
+            "media:enc=utf8;ext=json;fmt=json;record",
+            "media:enc=utf8;ext=json;fmt=json;list;record",
             // NDJSON variants
-            "media:ext=ndjson;fmt=ndjson",
-            "media:ext=ndjson;fmt=ndjson;list",
-            "media:ext=ndjson;fmt=ndjson;list;record",
+            "media:enc=utf8;ext=ndjson;fmt=ndjson",
+            "media:enc=utf8;ext=ndjson;fmt=ndjson;list",
+            "media:enc=utf8;ext=ndjson;fmt=ndjson;list;record",
             // CSV/TSV/PSV — single canonical each
-            "media:ext=csv;fmt=csv;list;record",
-            "media:ext=tsv;fmt=tsv;list;record",
-            "media:ext=psv;fmt=psv;list;record",
+            "media:enc=utf8;ext=csv;fmt=csv;list;record",
+            "media:enc=utf8;ext=tsv;fmt=tsv;list;record",
+            "media:enc=utf8;ext=psv;fmt=psv;list;record",
             // YAML variants
-            "media:ext=yaml;fmt=yaml",
-            "media:ext=yaml;fmt=yaml;list",
-            "media:ext=yaml;fmt=yaml;record",
-            "media:ext=yaml;fmt=yaml;list;record",
+            "media:enc=utf8;ext=yaml;fmt=yaml",
+            "media:enc=utf8;ext=yaml;fmt=yaml;list",
+            "media:enc=utf8;ext=yaml;fmt=yaml;record",
+            "media:enc=utf8;ext=yaml;fmt=yaml;list;record",
             // XML variants
-            "media:ext=xml;fmt=xml",
-            "media:ext=xml;fmt=xml;record",
-            "media:ext=xml;fmt=xml;list;record",
+            "media:enc=utf8;ext=xml;fmt=xml",
+            "media:enc=utf8;ext=xml;fmt=xml;record",
+            "media:enc=utf8;ext=xml;fmt=xml;list;record",
             // TOML
-            "media:enc=utf-8;ext=toml",
+            "media:enc=utf8;ext=toml",
         ]
         .iter()
         .map(|s| s.to_string())

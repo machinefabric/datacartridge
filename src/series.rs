@@ -14,23 +14,23 @@ use serde_json::{json, Value};
 
 use crate::input_arg_error;
 
-pub const TIME_SERIES: &str = "media:fmt=json;list;record;time-series";
-pub const RIGHT_SERIES: &str = "media:fmt=json;list;record;right-series";
-pub const REGRESSOR_SERIES: &str = "media:fmt=json;list;record;regressor-series";
-pub const RESIDUALS: &str = "media:fmt=json;list;record;regression-residuals;time-series";
-pub const DROPPED: &str = "media:filtered-out;fmt=json;list;record";
-const EVERY: &str = "media:enc=utf-8;resample-every";
-const AGGREGATE: &str = "media:enc=utf-8;resample-aggregate";
-const CHANGE_HOW: &str = "media:change-how;enc=utf-8";
+pub const TIME_SERIES: &str = "media:enc=utf8;fmt=json;list;record;time-series";
+pub const RIGHT_SERIES: &str = "media:enc=utf8;fmt=json;list;record;right-series";
+pub const REGRESSOR_SERIES: &str = "media:enc=utf8;fmt=json;list;record;regressor-series";
+pub const RESIDUALS: &str = "media:enc=utf8;fmt=json;list;record;regression-residuals;time-series";
+pub const DROPPED: &str = "media:enc=utf8;filtered-out;fmt=json;list;record";
+const EVERY: &str = "media:enc=utf8;resample-every";
+const AGGREGATE: &str = "media:enc=utf8;resample-aggregate";
+const CHANGE_HOW: &str = "media:change-how;enc=utf8";
 const CHANGE_OVER: &str = "media:change-over;integer;numeric";
 const LAG_BY: &str = "media:integer;lag-by;numeric";
 const WINDOW: &str = "media:integer;numeric;rolling-window";
-const STATISTIC: &str = "media:enc=utf-8;rolling-statistic-kind";
+const STATISTIC: &str = "media:enc=utf8;rolling-statistic-kind";
 const PERIODS_PER_YEAR: &str = "media:numeric;periods-per-year";
-const OPERATION: &str = "media:combine-operation;enc=utf-8";
-const COMPARISON: &str = "media:comparison;enc=utf-8";
+const OPERATION: &str = "media:combine-operation;enc=utf8";
+const COMPARISON: &str = "media:comparison;enc=utf8";
 const THRESHOLD: &str = "media:numeric;threshold";
-const SUMMARY_KIND: &str = "media:enc=utf-8;summary-kind";
+const SUMMARY_KIND: &str = "media:enc=utf8;summary-kind";
 
 /// A step's refusal (too few values, values it is not defined for): decided by what was given.
 fn refused(error: Error, arg: &str) -> OpError {

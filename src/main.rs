@@ -58,12 +58,12 @@ fn build_manifest() -> CapManifest {
         name: "data-formats".to_string(),
         caps: all_caps, // identity_cap() is already first in all_caps
         adapter_urns: vec![
-            "media:fmt=json".to_string(),
-            "media:fmt=ndjson".to_string(),
-            "media:fmt=csv".to_string(),
+            "media:enc=utf8;fmt=json".to_string(),
+            "media:enc=utf8;fmt=ndjson".to_string(),
+            "media:enc=utf8;fmt=csv".to_string(),
             "media:ext=tsv".to_string(),
             "media:ext=psv".to_string(),
-            "media:fmt=yaml".to_string(),
+            "media:enc=utf8;fmt=yaml".to_string(),
             "media:ext=xml".to_string(),
             "media:ext=toml".to_string(),
         ],
@@ -235,23 +235,20 @@ impl Op<()> for CoerceOp {
 // SAVE-AS-TXT OP — relabel any text value as a `.txt` file
 // =============================================================================
 //
-// The cap signature is `media:enc=utf-8 → media:enc=utf-8;ext=txt`. The
-// op is byte-passthrough: input bytes flow to the output stream
-// unchanged; only the URN-side type narrows from the abstract
-// enc=utf-8 wildcard to the concrete `.txt` file format.
+// The cap signature is `media:enc=utf8;ext=txt;plain-text → media:enc=utf8;ext=txt;plain-text`
+// (fabric/caps/save-as-txt.toml). The op is byte-passthrough: input bytes flow
+// to the output stream unchanged.
 //
-// Why this op exists: the Finder transmute dialog filters target
-// candidates to URNs that own a file extension. `media:enc=utf-8`
-// is an abstract coercion class with no extension and is suppressed
-// from the target list (see `LiveCapFab::get_reachable_targets`).
-// `media:enc=utf-8;ext=txt` carries the `txt` extension and is offered
-// as a target. This op closes the gap so any chain that ends in a
-// text value can be saved as `.txt` without an additional
-// per-cap output declaration.
+// Why this op exists: it is the registered terminal that writes finished
+// plain text to disk as `.txt`. Its narrow `in` accepts only plain text —
+// the `.txt` file type and every kind of it (digitized text, an image
+// description, a document page) — so a chain ending in a bare UTF-8 string
+// (`media:enc=utf8`: code, markup, serialized data) is never offered `.txt`
+// persistence by accident.
 //
-// `media:enc=utf-8` PROMISES UTF-8 representability; bytes that
-// fail UTF-8 validation here are a contract violation upstream and
-// surface as a hard error rather than being silently corrupted.
+// `enc=utf8` PROMISES UTF-8 representability; bytes that fail UTF-8
+// validation here are a contract violation upstream and surface as a hard
+// error rather than being silently corrupted.
 
 struct SaveAsTxtOp;
 
@@ -268,7 +265,7 @@ impl Op<()> for SaveAsTxtOp {
 
         // The input arrives as a single stream whose URN is whatever
         // the upstream cap emitted (any URN that conforms to
-        // `media:enc=utf-8`). We don't filter by URN here — the
+        // `media:enc=utf8;ext=txt;plain-text`). We don't filter by URN here — the
         // planner already verified conformance — we just take the
         // stream that arrives and copy its bytes through.
         let mut received: Option<(Vec<u8>, Option<capdag::StreamMeta>)> = None;
@@ -296,11 +293,11 @@ impl Op<()> for SaveAsTxtOp {
             input_arg_error(
                 "INPUT_REQUIRED",
                 "save-as-txt received no input stream — missing required textable input",
-                "media:enc=utf-8;ext=txt;plain-text",
+                "media:enc=utf8;ext=txt;plain-text",
             )
         })?;
 
-        // The cap-arg URN (`media:enc=utf-8;ext=txt;plain-text`)
+        // The cap-arg URN (`media:enc=utf8;ext=txt;plain-text`)
         // promises UTF-8 representability via the `enc=` dim.
         // Validate here so a contract violation upstream surfaces
         // immediately rather than producing a garbled `.txt` file
@@ -311,12 +308,12 @@ impl Op<()> for SaveAsTxtOp {
                 "INVALID_INPUT",
                 format!(
                 "save-as-txt: input bytes are not valid UTF-8 — \
-                 the cap-arg URN `media:enc=utf-8;ext=txt;plain-text` \
+                 the cap-arg URN `media:enc=utf8;ext=txt;plain-text` \
                  requires UTF-8 representability. Upstream cap or \
                  the producer is violating the textable contract: {}",
                 e
                 ),
-                "media:enc=utf-8;ext=txt;plain-text",
+                "media:enc=utf8;ext=txt;plain-text",
             )
         })?;
 
@@ -896,15 +893,15 @@ async fn main() -> Result<()> {
         });
     }
 
-    // Save-as-txt cap: media:enc=utf-8;ext=txt;plain-text → same.
+    // Save-as-txt cap: media:enc=utf8;ext=txt;plain-text → same.
     // The cap declaration in `build_manifest()` builds the URN
     // with the same markers; mirror it here so the runtime can
     // dispatch the cap to its op.
     {
         let urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:enc=utf-8;ext=txt;plain-text")
-            .out_spec("media:enc=utf-8;ext=txt;plain-text")
+            .in_spec("media:enc=utf8;ext=txt;plain-text")
+            .out_spec("media:enc=utf8;ext=txt;plain-text")
             .build()
             .expect("save-as-txt URN");
         runtime.register_op(&urn.to_string(), || Box::new(SaveAsTxtOp));
@@ -915,24 +912,24 @@ async fn main() -> Result<()> {
     {
         let repair_json_urn = capdag::CapUrnBuilder::new()
             .marker("repair")
-            .in_spec("media:enc=utf-8")
-            .out_spec("media:fmt=json")
+            .in_spec("media:enc=utf8")
+            .out_spec("media:enc=utf8;fmt=json")
             .build()
             .expect("repair-json URN");
         runtime.register_op(&repair_json_urn.to_string(), || Box::new(RepairJsonOp));
 
         let repair_csv_urn = capdag::CapUrnBuilder::new()
             .marker("repair")
-            .in_spec("media:enc=utf-8")
-            .out_spec("media:fmt=csv;list;record")
+            .in_spec("media:enc=utf8")
+            .out_spec("media:enc=utf8;fmt=csv;list;record")
             .build()
             .expect("repair-csv URN");
         runtime.register_op(&repair_csv_urn.to_string(), || Box::new(RepairCsvOp));
 
         let edit_urn = capdag::CapUrnBuilder::new()
             .marker("edit")
-            .in_spec("media:fmt=json;list;record")
-            .out_spec("media:fmt=json;list;record")
+            .in_spec("media:enc=utf8;fmt=json;list;record")
+            .out_spec("media:enc=utf8;fmt=json;list;record")
             .build()
             .expect("edit URN");
         runtime.register_op(&edit_urn.to_string(), || Box::new(EditOp));
@@ -951,29 +948,29 @@ async fn main() -> Result<()> {
     {
         let json_array_urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
-            .in_spec("media:fmt=json;record")
-            .out_spec("media:fmt=json;list;record")
+            .in_spec("media:enc=utf8;fmt=json;record")
+            .out_spec("media:enc=utf8;fmt=json;list;record")
             .build().expect("collect_json_objects → json array URN");
         runtime.register_op(&json_array_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:fmt=json;list;record" })
+            Box::new(CollectJsonObjectsOp { out_media: "media:enc=utf8;fmt=json;list;record" })
         });
 
         let csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
-            .in_spec("media:fmt=json;record")
-            .out_spec("media:fmt=csv;list;record")
+            .in_spec("media:enc=utf8;fmt=json;record")
+            .out_spec("media:enc=utf8;fmt=csv;list;record")
             .build().expect("collect_json_objects → csv URN");
         runtime.register_op(&csv_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:fmt=csv;list;record" })
+            Box::new(CollectJsonObjectsOp { out_media: "media:enc=utf8;fmt=csv;list;record" })
         });
 
         let yaml_urn = capdag::CapUrnBuilder::new()
             .marker("collect-json-objects")
-            .in_spec("media:fmt=json;record")
-            .out_spec("media:fmt=yaml;list;record")
+            .in_spec("media:enc=utf8;fmt=json;record")
+            .out_spec("media:enc=utf8;fmt=yaml;list;record")
             .build().expect("collect_json_objects → yaml URN");
         runtime.register_op(&yaml_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:fmt=yaml;list;record" })
+            Box::new(CollectJsonObjectsOp { out_media: "media:enc=utf8;fmt=yaml;list;record" })
         });
     }
 
@@ -981,29 +978,29 @@ async fn main() -> Result<()> {
     {
         let csv_csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:fmt=csv;list;record")
-            .out_spec("media:fmt=csv;list;record")
+            .in_spec("media:enc=utf8;fmt=csv;list;record")
+            .out_spec("media:enc=utf8;fmt=csv;list;record")
             .build().expect("collect_records csv→csv URN");
         runtime.register_op(&csv_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:fmt=csv;list;record", out_media: "media:fmt=csv;list;record" })
+            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=csv;list;record", out_media: "media:enc=utf8;fmt=csv;list;record" })
         });
 
         let csv_json_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:fmt=csv;list;record")
-            .out_spec("media:fmt=json;list;record")
+            .in_spec("media:enc=utf8;fmt=csv;list;record")
+            .out_spec("media:enc=utf8;fmt=json;list;record")
             .build().expect("collect_records csv→json URN");
         runtime.register_op(&csv_json_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:fmt=csv;list;record", out_media: "media:fmt=json;list;record" })
+            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=csv;list;record", out_media: "media:enc=utf8;fmt=json;list;record" })
         });
 
         let csv_yaml_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:fmt=csv;list;record")
-            .out_spec("media:fmt=yaml;list;record")
+            .in_spec("media:enc=utf8;fmt=csv;list;record")
+            .out_spec("media:enc=utf8;fmt=yaml;list;record")
             .build().expect("collect_records csv→yaml URN");
         runtime.register_op(&csv_yaml_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:fmt=csv;list;record", out_media: "media:fmt=yaml;list;record" })
+            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=csv;list;record", out_media: "media:enc=utf8;fmt=yaml;list;record" })
         });
     }
 
@@ -1011,29 +1008,29 @@ async fn main() -> Result<()> {
     {
         let yaml_yaml_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:fmt=yaml;record")
-            .out_spec("media:fmt=yaml;list;record")
+            .in_spec("media:enc=utf8;fmt=yaml;record")
+            .out_spec("media:enc=utf8;fmt=yaml;list;record")
             .build().expect("collect_records yaml→yaml URN");
         runtime.register_op(&yaml_yaml_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:fmt=yaml;record", out_media: "media:fmt=yaml;list;record" })
+            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=yaml;record", out_media: "media:enc=utf8;fmt=yaml;list;record" })
         });
 
         let yaml_json_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:fmt=yaml;record")
-            .out_spec("media:fmt=json;list;record")
+            .in_spec("media:enc=utf8;fmt=yaml;record")
+            .out_spec("media:enc=utf8;fmt=json;list;record")
             .build().expect("collect_records yaml→json URN");
         runtime.register_op(&yaml_json_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:fmt=yaml;record", out_media: "media:fmt=json;list;record" })
+            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=yaml;record", out_media: "media:enc=utf8;fmt=json;list;record" })
         });
 
         let yaml_csv_urn = capdag::CapUrnBuilder::new()
             .marker("collect-records")
-            .in_spec("media:fmt=yaml;record")
-            .out_spec("media:fmt=csv;list;record")
+            .in_spec("media:enc=utf8;fmt=yaml;record")
+            .out_spec("media:enc=utf8;fmt=csv;list;record")
             .build().expect("collect_records yaml→csv URN");
         runtime.register_op(&yaml_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:fmt=yaml;record", out_media: "media:fmt=csv;list;record" })
+            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=yaml;record", out_media: "media:enc=utf8;fmt=csv;list;record" })
         });
     }
 
@@ -1068,7 +1065,7 @@ enum Fmt {
     Json,
     Yaml,
     Csv,
-    /// Bare UTF-8 text list (`media:enc=utf-8;list`) — one value per line,
+    /// Bare UTF-8 text list (`media:enc=utf8;list`) — one value per line,
     /// carrying an encoding but no serialization-format (`fmt=`) tag.
     TextList,
 }
@@ -1614,18 +1611,18 @@ impl Op<()> for RepairJsonOp {
             .collect_streams()
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
-        let data = capdag::require_stream(&streams, "media:enc=utf-8")
-            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing input: {}", e), "media:enc=utf-8"))?;
+        let data = capdag::require_stream(&streams, "media:enc=utf8")
+            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing input: {}", e), "media:enc=utf8"))?;
         let text = String::from_utf8_lossy(data);
 
-        let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf-8").cloned();
+        let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf8").cloned();
         output
             .start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Repairing JSON");
 
         let (value, repairs) = repair::repair_json(&text)
-            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), "media:enc=utf-8"))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), "media:enc=utf8"))?;
 
         // The visible-forgiveness contract: every fix is on the record.
         for action in &repairs {
@@ -1675,17 +1672,17 @@ impl Op<()> for RepairCsvOp {
             .collect_streams()
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
-        let data = capdag::require_stream(&streams, "media:enc=utf-8")
-            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing input: {}", e), "media:enc=utf-8"))?;
+        let data = capdag::require_stream(&streams, "media:enc=utf8")
+            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing input: {}", e), "media:enc=utf8"))?;
 
-        let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf-8").cloned();
+        let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf8").cloned();
         output
             .start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Repairing CSV");
 
         let (repaired, repairs) = repair::repair_csv(data)
-            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), "media:enc=utf-8"))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), "media:enc=utf8"))?;
         for action in &repairs {
             output.log(
                 "WARN", capdag::AttributionClass::Internal,
@@ -1744,26 +1741,26 @@ impl Op<()> for EditOp {
             .collect_streams()
             .await
             .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
-        let data_bytes = capdag::require_stream(&streams, "media:fmt=json;list;record")
-            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing JSON records input: {}", e), "media:fmt=json;list;record"))?;
-        let instruction_bytes = capdag::find_stream_conforming(&streams, "media:enc=utf-8;instruction")
+        let data_bytes = capdag::require_stream(&streams, "media:enc=utf8;fmt=json;list;record")
+            .map_err(|e| input_arg_error("INPUT_REQUIRED", format!("Missing JSON records input: {}", e), "media:enc=utf8;fmt=json;list;record"))?;
+        let instruction_bytes = capdag::find_stream_conforming(&streams, "media:enc=utf8;instruction")
             .ok_or_else(|| input_arg_error(
                 "INPUT_REQUIRED",
-                "Missing --instruction (media:enc=utf-8;instruction)",
-                "media:enc=utf-8;instruction",
+                "Missing --instruction (media:enc=utf8;instruction)",
+                "media:enc=utf8;instruction",
             ))?;
         let instruction = std::str::from_utf8(instruction_bytes).map_err(|e| {
             input_arg_error(
                 "INVALID_INPUT",
                 format!("--instruction is not valid UTF-8: {}", e),
-                "media:enc=utf-8;instruction",
+                "media:enc=utf8;instruction",
             )
         })?;
         if instruction.trim().is_empty() {
             return Err(input_arg_error(
                 "INPUT_REQUIRED",
                 "--instruction must not be empty",
-                "media:enc=utf-8;instruction",
+                "media:enc=utf8;instruction",
             ));
         }
         let model_spec = match capdag::find_stream_conforming(&streams, "media:model-spec") {
@@ -1773,14 +1770,14 @@ impl Op<()> for EditOp {
                     input_arg_error(
                         "INVALID_INPUT",
                         format!("model-spec is not valid UTF-8: {}", e),
-                        "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+                        "media:enc=utf8;gguf;llm;model-spec;tokenizer-embedded-gguf",
                     )
                 })?;
                 if value.trim().is_empty() {
                     return Err(input_arg_error(
                         "INVALID_INPUT",
                         "model-spec must not be empty",
-                        "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+                        "media:enc=utf8;gguf;llm;model-spec;tokenizer-embedded-gguf",
                     ));
                 } else {
                     value.to_string()
@@ -1789,16 +1786,16 @@ impl Op<()> for EditOp {
         };
 
         let data: serde_json::Value = serde_json::from_slice(data_bytes)
-            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Input is not valid JSON: {}", e), "media:fmt=json;list;record"))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Input is not valid JSON: {}", e), "media:enc=utf8;fmt=json;list;record"))?;
         let records = data.as_array().ok_or_else(|| {
             input_arg_error(
                 "INVALID_INPUT",
                 "edit input must be a JSON array of objects",
-                "media:fmt=json;list;record",
+                "media:enc=utf8;fmt=json;list;record",
             )
         })?;
 
-        let input_meta = capdag::find_stream_meta(&streams, "media:fmt=json;list;record").cloned();
+        let input_meta = capdag::find_stream_meta(&streams, "media:enc=utf8;fmt=json;list;record").cloned();
         output
             .start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
@@ -2065,7 +2062,7 @@ pub(crate) async fn invoke_constrained_peer(
     let call = peer
         .call(CAP_LLM_INFERENCE_CONSTRAINED)
         .map_err(|e| anyhow::anyhow!("peer call failed to start: {}", e))?;
-    let arg = call.arg("media:fmt=json;llm-generation-request;record");
+    let arg = call.arg("media:enc=utf8;fmt=json;llm-generation-request;record");
     arg.start(false, None)
         .map_err(|e| anyhow::anyhow!("peer arg start failed: {}", e))?;
     arg.write(request_json.as_bytes())
@@ -2217,7 +2214,7 @@ mod tests {
             b"name,value,ok,code\nbeta,2.5,false,42\n".to_vec(),
         ];
         let collected: serde_json::Value = serde_json::from_slice(
-            &collect_records_to(&csv_items, "media:fmt=csv;list;record", "media:fmt=json;list;record")
+            &collect_records_to(&csv_items, "media:enc=utf8;fmt=csv;list;record", "media:enc=utf8;fmt=json;list;record")
                 .expect("CSV records collect"),
         )
         .expect("the collection is JSON");
@@ -2239,7 +2236,7 @@ mod tests {
         );
 
         // A text list is not records, either way round, and says so.
-        assert!(collect_records_to(&csv_items, "media:enc=utf-8;list", "media:fmt=json;list;record").is_err());
+        assert!(collect_records_to(&csv_items, "media:enc=utf8;list", "media:enc=utf8;fmt=json;list;record").is_err());
     }
     use super::*;
 
@@ -2641,9 +2638,9 @@ mod tests {
         let result = coerce(b"\"hello\"", "string", "object").unwrap();
         let val: serde_json::Value = serde_json::from_slice(&result).unwrap();
         assert_eq!(val["value"], "hello");
-        // The string source media URN now declares its UTF-8 encoding via enc=utf-8
+        // The string source media URN now declares its UTF-8 encoding via enc=utf8
         // (the old `textable` marker is gone).
-        assert!(val["source_type"].as_str().unwrap().contains("enc=utf-8"));
+        assert!(val["source_type"].as_str().unwrap().contains("enc=utf8"));
     }
 
     // TEST0042: Coerce object passthrough
@@ -2752,15 +2749,15 @@ mod tests {
     fn test0051_save_as_txt_manifest_and_runtime_urn_agree() {
         let manifest_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:enc=utf-8;ext=txt;plain-text")
-            .out_spec("media:enc=utf-8;ext=txt;plain-text")
+            .in_spec("media:enc=utf8;ext=txt;plain-text")
+            .out_spec("media:enc=utf8;ext=txt;plain-text")
             .build()
             .expect("save-as-txt manifest URN")
             .to_string();
         let runtime_urn = capdag::CapUrnBuilder::new()
             .marker("save-as-txt")
-            .in_spec("media:enc=utf-8;ext=txt;plain-text")
-            .out_spec("media:enc=utf-8;ext=txt;plain-text")
+            .in_spec("media:enc=utf8;ext=txt;plain-text")
+            .out_spec("media:enc=utf8;ext=txt;plain-text")
             .build()
             .expect("save-as-txt runtime URN")
             .to_string();
@@ -2776,7 +2773,7 @@ mod tests {
         // exactly this string.
         assert_eq!(
             manifest_urn,
-            r#"cap:in="media:enc=utf-8;ext=txt;plain-text";out="media:enc=utf-8;ext=txt;plain-text";save-as-txt"#,
+            r#"cap:in="media:enc=utf8;ext=txt;plain-text";out="media:enc=utf8;ext=txt;plain-text";save-as-txt"#,
             "canonical save-as-txt URN drifted — catalog lookups will 404"
         );
     }
@@ -2804,8 +2801,8 @@ mod tests {
                 urn.contains("save-as-txt")
             })
             .expect("save-as-txt cap must be present in data-formats group");
-        assert_eq!(cap.urn.in_spec(), "media:enc=utf-8;ext=txt;plain-text");
-        assert_eq!(cap.urn.out_spec(), "media:enc=utf-8;ext=txt;plain-text");
+        assert_eq!(cap.urn.in_spec(), "media:enc=utf8;ext=txt;plain-text");
+        assert_eq!(cap.urn.out_spec(), "media:enc=utf8;ext=txt;plain-text");
         assert!(cap.has_alias("save-as-txt"), "save-as-txt cap must carry its fabric alias");
     }
 

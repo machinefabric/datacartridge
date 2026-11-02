@@ -37,7 +37,7 @@ type Streams = [(String, Vec<u8>, Option<StreamMeta>)];
 /// Read a required arg whose declared URN *conforms to* `pattern`, failing
 /// hard (never a silent default) when it is absent. Conformance matching
 /// mirrors the former cartridge's `find_arg`: the primary content arg is the
-/// first stream conforming to the bare `media:enc=utf-8`, the refined args
+/// first stream conforming to the bare `media:enc=utf8`, the refined args
 /// (`…;question`, `…;rubric`, …) match their own specific patterns.
 fn require_conforming(streams: &Streams, pattern: &str, what: &str) -> OpResult<String> {
     let bytes = capdag::find_stream_conforming(streams, pattern).ok_or_else(|| {
@@ -145,7 +145,7 @@ const ROPE_SCALE_URN: &str = "media:rope-frequency-scale;inference;policy;operat
 const TEMPERATURE_URN: &str = "media:temperature;inference;sampling;user;task;numeric";
 const SEED_URN: &str = "media:sampling-seed;inference;sampling;user;task;numeric";
 const MODEL_SPEC_URN: &str =
-    "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf";
+    "media:enc=utf8;gguf;llm;model-spec;tokenizer-embedded-gguf";
 
 /// Read an optional numeric inference-param arg from the delivered streams. Returns
 /// `None` when the arg is absent (the caller substitutes its declared default — see
@@ -209,11 +209,11 @@ pub(crate) fn resolve_judgment_params(
 }
 
 /// The stream meta of the primary content input (first stream conforming to
-/// `media:enc=utf-8`), carrying the `title` provenance downstream writers use
+/// plain text, `media:enc=utf8;plain-text`), carrying the `title` provenance downstream writers use
 /// to derive per-row file names. Returns the meta of that stream even when it
 /// is `None`, never skipping ahead to a refined sibling's meta.
 fn content_stream_meta(streams: &Streams) -> Option<StreamMeta> {
-    let p = capdag::MediaUrn::from_string("media:enc=utf-8").ok()?;
+    let p = capdag::MediaUrn::from_string(capdag::MEDIA_PLAIN_TEXT).ok()?;
     let (_, _, meta) = streams.iter().find(|(urn_str, _, _)| {
         capdag::MediaUrn::from_string(urn_str)
             .map(|u| u.conforms_to(&p).unwrap_or(false))
@@ -853,7 +853,7 @@ fn stream_meta_title(meta: Option<&StreamMeta>) -> Option<String> {
 
 /// Build the wire-shape body for a single `make-decision` row: `{ title,
 /// identifier, value, confidence, reason, confidence_below_threshold }`,
-/// mirroring the `media:decision;fmt=json;record` schema so a downstream writer
+/// mirroring the `media:decision;enc=utf8;fmt=json;record` schema so a downstream writer
 /// can rely on every field being present. Below-threshold confidence is flagged
 /// on the record (and warned).
 fn build_decision_record(
@@ -909,10 +909,10 @@ impl Op<()> for GenerateJsonOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let schema_str = require_conforming(&streams, "media:fmt=json;json-schema;record", "schema")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let schema_str = require_conforming(&streams, "media:enc=utf8;fmt=json;json-schema;record", "schema")?;
         let output_schema: serde_json::Value = serde_json::from_str(&schema_str)
-            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Failed to parse schema argument as JSON: {}", e), "media:fmt=json;json-schema;record"))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Failed to parse schema argument as JSON: {}", e), "media:enc=utf8;fmt=json;json-schema;record"))?;
         let model_spec = resolve_model_spec(&streams)?;
         // generate_json is the one non-deterministic cap: temperature/seed are real,
         // configurable args here, each backstopped to its declared default.
@@ -953,10 +953,10 @@ impl Op<()> for ExtractOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let schema_str = require_conforming(&streams, "media:fmt=json;json-schema;record", "schema")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let schema_str = require_conforming(&streams, "media:enc=utf8;fmt=json;json-schema;record", "schema")?;
         let user_schema: serde_json::Value = serde_json::from_str(&schema_str)
-            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Failed to parse schema argument as JSON: {}", e), "media:fmt=json;json-schema;record"))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", format!("Failed to parse schema argument as JSON: {}", e), "media:enc=utf8;fmt=json;json-schema;record"))?;
         let model_spec = resolve_model_spec(&streams)?;
         let inference_params = resolve_judgment_params(&streams)?;
 
@@ -991,8 +991,8 @@ impl Op<()> for MakeDecisionOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let question = require_conforming(&streams, "media:enc=utf-8;question", "question")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let question = require_conforming(&streams, "media:enc=utf8;question", "question")?;
         let max_content_length = optional_num(&streams, "media:integer;max-content-length;numeric", "max_content_length")?;
         // The threshold arg is REAL: below-threshold judgments are flagged on
         // the record (and warned), exactly as the cap doc promises.
@@ -1048,8 +1048,8 @@ impl Op<()> for MakeMultipleDecisionsOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let questions_str = require_conforming(&streams, "media:enc=utf-8;question", "questions")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let questions_str = require_conforming(&streams, "media:enc=utf8;question", "questions")?;
         let questions: Vec<String> = questions_str
             .lines()
             .filter(|line| !line.is_empty())
@@ -1116,9 +1116,9 @@ impl Op<()> for SameOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let left = require_conforming(&streams, "media:enc=utf-8", "first item")?;
-        let right = require_conforming(&streams, "media:enc=utf-8;second-item", "second item")?;
-        let context = optional_conforming(&streams, "media:criterion;enc=utf-8")?;
+        let left = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "first item")?;
+        let right = require_conforming(&streams, "media:enc=utf8;second-item", "second item")?;
+        let context = optional_conforming(&streams, "media:criterion;enc=utf8")?;
         let model_spec = resolve_model_spec(&streams)?;
         let inference_params = resolve_judgment_params(&streams)?;
 
@@ -1154,12 +1154,12 @@ impl Op<()> for ClassifyOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let labels_raw = require_conforming(&streams, "media:enc=utf-8;label-set", "labels")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let labels_raw = require_conforming(&streams, "media:enc=utf8;label-set", "labels")?;
         let labels = parse_label_set(&labels_raw).map_err(|message| {
-            input_arg_error("INVALID_INPUT", message, "media:enc=utf-8;label-set")
+            input_arg_error("INVALID_INPUT", message, "media:enc=utf8;label-set")
         })?;
-        let context = optional_conforming(&streams, "media:criterion;enc=utf-8")?;
+        let context = optional_conforming(&streams, "media:criterion;enc=utf8")?;
         let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
@@ -1224,12 +1224,12 @@ impl Op<()> for ScoreOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let rubric = require_conforming(&streams, "media:enc=utf-8;rubric", "rubric")?;
-        let scale_raw = optional_conforming(&streams, "media:enc=utf-8;scale")?
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let rubric = require_conforming(&streams, "media:enc=utf8;rubric", "rubric")?;
+        let scale_raw = optional_conforming(&streams, "media:enc=utf8;scale")?
             .unwrap_or_else(|| "0..10".to_string());
         let (scale_min, scale_max) = parse_scale(&scale_raw).map_err(|message| {
-            input_arg_error("INVALID_INPUT", message, "media:enc=utf-8;scale")
+            input_arg_error("INVALID_INPUT", message, "media:enc=utf8;scale")
         })?;
         let model_spec = resolve_model_spec(&streams)?;
 
@@ -1276,8 +1276,8 @@ impl Op<()> for VerifyOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "artifact")?;
-        let requirements = require_conforming(&streams, "media:enc=utf-8;rubric", "requirements")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "artifact")?;
+        let requirements = require_conforming(&streams, "media:enc=utf8;rubric", "requirements")?;
         let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
@@ -1331,10 +1331,10 @@ impl Op<()> for RouteOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let targets_raw = require_conforming(&streams, "media:fmt=json;record;target-set", "targets")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let targets_raw = require_conforming(&streams, "media:enc=utf8;fmt=json;record;target-set", "targets")?;
         let targets = parse_target_set(&targets_raw).map_err(|message| {
-            input_arg_error("INVALID_INPUT", message, "media:fmt=json;record;target-set")
+            input_arg_error("INVALID_INPUT", message, "media:enc=utf8;fmt=json;record;target-set")
         })?;
         let model_spec = resolve_model_spec(&streams)?;
 
@@ -1395,9 +1395,9 @@ impl Op<()> for NormalizeOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "value")?;
-        let entity_type = require_conforming(&streams, "media:enc=utf-8;entity-type", "entity type")?;
-        let locale = optional_conforming(&streams, "media:enc=utf-8;locale")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "value")?;
+        let entity_type = require_conforming(&streams, "media:enc=utf8;entity-type", "entity type")?;
+        let locale = optional_conforming(&streams, "media:enc=utf8;locale")?;
         let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
@@ -1445,8 +1445,8 @@ impl Op<()> for AskOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let question = require_conforming(&streams, "media:enc=utf-8;question", "question")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let question = require_conforming(&streams, "media:enc=utf8;question", "question")?;
         let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
@@ -1492,8 +1492,8 @@ impl Op<()> for ExplainOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "data")?;
-        let goal = require_conforming(&streams, "media:criterion;enc=utf-8", "goal")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "data")?;
+        let goal = require_conforming(&streams, "media:criterion;enc=utf8", "goal")?;
         let model_spec = resolve_model_spec(&streams)?;
 
         let mut subs = HashMap::new();
@@ -1538,8 +1538,8 @@ impl Op<()> for SummarizeOp {
     async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
         let (req, streams) = take_request_streams(wet).await?;
 
-        let content = require_conforming(&streams, "media:enc=utf-8", "content")?;
-        let purpose = require_conforming(&streams, "media:criterion;enc=utf-8", "purpose")?;
+        let content = require_conforming(&streams, capdag::MEDIA_PLAIN_TEXT, "content")?;
+        let purpose = require_conforming(&streams, "media:criterion;enc=utf8", "purpose")?;
         let budget_words = match optional_conforming(&streams, "media:integer;numeric;word-budget")? {
             None => None,
             Some(raw) => {
@@ -1649,7 +1649,7 @@ pub fn register_semantic_ops(runtime: &mut capdag::CartridgeRuntime) {
 /// catalog's declared default GGUF LLM).
 fn model_spec_arg() -> capdag::CapArg {
     let mut a = capdag::CapArg::with_description(
-        "media:enc=utf-8;gguf;llm;model-spec;tokenizer-embedded-gguf",
+        "media:enc=utf8;gguf;llm;model-spec;tokenizer-embedded-gguf",
         "model-spec",
         false,
         vec![capdag::ArgSource::CliFlag { cli_flag: "--model-spec".to_string() }],
@@ -1719,14 +1719,15 @@ fn flag_name(flag: &str) -> &str {
     name
 }
 
-/// The primary content arg (stdin / positional 0) every semantic cap shares.
+/// The primary content arg (stdin / positional 0) every semantic cap shares:
+/// plain text, as every cap that reads text as language takes.
 fn content_arg(desc: &str) -> capdag::CapArg {
     capdag::CapArg::with_description(
-        "media:enc=utf-8",
+        capdag::MEDIA_PLAIN_TEXT,
         "input",
         true,
         vec![
-            capdag::ArgSource::Stdin { stdin: "media:enc=utf-8".to_string() },
+            capdag::ArgSource::Stdin { stdin: capdag::MEDIA_PLAIN_TEXT.to_string() },
             capdag::ArgSource::Position { position: 0 },
         ],
         desc.to_string(),
@@ -1737,7 +1738,7 @@ fn content_arg(desc: &str) -> capdag::CapArg {
 /// it: generate-json, make-decision, make-multiple-decisions).
 fn language_arg() -> capdag::CapArg {
     let mut a = capdag::CapArg::with_description(
-        "media:enc=utf-8;language-code",
+        "media:enc=utf8;language-code",
         "language",
         false,
         vec![capdag::ArgSource::CliFlag { cli_flag: "--language".to_string() }],
@@ -1775,7 +1776,7 @@ fn opt_flag_arg(media: &str, flag: &str, desc: &str, default: Option<serde_json:
 pub fn semantic_caps() -> Vec<capdag::Cap> {
     use capdag::{standard, Cap, CapOutput};
     let en = "en";
-    let judgment_out = "media:fmt=json;record;semantic-judgment";
+    let judgment_out = "media:enc=utf8;fmt=json;record;semantic-judgment";
     let mut caps: Vec<Cap> = Vec::new();
 
     // generate_json
@@ -1786,7 +1787,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["generate_json".to_string()],
             "Produce a JSON object matching a caller-supplied schema from content, guaranteed valid via constrained generation.".to_string());
         cap.add_arg(content_arg("Content to analyze"));
-        cap.add_arg(flag_arg("media:fmt=json;json-schema;record", "--schema", "The JSON Schema the output must match"));
+        cap.add_arg(flag_arg("media:enc=utf8;fmt=json;json-schema;record", "--schema", "The JSON Schema the output must match"));
         cap.add_arg(language_arg());
         add_llm_args(&mut cap);
         // generate_json is the one non-deterministic cap: temperature/seed are real,
@@ -1794,7 +1795,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         for a in sampling_temperature_args() {
             cap.add_arg(a);
         }
-        cap.add_output(CapOutput::new("media:fmt=json;record", "output", "JSON object conforming to the supplied schema."));
+        cap.add_output(CapOutput::new("media:enc=utf8;fmt=json;record", "output", "JSON object conforming to the supplied schema."));
         caps.push(cap);
     }
 
@@ -1806,7 +1807,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["extract".to_string()],
             "Extract the fields described by a schema from content, wrapped in the semantic-judgment envelope.".to_string());
         cap.add_arg(content_arg("Content to extract from"));
-        cap.add_arg(flag_arg("media:fmt=json;json-schema;record", "--schema", "The JSON Schema describing the fields to extract"));
+        cap.add_arg(flag_arg("media:enc=utf8;fmt=json;json-schema;record", "--schema", "The JSON Schema describing the fields to extract"));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: result (instance of the supplied schema), confidence, reason"));
         caps.push(cap);
@@ -1820,12 +1821,12 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["make_decision".to_string()],
             "Make a single binary (yes/no, true/false) decision based on content and a question".to_string());
         cap.add_arg(content_arg("Content to analyze for the binary decision"));
-        cap.add_arg(flag_arg("media:enc=utf-8;question", "--question", "The binary question to answer about the content"));
+        cap.add_arg(flag_arg("media:enc=utf8;question", "--question", "The binary question to answer about the content"));
         cap.add_arg(language_arg());
         cap.add_arg(opt_flag_arg("media:integer;max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
         cap.add_arg(opt_flag_arg("media:confidence-threshold;numeric", "--confidence-threshold", "Minimum confidence threshold for decisions", Some(serde_json::json!(0.7))));
         add_llm_args(&mut cap);
-        cap.add_output(CapOutput::new("media:decision;fmt=json;record", "output", "Binary decision result (true/false)"));
+        cap.add_output(CapOutput::new("media:decision;enc=utf8;fmt=json;record", "output", "Binary decision result (true/false)"));
         caps.push(cap);
     }
 
@@ -1837,7 +1838,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["make_multiple_decisions".to_string()],
             "Make several binary decisions about the same content in one constrained decode, one record per question.".to_string());
         cap.add_arg(content_arg("Content to analyze for the binary decisions"));
-        cap.add_arg(flag_arg("media:enc=utf-8;question", "--questions", "The binary questions (one per line) to answer about the content"));
+        cap.add_arg(flag_arg("media:enc=utf8;question", "--questions", "The binary questions (one per line) to answer about the content"));
         cap.add_arg(language_arg());
         cap.add_arg(opt_flag_arg("media:integer;max-content-length;numeric", "--max-content-length", "Optional bound on content length in characters. 0 (the default) uses the whole content.", Some(serde_json::json!(0))));
         cap.add_arg(opt_flag_arg("media:confidence-threshold;numeric", "--confidence-threshold", "Minimum confidence threshold for decisions", Some(serde_json::json!(0.7))));
@@ -1848,7 +1849,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
         // scalar output channel while the Op emits a sequence — the mismatch
         // prepends a phantom empty item to the terminal.
         cap.add_output(CapOutput::with_full_definition(
-            "media:decision;fmt=json;record",
+            "media:decision;enc=utf8;fmt=json;record",
             "output",
             "One decision per question, each as a JSON object with identifier and value",
             true,
@@ -1867,13 +1868,13 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             "Judge whether two items refer to the same thing, under an optional context.".to_string());
         cap.add_arg(content_arg("The first item"));
         cap.add_arg(capdag::CapArg::with_description(
-            "media:enc=utf-8;second-item",
+            "media:enc=utf8;second-item",
             "second",
             true,
             vec![capdag::ArgSource::Position { position: 1 }],
             "The second item".to_string(),
         ));
-        cap.add_arg(opt_flag_arg("media:criterion;enc=utf-8", "--context", "Optional context framing what \"the same\" means", None));
+        cap.add_arg(opt_flag_arg("media:criterion;enc=utf8", "--context", "Optional context framing what \"the same\" means", None));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: same (bool), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
@@ -1887,8 +1888,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["classify".to_string()],
             "Assign content exactly one label from a caller-supplied set.".to_string());
         cap.add_arg(content_arg("Content to classify"));
-        cap.add_arg(flag_arg("media:enc=utf-8;label-set", "--labels", "The allowed labels, comma- or newline-separated (2..=64)"));
-        cap.add_arg(opt_flag_arg("media:criterion;enc=utf-8", "--context", "Optional context framing the classification", None));
+        cap.add_arg(flag_arg("media:enc=utf8;label-set", "--labels", "The allowed labels, comma- or newline-separated (2..=64)"));
+        cap.add_arg(opt_flag_arg("media:criterion;enc=utf8", "--context", "Optional context framing the classification", None));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: label (from the allowed set), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
@@ -1902,8 +1903,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["score".to_string()],
             "Score content on a caller-supplied integer scale against a rubric.".to_string());
         cap.add_arg(content_arg("Content to score"));
-        cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--rubric", "The rubric describing what to score"));
-        cap.add_arg(opt_flag_arg("media:enc=utf-8;scale", "--scale", "The integer scale as min..max (default 0..10)", Some(serde_json::json!("0..10"))));
+        cap.add_arg(flag_arg("media:enc=utf8;rubric", "--rubric", "The rubric describing what to score"));
+        cap.add_arg(opt_flag_arg("media:enc=utf8;scale", "--scale", "The integer scale as min..max (default 0..10)", Some(serde_json::json!("0..10"))));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: score (integer on the scale), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
@@ -1917,7 +1918,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["verify".to_string()],
             "Verify an artifact against requirements, returning pass/fail with violations.".to_string());
         cap.add_arg(content_arg("The artifact to verify"));
-        cap.add_arg(flag_arg("media:enc=utf-8;rubric", "--against", "The requirements to verify against"));
+        cap.add_arg(flag_arg("media:enc=utf8;rubric", "--against", "The requirements to verify against"));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: pass (bool), violations (requirement/evidence/severity), confidence, reason"));
         caps.push(cap);
@@ -1931,7 +1932,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["route".to_string()],
             "Pick exactly one target from a caller-supplied contract set for the content.".to_string());
         cap.add_arg(content_arg("Content to route"));
-        cap.add_arg(flag_arg("media:fmt=json;record;target-set", "--targets", "A JSON object mapping target name to its contract description (2..=64)"));
+        cap.add_arg(flag_arg("media:enc=utf8;fmt=json;record;target-set", "--targets", "A JSON object mapping target name to its contract description (2..=64)"));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: target (from the given set), confidence (0-1), reason (one sentence)"));
         caps.push(cap);
@@ -1945,8 +1946,8 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["normalize".to_string()],
             "Canonicalize a value to its standard form for a given entity type.".to_string());
         cap.add_arg(content_arg("The value to normalize"));
-        cap.add_arg(flag_arg("media:enc=utf-8;entity-type", "--type", "The entity type (e.g. date, currency, phone)"));
-        cap.add_arg(opt_flag_arg("media:enc=utf-8;locale", "--locale", "Optional locale hint for normalization", None));
+        cap.add_arg(flag_arg("media:enc=utf8;entity-type", "--type", "The entity type (e.g. date, currency, phone)"));
+        cap.add_arg(opt_flag_arg("media:enc=utf8;locale", "--locale", "Optional locale hint for normalization", None));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: canonical (string; empty with confidence 0.0 when unreadable), confidence, reason"));
         caps.push(cap);
@@ -1960,7 +1961,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["ask".to_string()],
             "Answer a question about content with verbatim-quote evidence that is verified to occur in the content.".to_string());
         cap.add_arg(content_arg("Content to answer against"));
-        cap.add_arg(flag_arg("media:enc=utf-8;question", "--question", "The question to answer about the content"));
+        cap.add_arg(flag_arg("media:enc=utf8;question", "--question", "The question to answer about the content"));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: answer, verified verbatim quotes, confidence, reason"));
         caps.push(cap);
@@ -1974,7 +1975,7 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["explain".to_string()],
             "Propose a hypothesis for a goal, backed by verified evidence from the data plus next checks.".to_string());
         cap.add_arg(content_arg("The data to explain"));
-        cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--goal", "The goal the explanation should serve"));
+        cap.add_arg(flag_arg("media:criterion;enc=utf8", "--goal", "The goal the explanation should serve"));
         add_llm_args(&mut cap);
         cap.add_output(CapOutput::new(judgment_out, "output", "Semantic-judgment record: hypothesis, verified evidence, next checks, confidence, reason"));
         caps.push(cap);
@@ -1988,10 +1989,10 @@ pub fn semantic_caps() -> Vec<capdag::Cap> {
             vec!["summarize".to_string()],
             "Summarize content for a stated purpose, as plain text.".to_string());
         cap.add_arg(content_arg("Content to summarize"));
-        cap.add_arg(flag_arg("media:criterion;enc=utf-8", "--for", "The purpose the summary should serve"));
+        cap.add_arg(flag_arg("media:criterion;enc=utf8", "--for", "The purpose the summary should serve"));
         cap.add_arg(opt_flag_arg("media:integer;numeric;word-budget", "--budget", "Optional positive word budget for the summary", None));
         add_llm_args(&mut cap);
-        cap.add_output(CapOutput::new("media:enc=utf-8;ext=txt;plain-text", "output", "The purpose-driven summary as plain text"));
+        cap.add_output(CapOutput::new("media:enc=utf8;ext=txt;plain-text", "output", "The purpose-driven summary as plain text"));
         caps.push(cap);
     }
 
