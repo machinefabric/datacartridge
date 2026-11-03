@@ -407,9 +407,9 @@ mod tests {
     /// `media:enc=utf8;list;psv`, and other URN forms that did
     /// not exist in the catalog because no anchor declared them.
     /// This test exhaustively enumerates the URN forms the adapter
-    /// is allowed to return; cross-validation at `sdx publish fabric`
-    /// time catches any of these strings drifting away from
-    /// catalog truth.
+    /// is allowed to return; validating the fabric against its
+    /// published catalog catches any of these strings drifting away
+    /// from catalog truth.
     #[test]
     fn test0013_every_emitted_urn_is_in_catalog_form() {
         // Trigger every detect_* branch with carefully-chosen
