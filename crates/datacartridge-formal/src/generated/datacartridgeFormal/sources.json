@@ -3,11 +3,11 @@
     "lean_name": "Array.getInternalBorrowed",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3272,
+      3413,
       1
     ],
     "end": [
-      3279,
+      3420,
       22
     ]
   },
@@ -15,11 +15,11 @@
     "lean_name": "Array.mk",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3210,
+      3351,
       3
     ],
     "end": [
-      3210,
+      3351,
       5
     ]
   },
@@ -27,11 +27,11 @@
     "lean_name": "Array.size",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3259,
+      3400,
       1
     ],
     "end": [
-      3270,
+      3411,
       17
     ]
   },
@@ -63,11 +63,11 @@
     "lean_name": "ByteArray.size",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3472,
+      3613,
       1
     ],
     "end": [
-      3480,
+      3621,
       20
     ]
   },
@@ -3177,11 +3177,11 @@
     "lean_name": "List.all",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      1915,
+      1907,
       1
     ],
     "end": [
-      1928,
+      1920,
       32
     ]
   },
@@ -3189,11 +3189,11 @@
     "lean_name": "List.any",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      1894,
+      1886,
       1
     ],
     "end": [
-      1908,
+      1900,
       32
     ]
   },
@@ -3201,11 +3201,11 @@
     "lean_name": "List.filterTR.loop",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      2472,
+      2464,
       17
     ],
     "end": [
-      2476,
+      2468,
       28
     ]
   },
@@ -3213,11 +3213,11 @@
     "lean_name": "List.find?",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      1606,
+      1598,
       1
     ],
     "end": [
-      1621,
+      1613,
       26
     ]
   },
@@ -3225,11 +3225,11 @@
     "lean_name": "List.findIdx.go",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      1701,
+      1693,
       17
     ],
     "end": [
-      1703,
+      1695,
       49
     ]
   },
@@ -3237,11 +3237,11 @@
     "lean_name": "List.foldl",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3102,
+      3243,
       1
     ],
     "end": [
-      3114,
+      3255,
       37
     ]
   },
@@ -3249,11 +3249,11 @@
     "lean_name": "List.foldr",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      533,
+      524,
       1
     ],
     "end": [
-      546,
+      537,
       35
     ]
   },
@@ -3273,11 +3273,11 @@
     "lean_name": "List.head?",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      371,
+      362,
       1
     ],
     "end": [
-      383,
+      374,
       19
     ]
   },
@@ -3285,11 +3285,11 @@
     "lean_name": "List.idxOf",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      1709,
+      1701,
       1
     ],
     "end": [
-      1719,
+      1711,
       61
     ]
   },
@@ -3297,11 +3297,11 @@
     "lean_name": "List.isEmpty",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      763,
+      754,
       1
     ],
     "end": [
-      776,
+      767,
       20
     ]
   },
@@ -3309,11 +3309,11 @@
     "lean_name": "List.lengthTR",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3061,
+      3202,
       1
     ],
     "end": [
-      3072,
+      3213,
       19
     ]
   },
@@ -3321,11 +3321,11 @@
     "lean_name": "List.lengthTRAux",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3056,
+      3197,
       1
     ],
     "end": [
-      3059,
+      3200,
       48
     ]
   },
@@ -3333,11 +3333,11 @@
     "lean_name": "List.mapTR.loop",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      2440,
+      2432,
       17
     ],
     "end": [
-      2442,
+      2434,
       37
     ]
   },
@@ -3345,11 +3345,11 @@
     "lean_name": "List.range",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      2092,
+      2084,
       1
     ],
     "end": [
-      2107,
+      2099,
       32
     ]
   },
@@ -3357,11 +3357,11 @@
     "lean_name": "List.range.loop",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      2105,
+      2097,
       3
     ],
     "end": [
-      2107,
+      2099,
       32
     ]
   },
@@ -3369,11 +3369,11 @@
     "lean_name": "List.reverse",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      562,
+      553,
       1
     ],
     "end": [
-      576,
+      567,
       19
     ]
   },
@@ -3381,11 +3381,11 @@
     "lean_name": "List.reverseAux",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      554,
+      545,
       1
     ],
     "end": [
-      557,
+      548,
       35
     ]
   },
@@ -3393,11 +3393,11 @@
     "lean_name": "List.sum",
     "file": "<lean>/Init/Data/List/Basic.lean",
     "start": [
-      2062,
+      2054,
       1
     ],
     "end": [
-      2070,
+      2062,
       18
     ]
   },
@@ -3405,11 +3405,11 @@
     "lean_name": "Nat.add",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      1764,
+      1879,
       1
     ],
     "end": [
-      1775,
+      1890,
       44
     ]
   },
@@ -3417,11 +3417,11 @@
     "lean_name": "Nat.ble",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      1881,
+      1998,
       1
     ],
     "end": [
-      1896,
+      2013,
       30
     ]
   },
@@ -3429,35 +3429,35 @@
     "lean_name": "Nat.decEq",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      1860,
+      1975,
       1
     ],
     "end": [
-      1876,
-      44
+      1993,
+      36
     ]
   },
   {
     "lean_name": "Nat.decLe",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2079,
+      2196,
       1
     ],
     "end": [
-      2091,
-      128
+      2212,
+      85
     ]
   },
   {
     "lean_name": "Nat.decLt",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2093,
+      2214,
       1
     ],
     "end": [
-      2105,
+      2226,
       19
     ]
   },
@@ -3477,11 +3477,11 @@
     "lean_name": "Nat.div",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2170,
+      2291,
       1
     ],
     "end": [
-      2197,
+      2318,
       17
     ]
   },
@@ -3489,11 +3489,11 @@
     "lean_name": "Nat.mod",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2248,
+      2369,
       1
     ],
     "end": [
-      2285,
+      2406,
       57
     ]
   },
@@ -3501,11 +3501,11 @@
     "lean_name": "Nat.mul",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      1785,
+      1900,
       1
     ],
     "end": [
-      1796,
+      1911,
       45
     ]
   },
@@ -3513,11 +3513,11 @@
     "lean_name": "Nat.pow",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      1802,
+      1917,
       1
     ],
     "end": [
-      1811,
+      1926,
       38
     ]
   },
@@ -3549,11 +3549,11 @@
     "lean_name": "Nat.sub",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2110,
+      2231,
       1
     ],
     "end": [
-      2129,
+      2250,
       36
     ]
   },
@@ -3675,11 +3675,11 @@
     "lean_name": "String.ofList",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3551,
+      3692,
       1
     ],
     "end": [
-      3561,
+      3702,
       42
     ]
   },
@@ -3699,11 +3699,11 @@
     "lean_name": "System.Platform.getNumBits",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2297,
+      2418,
       1
     ],
     "end": [
-      2306,
+      2427,
       28
     ]
   },
@@ -3711,11 +3711,11 @@
     "lean_name": "System.Platform.numBits",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2308,
+      2429,
       1
     ],
     "end": [
-      2312,
+      2433,
       22
     ]
   },
@@ -3723,11 +3723,11 @@
     "lean_name": "UInt32.add",
     "file": "<lean>/Init/Data/UInt/BasicAux.lean",
     "start": [
-      225,
+      216,
       1
     ],
     "end": [
-      232,
+      223,
       78
     ]
   },
@@ -3735,11 +3735,11 @@
     "lean_name": "UInt32.decLe",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2693,
+      2818,
       1
     ],
     "end": [
-      2707,
+      2832,
       60
     ]
   },
@@ -3747,11 +3747,11 @@
     "lean_name": "UInt32.toNat",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2641,
+      2764,
       1
     ],
     "end": [
-      2647,
+      2770,
       56
     ]
   },
@@ -3783,11 +3783,11 @@
     "lean_name": "UInt64.toNat",
     "file": "<lean>/Init/Data/UInt/BasicAux.lean",
     "start": [
-      289,
+      277,
       1
     ],
     "end": [
-      295,
+      283,
       56
     ]
   },
@@ -3795,11 +3795,11 @@
     "lean_name": "UInt8.toUInt64",
     "file": "<lean>/Init/Data/UInt/BasicAux.lean",
     "start": [
-      317,
+      305,
       1
     ],
     "end": [
-      323,
+      311,
       97
     ]
   },
@@ -3807,11 +3807,11 @@
     "lean_name": "USize.ofNat",
     "file": "<lean>/Init/Data/UInt/BasicAux.lean",
     "start": [
-      344,
+      332,
       1
     ],
     "end": [
-      351,
+      339,
       59
     ]
   },
@@ -3819,11 +3819,11 @@
     "lean_name": "USize.ofNatLT",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      2807,
+      2932,
       1
     ],
     "end": [
-      2815,
+      2940,
       33
     ]
   },
@@ -4188,18 +4188,6 @@
     ]
   },
   {
-    "lean_name": "instDecidableEqOrdering",
-    "file": "<lean>/Init/Data/Ord/Basic.lean",
-    "start": [
-      32,
-      21
-    ],
-    "end": [
-      32,
-      32
-    ]
-  },
-  {
     "lean_name": "mkPanicMessage",
     "file": "<lean>/Init/Util.lean",
     "start": [
@@ -4239,11 +4227,11 @@
     "lean_name": "panic",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3710,
+      3851,
       1
     ],
     "end": [
-      3723,
+      3864,
       16
     ]
   },
@@ -4251,11 +4239,11 @@
     "lean_name": "panicCore",
     "file": "<lean>/Init/Prelude.lean",
     "start": [
-      3696,
+      3837,
       1
     ],
     "end": [
-      3708,
+      3849,
       73
     ]
   }

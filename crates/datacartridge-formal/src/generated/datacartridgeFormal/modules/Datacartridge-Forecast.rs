@@ -3576,19 +3576,19 @@ pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dinstDecidableEqCall_d
             return x_7;
         }
         _ => {
-            match x_4 {
+            match x_6 {
                 0 => {
-                    match x_6 {
+                    match x_4 {
                         0 => {
                             return x_7;
                         }
                         _ => {
-                            return x_4;
+                            return x_6;
                         }
                     }
                 }
                 _ => {
-                    return x_6;
+                    return x_4;
                 }
             }
         }
@@ -3637,21 +3637,21 @@ pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dinstDecidableEqClaim_
     let x_10: Obj = rt::lean_ctor_get(x_2, 1);
     'b11: {
         'b14: {
-            match x_3 {
+            match x_7 {
                 0 => {
-                    match x_7 {
+                    match x_3 {
                         0 => {
                             break 'b14;
                         }
                         _ => {
-                            return x_3;
+                            return x_7;
                         }
                     }
                 }
                 _ => {
-                    match x_7 {
+                    match x_3 {
                         0 => {
-                            return x_7;
+                            return x_3;
                         }
                         _ => {
                             break 'b14;
@@ -3660,21 +3660,21 @@ pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dinstDecidableEqClaim_
                 }
             }
         }
-        match x_4 {
+        match x_8 {
             0 => {
-                match x_8 {
+                match x_4 {
                     0 => {
                         break 'b11;
                     }
                     _ => {
-                        return x_4;
+                        return x_8;
                     }
                 }
             }
             _ => {
-                match x_8 {
+                match x_4 {
                     0 => {
-                        return x_8;
+                        return x_4;
                     }
                     _ => {
                         break 'b11;
@@ -3853,44 +3853,30 @@ pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dinstDecidableEqLink_d
 pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dinstDecidableEqLink_ddecEq(x_1: Obj, x_2: Obj) -> u8 {
     match rt::lean_obj_tag(x_1) {
         0 => {
-            let x_3: Obj = rt::lean_ctor_get(x_1, 0);
-            let x_4: u8 = 0u8;
             match rt::lean_obj_tag(x_2) {
                 0 => {
-                    let x_5: Obj = rt::lean_ctor_get(x_2, 0);
-                    let x_6: u8 = l_Int_ddecEq(x_3, x_5);
-                    match x_6 {
-                        0 => {
-                            return x_4;
-                        }
-                        _ => {
-                            return x_6;
-                        }
-                    }
+                    let x_3: Obj = rt::lean_ctor_get(x_1, 0);
+                    let x_4: Obj = rt::lean_ctor_get(x_2, 0);
+                    let x_5: u8 = l_Int_ddecEq(x_3, x_4);
+                    return x_5;
                 }
                 _ => {
-                    return x_4;
+                    let x_6: u8 = 0u8;
+                    return x_6;
                 }
             }
         }
         1 => {
-            let x_7: Obj = rt::lean_ctor_get(x_1, 0);
-            let x_8: u8 = 0u8;
             match rt::lean_obj_tag(x_2) {
                 1 => {
-                    let x_9: Obj = rt::lean_ctor_get(x_2, 0);
-                    let x_10: u8 = l_Int_ddecEq(x_7, x_9);
-                    match x_10 {
-                        0 => {
-                            return x_8;
-                        }
-                        _ => {
-                            return x_10;
-                        }
-                    }
+                    let x_7: Obj = rt::lean_ctor_get(x_1, 0);
+                    let x_8: Obj = rt::lean_ctor_get(x_2, 0);
+                    let x_9: u8 = l_Int_ddecEq(x_7, x_8);
+                    return x_9;
                 }
                 _ => {
-                    return x_8;
+                    let x_10: u8 = 0u8;
+                    return x_10;
                 }
             }
         }
@@ -3900,29 +3886,21 @@ pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dinstDecidableEqLink_d
                     let x_11: u8 = 1u8;
                     return x_11;
                 }
-                3 => {
+                _ => {
                     let x_12: u8 = 0u8;
                     return x_12;
-                }
-                _ => {
-                    let x_13: u8 = 0u8;
-                    return x_13;
                 }
             }
         }
         _ => {
             match rt::lean_obj_tag(x_2) {
-                2 => {
-                    let x_14: u8 = 0u8;
-                    return x_14;
-                }
                 3 => {
-                    let x_15: u8 = 1u8;
-                    return x_15;
+                    let x_13: u8 = 1u8;
+                    return x_13;
                 }
                 _ => {
-                    let x_16: u8 = 0u8;
-                    return x_16;
+                    let x_14: u8 = 0u8;
+                    return x_14;
                 }
             }
         }
@@ -4246,21 +4224,21 @@ pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dinstDecidableEqWhen_d
     let x_7: Obj = rt::lean_ctor_get(x_2, 0);
     let x_8: Obj = rt::lean_ctor_get(x_2, 1);
     'b9: {
-        match x_3 {
+        match x_6 {
             0 => {
-                match x_6 {
+                match x_3 {
                     0 => {
                         break 'b9;
                     }
                     _ => {
-                        return x_3;
+                        return x_6;
                     }
                 }
             }
             _ => {
-                match x_6 {
+                match x_3 {
                     0 => {
-                        return x_6;
+                        return x_3;
                     }
                     _ => {
                         break 'b9;
@@ -10438,7 +10416,7 @@ pub(crate) unsafe extern "C" fn l_Datacartridge_dForecast_dyearBefore_d__boxed(x
 
 // Lean: List.all._at_.Datacartridge.Forecast.all.spec_1
 // Compiled from: List.all
-// Source: <lean>/Init/Data/List/Basic.lean:1915:1
+// Source: <lean>/Init/Data/List/Basic.lean:1907:1
 pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10449,12 +10427,14 @@ pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dal
             _ => {
                 let x_3: Obj = rt::lean_ctor_get(x_1, 0);
                 let x_4: Obj = rt::lean_ctor_get(x_1, 1);
-                let x_5: u8 = 1u8;
-                let x_6: u8 = rt::lean_unbox(x_3) as u8;
-                let x_7: u8 = l_Datacartridge_dForecast_dinstDecidableEqOutcome(x_6, x_5);
-                match x_7 {
+                let x_5: u8 = rt::lean_unbox(x_3) as u8;
+                let x_6: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_5);
+                let x_7: Obj = l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__closed__0();
+                let x_8: u8 = l_Nat_ddecEq(x_6, x_7);
+                rt::lean_dec(x_6);
+                match x_8 {
                     0 => {
-                        return x_7;
+                        return x_8;
                     }
                     _ => {
                         let t_0: Obj = x_4;
@@ -10469,7 +10449,7 @@ pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dal
 
 // Lean: List.all._at_.Datacartridge.Forecast.all.spec_1._boxed
 // Compiled from: List.all
-// Source: <lean>/Init/Data/List/Basic.lean:1915:1
+// Source: <lean>/Init/Data/List/Basic.lean:1907:1
 pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__boxed(x_1: Obj) -> Obj {
     let x_2: u8 = l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1(x_1);
     rt::lean_dec(x_1);
@@ -10477,9 +10457,23 @@ pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dal
     return x_3;
 }
 
+// Lean: List.all._at_.Datacartridge.Forecast.all.spec_1._closed_0
+// Compiled from: List.all
+// Source: <lean>/Init/Data/List/Basic.lean:1907:1
+static C_l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__closed__0: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__closed__0__init() -> Obj {
+    let x_1: u8 = 1u8;
+    let x_2: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__closed__0() -> Obj {
+    C_l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__closed__0.get(l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__closed__0__init)
+}
+
 // Lean: List.all._at_.Datacartridge.Forecast.partsCarry.spec_2
 // Compiled from: List.all
-// Source: <lean>/Init/Data/List/Basic.lean:1915:1
+// Source: <lean>/Init/Data/List/Basic.lean:1907:1
 pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dpartsCarry_dspec__2(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10508,7 +10502,7 @@ pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dpa
 
 // Lean: List.all._at_.Datacartridge.Forecast.partsCarry.spec_2._boxed
 // Compiled from: List.all
-// Source: <lean>/Init/Data/List/Basic.lean:1915:1
+// Source: <lean>/Init/Data/List/Basic.lean:1907:1
 pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dpartsCarry_dspec__2_d__boxed(x_1: Obj) -> Obj {
     let x_2: u8 = l_List_dall_d__at___dDatacartridge_dForecast_dpartsCarry_dspec__2(x_1);
     rt::lean_dec(x_1);
@@ -10518,7 +10512,7 @@ pub(crate) unsafe extern "C" fn l_List_dall_d__at___dDatacartridge_dForecast_dpa
 
 // Lean: List.any._at_.Datacartridge.Forecast.all.spec_0
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10529,17 +10523,19 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dal
             _ => {
                 let x_3: Obj = rt::lean_ctor_get(x_1, 0);
                 let x_4: Obj = rt::lean_ctor_get(x_1, 1);
-                let x_5: u8 = 2u8;
-                let x_6: u8 = rt::lean_unbox(x_3) as u8;
-                let x_7: u8 = l_Datacartridge_dForecast_dinstDecidableEqOutcome(x_6, x_5);
-                match x_7 {
+                let x_5: u8 = rt::lean_unbox(x_3) as u8;
+                let x_6: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_5);
+                let x_7: Obj = l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0_d__closed__0();
+                let x_8: u8 = l_Nat_ddecEq(x_6, x_7);
+                rt::lean_dec(x_6);
+                match x_8 {
                     0 => {
                         let t_0: Obj = x_4;
                         x_1 = t_0;
                         continue 'tail;
                     }
                     _ => {
-                        return x_7;
+                        return x_8;
                     }
                 }
             }
@@ -10549,7 +10545,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dal
 
 // Lean: List.any._at_.Datacartridge.Forecast.all.spec_0._boxed
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0_d__boxed(x_1: Obj) -> Obj {
     let x_2: u8 = l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0(x_1);
     rt::lean_dec(x_1);
@@ -10557,9 +10553,23 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dal
     return x_3;
 }
 
+// Lean: List.any._at_.Datacartridge.Forecast.all.spec_0._closed_0
+// Compiled from: List.any
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
+static C_l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0_d__closed__0: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0_d__closed__0__init() -> Obj {
+    let x_1: u8 = 2u8;
+    let x_2: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0_d__closed__0() -> Obj {
+    C_l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0_d__closed__0.get(l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__0_d__closed__0__init)
+}
+
 // Lean: List.any._at_.Datacartridge.Forecast.all.spec_2
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10570,17 +10580,19 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dal
             _ => {
                 let x_3: Obj = rt::lean_ctor_get(x_1, 0);
                 let x_4: Obj = rt::lean_ctor_get(x_1, 1);
-                let x_5: u8 = 0u8;
-                let x_6: u8 = rt::lean_unbox(x_3) as u8;
-                let x_7: u8 = l_Datacartridge_dForecast_dinstDecidableEqOutcome(x_6, x_5);
-                match x_7 {
+                let x_5: u8 = rt::lean_unbox(x_3) as u8;
+                let x_6: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_5);
+                let x_7: Obj = l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2_d__closed__0();
+                let x_8: u8 = l_Nat_ddecEq(x_6, x_7);
+                rt::lean_dec(x_6);
+                match x_8 {
                     0 => {
                         let t_0: Obj = x_4;
                         x_1 = t_0;
                         continue 'tail;
                     }
                     _ => {
-                        return x_7;
+                        return x_8;
                     }
                 }
             }
@@ -10590,7 +10602,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dal
 
 // Lean: List.any._at_.Datacartridge.Forecast.all.spec_2._boxed
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2_d__boxed(x_1: Obj) -> Obj {
     let x_2: u8 = l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2(x_1);
     rt::lean_dec(x_1);
@@ -10598,9 +10610,23 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dal
     return x_3;
 }
 
+// Lean: List.any._at_.Datacartridge.Forecast.all.spec_2._closed_0
+// Compiled from: List.any
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
+static C_l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2_d__closed__0: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2_d__closed__0__init() -> Obj {
+    let x_1: u8 = 0u8;
+    let x_2: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2_d__closed__0() -> Obj {
+    C_l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2_d__closed__0.get(l_List_dany_d__at___dDatacartridge_dForecast_dall_dspec__2_d__closed__0__init)
+}
+
 // Lean: List.any._at_.Datacartridge.Forecast.any.spec_0
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__0(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10611,17 +10637,19 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dan
             _ => {
                 let x_3: Obj = rt::lean_ctor_get(x_1, 0);
                 let x_4: Obj = rt::lean_ctor_get(x_1, 1);
-                let x_5: u8 = 1u8;
-                let x_6: u8 = rt::lean_unbox(x_3) as u8;
-                let x_7: u8 = l_Datacartridge_dForecast_dinstDecidableEqOutcome(x_6, x_5);
-                match x_7 {
+                let x_5: u8 = rt::lean_unbox(x_3) as u8;
+                let x_6: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_5);
+                let x_7: Obj = l_List_dall_d__at___dDatacartridge_dForecast_dall_dspec__1_d__closed__0();
+                let x_8: u8 = l_Nat_ddecEq(x_6, x_7);
+                rt::lean_dec(x_6);
+                match x_8 {
                     0 => {
                         let t_0: Obj = x_4;
                         x_1 = t_0;
                         continue 'tail;
                     }
                     _ => {
-                        return x_7;
+                        return x_8;
                     }
                 }
             }
@@ -10631,7 +10659,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dan
 
 // Lean: List.any._at_.Datacartridge.Forecast.any.spec_0._boxed
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__0_d__boxed(x_1: Obj) -> Obj {
     let x_2: u8 = l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__0(x_1);
     rt::lean_dec(x_1);
@@ -10641,7 +10669,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dan
 
 // Lean: List.any._at_.Datacartridge.Forecast.any.spec_1
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10652,17 +10680,19 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dan
             _ => {
                 let x_3: Obj = rt::lean_ctor_get(x_1, 0);
                 let x_4: Obj = rt::lean_ctor_get(x_1, 1);
-                let x_5: u8 = 3u8;
-                let x_6: u8 = rt::lean_unbox(x_3) as u8;
-                let x_7: u8 = l_Datacartridge_dForecast_dinstDecidableEqOutcome(x_6, x_5);
-                match x_7 {
+                let x_5: u8 = rt::lean_unbox(x_3) as u8;
+                let x_6: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_5);
+                let x_7: Obj = l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1_d__closed__0();
+                let x_8: u8 = l_Nat_ddecEq(x_6, x_7);
+                rt::lean_dec(x_6);
+                match x_8 {
                     0 => {
                         let t_0: Obj = x_4;
                         x_1 = t_0;
                         continue 'tail;
                     }
                     _ => {
-                        return x_7;
+                        return x_8;
                     }
                 }
             }
@@ -10672,7 +10702,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dan
 
 // Lean: List.any._at_.Datacartridge.Forecast.any.spec_1._boxed
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1_d__boxed(x_1: Obj) -> Obj {
     let x_2: u8 = l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1(x_1);
     rt::lean_dec(x_1);
@@ -10680,9 +10710,23 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dan
     return x_3;
 }
 
+// Lean: List.any._at_.Datacartridge.Forecast.any.spec_1._closed_0
+// Compiled from: List.any
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
+static C_l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1_d__closed__0: rt::LazyObj = rt::LazyObj::new();
+unsafe fn l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1_d__closed__0__init() -> Obj {
+    let x_1: u8 = 3u8;
+    let x_2: Obj = l_Datacartridge_dForecast_dOutcome_dctorIdx(x_1);
+    return x_2;
+}
+#[inline]
+pub(crate) unsafe fn l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1_d__closed__0() -> Obj {
+    C_l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1_d__closed__0.get(l_List_dany_d__at___dDatacartridge_dForecast_dany_dspec__1_d__closed__0__init)
+}
+
 // Lean: List.any._at_.Datacartridge.Forecast.partsCarry.spec_1
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dpartsCarry_dspec__1(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10711,7 +10755,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dpa
 
 // Lean: List.any._at_.Datacartridge.Forecast.partsCarry.spec_1._boxed
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dpartsCarry_dspec__1_d__boxed(x_1: Obj) -> Obj {
     let x_2: u8 = l_List_dany_d__at___dDatacartridge_dForecast_dpartsCarry_dspec__1(x_1);
     rt::lean_dec(x_1);
@@ -10721,7 +10765,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dDatacartridge_dForecast_dpa
 
 // Lean: List.filterTR.loop._at_.Datacartridge.Forecast.split.spec_2
 // Compiled from: List.filterTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2472:17
+// Source: <lean>/Init/Data/List/Basic.lean:2464:17
 pub(crate) unsafe extern "C" fn l_List_dfilterTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__2(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -10797,7 +10841,7 @@ pub(crate) unsafe extern "C" fn l_List_dfilterTR_dloop_d__at___dDatacartridge_dF
 
 // Lean: List.foldl._at_.Datacartridge.Forecast.bestReading.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_dbestReading_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_2) {
@@ -10821,7 +10865,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_d
 
 // Lean: List.foldl._at_.Datacartridge.Forecast.bestReading.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_dbestReading_dspec__0_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_List_dfoldl_d__at___dDatacartridge_dForecast_dbestReading_dspec__0(x_1, x_2);
     rt::lean_dec(x_2);
@@ -10830,7 +10874,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_d
 
 // Lean: List.foldl._at_.Datacartridge.Forecast.mean.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_dmean_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_2) {
@@ -10854,7 +10898,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_d
 
 // Lean: List.foldl._at_.Datacartridge.Forecast.mean.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_dmean_dspec__0_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_List_dfoldl_d__at___dDatacartridge_dForecast_dmean_dspec__0(x_1, x_2);
     rt::lean_dec(x_2);
@@ -10863,7 +10907,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___dDatacartridge_dForecast_d
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.cameTrue.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dcameTrue_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_2) {
@@ -10901,7 +10945,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.cameTrue.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dcameTrue_dspec__0_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dcameTrue_dspec__0(x_1, x_2);
     rt::lean_dec(x_2);
@@ -10910,7 +10954,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.latestPeriod.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dlatestPeriod_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_2) {
@@ -10934,7 +10978,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.latestPeriod.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dlatestPeriod_dspec__0_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dlatestPeriod_dspec__0(x_1, x_2);
     rt::lean_dec(x_2);
@@ -10943,7 +10987,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.spread.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dspread_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_2) {
@@ -10975,7 +11019,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.spread.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dspread_dspec__0_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dspread_dspec__0(x_1, x_2);
     rt::lean_dec(x_2);
@@ -10984,7 +11028,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.statedSum.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dstatedSum_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_2) {
@@ -11011,7 +11055,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.statedSum.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dstatedSum_dspec__0_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dstatedSum_dspec__0(x_1, x_2);
     rt::lean_dec(x_2);
@@ -11020,7 +11064,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.totalDuration.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dtotalDuration_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_2) {
@@ -11045,7 +11089,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.totalDuration.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dtotalDuration_dspec__0_d__boxed(x_1: Obj, x_2: Obj) -> Obj {
     let x_3: Obj = l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dtotalDuration_dspec__0(x_1, x_2);
     rt::lean_dec(x_2);
@@ -11054,7 +11098,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.weightedSum.spec_0
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dweightedSum_dspec__0(mut x_1: u8, mut x_2: Obj, mut x_3: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_3) {
@@ -11086,7 +11130,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.foldl._at_._private.Datacartridge.Forecast.0.Datacartridge.Forecast.weightedSum.spec_0._boxed
 // Compiled from: List.foldl
-// Source: <lean>/Init/Prelude.lean:3102:1
+// Source: <lean>/Init/Prelude.lean:3243:1
 pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dweightedSum_dspec__0_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj) -> Obj {
     let x_4: u8 = rt::lean_unbox(x_1) as u8;
     let x_5: Obj = l_List_dfoldl_d__at___d__private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dweightedSum_dspec__0(x_4, x_2, x_3);
@@ -11096,7 +11140,7 @@ pub(crate) unsafe extern "C" fn l_List_dfoldl_d__at___d__private_dDatacartridge_
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.leastFromParts.spec_0
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dleastFromParts_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -11160,7 +11204,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.leastWhenAll.spec_0
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dleastWhenAll_dspec__0(x_1: Obj, x_2: Obj) -> Obj {
     match rt::lean_obj_tag(x_1) {
         0 => {
@@ -11219,7 +11263,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.partsCarry.spec_0
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dpartsCarry_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -11283,7 +11327,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_0
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -11347,7 +11391,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_1
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__1(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -11411,7 +11455,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_3
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__3(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -11473,7 +11517,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_5
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__5(x_1: Obj, x_2: Obj) -> Obj {
     match rt::lean_obj_tag(x_1) {
         0 => {
@@ -11536,7 +11580,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_6
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__6(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     match rt::lean_obj_tag(x_3) {
         0 => {
@@ -11614,7 +11658,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_6._boxed
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__6_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_List_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__6(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_2);
@@ -11624,7 +11668,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dDatacartridge_dFore
 
 // Lean: List.mapTR.loop._at_.List.mapTR.loop._at_.Datacartridge.Forecast.leastWhenAll.spec_0.spec_0
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d__at___dDatacartridge_dForecast_dleastWhenAll_dspec__0_dspec__0(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -11688,7 +11732,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d
 
 // Lean: List.mapTR.loop._at_.List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_5.spec_5
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__5_dspec__5(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -11756,7 +11800,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d
 
 // Lean: List.mapTR.loop._at_.List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_6.spec_7
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__6_dspec__7(mut x_1: Obj, mut x_2: Obj, mut x_3: Obj, mut x_4: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_3) {
@@ -11843,7 +11887,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d
 
 // Lean: List.mapTR.loop._at_.List.mapTR.loop._at_.Datacartridge.Forecast.split.spec_6.spec_7._boxed
 // Compiled from: List.mapTR.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2440:17
+// Source: <lean>/Init/Data/List/Basic.lean:2432:17
 pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__6_dspec__7_d__boxed(x_1: Obj, x_2: Obj, x_3: Obj, x_4: Obj) -> Obj {
     let x_5: Obj = l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d__at___dDatacartridge_dForecast_dsplit_dspec__6_dspec__7(x_1, x_2, x_3, x_4);
     rt::lean_dec(x_2);
@@ -11853,7 +11897,7 @@ pub(crate) unsafe extern "C" fn l_List_dmapTR_dloop_d__at___dList_dmapTR_dloop_d
 
 // Lean: List.sum._at_.Datacartridge.Forecast.split.spec_4
 // Compiled from: List.sum
-// Source: <lean>/Init/Data/List/Basic.lean:2062:1
+// Source: <lean>/Init/Data/List/Basic.lean:2054:1
 pub(crate) unsafe extern "C" fn l_List_dsum_d__at___dDatacartridge_dForecast_dsplit_dspec__4(x_1: Obj) -> Obj {
     let x_2: Obj = l_List_dsum_d__at___dDatacartridge_dForecast_dsplit_dspec__4_d__closed__0();
     let x_3: Obj = l_List_dfoldr_d__at___dLean_dOmega_dIntList_dsum_dspec__0(x_2, x_1);
@@ -11862,7 +11906,7 @@ pub(crate) unsafe extern "C" fn l_List_dsum_d__at___dDatacartridge_dForecast_dsp
 
 // Lean: List.sum._at_.Datacartridge.Forecast.split.spec_4._boxed
 // Compiled from: List.sum
-// Source: <lean>/Init/Data/List/Basic.lean:2062:1
+// Source: <lean>/Init/Data/List/Basic.lean:2054:1
 pub(crate) unsafe extern "C" fn l_List_dsum_d__at___dDatacartridge_dForecast_dsplit_dspec__4_d__boxed(x_1: Obj) -> Obj {
     let x_2: Obj = l_List_dsum_d__at___dDatacartridge_dForecast_dsplit_dspec__4(x_1);
     rt::lean_dec(x_1);
@@ -11871,7 +11915,7 @@ pub(crate) unsafe extern "C" fn l_List_dsum_d__at___dDatacartridge_dForecast_dsp
 
 // Lean: List.sum._at_.Datacartridge.Forecast.split.spec_4._closed_0
 // Compiled from: List.sum
-// Source: <lean>/Init/Data/List/Basic.lean:2062:1
+// Source: <lean>/Init/Data/List/Basic.lean:2054:1
 static C_l_List_dsum_d__at___dDatacartridge_dForecast_dsplit_dspec__4_d__closed__0: rt::LazyObj = rt::LazyObj::new();
 unsafe fn l_List_dsum_d__at___dDatacartridge_dForecast_dsplit_dspec__4_d__closed__0__init() -> Obj {
     let x_1: Obj = rt::nat::lean_usize_to_nat(0);
@@ -11887,78 +11931,84 @@ pub(crate) unsafe fn l_List_dsum_d__at___dDatacartridge_dForecast_dsplit_dspec__
 // Source: Datacartridge/Forecast.lean:847:1
 pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dClaim_dcovers(x_1: Obj, x_2: Obj) -> u8 {
     let mut x_4: u8;
-    let mut x_5: Obj;
-    let mut x_6: u8;
-    let mut x_7: Obj;
+    let mut x_5: u8;
+    let mut x_6: Obj;
+    let mut x_7: u8;
+    let mut x_8: Obj;
     'b3: {
-        let x_10: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>());
-        let x_11: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>() + 1);
-        let x_12: Obj = rt::lean_ctor_get(x_1, 0);
-        let x_13: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>());
-        let x_14: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>() + 1);
-        let x_15: Obj = rt::lean_ctor_get(x_2, 0);
-        'b16: {
-            match x_10 {
+        let x_11: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>());
+        let x_12: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>() + 1);
+        let x_13: Obj = rt::lean_ctor_get(x_1, 0);
+        let x_14: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>());
+        let x_15: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>() + 1);
+        let x_16: Obj = rt::lean_ctor_get(x_2, 0);
+        let mut x_18: u8;
+        'b17: {
+            match x_14 {
                 0 => {
-                    match x_13 {
+                    match x_11 {
                         0 => {
-                            return x_13;
+                            return x_11;
                         }
                         _ => {
-                            break 'b16;
+                            x_18 = x_14;
+                            break 'b17;
                         }
                     }
                 }
                 _ => {
-                    match x_13 {
+                    match x_11 {
                         0 => {
-                            break 'b16;
+                            x_18 = x_11;
+                            break 'b17;
                         }
                         _ => {
-                            let x_17: u8 = 0u8;
-                            return x_17;
+                            let x_19: u8 = 0u8;
+                            return x_19;
                         }
                     }
                 }
             }
         }
-        match x_10 {
+        match x_11 {
             0 => {
-                x_4 = x_14;
+                x_4 = x_18;
                 x_5 = x_15;
-                x_6 = x_11;
+                x_6 = x_16;
                 x_7 = x_12;
+                x_8 = x_13;
                 break 'b3;
             }
             _ => {
-                x_4 = x_11;
+                x_4 = x_18;
                 x_5 = x_12;
-                x_6 = x_14;
+                x_6 = x_13;
                 x_7 = x_15;
+                x_8 = x_16;
                 break 'b3;
             }
         }
     }
-    let x_8: u8 = l_Int_ddecLt(x_5, x_7);
-    match x_8 {
+    let x_9: u8 = l_Int_ddecLt(x_6, x_8);
+    match x_9 {
         0 => {
-            let x_9: u8 = l_Int_ddecEq(x_5, x_7);
-            match x_9 {
+            let x_10: u8 = l_Int_ddecEq(x_6, x_8);
+            match x_10 {
                 0 => {
-                    return x_9;
+                    return x_4;
                 }
                 _ => {
-                    match x_4 {
+                    match x_5 {
                         0 => {
-                            return x_9;
+                            return x_10;
                         }
                         _ => {
-                            match x_6 {
+                            match x_7 {
                                 0 => {
-                                    return x_9;
+                                    return x_10;
                                 }
                                 _ => {
-                                    return x_8;
+                                    return x_4;
                                 }
                             }
                         }
@@ -11967,7 +12017,7 @@ pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacar
             }
         }
         _ => {
-            return x_8;
+            return x_9;
         }
     }
 }
@@ -11987,80 +12037,86 @@ pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacar
 // Source: Datacartridge/Forecast.lean:840:1
 pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacartridge_dForecast_dClaim_dexcludes(x_1: Obj, x_2: Obj) -> u8 {
     let mut x_4: u8;
-    let mut x_5: Obj;
-    let mut x_6: u8;
-    let mut x_7: Obj;
+    let mut x_5: u8;
+    let mut x_6: Obj;
+    let mut x_7: u8;
+    let mut x_8: Obj;
     'b3: {
-        let x_10: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>());
-        let x_11: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>() + 1);
-        let x_12: Obj = rt::lean_ctor_get(x_1, 0);
-        let x_13: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>());
-        let x_14: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>() + 1);
-        let x_15: Obj = rt::lean_ctor_get(x_2, 0);
-        'b16: {
-            match x_10 {
+        let x_11: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>());
+        let x_12: u8 = rt::lean_ctor_get_uint8(x_1, 2 * ::core::mem::size_of::<usize>() + 1);
+        let x_13: Obj = rt::lean_ctor_get(x_1, 0);
+        let x_14: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>());
+        let x_15: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>() + 1);
+        let x_16: Obj = rt::lean_ctor_get(x_2, 0);
+        let mut x_18: u8;
+        'b17: {
+            match x_14 {
                 0 => {
-                    match x_13 {
+                    match x_11 {
                         0 => {
-                            return x_13;
+                            return x_11;
                         }
                         _ => {
-                            break 'b16;
+                            x_18 = x_14;
+                            break 'b17;
                         }
                     }
                 }
                 _ => {
-                    match x_13 {
+                    match x_11 {
                         0 => {
-                            break 'b16;
+                            x_18 = x_11;
+                            break 'b17;
                         }
                         _ => {
-                            let x_17: u8 = 0u8;
-                            return x_17;
+                            let x_19: u8 = 0u8;
+                            return x_19;
                         }
                     }
                 }
             }
         }
-        match x_10 {
+        match x_11 {
             0 => {
-                x_4 = x_14;
+                x_4 = x_18;
                 x_5 = x_15;
-                x_6 = x_11;
+                x_6 = x_16;
                 x_7 = x_12;
+                x_8 = x_13;
                 break 'b3;
             }
             _ => {
-                x_4 = x_11;
+                x_4 = x_18;
                 x_5 = x_12;
-                x_6 = x_14;
+                x_6 = x_13;
                 x_7 = x_15;
+                x_8 = x_16;
                 break 'b3;
             }
         }
     }
-    let x_8: u8 = l_Int_ddecLt(x_7, x_5);
-    match x_8 {
+    let x_9: u8 = l_Int_ddecLt(x_8, x_6);
+    match x_9 {
         0 => {
-            let x_9: u8 = l_Int_ddecEq(x_7, x_5);
-            match x_9 {
+            let x_10: u8 = l_Int_ddecEq(x_8, x_6);
+            match x_10 {
                 0 => {
-                    return x_9;
+                    return x_4;
                 }
                 _ => {
-                    match x_4 {
+                    match x_5 {
                         0 => {
-                            return x_6;
+                            return x_7;
                         }
                         _ => {
-                            return x_4;
+                            return x_5;
                         }
                     }
                 }
             }
         }
         _ => {
-            return x_8;
+            return x_9;
         }
     }
 }
@@ -12086,21 +12142,21 @@ pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacar
     let x_7: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>() + 1);
     let x_8: Obj = rt::lean_ctor_get(x_2, 0);
     'b9: {
-        match x_3 {
+        match x_6 {
             0 => {
-                match x_6 {
+                match x_3 {
                     0 => {
                         break 'b9;
                     }
                     _ => {
-                        return x_3;
+                        return x_6;
                     }
                 }
             }
             _ => {
-                match x_6 {
+                match x_3 {
                     0 => {
-                        return x_6;
+                        return x_3;
                     }
                     _ => {
                         break 'b9;
@@ -12136,7 +12192,7 @@ pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacar
                     }
                 }
                 _ => {
-                    return x_4;
+                    return x_10;
                 }
             }
         }
@@ -12266,7 +12322,7 @@ pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacar
                     let x_12: u8 = l_Int_ddecLt(x_9, x_11);
                     match x_12 {
                         0 => {
-                            return x_12;
+                            return x_8;
                         }
                         _ => {
                             let x_13: u8 = l_Int_ddecLe(x_11, x_10);
@@ -12319,43 +12375,37 @@ pub(crate) unsafe extern "C" fn l___private_dDatacartridge_dForecast_d0_dDatacar
             }
             _ => {
                 let x_9: u8 = rt::lean_ctor_get_uint8(x_2, 2 * ::core::mem::size_of::<usize>());
-                let x_10: Obj = rt::lean_ctor_get(x_2, 0);
-                let x_11: Obj = rt::lean_ctor_get(x_2, 1);
-                let mut x_13: u8;
-                'b12: {
-                    match x_9 {
-                        0 => {
-                            break 'b6;
-                        }
-                        _ => {
-                            let x_16: u8 = l_Int_ddecLt(x_4, x_5);
-                            match x_16 {
-                                0 => {
-                                    x_13 = x_16;
-                                    break 'b12;
-                                }
-                                _ => {
-                                    let x_17: u8 = l_Int_ddecLt(x_10, x_11);
-                                    x_13 = x_17;
-                                    break 'b12;
-                                }
-                            }
-                        }
-                    }
-                }
-                match x_13 {
+                match x_9 {
                     0 => {
-                        return x_13;
+                        break 'b6;
                     }
                     _ => {
-                        let x_14: u8 = l_Int_ddecLt(x_4, x_11);
-                        match x_14 {
+                        let x_10: Obj = rt::lean_ctor_get(x_2, 0);
+                        let x_11: Obj = rt::lean_ctor_get(x_2, 1);
+                        let x_12: u8 = l_Int_ddecLt(x_4, x_5);
+                        match x_12 {
                             0 => {
-                                return x_14;
+                                return x_12;
                             }
                             _ => {
-                                let x_15: u8 = l_Int_ddecLt(x_10, x_5);
-                                return x_15;
+                                let x_13: u8 = l_Int_ddecLt(x_10, x_11);
+                                match x_13 {
+                                    0 => {
+                                        return x_13;
+                                    }
+                                    _ => {
+                                        let x_14: u8 = l_Int_ddecLt(x_4, x_11);
+                                        match x_14 {
+                                            0 => {
+                                                return x_14;
+                                            }
+                                            _ => {
+                                                let x_15: u8 = l_Int_ddecLt(x_10, x_5);
+                                                return x_15;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

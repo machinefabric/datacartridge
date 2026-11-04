@@ -2,7 +2,7 @@
 
 // Lean: List.any._at_.List.or.spec_0
 // Compiled from: List.any
-// Source: <lean>/Init/Data/List/Basic.lean:1894:1
+// Source: <lean>/Init/Data/List/Basic.lean:1886:1
 pub(crate) unsafe extern "C" fn l_List_dany_d__at___dList_dor_dspec__0(mut x_1: Obj) -> u8 {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {
@@ -32,7 +32,7 @@ pub(crate) unsafe extern "C" fn l_List_dany_d__at___dList_dor_dspec__0(mut x_1: 
 
 // Lean: List.head?._redArg
 // Compiled from: List.head?
-// Source: <lean>/Init/Data/List/Basic.lean:371:1
+// Source: <lean>/Init/Data/List/Basic.lean:362:1
 pub(crate) unsafe extern "C" fn l_List_dhead_x3f__d__redArg(x_1: Obj) -> Obj {
     match rt::lean_obj_tag(x_1) {
         0 => {
@@ -51,7 +51,7 @@ pub(crate) unsafe extern "C" fn l_List_dhead_x3f__d__redArg(x_1: Obj) -> Obj {
 
 // Lean: List.isEmpty._redArg
 // Compiled from: List.isEmpty
-// Source: <lean>/Init/Data/List/Basic.lean:763:1
+// Source: <lean>/Init/Data/List/Basic.lean:754:1
 pub(crate) unsafe extern "C" fn l_List_disEmpty_d__redArg(x_1: Obj) -> u8 {
     match rt::lean_obj_tag(x_1) {
         0 => {
@@ -66,7 +66,7 @@ pub(crate) unsafe extern "C" fn l_List_disEmpty_d__redArg(x_1: Obj) -> u8 {
 }
 
 // Lean: List.range
-// Source: <lean>/Init/Data/List/Basic.lean:2092:1
+// Source: <lean>/Init/Data/List/Basic.lean:2084:1
 pub(crate) unsafe extern "C" fn l_List_drange(x_1: Obj) -> Obj {
     let x_2: Obj = rt::lean_box(0);
     let x_3: Obj = l_List_drange_dloop(x_1, x_2);
@@ -74,7 +74,7 @@ pub(crate) unsafe extern "C" fn l_List_drange(x_1: Obj) -> Obj {
 }
 
 // Lean: List.range.loop
-// Source: <lean>/Init/Data/List/Basic.lean:2105:3
+// Source: <lean>/Init/Data/List/Basic.lean:2097:3
 pub(crate) unsafe extern "C" fn l_List_drange_dloop(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         let x_3: Obj = rt::nat::lean_usize_to_nat(0);
@@ -104,7 +104,7 @@ pub(crate) unsafe extern "C" fn l_List_drange_dloop(mut x_1: Obj, mut x_2: Obj) 
 
 // Lean: List.reverse._redArg
 // Compiled from: List.reverse
-// Source: <lean>/Init/Data/List/Basic.lean:562:1
+// Source: <lean>/Init/Data/List/Basic.lean:553:1
 pub(crate) unsafe extern "C" fn l_List_dreverse_d__redArg(x_1: Obj) -> Obj {
     let x_2: Obj = rt::lean_box(0);
     let x_3: Obj = l_List_dreverseAux_d__redArg(x_1, x_2);
@@ -113,7 +113,7 @@ pub(crate) unsafe extern "C" fn l_List_dreverse_d__redArg(x_1: Obj) -> Obj {
 
 // Lean: List.reverseAux._redArg
 // Compiled from: List.reverseAux
-// Source: <lean>/Init/Data/List/Basic.lean:554:1
+// Source: <lean>/Init/Data/List/Basic.lean:545:1
 pub(crate) unsafe extern "C" fn l_List_dreverseAux_d__redArg(mut x_1: Obj, mut x_2: Obj) -> Obj {
     'tail: loop {
         match rt::lean_obj_tag(x_1) {

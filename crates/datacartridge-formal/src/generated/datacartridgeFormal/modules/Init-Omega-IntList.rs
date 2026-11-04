@@ -2,7 +2,7 @@
 
 // Lean: List.foldr._at_.Lean.Omega.IntList.sum.spec_0
 // Compiled from: List.foldr
-// Source: <lean>/Init/Data/List/Basic.lean:533:1
+// Source: <lean>/Init/Data/List/Basic.lean:524:1
 pub(crate) unsafe extern "C" fn l_List_dfoldr_d__at___dLean_dOmega_dIntList_dsum_dspec__0(x_1: Obj, x_2: Obj) -> Obj {
     match rt::lean_obj_tag(x_2) {
         0 => {

@@ -19,14 +19,3 @@ pub(crate) unsafe extern "C" fn l_Ordering_dctorIdx(x_1: u8) -> Obj {
     }
 }
 
-// Lean: instDecidableEqOrdering
-// Source: <lean>/Init/Data/Ord/Basic.lean:32:21
-pub(crate) unsafe extern "C" fn l_instDecidableEqOrdering(x_1: u8, x_2: u8) -> u8 {
-    let x_3: Obj = l_Ordering_dctorIdx(x_1);
-    let x_4: Obj = l_Ordering_dctorIdx(x_2);
-    let x_5: u8 = l_Nat_ddecEq(x_3, x_4);
-    rt::lean_dec(x_4);
-    rt::lean_dec(x_3);
-    return x_5;
-}
-
