@@ -1,5 +1,5 @@
-# Caps this cartridge implements, one fabric alias per line. `dx cartridge snapshot`
-# resolves each through the live fabric via `capdag cap-def <alias>` and writes the
+# Caps this cartridge implements, one fabric alias per line. `sdx-mf cartridge <name>`
+# resolves each through the live fabric via `capdag info --json` and writes the
 # embedded cap-def snapshot (cap-snapshots.json), validated against the live fabric
 # before publication via the `manifest` command. `#` comments / blank lines ignored.
 ask-en
