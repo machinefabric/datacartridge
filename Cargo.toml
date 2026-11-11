@@ -12,7 +12,7 @@ needless_range_loop = "allow"
 
 [package]
 name = "datacartridge"
-version = "1.244.906"
+version = "1.245.934"
 edition = "2021"
 license = "AGPL-3.0-or-later"
 description = "JSON/YAML/CSV format conversion cartridge for CapDAG"
@@ -32,7 +32,7 @@ tracing = "0.1"
 
 [dependencies.capdag]
 git = "https://github.com/machinefabric/capdag-rs"
-tag = "v1.983.207"
+tag = "v1.989.33"
 
 # The series steps, forecasts and the proved model they decide by (see crates/).
 [dependencies.datacartridge-core]
