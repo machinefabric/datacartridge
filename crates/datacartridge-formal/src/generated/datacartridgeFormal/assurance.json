@@ -4,7 +4,7 @@
   "provenance": {
     "lean_version": "4.35.0",
     "lean_githash": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
-    "lungo_version": "1.120.164",
+    "lungo_version": "1.126.0",
     "bir_version": 3,
     "runtime_abi": 3
   },
