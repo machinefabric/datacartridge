@@ -14,11 +14,14 @@ serde = { version = "1.0", features = ["derive"] }
 # version, so the runtime is pinned exactly.
 [dependencies.lungo]
 features = ["serde"]
-{%- if env.MFR_LOCAL_LIBS %}
-# MFR_LOCAL_LIBS was set when this was rendered: the working copy in this
+{%- if env.MFR_LIBS == "working" %}
+# MFR_LIBS was "working" when this was rendered: the working copy in this
 # workspace rather than a published release. Re-render without it before
 # committing or releasing — a path resolves on this machine only.
 path = "{{ projects.lungo_rs.path_from_here }}/crates/lungo"
+{%- elif env.MFR_LIBS == "channel" %}
+# MFR_LIBS "channel": the release fetched under the build root, in place of the public one.
+path = "{{ build.root_from_here }}/libraries/lungo/{{ projects.lungo_rs.version }}/lungo-{{ projects.lungo_rs.version }}"
 {%- else %}
 version = "={{ projects.lungo_rs.latest_remote_version }}"
 {%- endif %}

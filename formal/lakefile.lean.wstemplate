@@ -5,11 +5,14 @@ package datacartridgeFormal where
 
 -- lungo's Lean library: the specifications and claims lungo carries into the generated
 -- package, at the lungo the generated crate's runtime is.
-{%- if env.MFR_LOCAL_LIBS %}
--- MFR_LOCAL_LIBS was set when this was rendered: the working copy in this workspace rather
+{%- if env.MFR_LIBS == "working" %}
+-- MFR_LIBS was "working" when this was rendered: the working copy in this workspace rather
 -- than a published release. Re-render without it before committing or releasing — a path
 -- resolves on this machine only.
 require lungo from "{{ projects.lungo_rs.path_from_here }}/lean"
+{%- elif env.MFR_LIBS == "channel" %}
+-- MFR_LIBS "channel": the release fetched under the build root, in place of the public one.
+require lungo from "{{ build.root_from_here }}/libraries/lungo/{{ projects.lungo_rs.version }}/lungo-source-{{ projects.lungo_rs.version }}/lean"
 {%- else %}
 -- The release, by URL, so the package builds wherever it is required from, not only inside
 -- this workspace.
