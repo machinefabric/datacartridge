@@ -931,7 +931,7 @@ impl Op<()> for GenerateJsonOp {
             req.output(),
         )
             .await
-            .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute generate_json: {}", e)))?;
+            .map_err(|e| crate::step_failure("Failed to execute generate_json", e))?;
 
         let body = serde_json::to_string(&result)
             .map_err(|e| OpError::ExecutionFailed(format!("Serialize failed: {}", e)))?;
@@ -969,7 +969,7 @@ impl Op<()> for ExtractOp {
             req.output(),
         )
             .await
-            .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute extract: {}", e)))?;
+            .map_err(|e| crate::step_failure("Failed to execute extract", e))?;
 
         let body = serde_json::to_string_pretty(&judgment)
             .map_err(|e| OpError::ExecutionFailed(format!("Serialize failed: {}", e)))?;
@@ -1012,7 +1012,7 @@ impl Op<()> for MakeDecisionOp {
                 req.output(),
             )
                 .await
-                .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute Make Decision: {}", e)))?;
+                .map_err(|e| crate::step_failure("Failed to execute Make Decision", e))?;
 
         // The input stream's `title` provenance becomes a first-class column on
         // the decision record so a downstream writer can derive a per-row file
@@ -1071,7 +1071,7 @@ impl Op<()> for MakeMultipleDecisionsOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute Make Multiple Decisions: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute Make Multiple Decisions", e))?;
 
         // Each per-row decision carries the question both as its stream meta
         // `title` (so downstream sequence consumers can route on it) AND as a
@@ -1132,7 +1132,7 @@ impl Op<()> for SameOp {
             req.output(),
         )
             .await
-            .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute same: {}", e)))?;
+            .map_err(|e| crate::step_failure("Failed to execute same", e))?;
 
         let body = serde_json::to_string_pretty(&judgment)
             .map_err(|e| OpError::ExecutionFailed(format!("Failed to serialize judgment: {}", e)))?;
@@ -1193,7 +1193,7 @@ impl Op<()> for ClassifyOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute classify: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute classify", e))?;
 
         // The enum constraint makes an out-of-set label impossible; assert it
         // anyway so a constraint regression is caught here.
@@ -1254,7 +1254,7 @@ impl Op<()> for ScoreOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute score: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute score", e))?;
 
         let body = serde_json::to_string_pretty(&judgment)
             .map_err(|e| OpError::ExecutionFailed(format!("Serialize failed: {}", e)))?;
@@ -1299,7 +1299,7 @@ impl Op<()> for VerifyOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute verify: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute verify", e))?;
 
         // Internal consistency: pass=true with violations (or pass=false with
         // none) is a broken judgment — expose it.
@@ -1366,7 +1366,7 @@ impl Op<()> for RouteOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute route: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute route", e))?;
 
         let target = judgment["target"].as_str().unwrap_or_default();
         if !names.iter().any(|n| n == target) {
@@ -1423,7 +1423,7 @@ impl Op<()> for NormalizeOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute normalize: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute normalize", e))?;
 
         let body = serde_json::to_string_pretty(&judgment)
             .map_err(|e| OpError::ExecutionFailed(format!("Serialize failed: {}", e)))?;
@@ -1465,7 +1465,7 @@ impl Op<()> for AskOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute ask: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute ask", e))?;
 
         // Grounding enforcement (the whole point of `ask`): every quote must
         // actually occur in the content. A fabricated quote is an answer
@@ -1512,7 +1512,7 @@ impl Op<()> for ExplainOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute explain: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute explain", e))?;
 
         // Same grounding enforcement as `ask`: evidence must occur in the data.
         verify_quotes_grounded(&content, &judgment["evidence"], "explain")
@@ -1585,7 +1585,7 @@ impl Op<()> for SummarizeOp {
             req.output(),
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Failed to execute summarize: {}", e)))?;
+        .map_err(|e| crate::step_failure("Failed to execute summarize", e))?;
 
         // The cap's output is the summary TEXT itself; confidence and the
         // dropped-detail note go to the caller's log, not the artifact.

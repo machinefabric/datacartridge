@@ -37,6 +37,21 @@ pub(crate) fn input_arg_error(
         class: capdag::AttributionClass::Input,
         message: message.into(),
         arg_urn: Some(arg_urn.to_string()),
+        hint: None,
+    }
+}
+
+/// What a handler's step failed with, as the error its request ends with. An
+/// error a peer answered with — a model that could not be loaded, a cartridge
+/// that is not installed — is forwarded as it came: its code, class, message,
+/// argument and hint, so the person reads the peer's refusal and the command
+/// it names. Any other failure is this step's own, said with what it was
+/// doing.
+pub(crate) fn step_failure(doing: &str, error: anyhow::Error) -> OpError {
+    match error.downcast::<capdag::RuntimeError>() {
+        Ok(forwarded) if forwarded.failure_code().is_some() => OpError::from(forwarded),
+        Ok(own) => OpError::ExecutionFailed(format!("{doing}: {own}")),
+        Err(own) => OpError::ExecutionFailed(format!("{doing}: {own}")),
     }
 }
 
@@ -1855,7 +1870,7 @@ impl Op<()> for EditOp {
             &inference_params,
         )
         .await
-        .map_err(|e| OpError::ExecutionFailed(format!("Program generation failed: {}", e)))?;
+        .map_err(|e| step_failure("Program generation failed", e))?;
 
         // The program IS the audit artifact: log it in full before running.
         output.log("info", capdag::AttributionClass::Internal, &format!("[edit] generated program: {}", program_json.trim()));
@@ -2119,8 +2134,10 @@ pub(crate) async fn invoke_constrained_peer(
             // Another output the inference cap declares: the answer is its
             // main output, and nothing here reads the others.
             capdag::PeerResponseItem::Output { .. } => {}
+            // The peer's ERR, kept whole: the step that needed its answer
+            // fails with it as it came (see `step_failure`).
             capdag::PeerResponseItem::Data(Err(e), _) => {
-                anyhow::bail!("peer response stream error: {}", e);
+                return Err(capdag::RuntimeError::Stream(e).into());
             }
             capdag::PeerResponseItem::Data(Ok(value), _) => {
                 let chunk = match value {
@@ -2822,5 +2839,42 @@ mod tests {
         assert!(!pooled.contains(&urn("change-series")) && !pooled.contains(&urn("decimate-sequence")));
         assert_eq!(series_handlers(&manifest).len(), series::handlers().len());
         manifest.with_pool_declarations(declarations).expect("the pools validate against the manifest");
+    }
+}
+
+#[cfg(test)]
+mod peer_failure_tests {
+    use super::*;
+
+    // TEST2391: a step that failed because its peer answered with an ERR ends
+    // its request with that ERR as it came — the inference cartridge's
+    // refusal, its code, class, message and hint — not with "Failed to
+    // execute …" around it; a failure of the step's own is said with what it
+    // was doing.
+    #[test]
+    fn test2391_a_peers_err_is_the_steps_failure() {
+        let refused = capdag::StreamError::RemoteError {
+            code: "CARTRIDGE_INSTALL_FAILED".to_string(),
+            class: capdag::AttributionClass::Environment,
+            message: "ggufcartridge provides the inference cap and is not installed, and installing it failed"
+                .to_string(),
+            arg_urn: None,
+            hint: Some("capdag cartridge install ggufcartridge".to_string()),
+        };
+        let failure = step_failure(
+            "Failed to execute summarize",
+            anyhow::Error::from(capdag::RuntimeError::Stream(refused)),
+        );
+        assert_eq!(failure.failure_code(), Some("CARTRIDGE_INSTALL_FAILED"));
+        assert_eq!(failure.attribution_class(), capdag::AttributionClass::Environment);
+        assert_eq!(
+            failure.failure_reason(),
+            "ggufcartridge provides the inference cap and is not installed, and installing it failed"
+        );
+        assert_eq!(failure.failure_hint(), Some("capdag cartridge install ggufcartridge"));
+
+        let own = step_failure("Failed to execute summarize", anyhow::anyhow!("the judgment had no summary"));
+        assert_eq!(own.failure_code(), None);
+        assert_eq!(own.to_string(), "Op execution failed: Failed to execute summarize: the judgment had no summary");
     }
 }
