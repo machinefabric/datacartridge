@@ -48,11 +48,7 @@ pub(crate) fn input_arg_error(
 /// it names. Any other failure is this step's own, said with what it was
 /// doing.
 pub(crate) fn step_failure(doing: &str, error: anyhow::Error) -> OpError {
-    match error.downcast::<capdag::RuntimeError>() {
-        Ok(forwarded) if forwarded.failure_code().is_some() => OpError::from(forwarded),
-        Ok(own) => OpError::ExecutionFailed(format!("{doing}: {own}")),
-        Err(own) => OpError::ExecutionFailed(format!("{doing}: {own}")),
-    }
+    OpError::ExecutionFailed(format!("{doing}: {error}"))
 }
 
 // =============================================================================
