@@ -216,7 +216,7 @@ fn content_stream_meta(streams: &Streams) -> Option<StreamMeta> {
     let p = capdag::MediaUrn::from_string(capdag::MEDIA_PLAIN_TEXT).ok()?;
     let (_, _, meta) = streams.iter().find(|(urn_str, _, _)| {
         capdag::MediaUrn::from_string(urn_str)
-            .map(|u| u.conforms_to(&p).unwrap_or(false))
+            .map(|u| u.conforms_to(&p))
             .unwrap_or(false)
     })?;
     meta.clone()
