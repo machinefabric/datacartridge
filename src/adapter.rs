@@ -31,7 +31,8 @@ pub fn detect_data_media_urns(content: &[u8], extension: &str) -> Vec<String> {
 // carries both the on-disk file-type (`ext=`) and the content serialization
 // format (`fmt=`). The catalog's `_<fmt>-file.toml` anchors publish exactly
 // these shapes. Pure inter-cap content (no file) uses `fmt=` alone, but that is
-// produced by the converter caps, not by this file adapter.
+// produced by the converter caps, not by this file adapter. An empty list is
+// read as a list of records: it is one, vacuously.
 
 fn detect_json(text: &str) -> Vec<String> {
     let trimmed = text.trim_start();
@@ -46,12 +47,13 @@ fn detect_json(text: &str) -> Vec<String> {
         ],
         Some('[') => {
             let after_bracket = trimmed[1..].trim_start();
-            if after_bracket.is_empty() || after_bracket.starts_with(']') {
+            if after_bracket.is_empty() {
+                // `[` with nothing after it is no list yet, empty or not.
                 vec![
                     "media:enc=utf8;ext=json;fmt=json;list".to_string(),
                     "media:enc=utf8;ext=json;fmt=json".to_string(),
                 ]
-            } else if after_bracket.starts_with('{') {
+            } else if after_bracket.starts_with(']') || after_bracket.starts_with('{') {
                 vec![
                     "media:enc=utf8;ext=json;fmt=json;list;record".to_string(),
                     "media:enc=utf8;ext=json;fmt=json;list".to_string(),
@@ -73,8 +75,9 @@ fn detect_ndjson(text: &str) -> Vec<String> {
         .lines()
         .take(10)
         .any(|line| line.trim().starts_with('{'));
+    let empty = text.lines().all(|line| line.trim().is_empty());
 
-    if has_object {
+    if empty || has_object {
         vec![
             "media:enc=utf8;ext=ndjson;fmt=ndjson;list;record".to_string(),
             "media:enc=utf8;ext=ndjson;fmt=ndjson;list".to_string(),
@@ -163,7 +166,8 @@ fn detect_yaml(text: &str) -> Vec<String> {
             "media:enc=utf8;ext=yaml;fmt=yaml".to_string(),
         ]
     } else if doc.starts_with('[') {
-        if doc.contains('{') {
+        let empty = doc[1..].trim_start().starts_with(']');
+        if empty || doc.contains('{') {
             vec![
                 "media:enc=utf8;ext=yaml;fmt=yaml;list;record".to_string(),
                 "media:enc=utf8;ext=yaml;fmt=yaml;list".to_string(),
@@ -422,8 +426,12 @@ mod tests {
             (br#"[{"a":1}]"# as &[u8], "json"),
             (br#"[1,2,3]"# as &[u8], "json"),
             (br#"42"# as &[u8], "json"),
+            (b"[]" as &[u8], "json"),
+            (b"[" as &[u8], "json"),
             (br#"{"a":1}"# as &[u8], "ndjson"),
             (br#"42"# as &[u8], "ndjson"),
+            (b"\n\n" as &[u8], "ndjson"),
+            (b"[]" as &[u8], "yaml"),
             (b"a,b\n1,2" as &[u8], "csv"),
             (b"a\tb\n1\t2" as &[u8], "tsv"),
             (b"a|b\n1|2" as &[u8], "psv"),
@@ -478,6 +486,37 @@ mod tests {
              {:?}\n— either add them to the dim catalogue (and verify they \
              publish) or fix the adapter to emit only catalog-published forms",
             stray
+        );
+    }
+
+    // TEST7310: an empty list is read as a list of records — it is one,
+    // vacuously — so a list of records saved and read back is what it was
+    // saved as, empty or not: a JSON `[]` however spaced, an NDJSON file with
+    // no line, and a YAML `[]`. A JSON `[` with nothing after it is no list of
+    // records yet.
+    #[test]
+    fn test7310_an_empty_list_is_read_as_a_list_of_records() {
+        let tier = |fmt: &str| {
+            vec![
+                format!("media:enc=utf8;ext={fmt};fmt={fmt};list;record"),
+                format!("media:enc=utf8;ext={fmt};fmt={fmt};list"),
+                format!("media:enc=utf8;ext={fmt};fmt={fmt}"),
+            ]
+        };
+        for empty in [b"[]" as &[u8], b"[ ]", b"[\n]"] {
+            assert_eq!(detect_data_media_urns(empty, "json"), tier("json"), "{:?}", std::str::from_utf8(empty));
+        }
+        for empty in [b"" as &[u8], b"\n\n"] {
+            assert_eq!(detect_data_media_urns(empty, "ndjson"), tier("ndjson"), "{:?}", std::str::from_utf8(empty));
+        }
+        assert_eq!(detect_data_media_urns(b"[]", "yaml"), tier("yaml"));
+        assert_eq!(
+            detect_data_media_urns(b"[", "json"),
+            vec![
+                "media:enc=utf8;ext=json;fmt=json;list".to_string(),
+                "media:enc=utf8;ext=json;fmt=json".to_string(),
+            ],
+            "`[` alone is no list of records"
         );
     }
 }
