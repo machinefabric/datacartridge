@@ -340,8 +340,10 @@ impl Op<()> for SaveAsTxtOp {
 // COLLECT OPS — sequence of items → single merged output
 // =============================================================================
 
+/// Collect JSON objects, one per item, into the format `out_media` names: the output of the
+/// embedded definition the op is registered under.
 struct CollectJsonObjectsOp {
-    out_media: &'static str,
+    out_media: String,
 }
 
 #[async_trait]
@@ -371,7 +373,7 @@ impl Op<()> for CollectJsonObjectsOp {
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.50, "Collecting objects");
 
-        let result = collect_json_objects_to(&json_items, self.out_media)
+        let result = collect_json_objects_to(&json_items, &self.out_media)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         let cbor_value = ciborium::Value::Text(
@@ -581,8 +583,8 @@ impl Op<()> for DecimateSequenceOp {
 }
 
 struct CollectRecordsOp {
-    in_media: &'static str,
-    out_media: &'static str,
+    in_media: String,
+    out_media: String,
 }
 
 #[async_trait]
@@ -612,7 +614,7 @@ impl Op<()> for CollectRecordsOp {
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.50, "Collecting records");
 
-        let result = collect_records_to(&raw_items, self.in_media, self.out_media)
+        let result = collect_records_to(&raw_items, &self.in_media, &self.out_media)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         let cbor_value = ciborium::Value::Text(
@@ -632,25 +634,29 @@ impl Op<()> for CollectRecordsOp {
     }
 }
 
-/// Collect JSON objects into the target format.
+/// Collect JSON objects, one record per item, into the format `out_media` names. An item
+/// that is not a JSON object (a list among them) is refused, never nested as one element.
 fn collect_json_objects_to(items: &[Vec<u8>], out_media: &str) -> Result<Vec<u8>> {
-    // Parse each item as a JSON object
     let objects: Vec<serde_json::Value> = items.iter()
         .enumerate()
         .map(|(i, bytes)| {
-            serde_json::from_slice(bytes)
-                .map_err(|e| anyhow::anyhow!("Item {} is not valid JSON: {}", i, e))
+            let value: serde_json::Value = serde_json::from_slice(bytes)
+                .map_err(|e| anyhow::anyhow!("Item {} is not valid JSON: {}", i, e))?;
+            if !value.is_object() {
+                anyhow::bail!("item {i} is not a JSON record (an object); collect-json-objects takes one record per item");
+            }
+            Ok(value)
         })
         .collect::<Result<Vec<_>>>()?;
 
-    if out_media.contains("csv") {
-        json_objects_to_csv(&objects)
-    } else if out_media.contains("yaml") {
-        json_objects_to_yaml(&objects)
-    } else {
-        // Default: JSON array
-        serde_json::to_vec_pretty(&objects)
-            .map_err(|e| anyhow::anyhow!("Failed to serialize JSON array: {}", e))
+    match format_of_str(out_media)? {
+        Fmt::Csv => json_objects_to_csv(&objects),
+        Fmt::Yaml => json_objects_to_yaml(&objects),
+        Fmt::Json => serde_json::to_vec_pretty(&objects)
+            .map_err(|e| anyhow::anyhow!("Failed to serialize JSON array: {}", e)),
+        Fmt::TextList => anyhow::bail!(
+            "a text list is not a record format; collect-json-objects writes CSV, YAML or JSON records"
+        ),
     }
 }
 
@@ -682,6 +688,9 @@ fn collect_records_to(items: &[Vec<u8>], in_media: &str, out_media: &str) -> Res
             Fmt::Yaml => {
                 let value: serde_yaml::Value = serde_yaml::from_slice(bytes)
                     .map_err(|e| anyhow::anyhow!("YAML item {} parse error: {}", i, e))?;
+                if !value.is_mapping() {
+                    anyhow::bail!("YAML item {i} is not a mapping; collect-records takes one YAML record per item");
+                }
                 all_objects.push(yaml_value_to_json_value(value)?);
             }
             Fmt::Json => {
@@ -848,14 +857,65 @@ fn pool_declarations(manifest: &CapManifest) -> capdag::PoolDeclarations {
     declarations
 }
 
-/// The series steps, each under the URN of its embedded definition. A handler whose alias
-/// no embedded definition has is a defect of the build.
+/// The embedded definition one of whose aliases is `alias`. A handler whose alias no
+/// embedded definition has is a defect of the build.
+fn embedded_cap(manifest: &CapManifest, alias: &str) -> capdag::Cap {
+    manifest
+        .all_caps()
+        .into_iter()
+        .find(|cap| cap.aliases.iter().any(|a| a == alias))
+        .unwrap_or_else(|| panic!("a handler answers '{alias}', which no embedded cap definition has; list it in cap-aliases.txt and rebuild"))
+        .clone()
+}
+
+/// The series steps, each under the URN of its embedded definition.
 fn series_handlers(manifest: &CapManifest) -> Vec<(String, series::Factory)> {
     series::handlers()
         .into_iter()
-        .map(|(alias, factory)| {
-            let cap = manifest.all_caps().into_iter().find(|cap| cap.aliases.iter().any(|a| a == alias)).unwrap_or_else(|| panic!("a handler answers '{alias}', which no embedded cap definition has; list it in cap-aliases.txt and rebuild"));
-            (cap.urn_string(), factory)
+        .map(|(alias, factory)| (embedded_cap(manifest, alias).urn_string(), factory))
+        .collect()
+}
+
+/// The collect steps that take one JSON object per item.
+const JSON_OBJECT_COLLECTS: [&str; 3] = [
+    "collect-json-objects-to-array",
+    "collect-json-objects-to-csv",
+    "collect-json-objects-to-yaml-list",
+];
+
+/// The collect steps that take one list of CSV records per item.
+const CSV_RECORD_COLLECTS: [&str; 3] = [
+    "collect-csv-records-to-csv",
+    "collect-csv-records-to-json-array",
+    "collect-csv-records-to-yaml-list",
+];
+
+/// The collect steps that take one YAML mapping per item.
+const YAML_MAPPING_COLLECTS: [&str; 3] = [
+    "collect-yaml-mappings-to-json-array",
+    "collect-yaml-mappings-to-csv",
+    "collect-yaml-mappings-to-yaml-list",
+];
+
+/// A collect step as its embedded definition states it: the URN it is registered under and
+/// the media it takes and gives, so the op reads its formats from the one definition rather
+/// than from a second copy of the URN.
+struct CollectStep {
+    urn: String,
+    in_media: String,
+    out_media: String,
+}
+
+fn collect_steps(manifest: &CapManifest, aliases: &[&str]) -> Vec<CollectStep> {
+    aliases
+        .iter()
+        .map(|alias| {
+            let cap = embedded_cap(manifest, alias);
+            CollectStep {
+                urn: cap.urn_string(),
+                in_media: cap.urn.in_spec().to_string(),
+                out_media: cap.urn.out_spec().to_string(),
+            }
         })
         .collect()
 }
@@ -872,6 +932,9 @@ async fn main() -> Result<()> {
         .with_pool_declarations(pool_declarations)
         .expect("data pool declarations must validate against the manifest");
     let series_handlers = series_handlers(&manifest);
+    let json_object_collects = collect_steps(&manifest, &JSON_OBJECT_COLLECTS);
+    let csv_record_collects = collect_steps(&manifest, &CSV_RECORD_COLLECTS);
+    let yaml_mapping_collects = collect_steps(&manifest, &YAML_MAPPING_COLLECTS);
     let mut runtime = CartridgeRuntime::with_manifest(manifest);
 
     // Register adapter selection handler
@@ -946,93 +1009,18 @@ async fn main() -> Result<()> {
         runtime.register_op(&urn, factory);
     }
 
-    // Collect JSON objects → JSON array / CSV / YAML
-    {
-        let json_array_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-json-objects")
-            .in_spec("media:enc=utf8;fmt=json;record")
-            .out_spec("media:enc=utf8;fmt=json;list;record")
-            .build().expect("collect_json_objects → json array URN");
-        runtime.register_op(&json_array_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:enc=utf8;fmt=json;list;record" })
-        });
-
-        let csv_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-json-objects")
-            .in_spec("media:enc=utf8;fmt=json;record")
-            .out_spec("media:enc=utf8;fmt=csv;list;record")
-            .build().expect("collect_json_objects → csv URN");
-        runtime.register_op(&csv_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:enc=utf8;fmt=csv;list;record" })
-        });
-
-        let yaml_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-json-objects")
-            .in_spec("media:enc=utf8;fmt=json;record")
-            .out_spec("media:enc=utf8;fmt=yaml;list;record")
-            .build().expect("collect_json_objects → yaml URN");
-        runtime.register_op(&yaml_urn.to_string(), || {
-            Box::new(CollectJsonObjectsOp { out_media: "media:enc=utf8;fmt=yaml;list;record" })
-        });
+    // Collect JSON objects → JSON array / CSV / YAML, each under its embedded definition's URN.
+    for step in json_object_collects {
+        let out_media = step.out_media;
+        runtime.register_op(&step.urn, move || Box::new(CollectJsonObjectsOp { out_media: out_media.clone() }));
     }
 
-    // Collect CSV records → merged CSV / JSON array / YAML list
-    {
-        let csv_csv_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-records")
-            .in_spec("media:enc=utf8;fmt=csv;list;record")
-            .out_spec("media:enc=utf8;fmt=csv;list;record")
-            .build().expect("collect_records csv→csv URN");
-        runtime.register_op(&csv_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=csv;list;record", out_media: "media:enc=utf8;fmt=csv;list;record" })
-        });
-
-        let csv_json_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-records")
-            .in_spec("media:enc=utf8;fmt=csv;list;record")
-            .out_spec("media:enc=utf8;fmt=json;list;record")
-            .build().expect("collect_records csv→json URN");
-        runtime.register_op(&csv_json_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=csv;list;record", out_media: "media:enc=utf8;fmt=json;list;record" })
-        });
-
-        let csv_yaml_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-records")
-            .in_spec("media:enc=utf8;fmt=csv;list;record")
-            .out_spec("media:enc=utf8;fmt=yaml;list;record")
-            .build().expect("collect_records csv→yaml URN");
-        runtime.register_op(&csv_yaml_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=csv;list;record", out_media: "media:enc=utf8;fmt=yaml;list;record" })
-        });
-    }
-
-    // Collect YAML mappings → merged YAML list / JSON array / CSV
-    {
-        let yaml_yaml_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-records")
-            .in_spec("media:enc=utf8;fmt=yaml;record")
-            .out_spec("media:enc=utf8;fmt=yaml;list;record")
-            .build().expect("collect_records yaml→yaml URN");
-        runtime.register_op(&yaml_yaml_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=yaml;record", out_media: "media:enc=utf8;fmt=yaml;list;record" })
-        });
-
-        let yaml_json_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-records")
-            .in_spec("media:enc=utf8;fmt=yaml;record")
-            .out_spec("media:enc=utf8;fmt=json;list;record")
-            .build().expect("collect_records yaml→json URN");
-        runtime.register_op(&yaml_json_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=yaml;record", out_media: "media:enc=utf8;fmt=json;list;record" })
-        });
-
-        let yaml_csv_urn = capdag::CapUrnBuilder::new()
-            .marker("collect-records")
-            .in_spec("media:enc=utf8;fmt=yaml;record")
-            .out_spec("media:enc=utf8;fmt=csv;list;record")
-            .build().expect("collect_records yaml→csv URN");
-        runtime.register_op(&yaml_csv_urn.to_string(), || {
-            Box::new(CollectRecordsOp { in_media: "media:enc=utf8;fmt=yaml;record", out_media: "media:enc=utf8;fmt=csv;list;record" })
+    // Collect CSV records and YAML mappings → merged CSV / JSON array / YAML list, each
+    // under its embedded definition's URN.
+    for step in csv_record_collects.into_iter().chain(yaml_mapping_collects) {
+        let (in_media, out_media) = (step.in_media, step.out_media);
+        runtime.register_op(&step.urn, move || {
+            Box::new(CollectRecordsOp { in_media: in_media.clone(), out_media: out_media.clone() })
         });
     }
 
@@ -2239,6 +2227,38 @@ mod tests {
 
         // A text list is not records, either way round, and says so.
         assert!(collect_records_to(&csv_items, "media:enc=utf8;list", "media:enc=utf8;fmt=json;list;record").is_err());
+    }
+
+    // TEST7311: collect-json-objects takes one record per item: an item that is a
+    // JSON list is refused naming it, never nested into the collection as one element.
+    #[test]
+    fn test7311_collect_json_objects_refuses_an_item_that_is_a_list() {
+        let err = collect_json_objects_to(&[br#"[{"a":1}]"#.to_vec()], "media:enc=utf8;fmt=json;list;record")
+            .expect_err("a JSON list is not one record");
+        assert!(err.to_string().contains("item 0 is not a JSON record"), "{err}");
+
+        let collected: serde_json::Value = serde_json::from_slice(
+            &collect_json_objects_to(&[br#"{"a":1}"#.to_vec(), br#"{"a":2}"#.to_vec()], "media:enc=utf8;fmt=json;list;record")
+                .expect("JSON objects collect"),
+        )
+        .expect("the collection is JSON");
+        assert_eq!(collected, serde_json::json!([{"a": 1}, {"a": 2}]));
+    }
+
+    // TEST7312: collect-records over YAML takes one mapping per item: an item that is a
+    // YAML sequence is refused naming it, never pushed as one record.
+    #[test]
+    fn test7312_collect_yaml_mappings_refuses_an_item_that_is_a_sequence() {
+        let err = collect_records_to(&[b"- a: 1".to_vec()], "media:enc=utf8;fmt=yaml;!list;record", "media:enc=utf8;fmt=json;list;record")
+            .expect_err("a YAML sequence is not one record");
+        assert!(err.to_string().contains("YAML item 0 is not a mapping"), "{err}");
+
+        let collected: serde_json::Value = serde_json::from_slice(
+            &collect_records_to(&[b"a: 1".to_vec(), b"a: 2".to_vec()], "media:enc=utf8;fmt=yaml;!list;record", "media:enc=utf8;fmt=json;list;record")
+                .expect("YAML mappings collect"),
+        )
+        .expect("the collection is JSON");
+        assert_eq!(collected, serde_json::json!([{"a": 1}, {"a": 2}]));
     }
     use super::*;
 
