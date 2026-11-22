@@ -878,7 +878,7 @@ async fn main() -> Result<()> {
     runtime.register_op(CAP_ADAPTER_SELECTION, || Box::new(DataAdapterSelectionOp));
 
     for path in capdag::all_format_conversion_paths() {
-        let urn = capdag::format_conversion_urn(path.in_media, path.out_media);
+        let urn = capdag::format_conversion_urn(path.in_media, path.out_media, path.effect);
         let in_media = path.in_media;
         let out_media = path.out_media;
         runtime.register_op(&urn.to_string(), move || {
@@ -910,10 +910,12 @@ async fn main() -> Result<()> {
     // Semantic-primitive ops: repair-json, repair-csv, edit — URNs
     // mirror the manifest declarations above.
     {
+        // Repaired JSON is of whatever shape the input was: it may be a list
+        // and may be a record.
         let repair_json_urn = capdag::CapUrnBuilder::new()
             .marker("repair")
             .in_spec("media:enc=utf8")
-            .out_spec("media:enc=utf8;fmt=json")
+            .out_spec("media:enc=utf8;fmt=json;?list;?record")
             .build()
             .expect("repair-json URN");
         runtime.register_op(&repair_json_urn.to_string(), || Box::new(RepairJsonOp));
@@ -1416,7 +1418,7 @@ fn coerce(data: &[u8], _source_type: &str, target_type: &str) -> Result<Vec<u8>>
         "integer" => coerce_to_integer(s),
         "number" => coerce_to_number(s),
         "boolean" => coerce_to_boolean(s),
-        "object" => coerce_to_object(s, _source_type),
+        "json-object" => coerce_to_object(s, _source_type),
         other => anyhow::bail!("Unsupported coercion target type: '{}'", other),
     }
 }
@@ -2635,7 +2637,7 @@ mod tests {
     // TEST0041: Coerce string to object
     #[test]
     fn test0041_coerce_string_to_object() {
-        let result = coerce(b"\"hello\"", "string", "object").unwrap();
+        let result = coerce(b"\"hello\"", "string", "json-object").unwrap();
         let val: serde_json::Value = serde_json::from_slice(&result).unwrap();
         assert_eq!(val["value"], "hello");
         // The string source media URN now declares its UTF-8 encoding via enc=utf8
