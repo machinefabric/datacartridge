@@ -337,6 +337,92 @@ impl Op<()> for SaveAsTxtOp {
 }
 
 // =============================================================================
+// SAVE-AS-FILE OPS — content written as the file detection reads back
+// =============================================================================
+//
+// One save cap per shape detection tells apart (a list of records, a record,
+// a value, in JSON, YAML, NDJSON or CSV): each takes content with no file
+// extension and gives exactly the file type detection reads back from the
+// file it writes. The op passes the bytes through unchanged, after checking
+// that they read back from a `.{ext}` file as `out`, so a value saved and
+// opened again is what it was saved as.
+
+/// The text a save cap writes for `bytes`: the bytes unchanged, when they read
+/// back from a `.{ext}` file as `out`. Refused, naming what the content reads
+/// back as, when detection's first claim is another type or it claims none.
+fn saved_file(bytes: Vec<u8>, ext: &str, out: &capdag::MediaUrn) -> Result<String, String> {
+    let inspected = &bytes[..bytes.len().min(capdag::MAX_CONTENT_INSPECTION_BYTES)];
+    let claims = adapter::detect_data_media_urns(inspected, ext);
+    let Some(first) = claims.first() else {
+        return Err(format!("the content does not read back as a .{ext} file"));
+    };
+    let claim = capdag::MediaUrn::from_string(first)
+        .map_err(|e| format!("detection read the content as '{first}', which is no media URN: {e}"))?;
+    if !claim.is_equivalent(out) {
+        return Err(format!("the content reads back from a .{ext} file as '{claim}', not '{out}'"));
+    }
+    String::from_utf8(bytes).map_err(|e| format!("the content read back as '{claim}' is not UTF-8: {e}"))
+}
+
+/// Save content as the file of one shape: the type the cap's output names,
+/// with the extension that type carries.
+struct SaveAsFileOp {
+    ext: String,
+    out: capdag::MediaUrn,
+    in_media: String,
+}
+
+#[async_trait]
+impl Op<()> for SaveAsFileOp {
+    async fn perform(&self, _dry: &mut DryContext, wet: &mut WetContext) -> OpResult<()> {
+        let req: Arc<Request> = wet
+            .get_required(WET_KEY_REQUEST)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let mut input = req
+            .take_input()
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        let output = req.output();
+
+        let mut received: Option<(Vec<u8>, Option<capdag::StreamMeta>)> = None;
+        while let Some(stream_result) = input.recv().await {
+            let stream = stream_result
+                .map_err(|e| OpError::ExecutionFailed(format!("Stream error: {}", e)))?;
+            let meta = stream.stream_meta().cloned();
+            let bytes = stream
+                .collect_bytes()
+                .await
+                .map_err(|e| OpError::ExecutionFailed(format!("collect_bytes for a .{} save: {}", self.ext, e)))?;
+            if received.is_some() {
+                return Err(OpError::ExecutionFailed(format!(
+                    "a .{} save received more than one input stream; the cap takes one value",
+                    self.ext
+                )));
+            }
+            received = Some((bytes, meta));
+        }
+        let (bytes, input_meta) = received.ok_or_else(|| {
+            input_arg_error("INPUT_REQUIRED", format!("a .{} save received no input stream", self.ext), &self.in_media)
+        })?;
+
+        let text = saved_file(bytes, &self.ext, &self.out)
+            .map_err(|message| input_arg_error("INVALID_INPUT", message, &self.in_media))?;
+
+        output
+            .start(false, input_meta)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        output
+            .emit_cbor(&ciborium::Value::Text(text))
+            .await
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
+        Ok(())
+    }
+
+    fn metadata(&self) -> capdag::OpMetadata {
+        capdag::OpMetadata::builder("SaveAsFileOp").build()
+    }
+}
+
+// =============================================================================
 // COLLECT OPS — sequence of items → single merged output
 // =============================================================================
 
@@ -913,6 +999,18 @@ const FORMAT_CONVERSIONS: [&str; 12] = [
     "convert-csv-to-text-list",
 ];
 
+/// The save caps: content of one shape written as the file detection reads back.
+const SAVES_AS_FILE: [&str; 8] = [
+    "save-as-csv",
+    "save-as-json-list-records",
+    "save-as-json-record",
+    "save-as-json-value",
+    "save-as-ndjson-list-records",
+    "save-as-yaml-list-records",
+    "save-as-yaml-record",
+    "save-as-yaml-value",
+];
+
 /// A step as its embedded definition states it: the URN it is registered under and the
 /// media it takes and gives, so the op reads its formats from the one definition rather
 /// than from a second copy of the URN.
@@ -947,6 +1045,24 @@ fn register_conversions(runtime: &mut CartridgeRuntime, conversions: Vec<Defined
     }
 }
 
+/// Register each save cap under the URN of its embedded definition. The file type it
+/// writes is the definition's output, and the extension is that type's `ext`; an output
+/// with no exact extension is a defect of the definition.
+fn register_saves(runtime: &mut CartridgeRuntime, saves: Vec<DefinedStep>) {
+    for step in saves {
+        let out = capdag::MediaUrn::from_string(&step.out_media)
+            .unwrap_or_else(|e| panic!("save cap '{}' gives '{}', which is no media URN: {e}", step.urn, step.out_media));
+        let ext = out
+            .extension()
+            .unwrap_or_else(|| panic!("save cap '{}' gives '{}', which names no file extension", step.urn, step.out_media))
+            .to_string();
+        let in_media = step.in_media;
+        runtime.register_op(&step.urn, move || {
+            Box::new(SaveAsFileOp { ext: ext.clone(), out: out.clone(), in_media: in_media.clone() })
+        });
+    }
+}
+
 // =============================================================================
 // MAIN
 // =============================================================================
@@ -963,6 +1079,7 @@ async fn main() -> Result<()> {
     let json_object_collects = defined_steps(&manifest, &JSON_OBJECT_COLLECTS);
     let csv_record_collects = defined_steps(&manifest, &CSV_RECORD_COLLECTS);
     let yaml_mapping_collects = defined_steps(&manifest, &YAML_MAPPING_COLLECTS);
+    let saves = defined_steps(&manifest, &SAVES_AS_FILE);
     let mut runtime = CartridgeRuntime::with_manifest(manifest);
 
     // Register adapter selection handler
@@ -990,6 +1107,10 @@ async fn main() -> Result<()> {
             .expect("save-as-txt URN");
         runtime.register_op(&urn.to_string(), || Box::new(SaveAsTxtOp));
     }
+
+    // Save caps: content of one shape written as the file detection reads back, each
+    // under its embedded definition's URN.
+    register_saves(&mut runtime, saves);
 
     // Semantic-primitive ops: repair-json, repair-csv, edit — URNs
     // mirror the manifest declarations above.
@@ -2280,6 +2401,54 @@ mod tests {
         )
         .expect("the collection is JSON");
         assert_eq!(collected, serde_json::json!([{"a": 1}, {"a": 2}]));
+    }
+
+    /// The extension and file type a save cap writes, as its embedded definition states
+    /// them: the same lookup `register_saves` makes.
+    fn save_as(alias: &str) -> (String, capdag::MediaUrn) {
+        let step = defined_steps(&build_manifest(), &[alias]).remove(0);
+        let out = capdag::MediaUrn::from_string(&step.out_media).expect("a save cap gives a media URN");
+        let ext = out.extension().expect("a save cap gives a file type with an extension").to_string();
+        (ext, out)
+    }
+
+    // TEST7314: each save cap writes content of its own shape unchanged: what it
+    // writes reads back from its file as the type the cap gives.
+    #[test]
+    fn test7314_each_save_cap_writes_content_of_its_shape_unchanged() {
+        let shapes: [(&str, &[&str]); 8] = [
+            ("save-as-json-list-records", &[r#"[{"a":1}]"#, "[]"]),
+            ("save-as-json-record", &[r#"{"a":1}"#]),
+            ("save-as-json-value", &["42"]),
+            ("save-as-yaml-list-records", &["- a: 1"]),
+            ("save-as-yaml-record", &["a: 1"]),
+            ("save-as-yaml-value", &["42"]),
+            ("save-as-ndjson-list-records", &["{\"a\":1}\n"]),
+            ("save-as-csv", &["a,b\n1,2"]),
+        ];
+        assert_eq!(shapes.len(), SAVES_AS_FILE.len(), "every save cap is tested");
+        for (alias, contents) in shapes {
+            assert!(SAVES_AS_FILE.contains(&alias), "{alias} is registered");
+            let (ext, out) = save_as(alias);
+            for content in contents {
+                let written = saved_file(content.as_bytes().to_vec(), &ext, &out)
+                    .unwrap_or_else(|e| panic!("{alias} must write {content:?}: {e}"));
+                assert_eq!(written, *content, "{alias} writes the bytes unchanged");
+            }
+        }
+    }
+
+    // TEST7315: a save cap refuses content that would read back from its file as
+    // another type, naming what it reads back as.
+    #[test]
+    fn test7315_a_save_cap_refuses_content_that_reads_back_as_another_type() {
+        let (ext, out) = save_as("save-as-json-record");
+        let err = saved_file(br#"[{"a":1}]"#.to_vec(), &ext, &out).expect_err("a list of records is not one record");
+        assert!(err.contains("reads back from a .json file as 'media:enc=utf8;ext=json;fmt=json;list;record'"), "{err}");
+
+        let (ext, out) = save_as("save-as-yaml-value");
+        let err = saved_file(b"url: x".to_vec(), &ext, &out).expect_err("a mapping is a record, not a value");
+        assert!(err.contains("reads back from a .yaml file as 'media:enc=utf8;ext=yaml;fmt=yaml;record'"), "{err}");
     }
 
     // TEST7313: a request for the JSON↔YAML conversions, which carries the published caps'

@@ -59,7 +59,15 @@ repair-csv
 repair-json
 route-en
 same-en
+save-as-csv
+save-as-json-list-records
+save-as-json-record
+save-as-json-value
+save-as-ndjson-list-records
 save-as-txt
+save-as-yaml-list-records
+save-as-yaml-record
+save-as-yaml-value
 score-en
 summarize-en
 verify-en
