@@ -4034,6 +4034,196 @@
     ]
   },
   {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=csv;list;record\";out=\"media:enc=utf8;ext=csv;fmt=csv;list;record\";save-as-csv",
+    "version": 1,
+    "title": "Save as CSV",
+    "aliases": [
+      "save-as-csv"
+    ],
+    "cap_description": "Save a CSV list of records as a `.csv` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a CSV list of records to disk as a `.csv` file. Content is no file\ntype: a cap that gives a CSV list of records gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=csv;list;record;!ext` — a CSV list of records that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=csv;fmt=csv;list;record` — the same bytes, as a `.csv` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.csv`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=csv;list;record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=csv;list;record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a CSV list of records to save as a `.csv` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=csv;fmt=csv;list;record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.csv` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=json;list;record\";out=\"media:enc=utf8;ext=json;fmt=json;list;record\";save-as-json",
+    "version": 1,
+    "title": "Save as JSON List of Records",
+    "aliases": [
+      "save-as-json-list-records"
+    ],
+    "cap_description": "Save a JSON list of records as a `.json` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a JSON list of records to disk as a `.json` file. Content is no file\ntype: a cap that gives a JSON list of records gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=json;list;record;!ext` — a JSON list of records that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=json;fmt=json;list;record` — the same bytes, as a `.json` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.json`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=json;list;record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=json;list;record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a JSON list of records to save as a `.json` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=json;fmt=json;list;record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.json` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=json;!list;record\";out=\"media:enc=utf8;ext=json;fmt=json;record\";save-as-json",
+    "version": 1,
+    "title": "Save as JSON Record",
+    "aliases": [
+      "save-as-json-record"
+    ],
+    "cap_description": "Save a JSON record as a `.json` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a JSON record to disk as a `.json` file. Content is no file\ntype: a cap that gives a JSON record gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=json;!list;record;!ext` — a JSON record that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=json;fmt=json;record` — the same bytes, as a `.json` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.json`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=json;!list;record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=json;!list;record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a JSON record to save as a `.json` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=json;fmt=json;record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.json` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=json;!list;!record\";out=\"media:enc=utf8;ext=json;fmt=json\";save-as-json",
+    "version": 1,
+    "title": "Save as JSON Value",
+    "aliases": [
+      "save-as-json-value"
+    ],
+    "cap_description": "Save a JSON value that is neither a list nor a record as a `.json` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a JSON value that is neither a list nor a record to disk as a `.json` file. Content is no file\ntype: a cap that gives a JSON value that is neither a list nor a record gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=json;!list;!record;!ext` — a JSON value that is neither a list nor a record that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=json;fmt=json` — the same bytes, as a `.json` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.json`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=json;!list;!record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=json;!list;!record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a JSON value that is neither a list nor a record to save as a `.json` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=json;fmt=json",
+        "name": "output",
+        "output_description": "The same bytes, as a `.json` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=ndjson;list;record\";out=\"media:enc=utf8;ext=ndjson;fmt=ndjson;list;record\";save-as-ndjson",
+    "version": 1,
+    "title": "Save as NDJSON List of Records",
+    "aliases": [
+      "save-as-ndjson-list-records"
+    ],
+    "cap_description": "Save an NDJSON list of records as a `.ndjson` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes an NDJSON list of records to disk as a `.ndjson` file. Content is no file\ntype: a cap that gives an NDJSON list of records gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=ndjson;list;record;!ext` — an NDJSON list of records that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=ndjson;fmt=ndjson;list;record` — the same bytes, as a `.ndjson` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.ndjson`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=ndjson;list;record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=ndjson;list;record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "an NDJSON list of records to save as a `.ndjson` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=ndjson;fmt=ndjson;list;record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.ndjson` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
     "urn": "cap:in=\"media:enc=utf8;ext=txt;plain-text\";out=\"media:enc=utf8;ext=txt;plain-text\";save-as-txt",
     "version": 6,
     "title": "Save as Plain Text",
@@ -4065,6 +4255,120 @@
         "media_urn": "media:enc=utf8;ext=txt;plain-text",
         "name": "output",
         "output_description": "The same bytes, persisted as a `.txt` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=yaml;list;record\";out=\"media:enc=utf8;ext=yaml;fmt=yaml;list;record\";save-as-yaml",
+    "version": 1,
+    "title": "Save as YAML List of Records",
+    "aliases": [
+      "save-as-yaml-list-records"
+    ],
+    "cap_description": "Save a YAML list of records as a `.yaml` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a YAML list of records to disk as a `.yaml` file. Content is no file\ntype: a cap that gives a YAML list of records gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=yaml;list;record;!ext` — a YAML list of records that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=yaml;fmt=yaml;list;record` — the same bytes, as a `.yaml` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.yaml`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=yaml;list;record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=yaml;list;record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a YAML list of records to save as a `.yaml` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=yaml;fmt=yaml;list;record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.yaml` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=yaml;!list;record\";out=\"media:enc=utf8;ext=yaml;fmt=yaml;record\";save-as-yaml",
+    "version": 1,
+    "title": "Save as YAML Record",
+    "aliases": [
+      "save-as-yaml-record"
+    ],
+    "cap_description": "Save a YAML record as a `.yaml` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a YAML record to disk as a `.yaml` file. Content is no file\ntype: a cap that gives a YAML record gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=yaml;!list;record;!ext` — a YAML record that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=yaml;fmt=yaml;record` — the same bytes, as a `.yaml` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.yaml`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=yaml;!list;record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=yaml;!list;record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a YAML record to save as a `.yaml` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=yaml;fmt=yaml;record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.yaml` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=yaml;!list;!record\";out=\"media:enc=utf8;ext=yaml;fmt=yaml\";save-as-yaml",
+    "version": 1,
+    "title": "Save as YAML Value",
+    "aliases": [
+      "save-as-yaml-value"
+    ],
+    "cap_description": "Save a YAML value that is neither a list nor a record as a `.yaml` file that reads back as what it is. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a YAML value that is neither a list nor a record to disk as a `.yaml` file. Content is no file\ntype: a cap that gives a YAML value that is neither a list nor a record gives it without a file extension, and this cap is\nhow that content becomes a file a plan can end on.\n\nThe output is exactly the type detection reads back from the file it writes, so\na value saved here and opened again is what it was saved as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=yaml;!list;!record;!ext` — a YAML value that is neither a list nor a record that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=yaml;fmt=yaml` — the same bytes, as a `.yaml` file.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.yaml`\n  file as another type is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=yaml;!list;!record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=yaml;!list;!record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a YAML value that is neither a list nor a record to save as a `.yaml` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=yaml;fmt=yaml",
+        "name": "output",
+        "output_description": "The same bytes, as a `.yaml` file",
         "optional": false,
         "is_sequence": false,
         "streaming": false
