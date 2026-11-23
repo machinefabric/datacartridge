@@ -1053,7 +1053,7 @@ fn register_saves(runtime: &mut CartridgeRuntime, saves: Vec<DefinedStep>) {
         let out = capdag::MediaUrn::from_string(&step.out_media)
             .unwrap_or_else(|e| panic!("save cap '{}' gives '{}', which is no media URN: {e}", step.urn, step.out_media));
         let ext = out
-            .extension()
+            .exact_value("ext")
             .unwrap_or_else(|| panic!("save cap '{}' gives '{}', which names no file extension", step.urn, step.out_media))
             .to_string();
         let in_media = step.in_media;
@@ -2408,7 +2408,7 @@ mod tests {
     fn save_as(alias: &str) -> (String, capdag::MediaUrn) {
         let step = defined_steps(&build_manifest(), &[alias]).remove(0);
         let out = capdag::MediaUrn::from_string(&step.out_media).expect("a save cap gives a media URN");
-        let ext = out.extension().expect("a save cap gives a file type with an extension").to_string();
+        let ext = out.exact_value("ext").expect("a save cap gives a file type with an extension").to_string();
         (ext, out)
     }
 
