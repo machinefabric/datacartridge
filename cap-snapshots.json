@@ -1,7 +1,7 @@
 [
   {
     "urn": "cap:ask;constrained;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\"",
-    "version": 5,
+    "version": 6,
     "title": "Ask (Grounded Question Answering) (Constrained, English)",
     "aliases": [
       "ask-en"
@@ -202,7 +202,7 @@
   },
   {
     "urn": "cap:classify;constrained;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\"",
-    "version": 5,
+    "version": 6,
     "title": "Classify (Closed-Set Labeling) (Constrained, English)",
     "aliases": [
       "classify-en"
@@ -416,7 +416,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:bool;list\";out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Boolean Array to String",
     "aliases": [
       "coerce-boolean-array-to-string",
@@ -455,7 +455,7 @@
   },
   {
     "urn": "cap:coerce;in=media:bool;out=\"media:integer;numeric\"",
-    "version": 4,
+    "version": 5,
     "title": "Coerce Boolean to Integer",
     "aliases": [
       "coerce-boolean-to-integer",
@@ -494,7 +494,7 @@
   },
   {
     "urn": "cap:coerce;in=media:bool;out=media:numeric",
-    "version": 4,
+    "version": 5,
     "title": "Coerce Boolean to Number",
     "aliases": [
       "coerce-boolean-to-number",
@@ -532,15 +532,15 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=media:bool;out=media:record",
-    "version": 4,
+    "urn": "cap:coerce;in=media:bool;out=\"media:enc=utf8;fmt=json;record\"",
+    "version": 5,
     "title": "Coerce Boolean to Object",
     "aliases": [
       "coerce-boolean-to-object",
       "bool2obj"
     ],
     "cap_description": "Wrap a boolean value in a record",
-    "documentation": "## Purpose\n\nWraps a boolean value in a record (object) so it can be passed to caps that expect a structured record input. The boolean is stored under a standard key in the output record.\n\n## Inputs\n\nA boolean value (media type `media:bool`).\n\n## Outputs\n\nA record containing the boolean value.\n\n## Notes\n\n- Use when a downstream cap requires a record type but the upstream produces a scalar boolean.\n- This is primarily a type adapter for the capfab planner.",
+    "documentation": "## Purpose\n\nWraps a boolean value in a record (object) so it can be passed to caps that expect a structured record input. The boolean is stored under a standard key in the output record.\n\n## Inputs\n\nA boolean value (media type `media:bool`).\n\n## Outputs\n\nA JSON object containing the boolean value.\n\n## Notes\n\n- Use when a downstream cap requires a record type but the upstream produces a scalar boolean.\n- This is primarily a type adapter for the capfab planner.",
     "args": [
       {
         "media_urn": "media:bool",
@@ -561,7 +561,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:record",
+        "media_urn": "media:enc=utf8;fmt=json;record",
         "name": "output",
         "output_description": "Coerced value",
         "optional": false,
@@ -572,7 +572,7 @@
   },
   {
     "urn": "cap:coerce;in=media:bool;out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Boolean to String",
     "aliases": [
       "coerce-boolean-to-string",
@@ -611,7 +611,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;list;numeric\";out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Integer Array to String",
     "aliases": [
       "coerce-integer-array-to-string",
@@ -650,7 +650,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:bool",
-    "version": 4,
+    "version": 5,
     "title": "Coerce Integer to Boolean",
     "aliases": [
       "coerce-integer-to-boolean"
@@ -688,7 +688,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:numeric",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Integer to Number",
     "aliases": [
       "coerce-integer-to-number",
@@ -726,15 +726,15 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:integer;numeric\";out=media:record",
-    "version": 3,
+    "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:enc=utf8;fmt=json;record\"",
+    "version": 4,
     "title": "Coerce Integer to Object",
     "aliases": [
       "coerce-integer-to-object",
       "int2obj"
     ],
     "cap_description": "Wrap an integer value in a record",
-    "documentation": "## Purpose\n\nWraps an integer value in a record so it can be passed to caps that expect a structured record input.\n\n## Inputs\n\nAn integer value (media type `media:integer;numeric`).\n\n## Outputs\n\nA record containing the integer value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- Use when connecting an integer-producing cap to a record-consuming cap.",
+    "documentation": "## Purpose\n\nWraps an integer value in a record so it can be passed to caps that expect a structured record input.\n\n## Inputs\n\nAn integer value (media type `media:integer;numeric`).\n\n## Outputs\n\nA JSON object containing the integer value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- Use when connecting an integer-producing cap to a record-consuming cap.",
     "args": [
       {
         "media_urn": "media:integer;numeric",
@@ -755,7 +755,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:record",
+        "media_urn": "media:enc=utf8;fmt=json;record",
         "name": "output",
         "output_description": "Coerced value",
         "optional": false,
@@ -766,7 +766,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:integer;numeric\";out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Integer to String",
     "aliases": [
       "coerce-integer-to-string",
@@ -805,7 +805,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:list;numeric\";out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Number Array to String",
     "aliases": [
       "coerce-number-array-to-string",
@@ -844,7 +844,7 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=media:bool",
-    "version": 4,
+    "version": 5,
     "title": "Coerce Number to Boolean",
     "aliases": [
       "coerce-number-to-boolean"
@@ -882,7 +882,7 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:integer;numeric\"",
-    "version": 3,
+    "version": 4,
     "title": "Coerce Number to Integer",
     "aliases": [
       "coerce-number-to-integer",
@@ -920,15 +920,15 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=media:numeric;out=media:record",
-    "version": 3,
+    "urn": "cap:coerce;in=media:numeric;out=\"media:enc=utf8;fmt=json;record\"",
+    "version": 4,
     "title": "Coerce Number to Object",
     "aliases": [
       "coerce-number-to-object",
       "num2obj"
     ],
     "cap_description": "Wrap a numeric value in a record",
-    "documentation": "## Purpose\n\nWraps a floating-point number in a record so it can be passed to caps that expect a structured record input.\n\n## Inputs\n\nA numeric (float) value (media type `media:numeric`).\n\n## Outputs\n\nA record containing the numeric value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- Use when connecting a number-producing cap to a record-consuming cap.",
+    "documentation": "## Purpose\n\nWraps a floating-point number in a record so it can be passed to caps that expect a structured record input.\n\n## Inputs\n\nA numeric (float) value (media type `media:numeric`).\n\n## Outputs\n\nA JSON object containing the numeric value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- Use when connecting a number-producing cap to a record-consuming cap.",
     "args": [
       {
         "media_urn": "media:numeric",
@@ -949,7 +949,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:record",
+        "media_urn": "media:enc=utf8;fmt=json;record",
         "name": "output",
         "output_description": "Coerced value",
         "optional": false,
@@ -960,7 +960,7 @@
   },
   {
     "urn": "cap:coerce;in=media:numeric;out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Number to String",
     "aliases": [
       "coerce-number-to-string",
@@ -999,7 +999,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:list;record\";out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Object Array to String",
     "aliases": [
       "coerce-object-array-to-string",
@@ -1038,14 +1038,14 @@
   },
   {
     "urn": "cap:coerce;in=media:record;out=\"media:enc=utf8\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce Object to String",
     "aliases": [
       "coerce-object-to-string",
       "obj2str"
     ],
     "cap_description": "Convert a record/object to its string representation",
-    "documentation": "## Purpose\n\nConverts a record (object) to its string representation. Use this when a downstream cap requires text but the upstream produces a structured record.\n\n## Inputs\n\nA record value (media type `media:record`).\n\n## Outputs\n\nA string representation of the record.\n\n## Notes\n\n- The output format is typically JSON or a similar serialized form.\n- For wrapping a string in a record (the reverse), use [Coerce String to Object](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf8\";out=media:record).\n- For human-readable text output from a record, a format conversion cap (JSON-to-YAML, etc.) may produce better output than this coerce.",
+    "documentation": "## Purpose\n\nConverts a record (object) to its string representation. Use this when a downstream cap requires text but the upstream produces a structured record.\n\n## Inputs\n\nA record value (media type `media:record`).\n\n## Outputs\n\nA string representation of the record.\n\n## Notes\n\n- The output format is typically JSON or a similar serialized form.\n- For wrapping a string in a record (the reverse), use [Coerce String to Object](https://capdag.com/browse/cap:coerce;in=\"media:enc=utf8\";out=\"media:enc=utf8;fmt=json;record\").\n- For human-readable text output from a record, a format conversion cap (JSON-to-YAML, etc.) may produce better output than this coerce.",
     "args": [
       {
         "media_urn": "media:record",
@@ -1077,7 +1077,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf8;list\";out=\"media:enc=utf8\"",
-    "version": 4,
+    "version": 5,
     "title": "Coerce String Array to String",
     "aliases": [
       "coerce-string-array-to-string",
@@ -1116,7 +1116,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf8\";out=media:bool",
-    "version": 4,
+    "version": 5,
     "title": "Coerce String to Boolean",
     "aliases": [
       "coerce-string-to-boolean"
@@ -1154,7 +1154,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf8\";out=\"media:integer;numeric\"",
-    "version": 5,
+    "version": 6,
     "title": "Coerce String to Integer",
     "aliases": [
       "coerce-string-to-integer",
@@ -1193,7 +1193,7 @@
   },
   {
     "urn": "cap:coerce;in=\"media:enc=utf8\";out=media:numeric",
-    "version": 5,
+    "version": 6,
     "title": "Coerce String to Number",
     "aliases": [
       "coerce-string-to-number",
@@ -1231,15 +1231,15 @@
     ]
   },
   {
-    "urn": "cap:coerce;in=\"media:enc=utf8\";out=media:record",
-    "version": 5,
+    "urn": "cap:coerce;in=\"media:enc=utf8\";out=\"media:enc=utf8;fmt=json;record\"",
+    "version": 6,
     "title": "Coerce String to Object",
     "aliases": [
       "coerce-string-to-object",
       "str2obj"
     ],
     "cap_description": "Wrap a string value in a record",
-    "documentation": "## Purpose\n\nWraps a string value in a record so it can be passed to caps that expect a structured record input. The string is stored under a standard key in the output record.\n\n## Inputs\n\nA UTF-8 text string value (media type `media:enc=utf8`).\n\n## Outputs\n\nA record containing the string value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For the reverse, use [Coerce Object to String](https://capdag.com/browse/cap:coerce;in=media:record;out=\"media:enc=utf8\").",
+    "documentation": "## Purpose\n\nWraps a string value in a record so it can be passed to caps that expect a structured record input. The string is stored under a standard key in the output record.\n\n## Inputs\n\nA UTF-8 text string value (media type `media:enc=utf8`).\n\n## Outputs\n\nA JSON object containing the string value.\n\n## Notes\n\n- Type adapter for the capfab planner.\n- For the reverse, use [Coerce Object to String](https://capdag.com/browse/cap:coerce;in=media:record;out=\"media:enc=utf8\").",
     "args": [
       {
         "media_urn": "media:enc=utf8",
@@ -1260,7 +1260,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:record",
+        "media_urn": "media:enc=utf8;fmt=json;record",
         "name": "output",
         "output_description": "Coerced value",
         "optional": false,
@@ -1271,7 +1271,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;fmt=csv;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Merge CSV Files",
     "aliases": [
       "collect-csv-records-to-csv",
@@ -1310,7 +1310,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Merge CSV Files into JSON Array",
     "aliases": [
       "collect-csv-records-to-json-array"
@@ -1348,7 +1348,7 @@
   },
   {
     "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Merge CSV Files into YAML List",
     "aliases": [
       "collect-csv-records-to-yaml-list"
@@ -1385,25 +1385,25 @@
     ]
   },
   {
-    "urn": "cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
-    "version": 4,
+    "urn": "cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;!list;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
+    "version": 5,
     "title": "Collect JSON Objects into Array",
     "aliases": [
       "collect-json-objects-to-array",
       "collect-json2array"
     ],
     "cap_description": "Collect individual JSON objects into a single JSON array",
-    "documentation": "## Purpose\n\nGathers a sequence of individual JSON objects (one per pipeline item) into a single JSON array. Use this to fan-in results from parallel processing where each parallel branch produces one JSON object.\n\n## Inputs\n\nA sequence of JSON record objects.\n\n## Outputs\n\nA JSON array containing all input objects in order.\n\n## Notes\n\n- The objects do not need to have the same keys; heterogeneous objects are permitted.\n- For CSV output, use [Collect JSON Objects into CSV](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=csv;list;record\").\n- For YAML output, use [Collect JSON Objects into YAML List](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").",
+    "documentation": "## Purpose\n\nGathers a sequence of individual JSON objects (one per pipeline item) into a single JSON array. Use this to fan-in results from parallel processing where each parallel branch produces one JSON object.\n\n## Inputs\n\nA sequence of JSON record objects.\n\n## Outputs\n\nA JSON array containing all input objects in order.\n\n## Notes\n\n- The objects do not need to have the same keys; heterogeneous objects are permitted.\n- For CSV output, use [Collect JSON Objects into CSV](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;!list;record\";out=\"media:enc=utf8;fmt=csv;list;record\").\n- For YAML output, use [Collect JSON Objects into YAML List](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;!list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=json;record",
+        "media_urn": "media:enc=utf8;fmt=json;!list;record",
         "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=json;record"
+            "stdin": "media:enc=utf8;fmt=json;!list;record"
           },
           {
             "position": 0
@@ -1424,25 +1424,25 @@
     ]
   },
   {
-    "urn": "cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=csv;list;record\"",
-    "version": 4,
+    "urn": "cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;!list;record\";out=\"media:enc=utf8;fmt=csv;list;record\"",
+    "version": 5,
     "title": "Collect JSON Objects into CSV",
     "aliases": [
       "collect-json-objects-to-csv",
       "collect-json2csv"
     ],
     "cap_description": "Collect individual JSON objects into a single CSV file",
-    "documentation": "## Purpose\n\nGathers a sequence of individual JSON objects into a single CSV file. Object keys become column headers; one row is written per object. Use this to produce tabular output from a fan-in of JSON-producing parallel stages.\n\n## Inputs\n\nA sequence of JSON record objects.\n\n## Outputs\n\nA CSV file with headers derived from the union of all object keys, and one row per object.\n\n## Notes\n\n- Objects with missing keys produce empty cells in those columns.\n- Objects with different key sets are merged into a unified column set.\n- For a JSON array output instead, use [Collect JSON Objects into Array](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
+    "documentation": "## Purpose\n\nGathers a sequence of individual JSON objects into a single CSV file. Object keys become column headers; one row is written per object. Use this to produce tabular output from a fan-in of JSON-producing parallel stages.\n\n## Inputs\n\nA sequence of JSON record objects.\n\n## Outputs\n\nA CSV file with headers derived from the union of all object keys, and one row per object.\n\n## Notes\n\n- Objects with missing keys produce empty cells in those columns.\n- Objects with different key sets are merged into a unified column set.\n- For a JSON array output instead, use [Collect JSON Objects into Array](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;!list;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=json;record",
+        "media_urn": "media:enc=utf8;fmt=json;!list;record",
         "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=json;record"
+            "stdin": "media:enc=utf8;fmt=json;!list;record"
           },
           {
             "position": 0
@@ -1463,25 +1463,25 @@
     ]
   },
   {
-    "urn": "cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=yaml;list;record\"",
-    "version": 4,
+    "urn": "cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;!list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\"",
+    "version": 5,
     "title": "Collect JSON Objects into YAML List",
     "aliases": [
       "collect-json-objects-to-yaml-list",
       "collect-json2yaml"
     ],
     "cap_description": "Collect individual JSON objects into a single YAML sequence",
-    "documentation": "## Purpose\n\nGathers a sequence of individual JSON objects into a single YAML sequence of mappings. Each JSON object becomes one YAML mapping entry. Use this when downstream processing or configuration formats prefer YAML.\n\n## Inputs\n\nA sequence of JSON record objects.\n\n## Outputs\n\nA YAML sequence where each element is a mapping corresponding to one input JSON object.\n\n## Notes\n\n- Key order in the YAML output may differ from the JSON input; YAML mappings are unordered by spec.\n- For a JSON array output, use [Collect JSON Objects into Array](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
+    "documentation": "## Purpose\n\nGathers a sequence of individual JSON objects into a single YAML sequence of mappings. Each JSON object becomes one YAML mapping entry. Use this when downstream processing or configuration formats prefer YAML.\n\n## Inputs\n\nA sequence of JSON record objects.\n\n## Outputs\n\nA YAML sequence where each element is a mapping corresponding to one input JSON object.\n\n## Notes\n\n- Key order in the YAML output may differ from the JSON input; YAML mappings are unordered by spec.\n- For a JSON array output, use [Collect JSON Objects into Array](https://capdag.com/browse/cap:collect-json-objects;in=\"media:enc=utf8;fmt=json;!list;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=json;record",
+        "media_urn": "media:enc=utf8;fmt=json;!list;record",
         "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=json;record"
+            "stdin": "media:enc=utf8;fmt=json;!list;record"
           },
           {
             "position": 0
@@ -1502,25 +1502,25 @@
     ]
   },
   {
-    "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=csv;list;record\"",
-    "version": 4,
+    "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=yaml;!list;record\";out=\"media:enc=utf8;fmt=csv;list;record\"",
+    "version": 5,
     "title": "Merge YAML Mappings into CSV",
     "aliases": [
       "collect-yaml-mappings-to-csv",
       "merge-yaml2csv"
     ],
     "cap_description": "Merge multiple YAML mapping files into a single CSV file",
-    "documentation": "## Purpose\n\nMerges a sequence of YAML mapping files into a single CSV file. Each YAML mapping becomes one row; mapping keys become column headers. Use this to convert YAML-structured data from parallel processing stages into a tabular CSV for analysis or export.\n\n## Inputs\n\nA sequence of YAML mapping files (each file is a single YAML mapping, not a list).\n\n## Outputs\n\nA CSV file with headers from the union of all mapping keys and one row per input file.\n\n## Notes\n\n- Mappings with missing keys produce empty cells.\n- For JSON array output, use [Merge YAML Mappings into JSON Array](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
+    "documentation": "## Purpose\n\nMerges a sequence of YAML mapping files into a single CSV file. Each YAML mapping becomes one row; mapping keys become column headers. Use this to convert YAML-structured data from parallel processing stages into a tabular CSV for analysis or export.\n\n## Inputs\n\nA sequence of YAML mapping files (each file is a single YAML mapping, not a list).\n\n## Outputs\n\nA CSV file with headers from the union of all mapping keys and one row per input file.\n\n## Notes\n\n- Mappings with missing keys produce empty cells.\n- For JSON array output, use [Merge YAML Mappings into JSON Array](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;!list;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=yaml;record",
+        "media_urn": "media:enc=utf8;fmt=yaml;!list;record",
         "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=yaml;record"
+            "stdin": "media:enc=utf8;fmt=yaml;!list;record"
           },
           {
             "position": 0
@@ -1541,25 +1541,25 @@
     ]
   },
   {
-    "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
-    "version": 4,
+    "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=yaml;!list;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
+    "version": 5,
     "title": "Merge YAML Mappings into JSON Array",
     "aliases": [
       "collect-yaml-mappings-to-json-array",
       "merge-yaml2json"
     ],
     "cap_description": "Merge multiple YAML mapping files into a single JSON array of objects",
-    "documentation": "## Purpose\n\nMerges a sequence of YAML mapping files into a single JSON array of objects. Each YAML mapping becomes one JSON object. Use this to convert YAML-structured pipeline outputs into JSON for downstream caps that consume JSON arrays.\n\n## Inputs\n\nA sequence of YAML mapping files (each file is a single YAML mapping).\n\n## Outputs\n\nA JSON array where each element is an object derived from one input YAML mapping.\n\n## Notes\n\n- For YAML output, use [Merge YAML Mappings](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").\n- For CSV output, use [Merge YAML Mappings into CSV](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=csv;list;record\").",
+    "documentation": "## Purpose\n\nMerges a sequence of YAML mapping files into a single JSON array of objects. Each YAML mapping becomes one JSON object. Use this to convert YAML-structured pipeline outputs into JSON for downstream caps that consume JSON arrays.\n\n## Inputs\n\nA sequence of YAML mapping files (each file is a single YAML mapping).\n\n## Outputs\n\nA JSON array where each element is an object derived from one input YAML mapping.\n\n## Notes\n\n- For YAML output, use [Merge YAML Mappings](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;!list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").\n- For CSV output, use [Merge YAML Mappings into CSV](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;!list;record\";out=\"media:enc=utf8;fmt=csv;list;record\").",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=yaml;record",
+        "media_urn": "media:enc=utf8;fmt=yaml;!list;record",
         "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=yaml;record"
+            "stdin": "media:enc=utf8;fmt=yaml;!list;record"
           },
           {
             "position": 0
@@ -1580,25 +1580,25 @@
     ]
   },
   {
-    "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=yaml;list;record\"",
-    "version": 4,
+    "urn": "cap:collect-records;in=\"media:enc=utf8;fmt=yaml;!list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\"",
+    "version": 5,
     "title": "Merge YAML Mappings",
     "aliases": [
       "collect-yaml-mappings-to-yaml-list",
       "merge-yaml"
     ],
     "cap_description": "Merge multiple YAML mapping files into a single YAML sequence",
-    "documentation": "## Purpose\n\nMerges a sequence of YAML mapping files into a single YAML sequence. Each mapping becomes one entry in the output list. Use this to fan-in YAML-producing parallel processing stages into a unified YAML document.\n\n## Inputs\n\nA sequence of YAML mapping files (each file is a single YAML mapping).\n\n## Outputs\n\nA single YAML sequence containing all input mappings as elements.\n\n## Notes\n\n- Preserves input order.\n- For JSON array output, use [Merge YAML Mappings into JSON Array](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
+    "documentation": "## Purpose\n\nMerges a sequence of YAML mapping files into a single YAML sequence. Each mapping becomes one entry in the output list. Use this to fan-in YAML-producing parallel processing stages into a unified YAML document.\n\n## Inputs\n\nA sequence of YAML mapping files (each file is a single YAML mapping).\n\n## Outputs\n\nA single YAML sequence containing all input mappings as elements.\n\n## Notes\n\n- Preserves input order.\n- For JSON array output, use [Merge YAML Mappings into JSON Array](https://capdag.com/browse/cap:collect-records;in=\"media:enc=utf8;fmt=yaml;!list;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=yaml;record",
+        "media_urn": "media:enc=utf8;fmt=yaml;!list;record",
         "name": "input",
         "required": true,
         "is_sequence": true,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=yaml;record"
+            "stdin": "media:enc=utf8;fmt=yaml;!list;record"
           },
           {
             "position": 0
@@ -1620,7 +1620,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert CSV to JSON Array of Objects",
     "aliases": [
       "convert-csv-to-json-list-records",
@@ -1659,7 +1659,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;list\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert CSV to Text List",
     "aliases": [
       "convert-csv-to-text-list",
@@ -1698,7 +1698,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert CSV to YAML List of Mappings",
     "aliases": [
       "convert-csv-to-yaml-list-records"
@@ -1736,7 +1736,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=json;list;record\";out=\"media:enc=utf8;fmt=csv;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert JSON Array of Objects to CSV",
     "aliases": [
       "convert-json-list-records-to-csv",
@@ -1774,38 +1774,38 @@
     ]
   },
   {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=json;list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\"",
-    "version": 4,
-    "title": "Convert JSON Array of Objects to YAML List of Mappings",
+    "urn": "cap:convert-format;effect=patch;in=\"media:enc=utf8;fmt=json\";json-to-yaml;out=\"media:enc=utf8;!ext;fmt=yaml\"",
+    "version": 5,
+    "title": "Convert JSON to YAML",
     "aliases": [
-      "convert-json-list-records-to-yaml-list-records",
-      "json2yaml-records"
+      "convert-json-to-yaml",
+      "json2yaml"
     ],
-    "cap_description": "Convert a JSON array of objects to a YAML sequence of mappings",
-    "documentation": "## Purpose\n\nConverts a JSON array of objects into a YAML sequence of mappings. Each JSON object becomes one YAML mapping. Use this when downstream caps or configuration files prefer YAML over JSON.\n\n## Inputs\n\nA JSON array of objects.\n\n## Outputs\n\nA YAML sequence of mappings.\n\n## Notes\n\n- Semantically lossless: all JSON key-value types that YAML supports are preserved.\n- For the reverse, use [Convert YAML List of Mappings to JSON Array of Objects](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
+    "cap_description": "Re-serialize any JSON value as YAML, keeping its shape",
+    "documentation": "## Purpose\n\nRe-serializes any JSON value as YAML: a scalar, a list, a record or a list of records. The value's structure, and every marker that describes it (`list`, `record`, a named record such as `model-list`), is kept, so a JSON list of records gives a YAML list of records.\n\n## Inputs\n\nAny JSON value.\n\n## Outputs\n\nThe same value as YAML. A patch: what it gives is what it was given with `fmt=yaml` in place of `fmt=json`, and no `ext`. A JSON file gives YAML content, not a file; save it with a save cap to have a file.\n\n## Notes\n\n- For the reverse, use [Convert YAML to JSON](https://capdag.com/browse/cap:convert-format;effect=patch;in=\"media:enc=utf8;fmt=yaml\";out=\"media:enc=utf8;fmt=json;!ext\";yaml-to-json).",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=json;list;record",
+        "media_urn": "media:enc=utf8;fmt=json",
         "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=json;list;record"
+            "stdin": "media:enc=utf8;fmt=json"
           },
           {
             "position": 0
           }
         ],
-        "arg_description": "JSON array of objects to convert"
+        "arg_description": "JSON to convert"
       }
     ],
     "outputs": [
       {
-        "media_urn": "media:enc=utf8;fmt=yaml;list;record",
+        "media_urn": "media:enc=utf8;fmt=yaml;!ext",
         "name": "output",
-        "output_description": "YAML formatted sequence of mappings",
+        "output_description": "The same value as YAML",
         "optional": false,
         "is_sequence": false,
         "streaming": false
@@ -1814,7 +1814,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=json;list\";out=\"media:enc=utf8;list\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert JSON Array to Text List",
     "aliases": [
       "convert-json-list-to-text-list",
@@ -1852,125 +1852,8 @@
     ]
   },
   {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=json;list\";out=\"media:enc=utf8;fmt=yaml;list\"",
-    "version": 4,
-    "title": "Convert JSON Array to YAML List",
-    "aliases": [
-      "convert-json-list-to-yaml-list",
-      "json-list2yaml-list"
-    ],
-    "cap_description": "Convert a JSON array to a YAML sequence",
-    "documentation": "## Purpose\n\nConverts a JSON array into a YAML sequence. Use this when downstream caps or configuration files expect YAML but the upstream produces a JSON array.\n\n## Inputs\n\nA JSON array.\n\n## Outputs\n\nA YAML sequence.\n\n## Notes\n\n- Semantically lossless for all JSON scalar types.\n- For the reverse, use [Convert YAML List to JSON Array](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list\";out=\"media:enc=utf8;fmt=json;list\").",
-    "args": [
-      {
-        "media_urn": "media:enc=utf8;fmt=json;list",
-        "name": "input",
-        "required": true,
-        "is_sequence": false,
-        "streaming": false,
-        "sources": [
-          {
-            "stdin": "media:enc=utf8;fmt=json;list"
-          },
-          {
-            "position": 0
-          }
-        ],
-        "arg_description": "JSON array to convert"
-      }
-    ],
-    "outputs": [
-      {
-        "media_urn": "media:enc=utf8;fmt=yaml;list",
-        "name": "output",
-        "output_description": "YAML formatted sequence",
-        "optional": false,
-        "is_sequence": false,
-        "streaming": false
-      }
-    ]
-  },
-  {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=yaml;record\"",
-    "version": 4,
-    "title": "Convert JSON Object to YAML Mapping",
-    "aliases": [
-      "convert-json-record-to-yaml-record",
-      "json-obj2yaml-obj"
-    ],
-    "cap_description": "Convert a JSON object to a YAML mapping",
-    "documentation": "## Purpose\n\nConverts a single JSON object into a YAML mapping. Use this when a downstream cap or configuration system expects a YAML mapping but the upstream produces a JSON object.\n\n## Inputs\n\nA JSON object (record).\n\n## Outputs\n\nA YAML mapping.\n\n## Notes\n\n- Semantically lossless for all JSON types that YAML supports.\n- For the reverse, use [Convert YAML Mapping to JSON Object](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=json;record\").\n- For arrays of objects, use [Convert JSON Array of Objects to YAML List of Mappings](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=json;list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").",
-    "args": [
-      {
-        "media_urn": "media:enc=utf8;fmt=json;record",
-        "name": "input",
-        "required": true,
-        "is_sequence": false,
-        "streaming": false,
-        "sources": [
-          {
-            "stdin": "media:enc=utf8;fmt=json;record"
-          },
-          {
-            "position": 0
-          }
-        ],
-        "arg_description": "JSON object to convert"
-      }
-    ],
-    "outputs": [
-      {
-        "media_urn": "media:enc=utf8;fmt=yaml;record",
-        "name": "output",
-        "output_description": "YAML formatted mapping",
-        "optional": false,
-        "is_sequence": false,
-        "streaming": false
-      }
-    ]
-  },
-  {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=json\";out=\"media:enc=utf8;fmt=yaml\"",
-    "version": 4,
-    "title": "Convert JSON Value to YAML",
-    "aliases": [
-      "convert-json-value-to-yaml-value",
-      "json2yaml"
-    ],
-    "cap_description": "Convert a JSON scalar value to YAML format",
-    "documentation": "## Purpose\n\nConverts a JSON scalar value (string, number, boolean, null) to its YAML representation. Use this for the simplest scalar type bridging between JSON-producing and YAML-consuming caps.\n\n## Inputs\n\nA JSON scalar value.\n\n## Outputs\n\nThe value in YAML format.\n\n## Notes\n\n- For objects, use [Convert JSON Object to YAML Mapping](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=yaml;record\").\n- For arrays, use [Convert JSON Array to YAML List](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=json;list\";out=\"media:enc=utf8;fmt=yaml;list\").\n- For the reverse, use [Convert YAML Value to JSON](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml\";out=\"media:enc=utf8;fmt=json\").",
-    "args": [
-      {
-        "media_urn": "media:enc=utf8;fmt=json",
-        "name": "input",
-        "required": true,
-        "is_sequence": false,
-        "streaming": false,
-        "sources": [
-          {
-            "stdin": "media:enc=utf8;fmt=json"
-          },
-          {
-            "position": 0
-          }
-        ],
-        "arg_description": "JSON value to convert"
-      }
-    ],
-    "outputs": [
-      {
-        "media_urn": "media:enc=utf8;fmt=yaml",
-        "name": "output",
-        "output_description": "YAML formatted value",
-        "optional": false,
-        "is_sequence": false,
-        "streaming": false
-      }
-    ]
-  },
-  {
     "urn": "cap:convert-format;in=\"media:enc=utf8;list\";out=\"media:enc=utf8;fmt=csv;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert Text List to CSV",
     "aliases": [
       "convert-text-list-to-csv",
@@ -2009,7 +1892,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;list\";out=\"media:enc=utf8;fmt=json;list\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert Text List to JSON Array",
     "aliases": [
       "convert-text-list-to-json-list",
@@ -2048,7 +1931,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;list\";out=\"media:enc=utf8;fmt=yaml;list\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert Text List to YAML Sequence",
     "aliases": [
       "convert-text-list-to-yaml-list",
@@ -2087,14 +1970,14 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list;record\";out=\"media:enc=utf8;fmt=csv;list;record\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert YAML List of Mappings to CSV",
     "aliases": [
       "convert-yaml-list-records-to-csv",
       "yaml2csv"
     ],
     "cap_description": "Convert a YAML sequence of mappings to CSV with headers derived from mapping keys",
-    "documentation": "## Purpose\n\nConverts a YAML sequence of mappings into a CSV file. Each mapping becomes one row; mapping keys become column headers. Use this when downstream processing requires tabular CSV but the data is in YAML format.\n\n## Inputs\n\nA YAML sequence where each element is a mapping.\n\n## Outputs\n\nA CSV file with headers derived from the mapping keys.\n\n## Notes\n\n- Mappings with missing keys produce empty cells.\n- For JSON array output, use [Convert YAML List of Mappings to JSON Array of Objects](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list;record\";out=\"media:enc=utf8;fmt=json;list;record\").\n- For the reverse, use [Convert CSV to YAML List of Mappings](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").",
+    "documentation": "## Purpose\n\nConverts a YAML sequence of mappings into a CSV file. Each mapping becomes one row; mapping keys become column headers. Use this when downstream processing requires tabular CSV but the data is in YAML format.\n\n## Inputs\n\nA YAML sequence where each element is a mapping.\n\n## Outputs\n\nA CSV file with headers derived from the mapping keys.\n\n## Notes\n\n- Mappings with missing keys produce empty cells.\n- For JSON array output, use [Convert YAML to JSON](https://capdag.com/browse/cap:convert-format;effect=patch;in=\"media:enc=utf8;fmt=yaml\";out=\"media:enc=utf8;fmt=json;!ext\";yaml-to-json), which keeps the list of mappings a list of records.\n- For the reverse, use [Convert CSV to YAML List of Mappings](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=csv;list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").",
     "args": [
       {
         "media_urn": "media:enc=utf8;fmt=yaml;list;record",
@@ -2125,77 +2008,38 @@
     ]
   },
   {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
-    "version": 4,
-    "title": "Convert YAML List of Mappings to JSON Array of Objects",
+    "urn": "cap:convert-format;effect=patch;in=\"media:enc=utf8;fmt=yaml\";out=\"media:enc=utf8;!ext;fmt=json\";yaml-to-json",
+    "version": 5,
+    "title": "Convert YAML to JSON",
     "aliases": [
-      "convert-yaml-list-records-to-json-list-records",
-      "yaml2json-records"
+      "convert-yaml-to-json",
+      "yaml2json"
     ],
-    "cap_description": "Convert a YAML sequence of mappings to a JSON array of objects",
-    "documentation": "## Purpose\n\nConverts a YAML sequence of mappings into a JSON array of objects. Each YAML mapping becomes one JSON object. Use this when downstream caps expect JSON but the data is in YAML format.\n\n## Inputs\n\nA YAML sequence where each element is a mapping.\n\n## Outputs\n\nA JSON array of objects.\n\n## Notes\n\n- Semantically lossless for all YAML types that map to JSON.\n- For the reverse, use [Convert JSON Array of Objects to YAML List of Mappings](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=json;list;record\";out=\"media:enc=utf8;fmt=yaml;list;record\").",
+    "cap_description": "Re-serialize any YAML value as JSON, keeping its shape",
+    "documentation": "## Purpose\n\nRe-serializes any YAML value as JSON: a scalar, a list, a mapping or a list of mappings. The value's structure, and every marker that describes it (`list`, `record`, a named record), is kept, so a YAML list of records gives a JSON list of records.\n\n## Inputs\n\nAny YAML value.\n\n## Outputs\n\nThe same value as JSON. A patch: what it gives is what it was given with `fmt=json` in place of `fmt=yaml`, and no `ext`. A YAML file gives JSON content, not a file; save it with a save cap to have a file.\n\n## Notes\n\n- For the reverse, use [Convert JSON to YAML](https://capdag.com/browse/cap:convert-format;effect=patch;in=\"media:enc=utf8;fmt=json\";json-to-yaml;out=\"media:enc=utf8;fmt=yaml;!ext\").",
     "args": [
       {
-        "media_urn": "media:enc=utf8;fmt=yaml;list;record",
+        "media_urn": "media:enc=utf8;fmt=yaml",
         "name": "input",
         "required": true,
         "is_sequence": false,
         "streaming": false,
         "sources": [
           {
-            "stdin": "media:enc=utf8;fmt=yaml;list;record"
+            "stdin": "media:enc=utf8;fmt=yaml"
           },
           {
             "position": 0
           }
         ],
-        "arg_description": "YAML sequence of mappings to convert"
+        "arg_description": "YAML to convert"
       }
     ],
     "outputs": [
       {
-        "media_urn": "media:enc=utf8;fmt=json;list;record",
+        "media_urn": "media:enc=utf8;fmt=json;!ext",
         "name": "output",
-        "output_description": "JSON formatted array of objects",
-        "optional": false,
-        "is_sequence": false,
-        "streaming": false
-      }
-    ]
-  },
-  {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list\";out=\"media:enc=utf8;fmt=json;list\"",
-    "version": 4,
-    "title": "Convert YAML List to JSON Array",
-    "aliases": [
-      "convert-yaml-list-to-json-list",
-      "yaml-list2json-list"
-    ],
-    "cap_description": "Convert a YAML sequence to a JSON array",
-    "documentation": "## Purpose\n\nConverts a YAML sequence into a JSON array. Use this when downstream caps expect JSON but the upstream produces YAML.\n\n## Inputs\n\nA YAML sequence.\n\n## Outputs\n\nA JSON array.\n\n## Notes\n\n- Semantically lossless for all YAML types that JSON supports.\n- For the reverse, use [Convert JSON Array to YAML List](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=json;list\";out=\"media:enc=utf8;fmt=yaml;list\").",
-    "args": [
-      {
-        "media_urn": "media:enc=utf8;fmt=yaml;list",
-        "name": "input",
-        "required": true,
-        "is_sequence": false,
-        "streaming": false,
-        "sources": [
-          {
-            "stdin": "media:enc=utf8;fmt=yaml;list"
-          },
-          {
-            "position": 0
-          }
-        ],
-        "arg_description": "YAML sequence to convert"
-      }
-    ],
-    "outputs": [
-      {
-        "media_urn": "media:enc=utf8;fmt=json;list",
-        "name": "output",
-        "output_description": "JSON formatted array",
+        "output_description": "The same value as JSON",
         "optional": false,
         "is_sequence": false,
         "streaming": false
@@ -2204,7 +2048,7 @@
   },
   {
     "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list\";out=\"media:enc=utf8;list\"",
-    "version": 4,
+    "version": 5,
     "title": "Convert YAML Sequence to Text List",
     "aliases": [
       "convert-yaml-list-to-text-list",
@@ -2242,86 +2086,8 @@
     ]
   },
   {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=json;record\"",
-    "version": 4,
-    "title": "Convert YAML Mapping to JSON Object",
-    "aliases": [
-      "convert-yaml-record-to-json-record",
-      "yaml-obj2json-obj"
-    ],
-    "cap_description": "Convert a YAML mapping to a JSON object",
-    "documentation": "## Purpose\n\nConverts a single YAML mapping into a JSON object. Use this when a downstream cap expects a JSON record but the upstream produces a YAML mapping.\n\n## Inputs\n\nA YAML mapping.\n\n## Outputs\n\nA JSON object.\n\n## Notes\n\n- Semantically lossless for all YAML types that JSON supports (YAML-only types like dates are converted to strings).\n- For the reverse, use [Convert JSON Object to YAML Mapping](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=json;record\";out=\"media:enc=utf8;fmt=yaml;record\").\n- For sequences of mappings, use [Convert YAML List of Mappings to JSON Array of Objects](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list;record\";out=\"media:enc=utf8;fmt=json;list;record\").",
-    "args": [
-      {
-        "media_urn": "media:enc=utf8;fmt=yaml;record",
-        "name": "input",
-        "required": true,
-        "is_sequence": false,
-        "streaming": false,
-        "sources": [
-          {
-            "stdin": "media:enc=utf8;fmt=yaml;record"
-          },
-          {
-            "position": 0
-          }
-        ],
-        "arg_description": "YAML mapping to convert"
-      }
-    ],
-    "outputs": [
-      {
-        "media_urn": "media:enc=utf8;fmt=json;record",
-        "name": "output",
-        "output_description": "JSON formatted object",
-        "optional": false,
-        "is_sequence": false,
-        "streaming": false
-      }
-    ]
-  },
-  {
-    "urn": "cap:convert-format;in=\"media:enc=utf8;fmt=yaml\";out=\"media:enc=utf8;fmt=json\"",
-    "version": 4,
-    "title": "Convert YAML Value to JSON",
-    "aliases": [
-      "convert-yaml-value-to-json-value",
-      "yaml2json"
-    ],
-    "cap_description": "Convert a YAML scalar value to JSON format",
-    "documentation": "## Purpose\n\nConverts a YAML scalar value into its JSON representation. Use this for simple scalar type bridging between YAML-producing and JSON-consuming caps.\n\n## Inputs\n\nA YAML scalar value.\n\n## Outputs\n\nThe value in JSON format.\n\n## Notes\n\n- For mappings, use [Convert YAML Mapping to JSON Object](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml;record\";out=\"media:enc=utf8;fmt=json;record\").\n- For sequences, use [Convert YAML List to JSON Array](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=yaml;list\";out=\"media:enc=utf8;fmt=json;list\").\n- For the reverse, use [Convert JSON Value to YAML](https://capdag.com/browse/cap:convert-format;in=\"media:enc=utf8;fmt=json\";out=\"media:enc=utf8;fmt=yaml\").",
-    "args": [
-      {
-        "media_urn": "media:enc=utf8;fmt=yaml",
-        "name": "input",
-        "required": true,
-        "is_sequence": false,
-        "streaming": false,
-        "sources": [
-          {
-            "stdin": "media:enc=utf8;fmt=yaml"
-          },
-          {
-            "position": 0
-          }
-        ],
-        "arg_description": "YAML value to convert"
-      }
-    ],
-    "outputs": [
-      {
-        "media_urn": "media:enc=utf8;fmt=json",
-        "name": "output",
-        "output_description": "JSON formatted value",
-        "optional": false,
-        "is_sequence": false,
-        "streaming": false
-      }
-    ]
-  },
-  {
     "urn": "cap:decimate-sequence;effect=none",
-    "version": 4,
+    "version": 5,
     "title": "Decimate Sequence",
     "aliases": [
       "decimate-sequence"
@@ -2369,7 +2135,7 @@
   },
   {
     "urn": "cap:edit;in=\"media:enc=utf8;fmt=json;list;record\";out=\"media:enc=utf8;fmt=json;list;record\"",
-    "version": 5,
+    "version": 6,
     "title": "Edit (Instruction-Driven Transform)",
     "aliases": [
       "edit-records"
@@ -2434,7 +2200,7 @@
   },
   {
     "urn": "cap:constrained;explain;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\"",
-    "version": 5,
+    "version": 6,
     "title": "Explain (Root-Cause Hypothesis) (Constrained, English)",
     "aliases": [
       "explain-en"
@@ -2635,7 +2401,7 @@
   },
   {
     "urn": "cap:constrained;extract;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\"",
-    "version": 5,
+    "version": 6,
     "title": "Extract (Schema-Guided Extraction) (Constrained, English)",
     "aliases": [
       "extract-en"
@@ -2836,7 +2602,7 @@
   },
   {
     "urn": "cap:constrained;generate-json;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record\"",
-    "version": 5,
+    "version": 6,
     "title": "Generate JSON (Constrained, English)",
     "aliases": [
       "generate-json-en",
@@ -3080,7 +2846,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;make-decision;out=\"media:decision;enc=utf8;fmt=json;record\"",
-    "version": 6,
+    "version": 7,
     "title": "Make a Decision (Constrained, English)",
     "aliases": [
       "make-decision-en"
@@ -3322,7 +3088,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;make-multiple-decisions;out=\"media:decision;enc=utf8;fmt=json;record\"",
-    "version": 6,
+    "version": 7,
     "title": "Make Multiple Decisions (Constrained, English)",
     "aliases": [
       "make-multiple-decisions-en"
@@ -3564,7 +3330,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;normalize;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\"",
-    "version": 5,
+    "version": 6,
     "title": "Normalize (Entity Canonicalization) (Constrained, English)",
     "aliases": [
       "normalize-en"
@@ -3778,7 +3544,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8\";out=\"media:enc=utf8;fmt=csv;list;record\";repair",
-    "version": 4,
+    "version": 5,
     "title": "Repair CSV",
     "aliases": [
       "repair-csv"
@@ -3815,14 +3581,14 @@
     ]
   },
   {
-    "urn": "cap:in=\"media:enc=utf8\";out=\"media:enc=utf8;fmt=json\";repair",
-    "version": 4,
+    "urn": "cap:in=\"media:enc=utf8\";out=\"media:enc=utf8;fmt=json;?list;?record\";repair",
+    "version": 5,
     "title": "Repair JSON",
     "aliases": [
       "repair-json"
     ],
     "cap_description": "Repair broken JSON with every fix logged — explicit forgiveness so strict caps can stay strict",
-    "documentation": "## Purpose\n\nThe explicit-forgiveness step of the semantic-primitive family (docs/semantic-primitives.md, law P9): the strict data caps stay strict, and when real-world input is broken — single quotes, unquoted keys, trailing or missing commas, Python literals (`True`/`None`), `NaN`/`Infinity`, comments, truncated documents — `repair` fixes it VISIBLY. Every fix is logged with its byte position and a one-sentence description, so a pipeline that needs leniency writes `repair | convert-…` and the leniency is on the record.\n\n## Inputs\n\nThe broken JSON text (stdin or first positional argument).\n\n## Outputs\n\nStrictly valid JSON.\n\n## Notes\n\n- Valid JSON round-trips untouched (zero repairs logged) — repair is idempotent on clean input.\n- Repairs happen only where the intended structure is unambiguous. Anything that would require guessing at DATA — trailing content after a complete document, unknown bare words — is a hard error naming the byte position. A wrong guess silently propagated is worse than a loud stop.\n- Deterministic: no model is involved; the same input always repairs the same way.",
+    "documentation": "## Purpose\n\nThe explicit-forgiveness step of the semantic-primitive family (docs/semantic-primitives.md, law P9): the strict data caps stay strict, and when real-world input is broken — single quotes, unquoted keys, trailing or missing commas, Python literals (`True`/`None`), `NaN`/`Infinity`, comments, truncated documents — `repair` fixes it VISIBLY. Every fix is logged with its byte position and a one-sentence description, so a pipeline that needs leniency writes `repair | convert-…` and the leniency is on the record.\n\n## Inputs\n\nThe broken JSON text (stdin or first positional argument).\n\n## Outputs\n\nStrictly valid JSON, of whatever shape the input was: a value, a list, a record or a list of records. The output says it may be a list and may be a record (`?list;?record`), since which it is depends on the input.\n\n## Notes\n\n- Valid JSON round-trips untouched (zero repairs logged) — repair is idempotent on clean input.\n- Repairs happen only where the intended structure is unambiguous. Anything that would require guessing at DATA — trailing content after a complete document, unknown bare words — is a hard error naming the byte position. A wrong guess silently propagated is worse than a loud stop.\n- Deterministic: no model is involved; the same input always repairs the same way.",
     "args": [
       {
         "media_urn": "media:enc=utf8",
@@ -3843,7 +3609,7 @@
     ],
     "outputs": [
       {
-        "media_urn": "media:enc=utf8;fmt=json",
+        "media_urn": "media:enc=utf8;fmt=json;?list;?record",
         "name": "output",
         "output_description": "Repaired, strictly valid JSON",
         "optional": false,
@@ -3854,7 +3620,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\";route",
-    "version": 5,
+    "version": 6,
     "title": "Route (Dispatch Judgment) (Constrained, English)",
     "aliases": [
       "route-en"
@@ -4055,7 +3821,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\";same",
-    "version": 5,
+    "version": 6,
     "title": "Same (Semantic Equivalence) (Constrained, English)",
     "aliases": [
       "same-en"
@@ -4269,7 +4035,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;ext=txt;plain-text\";out=\"media:enc=utf8;ext=txt;plain-text\";save-as-txt",
-    "version": 5,
+    "version": 6,
     "title": "Save as Plain Text",
     "aliases": [
       "save-as-txt"
@@ -4307,7 +4073,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\";score",
-    "version": 5,
+    "version": 6,
     "title": "Score (Rubric Scoring) (Constrained, English)",
     "aliases": [
       "score-en"
@@ -4522,7 +4288,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;ext=txt;plain-text\";summarize",
-    "version": 5,
+    "version": 6,
     "title": "Summarize (Purpose-Driven Compression) (Constrained, English)",
     "aliases": [
       "summarize-en"
@@ -4736,7 +4502,7 @@
   },
   {
     "urn": "cap:constrained;in=\"media:enc=utf8;plain-text\";language=en;out=\"media:enc=utf8;fmt=json;record;semantic-judgment\";verify",
-    "version": 5,
+    "version": 6,
     "title": "Verify (Requirements Check) (Constrained, English)",
     "aliases": [
       "verify-en"
@@ -4937,7 +4703,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;list;record;time-series\";resample-series",
-    "version": 3,
+    "version": 4,
     "title": "Resample Series",
     "aliases": [
       "resample-series"
@@ -4999,7 +4765,7 @@
   },
   {
     "urn": "cap:change-series;in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;list;record;time-series\"",
-    "version": 3,
+    "version": 4,
     "title": "Change Series",
     "aliases": [
       "change-series"
@@ -5062,7 +4828,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;list;record;time-series\";lag-series;out=\"media:enc=utf8;fmt=json;list;record;time-series\"",
-    "version": 3,
+    "version": 4,
     "title": "Lag Series",
     "aliases": [
       "lag-series"
@@ -5110,7 +4876,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;list;record;time-series\";rolling-statistic",
-    "version": 4,
+    "version": 5,
     "title": "Rolling Statistic",
     "aliases": [
       "rolling-statistic"
@@ -5184,7 +4950,7 @@
   },
   {
     "urn": "cap:align-series;in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:aligned-series;enc=utf8;fmt=json;list;record\"",
-    "version": 3,
+    "version": 4,
     "title": "Align Series",
     "aliases": [
       "align-series"
@@ -5219,7 +4985,7 @@
   },
   {
     "urn": "cap:combine-series;in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;list;record;time-series\"",
-    "version": 3,
+    "version": 4,
     "title": "Combine Series",
     "aliases": [
       "combine-series"
@@ -5281,7 +5047,7 @@
   },
   {
     "urn": "cap:filter-series;in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;list;record;time-series\"",
-    "version": 3,
+    "version": 4,
     "title": "Filter Series",
     "aliases": [
       "filter-series"
@@ -5351,7 +5117,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;record;series-summary\";summarize-series",
-    "version": 3,
+    "version": 4,
     "title": "Summarize Series",
     "aliases": [
       "summarize-series"
@@ -5399,7 +5165,7 @@
   },
   {
     "urn": "cap:describe-series;in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;record;series-description\"",
-    "version": 3,
+    "version": 4,
     "title": "Describe Series",
     "aliases": [
       "describe-series"
@@ -5434,7 +5200,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;record;regression\";regress-series",
-    "version": 3,
+    "version": 4,
     "title": "Regress Series",
     "aliases": [
       "regress-series"
@@ -5491,7 +5257,7 @@
   },
   {
     "urn": "cap:correlate-series;in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:correlation;enc=utf8;fmt=json;record\"",
-    "version": 3,
+    "version": 4,
     "title": "Correlate Series",
     "aliases": [
       "correlate-series"
@@ -5540,7 +5306,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;list;record\";out=\"media:enc=utf8;fmt=json;list;record\";transform-records",
-    "version": 3,
+    "version": 4,
     "title": "Transform Records",
     "aliases": [
       "transform-records"
@@ -5588,7 +5354,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;forecast-outcomes;list;record\";out=\"media:enc=utf8;fmt=json;forecast-score;record\";score-forecasts",
-    "version": 3,
+    "version": 4,
     "title": "Score Forecasts",
     "aliases": [
       "score-forecasts"
@@ -5623,7 +5389,7 @@
   },
   {
     "urn": "cap:in=\"media:enc=utf8;fmt=json;list;record;time-series\";out=\"media:enc=utf8;fmt=json;forecast-trial;record\";try-forecasting-ways",
-    "version": 3,
+    "version": 4,
     "title": "Try Forecasting Ways",
     "aliases": [
       "try-forecasting-ways"

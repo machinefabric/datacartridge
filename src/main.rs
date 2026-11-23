@@ -90,8 +90,8 @@ fn build_manifest() -> CapManifest {
 // =============================================================================
 
 struct ConvertFormatOp {
-    in_media: &'static str,
-    out_media: &'static str,
+    in_media: String,
+    out_media: String,
 }
 
 #[async_trait]
@@ -122,11 +122,11 @@ impl Op<()> for ConvertFormatOp {
         }
 
         // Find input data by the expected media URN — fail hard if not supplied
-        let data = capdag::require_stream(&streams, self.in_media)
+        let data = capdag::require_stream(&streams, &self.in_media)
             .map_err(|e| input_arg_error(
                 "INPUT_REQUIRED",
                 format!("Expected input stream '{}' not found: {}", self.in_media, e),
-                self.in_media,
+                &self.in_media,
             ))?;
 
         output.log("info", capdag::AttributionClass::Internal, &format!(
@@ -136,13 +136,13 @@ impl Op<()> for ConvertFormatOp {
         ));
 
         // Determine conversion from the registered in/out media (not from content)
-        let from = format_of_str(self.in_media)
+        let from = format_of_str(&self.in_media)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
-        let to = format_of_str(self.out_media)
+        let to = format_of_str(&self.out_media)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
 
         // Scalar→Scalar: propagate input stream meta to output
-        let input_meta = capdag::find_stream_meta(&streams, self.in_media).cloned();
+        let input_meta = capdag::find_stream_meta(&streams, &self.in_media).cloned();
         output.start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output.progress(0.10, "Converting format");
@@ -151,7 +151,7 @@ impl Op<()> for ConvertFormatOp {
             from, to, data.len()
         ));
         let result = convert(from, to, data)
-            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), self.in_media))?;
+            .map_err(|e| input_arg_error("INVALID_INPUT", e.to_string(), &self.in_media))?;
 
         output.progress(0.90, "Encoding output");
         let cbor_value = ciborium::Value::Text(
@@ -897,27 +897,54 @@ const YAML_MAPPING_COLLECTS: [&str; 3] = [
     "collect-yaml-mappings-to-yaml-list",
 ];
 
-/// A collect step as its embedded definition states it: the URN it is registered under and
-/// the media it takes and gives, so the op reads its formats from the one definition rather
+/// The format conversions, between JSON, YAML, CSV and text lists.
+const FORMAT_CONVERSIONS: [&str; 12] = [
+    "convert-json-to-yaml",
+    "convert-yaml-to-json",
+    "convert-json-list-records-to-csv",
+    "convert-csv-to-json-list-records",
+    "convert-yaml-list-records-to-csv",
+    "convert-csv-to-yaml-list-records",
+    "convert-text-list-to-json-list",
+    "convert-json-list-to-text-list",
+    "convert-text-list-to-yaml-list",
+    "convert-yaml-list-to-text-list",
+    "convert-text-list-to-csv",
+    "convert-csv-to-text-list",
+];
+
+/// A step as its embedded definition states it: the URN it is registered under and the
+/// media it takes and gives, so the op reads its formats from the one definition rather
 /// than from a second copy of the URN.
-struct CollectStep {
+struct DefinedStep {
     urn: String,
     in_media: String,
     out_media: String,
 }
 
-fn collect_steps(manifest: &CapManifest, aliases: &[&str]) -> Vec<CollectStep> {
+fn defined_steps(manifest: &CapManifest, aliases: &[&str]) -> Vec<DefinedStep> {
     aliases
         .iter()
         .map(|alias| {
             let cap = embedded_cap(manifest, alias);
-            CollectStep {
+            DefinedStep {
                 urn: cap.urn_string(),
                 in_media: cap.urn.in_spec().to_string(),
                 out_media: cap.urn.out_spec().to_string(),
             }
         })
         .collect()
+}
+
+/// Register each format conversion under the URN of its embedded definition, reading the
+/// formats it converts between from that definition.
+fn register_conversions(runtime: &mut CartridgeRuntime, conversions: Vec<DefinedStep>) {
+    for step in conversions {
+        let (in_media, out_media) = (step.in_media, step.out_media);
+        runtime.register_op(&step.urn, move || {
+            Box::new(ConvertFormatOp { in_media: in_media.clone(), out_media: out_media.clone() })
+        });
+    }
 }
 
 // =============================================================================
@@ -932,22 +959,16 @@ async fn main() -> Result<()> {
         .with_pool_declarations(pool_declarations)
         .expect("data pool declarations must validate against the manifest");
     let series_handlers = series_handlers(&manifest);
-    let json_object_collects = collect_steps(&manifest, &JSON_OBJECT_COLLECTS);
-    let csv_record_collects = collect_steps(&manifest, &CSV_RECORD_COLLECTS);
-    let yaml_mapping_collects = collect_steps(&manifest, &YAML_MAPPING_COLLECTS);
+    let conversions = defined_steps(&manifest, &FORMAT_CONVERSIONS);
+    let json_object_collects = defined_steps(&manifest, &JSON_OBJECT_COLLECTS);
+    let csv_record_collects = defined_steps(&manifest, &CSV_RECORD_COLLECTS);
+    let yaml_mapping_collects = defined_steps(&manifest, &YAML_MAPPING_COLLECTS);
     let mut runtime = CartridgeRuntime::with_manifest(manifest);
 
     // Register adapter selection handler
     runtime.register_op(CAP_ADAPTER_SELECTION, || Box::new(DataAdapterSelectionOp));
 
-    for path in capdag::all_format_conversion_paths() {
-        let urn = capdag::format_conversion_urn(path.in_media, path.out_media, path.effect);
-        let in_media = path.in_media;
-        let out_media = path.out_media;
-        runtime.register_op(&urn.to_string(), move || {
-            Box::new(ConvertFormatOp { in_media, out_media })
-        });
-    }
+    register_conversions(&mut runtime, conversions);
 
     for (source_type, target_type) in capdag::all_coercion_paths() {
         let urn = capdag::coercion_urn(source_type, target_type);
@@ -2259,6 +2280,33 @@ mod tests {
         )
         .expect("the collection is JSON");
         assert_eq!(collected, serde_json::json!([{"a": 1}, {"a": 2}]));
+    }
+
+    // TEST7313: a request for the JSON↔YAML conversions, which carries the published caps'
+    // json-to-yaml and yaml-to-json markers, finds a handler, and every conversion is handled
+    // under its embedded definition's URN.
+    #[test]
+    fn test7313_conversion_requests_carrying_their_markers_find_a_handler() {
+        let manifest = build_manifest();
+        let conversions = defined_steps(&manifest, &FORMAT_CONVERSIONS);
+        let defined: Vec<String> = conversions.iter().map(|step| step.urn.clone()).collect();
+        let mut runtime = CartridgeRuntime::with_manifest(manifest);
+        register_conversions(&mut runtime, conversions);
+
+        for request in [
+            r#"cap:convert-format;effect=patch;in="media:enc=utf8;fmt=json";json-to-yaml;out="media:enc=utf8;!ext;fmt=yaml""#,
+            r#"cap:convert-format;effect=patch;in="media:enc=utf8;fmt=yaml";out="media:enc=utf8;!ext;fmt=json";yaml-to-json"#,
+        ] {
+            let (pattern, _) = runtime
+                .find_handler_with_pattern(request)
+                .expect("the request parses")
+                .unwrap_or_else(|| panic!("no handler serves {request}"));
+            let served = capdag::CapUrn::from_string(&pattern).unwrap();
+            assert!(served.is_equivalent(&capdag::CapUrn::from_string(request).unwrap()), "{request} is served by {pattern}");
+        }
+        for urn in defined {
+            assert!(runtime.find_handler(&urn).expect("the URN parses").is_some(), "no handler serves {urn}");
+        }
     }
     use super::*;
 
