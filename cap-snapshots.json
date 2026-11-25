@@ -4072,6 +4072,82 @@
     ]
   },
   {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=json\";out=\"media:enc=utf8;ext=json;fmt=json;?list;?record\";save-as-json",
+    "version": 1,
+    "title": "Save as JSON",
+    "aliases": [
+      "save-as-json"
+    ],
+    "cap_description": "Save JSON content of any shape as a `.json` file, labelled with the shape it reads back as. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes JSON content of any shape to disk as a `.json` file. Content is no file type: a\ncap that gives JSON content of any shape gives it without a file extension, and this cap is how that\ncontent becomes a file a plan can end on.\n\nIts shape is not known until the file is written: detection reads from the content whether it is a list, and whether it is a record or a list of records, so the cap gives the file type with only those left open and states, for each file, the type it reads back as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=json;!ext` — JSON content of any shape that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=json;fmt=json;?list;?record` — the same bytes, as a `.json` file. The cap states which of these\n  file types the file is: the type detection reads back from it.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.json`\n  file as a type outside its output is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=json;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=json;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "JSON content of any shape to save as a `.json` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=json;fmt=json;?list;?record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.json` file of the shape they read back as",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=json;list;!record\";out=\"media:enc=utf8;ext=json;fmt=json;list;?record\";save-as-json",
+    "version": 1,
+    "title": "Save as JSON List",
+    "aliases": [
+      "save-as-json-list"
+    ],
+    "cap_description": "Save a JSON list whose items are not records as a `.json` file, labelled with the shape it reads back as. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a JSON list whose items are not records to disk as a `.json` file. Content is no file type: a\ncap that gives a JSON list whose items are not records gives it without a file extension, and this cap is how that\ncontent becomes a file a plan can end on.\n\nA list whose items are not records is a list of records when it is empty, so the file is a list, and a list of records when the list is empty; the cap states, for each file, the type it reads back as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=json;list;!record;!ext` — a JSON list whose items are not records that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=json;fmt=json;list;?record` — the same bytes, as a `.json` file. The cap states which of these\n  file types the file is: the type detection reads back from it.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.json`\n  file as a type outside its output is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=json;list;!record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=json;list;!record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a JSON list whose items are not records to save as a `.json` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=json;fmt=json;list;?record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.json` file of the shape they read back as",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
     "urn": "cap:in=\"media:enc=utf8;!ext;fmt=json;list;record\";out=\"media:enc=utf8;ext=json;fmt=json;list;record\";save-as-json",
     "version": 1,
     "title": "Save as JSON List of Records",
@@ -4186,6 +4262,82 @@
     ]
   },
   {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=ndjson\";out=\"media:enc=utf8;ext=ndjson;fmt=ndjson;list;?record\";save-as-ndjson",
+    "version": 1,
+    "title": "Save as NDJSON",
+    "aliases": [
+      "save-as-ndjson"
+    ],
+    "cap_description": "Save NDJSON content of any shape as a `.ndjson` file, labelled with the shape it reads back as. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes NDJSON content of any shape to disk as a `.ndjson` file. Content is no file type: a\ncap that gives NDJSON content of any shape gives it without a file extension, and this cap is how that\ncontent becomes a file a plan can end on.\n\nNDJSON content always reads back from a file as a list: detection reads from the content only whether it is a list of records, so the cap gives the list file type with that left open and states, for each file, the type it reads back as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=ndjson;!ext` — NDJSON content of any shape that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=ndjson;fmt=ndjson;list;?record` — the same bytes, as a `.ndjson` file. The cap states which of these\n  file types the file is: the type detection reads back from it.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.ndjson`\n  file as a type outside its output is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=ndjson;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=ndjson;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "NDJSON content of any shape to save as a `.ndjson` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=ndjson;fmt=ndjson;list;?record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.ndjson` file of the shape they read back as",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=ndjson;list;!record\";out=\"media:enc=utf8;ext=ndjson;fmt=ndjson;list;?record\";save-as-ndjson",
+    "version": 1,
+    "title": "Save as NDJSON List",
+    "aliases": [
+      "save-as-ndjson-list"
+    ],
+    "cap_description": "Save an NDJSON list whose items are not records as a `.ndjson` file, labelled with the shape it reads back as. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes an NDJSON list whose items are not records to disk as a `.ndjson` file. Content is no file type: a\ncap that gives an NDJSON list whose items are not records gives it without a file extension, and this cap is how that\ncontent becomes a file a plan can end on.\n\nA list whose items are not records is a list of records when it is empty, so the file is a list, and a list of records when the list is empty; the cap states, for each file, the type it reads back as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=ndjson;list;!record;!ext` — an NDJSON list whose items are not records that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=ndjson;fmt=ndjson;list;?record` — the same bytes, as a `.ndjson` file. The cap states which of these\n  file types the file is: the type detection reads back from it.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.ndjson`\n  file as a type outside its output is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=ndjson;list;!record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=ndjson;list;!record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "an NDJSON list whose items are not records to save as a `.ndjson` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=ndjson;fmt=ndjson;list;?record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.ndjson` file of the shape they read back as",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
     "urn": "cap:in=\"media:enc=utf8;!ext;fmt=ndjson;list;record\";out=\"media:enc=utf8;ext=ndjson;fmt=ndjson;list;record\";save-as-ndjson",
     "version": 1,
     "title": "Save as NDJSON List of Records",
@@ -4255,6 +4407,82 @@
         "media_urn": "media:enc=utf8;ext=txt;plain-text",
         "name": "output",
         "output_description": "The same bytes, persisted as a `.txt` file",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=yaml\";out=\"media:enc=utf8;ext=yaml;fmt=yaml;?list;?record\";save-as-yaml",
+    "version": 1,
+    "title": "Save as YAML",
+    "aliases": [
+      "save-as-yaml"
+    ],
+    "cap_description": "Save YAML content of any shape as a `.yaml` file, labelled with the shape it reads back as. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes YAML content of any shape to disk as a `.yaml` file. Content is no file type: a\ncap that gives YAML content of any shape gives it without a file extension, and this cap is how that\ncontent becomes a file a plan can end on.\n\nIts shape is not known until the file is written: detection reads from the content whether it is a list, and whether it is a record or a list of records, so the cap gives the file type with only those left open and states, for each file, the type it reads back as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=yaml;!ext` — YAML content of any shape that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=yaml;fmt=yaml;?list;?record` — the same bytes, as a `.yaml` file. The cap states which of these\n  file types the file is: the type detection reads back from it.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.yaml`\n  file as a type outside its output is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=yaml;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=yaml;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "YAML content of any shape to save as a `.yaml` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=yaml;fmt=yaml;?list;?record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.yaml` file of the shape they read back as",
+        "optional": false,
+        "is_sequence": false,
+        "streaming": false
+      }
+    ]
+  },
+  {
+    "urn": "cap:in=\"media:enc=utf8;!ext;fmt=yaml;list;!record\";out=\"media:enc=utf8;ext=yaml;fmt=yaml;list;?record\";save-as-yaml",
+    "version": 1,
+    "title": "Save as YAML List",
+    "aliases": [
+      "save-as-yaml-list"
+    ],
+    "cap_description": "Save a YAML list whose items are not records as a `.yaml` file, labelled with the shape it reads back as. Bytes pass through unchanged.",
+    "documentation": "## Purpose\n\nTerminal cap that writes a YAML list whose items are not records to disk as a `.yaml` file. Content is no file type: a\ncap that gives a YAML list whose items are not records gives it without a file extension, and this cap is how that\ncontent becomes a file a plan can end on.\n\nA list whose items are not records is a list of records when it is empty, so the file is a list, and a list of records when the list is empty; the cap states, for each file, the type it reads back as.\n\n## Inputs\n\n- `media:enc=utf8;fmt=yaml;list;!record;!ext` — a YAML list whose items are not records that is not yet a file.\n\n## Outputs\n\n- `media:enc=utf8;ext=yaml;fmt=yaml;list;?record` — the same bytes, as a `.yaml` file. The cap states which of these\n  file types the file is: the type detection reads back from it.\n\n## Notes\n\n- No conversion and no re-encoding: the bytes pass through unchanged.\n- The cap checks the content first: content that would read back from a `.yaml`\n  file as a type outside its output is refused, naming what it reads back as.",
+    "args": [
+      {
+        "media_urn": "media:enc=utf8;fmt=yaml;list;!record;!ext",
+        "name": "input",
+        "required": true,
+        "is_sequence": false,
+        "streaming": false,
+        "sources": [
+          {
+            "stdin": "media:enc=utf8;fmt=yaml;list;!record;!ext"
+          },
+          {
+            "position": 0
+          }
+        ],
+        "arg_description": "a YAML list whose items are not records to save as a `.yaml` file"
+      }
+    ],
+    "outputs": [
+      {
+        "media_urn": "media:enc=utf8;ext=yaml;fmt=yaml;list;?record",
+        "name": "output",
+        "output_description": "The same bytes, as a `.yaml` file of the shape they read back as",
         "optional": false,
         "is_sequence": false,
         "streaming": false

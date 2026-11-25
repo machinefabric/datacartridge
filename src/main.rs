@@ -340,17 +340,36 @@ impl Op<()> for SaveAsTxtOp {
 // SAVE-AS-FILE OPS — content written as the file detection reads back
 // =============================================================================
 //
-// One save cap per shape detection tells apart (a list of records, a record,
-// a value, in JSON, YAML, NDJSON or CSV): each takes content with no file
-// extension and gives exactly the file type detection reads back from the
-// file it writes. The op passes the bytes through unchanged, after checking
-// that they read back from a `.{ext}` file as `out`, so a value saved and
-// opened again is what it was saved as.
+// One save cap per shape detection tells apart (a list of records, a list, a
+// record, a value, in JSON, YAML, NDJSON or CSV), and one per format for
+// content whose shape is not known: each takes content with no file extension
+// and gives the file type detection reads back from the file it writes. A
+// save of one shape gives that exact type; a list save gives `…;list;?record`
+// (an empty list is a list of records) and a generic save leaves open what
+// detection decides. The op passes the bytes through unchanged, after
+// checking that they read back from a `.{ext}` file as a type inside the
+// cap's output, and states that type as its output's label, so a value saved
+// and opened again is what it was saved as. For a save of one shape it is the
+// output itself; for an open output it is the shape the file is, which the
+// output's own URN cannot say: `…;?list;?record` leaves open what a plain
+// value has no part of.
 
-/// The text a save cap writes for `bytes`: the bytes unchanged, when they read
-/// back from a `.{ext}` file as `out`. Refused, naming what the content reads
-/// back as, when detection's first claim is another type or it claims none.
-fn saved_file(bytes: Vec<u8>, ext: &str, out: &capdag::MediaUrn) -> Result<String, String> {
+/// What a save cap writes: the bytes unchanged, and the type they read back
+/// as, which the save states as its output's label.
+#[derive(Debug)]
+struct SavedFile {
+    text: String,
+    label: capdag::MediaUrn,
+}
+
+/// What a save cap writes for `bytes`, when they read back from a `.{ext}`
+/// file as a type inside what `cap` declares it gives, read complete. Refused,
+/// naming what the content reads back as, when detection's first claim lies
+/// outside it or it claims none.
+fn saved_file(bytes: Vec<u8>, ext: &str, cap: &capdag::CapUrn) -> Result<SavedFile, String> {
+    let out = cap
+        .out_media_urn()
+        .map_err(|e| format!("save cap '{cap}' gives no media URN: {e}"))?;
     let inspected = &bytes[..bytes.len().min(capdag::MAX_CONTENT_INSPECTION_BYTES)];
     let claims = adapter::detect_data_media_urns(inspected, ext);
     let Some(first) = claims.first() else {
@@ -358,17 +377,21 @@ fn saved_file(bytes: Vec<u8>, ext: &str, out: &capdag::MediaUrn) -> Result<Strin
     };
     let claim = capdag::MediaUrn::from_string(first)
         .map_err(|e| format!("detection read the content as '{first}', which is no media URN: {e}"))?;
-    if !claim.is_equivalent(out) {
-        return Err(format!("the content reads back from a .{ext} file as '{claim}', not '{out}'"));
+    let inside = cap
+        .declared_output_holds(&claim)
+        .map_err(|e| format!("save cap '{cap}' declares no output a file can be checked against: {e}"))?;
+    if !inside {
+        return Err(format!("the content reads back from a .{ext} file as '{claim}', which is not inside '{out}'"));
     }
-    String::from_utf8(bytes).map_err(|e| format!("the content read back as '{claim}' is not UTF-8: {e}"))
+    let text = String::from_utf8(bytes).map_err(|e| format!("the content read back as '{claim}' is not UTF-8: {e}"))?;
+    Ok(SavedFile { text, label: claim })
 }
 
-/// Save content as the file of one shape: the type the cap's output names,
-/// with the extension that type carries.
+/// Save content as a file: of the type the cap's output names, with the
+/// extension that type carries, labelled with the shape it reads back as.
 struct SaveAsFileOp {
     ext: String,
-    out: capdag::MediaUrn,
+    cap: capdag::CapUrn,
     in_media: String,
 }
 
@@ -404,14 +427,17 @@ impl Op<()> for SaveAsFileOp {
             input_arg_error("INPUT_REQUIRED", format!("a .{} save received no input stream", self.ext), &self.in_media)
         })?;
 
-        let text = saved_file(bytes, &self.ext, &self.out)
+        let saved = saved_file(bytes, &self.ext, &self.cap)
             .map_err(|message| input_arg_error("INVALID_INPUT", message, &self.in_media))?;
 
+        output
+            .label(&saved.label)
+            .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output
             .start(false, input_meta)
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         output
-            .emit_cbor(&ciborium::Value::Text(text))
+            .emit_cbor(&ciborium::Value::Text(saved.text))
             .await
             .map_err(|e| OpError::ExecutionFailed(e.to_string()))?;
         Ok(())
@@ -999,13 +1025,20 @@ const FORMAT_CONVERSIONS: [&str; 12] = [
     "convert-csv-to-text-list",
 ];
 
-/// The save caps: content of one shape written as the file detection reads back.
-const SAVES_AS_FILE: [&str; 8] = [
+/// The save caps: content written as the file detection reads back, of one
+/// shape, a list, or of a shape only detection decides.
+const SAVES_AS_FILE: [&str; 14] = [
     "save-as-csv",
+    "save-as-json",
+    "save-as-json-list",
     "save-as-json-list-records",
     "save-as-json-record",
     "save-as-json-value",
+    "save-as-ndjson",
+    "save-as-ndjson-list",
     "save-as-ndjson-list-records",
+    "save-as-yaml",
+    "save-as-yaml-list",
     "save-as-yaml-list-records",
     "save-as-yaml-record",
     "save-as-yaml-value",
@@ -1050,17 +1083,25 @@ fn register_conversions(runtime: &mut CartridgeRuntime, conversions: Vec<Defined
 /// with no exact extension is a defect of the definition.
 fn register_saves(runtime: &mut CartridgeRuntime, saves: Vec<DefinedStep>) {
     for step in saves {
-        let out = capdag::MediaUrn::from_string(&step.out_media)
-            .unwrap_or_else(|e| panic!("save cap '{}' gives '{}', which is no media URN: {e}", step.urn, step.out_media));
-        let ext = out
-            .exact_value("ext")
-            .unwrap_or_else(|| panic!("save cap '{}' gives '{}', which names no file extension", step.urn, step.out_media))
-            .to_string();
+        let (ext, cap) = save_file_type(&step);
         let in_media = step.in_media;
         runtime.register_op(&step.urn, move || {
-            Box::new(SaveAsFileOp { ext: ext.clone(), out: out.clone(), in_media: in_media.clone() })
+            Box::new(SaveAsFileOp { ext: ext.clone(), cap: cap.clone(), in_media: in_media.clone() })
         });
     }
+}
+
+/// The extension a save cap writes and the cap itself, as its embedded definition states them.
+fn save_file_type(step: &DefinedStep) -> (String, capdag::CapUrn) {
+    let cap = capdag::CapUrn::from_string(&step.urn)
+        .unwrap_or_else(|e| panic!("save cap '{}' is no cap URN: {e}", step.urn));
+    let out = capdag::MediaUrn::from_string(&step.out_media)
+        .unwrap_or_else(|e| panic!("save cap '{}' gives '{}', which is no media URN: {e}", step.urn, step.out_media));
+    let ext = out
+        .exact_value("ext")
+        .unwrap_or_else(|| panic!("save cap '{}' gives '{}', which names no file extension", step.urn, step.out_media))
+        .to_string();
+    (ext, cap)
 }
 
 // =============================================================================
@@ -2403,52 +2444,100 @@ mod tests {
         assert_eq!(collected, serde_json::json!([{"a": 1}, {"a": 2}]));
     }
 
-    /// The extension and file type a save cap writes, as its embedded definition states
+    /// The extension a save cap writes and the cap, as its embedded definition states
     /// them: the same lookup `register_saves` makes.
-    fn save_as(alias: &str) -> (String, capdag::MediaUrn) {
-        let step = defined_steps(&build_manifest(), &[alias]).remove(0);
-        let out = capdag::MediaUrn::from_string(&step.out_media).expect("a save cap gives a media URN");
-        let ext = out.exact_value("ext").expect("a save cap gives a file type with an extension").to_string();
-        (ext, out)
+    fn save_as(alias: &str) -> (String, capdag::CapUrn) {
+        save_file_type(&defined_steps(&build_manifest(), &[alias]).remove(0))
     }
 
     // TEST7314: each save cap writes content of its own shape unchanged: what it
-    // writes reads back from its file as the type the cap gives.
+    // writes reads back from its file as a type the cap gives.
     #[test]
     fn test7314_each_save_cap_writes_content_of_its_shape_unchanged() {
-        let shapes: [(&str, &[&str]); 8] = [
+        let shapes: [(&str, &[&str]); 14] = [
             ("save-as-json-list-records", &[r#"[{"a":1}]"#, "[]"]),
             ("save-as-json-record", &[r#"{"a":1}"#]),
             ("save-as-json-value", &["42"]),
+            ("save-as-json-list", &["[1,2]", "[]"]),
+            ("save-as-json", &[r#"[{"a":1}]"#, "[1,2]", r#"{"a":1}"#, "42"]),
             ("save-as-yaml-list-records", &["- a: 1"]),
             ("save-as-yaml-record", &["a: 1"]),
             ("save-as-yaml-value", &["42"]),
+            ("save-as-yaml-list", &["- 1\n- 2", "[]"]),
+            ("save-as-yaml", &["- a: 1", "- 1", "a: 1", "42"]),
             ("save-as-ndjson-list-records", &["{\"a\":1}\n"]),
+            ("save-as-ndjson-list", &["1\n2\n", ""]),
+            ("save-as-ndjson", &["{\"a\":1}\n", "1\n2\n"]),
             ("save-as-csv", &["a,b\n1,2"]),
         ];
         assert_eq!(shapes.len(), SAVES_AS_FILE.len(), "every save cap is tested");
         for (alias, contents) in shapes {
             assert!(SAVES_AS_FILE.contains(&alias), "{alias} is registered");
-            let (ext, out) = save_as(alias);
+            let (ext, cap) = save_as(alias);
             for content in contents {
-                let written = saved_file(content.as_bytes().to_vec(), &ext, &out)
+                let written = saved_file(content.as_bytes().to_vec(), &ext, &cap)
                     .unwrap_or_else(|e| panic!("{alias} must write {content:?}: {e}"));
-                assert_eq!(written, *content, "{alias} writes the bytes unchanged");
+                assert_eq!(written.text, *content, "{alias} writes the bytes unchanged");
             }
         }
     }
 
     // TEST7315: a save cap refuses content that would read back from its file as
-    // another type, naming what it reads back as.
+    // a type outside what it gives, naming what it reads back as.
     #[test]
     fn test7315_a_save_cap_refuses_content_that_reads_back_as_another_type() {
-        let (ext, out) = save_as("save-as-json-record");
-        let err = saved_file(br#"[{"a":1}]"#.to_vec(), &ext, &out).expect_err("a list of records is not one record");
-        assert!(err.contains("reads back from a .json file as 'media:enc=utf8;ext=json;fmt=json;list;record'"), "{err}");
+        for (alias, content, reads_back) in [
+            ("save-as-json-record", r#"[{"a":1}]"#, "media:enc=utf8;ext=json;fmt=json;list;record"),
+            ("save-as-yaml-value", "url: x", "media:enc=utf8;ext=yaml;fmt=yaml;record"),
+            ("save-as-json-list", r#"{"a":1}"#, "media:enc=utf8;ext=json;fmt=json;record"),
+            ("save-as-json-list", "42", "media:enc=utf8;ext=json;fmt=json"),
+            ("save-as-yaml-list", "a: 1", "media:enc=utf8;ext=yaml;fmt=yaml;record"),
+            ("save-as-ndjson-list-records", "1\n2\n", "media:enc=utf8;ext=ndjson;fmt=ndjson;list"),
+        ] {
+            let (ext, cap) = save_as(alias);
+            let err = saved_file(content.as_bytes().to_vec(), &ext, &cap)
+                .expect_err(&format!("{alias} refuses {content:?}"));
+            assert!(err.contains(&format!("reads back from a .{ext} file as '{reads_back}'")), "{alias}: {err}");
+        }
+    }
 
-        let (ext, out) = save_as("save-as-yaml-value");
-        let err = saved_file(b"url: x".to_vec(), &ext, &out).expect_err("a mapping is a record, not a value");
-        assert!(err.contains("reads back from a .yaml file as 'media:enc=utf8;ext=yaml;fmt=yaml;record'"), "{err}");
+    // TEST7316: a save labels what it writes with the type it reads back as. A
+    // save whose output leaves open what detection decides gives the shape the
+    // file is: a list save a list, or a list of records when it is empty; a
+    // generic save each shape, a plain value with no list and no record. A save
+    // of one shape gives exactly its output.
+    #[test]
+    fn test7316_a_save_labels_what_it_writes_with_what_it_reads_back_as() {
+        for (alias, content, label) in [
+            ("save-as-json", r#"[{"a":1}]"#, "media:enc=utf8;ext=json;fmt=json;list;record"),
+            ("save-as-json", "[]", "media:enc=utf8;ext=json;fmt=json;list;record"),
+            ("save-as-json", "[1,2]", "media:enc=utf8;ext=json;fmt=json;list"),
+            ("save-as-json", r#"{"a":1}"#, "media:enc=utf8;ext=json;fmt=json;record"),
+            ("save-as-json", "42", "media:enc=utf8;ext=json;fmt=json"),
+            ("save-as-json-list", "[1,2]", "media:enc=utf8;ext=json;fmt=json;list"),
+            ("save-as-json-list", "[]", "media:enc=utf8;ext=json;fmt=json;list;record"),
+            ("save-as-yaml", "- a: 1", "media:enc=utf8;ext=yaml;fmt=yaml;list;record"),
+            ("save-as-yaml", "- 1", "media:enc=utf8;ext=yaml;fmt=yaml;list"),
+            ("save-as-yaml", "a: 1", "media:enc=utf8;ext=yaml;fmt=yaml;record"),
+            ("save-as-yaml", "42", "media:enc=utf8;ext=yaml;fmt=yaml"),
+            ("save-as-yaml-list", "- 1\n- 2", "media:enc=utf8;ext=yaml;fmt=yaml;list"),
+            ("save-as-yaml-list", "[]", "media:enc=utf8;ext=yaml;fmt=yaml;list;record"),
+            ("save-as-ndjson", "{\"a\":1}\n", "media:enc=utf8;ext=ndjson;fmt=ndjson;list;record"),
+            ("save-as-ndjson", "1\n2\n", "media:enc=utf8;ext=ndjson;fmt=ndjson;list"),
+            ("save-as-ndjson-list", "1\n2\n", "media:enc=utf8;ext=ndjson;fmt=ndjson;list"),
+            ("save-as-ndjson-list", "", "media:enc=utf8;ext=ndjson;fmt=ndjson;list;record"),
+            ("save-as-json-list-records", "[]", "media:enc=utf8;ext=json;fmt=json;list;record"),
+            ("save-as-json-value", "42", "media:enc=utf8;ext=json;fmt=json"),
+            ("save-as-csv", "a,b\n1,2", "media:enc=utf8;ext=csv;fmt=csv;list;record"),
+        ] {
+            let (ext, cap) = save_as(alias);
+            let written = saved_file(content.as_bytes().to_vec(), &ext, &cap)
+                .unwrap_or_else(|e| panic!("{alias} must write {content:?}: {e}"));
+            let expected = capdag::MediaUrn::from_string(label).unwrap();
+            assert_eq!(written.label, expected, "{alias} labels {content:?} '{}', not '{expected}'", written.label);
+            // What it states is a label the runtime takes for this cap's output.
+            assert!(cap.declared_output_holds(&written.label).unwrap(), "{} is inside what {alias} declares", written.label);
+        }
     }
 
     // TEST7313: a request for the JSON↔YAML conversions, which carries the published caps'
